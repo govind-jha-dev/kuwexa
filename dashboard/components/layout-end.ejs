@@ -1,0 +1,20 @@
+      </main>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/tinymce@7/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    if (window.tinymce && document.querySelector('.rich-editor')) {
+      tinymce.init({
+        selector: '.rich-editor',
+        height: 420,
+        menubar: false,
+        branding: false,
+        promotion: false,
+        plugins: 'autolink link lists image table code wordcount',
+        toolbar: 'undo redo | blocks | bold italic underline | bullist numlist | link image table | code',
+        content_style: 'body { font-family: Manrope, sans-serif; font-size: 14px; line-height: 1.7; padding: 12px; }'
+      });
+    }
+  </script>
+</body>
+</html>

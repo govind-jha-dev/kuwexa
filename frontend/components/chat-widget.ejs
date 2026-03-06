@@ -1,0 +1,91 @@
+<section class="chat-dock" data-chat-widget>
+  <div class="chat-dock__panel hidden" data-chat-panel>
+    <div class="chat-dock__panel-shell">
+      <div class="chat-dock__header">
+        <div class="chat-dock__brand">
+          <span class="chat-dock__avatar" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4v4"></path>
+              <rect x="7" y="9" width="18" height="14" rx="5"></rect>
+              <path d="M11 23v3"></path>
+              <path d="M21 23v3"></path>
+              <path d="M13 14h.01"></path>
+              <path d="M19 14h.01"></path>
+              <path d="M12 18c1.2 1.3 2.5 2 4 2s2.8-.7 4-2"></path>
+            </svg>
+          </span>
+          <div>
+            <p class="chat-dock__eyebrow">CodexWEBZ AI Desk</p>
+            <h2 class="chat-dock__title">Project Brief</h2>
+            <p class="chat-dock__copy">Message us. The assigned manager gets it directly.</p>
+          </div>
+        </div>
+        <button type="button" class="chat-dock__close" data-chat-close aria-label="Close chat">&times;</button>
+      </div>
+
+      <div class="chat-dock__body">
+        <div class="chat-dock__thread" data-chat-thread>
+          <div class="chat-dock__bubble chat-dock__bubble--bot">
+            Tell us what you need. We will route it to the right manager.
+          </div>
+        </div>
+
+        <div class="chat-dock__intents" data-chat-intents>
+          <% ['Website', 'Ecommerce', 'Software', 'SEO', 'Support'].forEach((intent) => { %>
+            <button type="button" class="chat-dock__intent" data-chat-intent="<%= intent %>"><%= intent %></button>
+          <% }) %>
+        </div>
+
+        <form method="post" action="/chat" class="chat-dock__form" data-chat-form>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="page_path" value="<%= currentPath || '/' %>">
+          <input type="hidden" name="topic" value="">
+
+          <div class="chat-dock__grid">
+            <div>
+              <label class="chat-dock__label" for="chat_name">Name</label>
+              <input id="chat_name" name="name" type="text" required class="chat-dock__input">
+            </div>
+            <div>
+              <label class="chat-dock__label" for="chat_email">Email</label>
+              <input id="chat_email" name="email" type="email" required class="chat-dock__input">
+            </div>
+          </div>
+
+          <div>
+            <label class="chat-dock__label" for="chat_phone">Phone</label>
+            <input id="chat_phone" name="phone" type="text" class="chat-dock__input">
+          </div>
+
+          <div>
+            <label class="chat-dock__label" for="chat_message">Message</label>
+            <textarea id="chat_message" name="message" rows="4" required class="chat-dock__textarea" placeholder="Tell us what you need built or fixed."></textarea>
+          </div>
+
+          <div class="hidden chat-dock__feedback" data-chat-feedback></div>
+
+          <button type="submit" class="chat-dock__submit" data-chat-submit>Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="chat-dock__trigger" data-chat-open aria-expanded="false">
+    <span class="chat-dock__trigger-orb">
+      <span class="chat-dock__trigger-pulse"></span>
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="chat-dock__trigger-icon" aria-hidden="true">
+        <path d="M16 4v4"></path>
+        <rect x="7" y="9" width="18" height="14" rx="5"></rect>
+        <path d="M11 23v3"></path>
+        <path d="M21 23v3"></path>
+        <path d="M13 14h.01"></path>
+        <path d="M19 14h.01"></path>
+        <path d="M12 18c1.2 1.3 2.5 2 4 2s2.8-.7 4-2"></path>
+      </svg>
+    </span>
+    <span class="chat-dock__trigger-copy">
+      <span class="chat-dock__trigger-label">CodexWEBZ AI</span>
+      <span class="chat-dock__trigger-subtitle">Open assistant</span>
+    </span>
+  </button>
+</section>

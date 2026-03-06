@@ -1,0 +1,89 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="grid gap-10 lg:grid-cols-[1fr,0.85fr] lg:items-end">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Services',
+      title: 'Professional landing-page execution backed by CMS, SEO, and operational logic.',
+      copy: 'These services are not isolated deliverables. Each one plugs into a broader website and management system that can be run by admins and managers after launch.'
+    }) %>
+    <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Engagement Models</p>
+      <div class="mt-5 space-y-4">
+        <% pageContent.engagementModels.forEach((item) => { %>
+          <article class="rounded-[1.45rem] bg-white/85 p-5">
+            <h3 class="font-display text-2xl font-bold text-primary"><%= item.title %></h3>
+            <p class="mt-2 text-sm leading-7 text-slate-600"><%= item.copy %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <section class="mt-12" data-filter-group>
+    <div class="surface-panel rounded-[2rem] p-6 lg:p-8">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Filter Services</p>
+          <p class="mt-2 text-sm text-slate-600"><span data-filter-count><%= services.length %></span> services available</p>
+        </div>
+        <input type="search" placeholder="Search services" class="w-full rounded-full border border-primary/10 bg-white px-5 py-3 text-sm focus:border-secondary focus:outline-none lg:max-w-sm" data-filter-control data-filter-key="search">
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-3">
+        <% pageContent.categories.forEach((category, index) => { %>
+          <button type="button" class="pill-filter <%= index === 0 ? 'is-active' : '' %>" data-filter-chip data-filter-key="category" data-filter-value="<%= category %>"><%= category %></button>
+        <% }) %>
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-2">
+        <% services.forEach((service) => { %>
+          <article
+            class="reveal spotlight-card rounded-[1.9rem] bg-white p-7 shadow-sm ring-1 ring-primary/8"
+            data-reveal
+            data-filter-item
+            data-category="<%= service.profile.category %>"
+            data-search="<%= `${service.title} ${service.short_description || ''} ${service.profile.category}` %>">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= service.profile.category %></span>
+              <span class="text-xs font-semibold uppercase tracking-[0.22em] text-primary/35"><%= service.icon || 'CodexWebz Service' %></span>
+            </div>
+            <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= service.title %></h2>
+            <p class="mt-4 text-sm leading-8 text-slate-600"><%= service.short_description || service.profile.kicker %></p>
+            <div class="mt-6 grid gap-3 sm:grid-cols-2">
+              <% service.profile.deliverables.slice(0, 4).forEach((item) => { %>
+                <div class="rounded-[1.35rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700"><%= item %></div>
+              <% }) %>
+            </div>
+            <a href="/services/<%= service.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">Open service <span aria-hidden="true">→</span></a>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <%- include('../components/section-heading', {
+    eyebrow: 'Questions',
+    title: 'What teams usually ask before starting.',
+    copy: 'Most decisions at this stage are about delivery model, ownership, and how much operational logic belongs inside the build.'
+  }) %>
+  <div class="mt-10">
+    <%- include('../components/faq-list', { items: pageContent.faqs }) %>
+  </div>
+</section>
+
+<%- include('../components/site-cta', {
+  eyebrow: 'Need a Custom Scope',
+  title: 'Choose the service track that fits now, then expand the platform without rebuilding from scratch.',
+  copy: 'The backend architecture is already structured for services, portfolio, blog, leads, careers, SEO, and analytics.',
+  primaryLabel: 'Talk to CodexWebz',
+  primaryHref: '/contact',
+  secondaryLabel: 'See Portfolio',
+  secondaryHref: '/portfolio'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

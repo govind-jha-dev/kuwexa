@@ -1,0 +1,58 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<section class="hero-grid overflow-hidden bg-primary text-white">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+    <div class="grid gap-10 lg:grid-cols-[1.06fr,0.94fr] lg:items-end">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary"><%= pageContent.eyebrow %></p>
+        <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[1.02] md:text-6xl lg:text-7xl"><%= pageContent.title %></h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/74"><%= pageContent.intro %></p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="/about-us" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">About CodexWEBZ</a>
+          <a href="/contact" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">Talk to the Team</a>
+        </div>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <% pageContent.metrics.forEach((item) => { %>
+          <article class="glass-card rounded-[1.8rem] p-5 text-slate-900 shadow-float ring-1 ring-white/10">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary/40"><%= item.label %></p>
+            <p class="mt-4 font-display text-4xl font-bold text-primary"><%= item.value %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="grid gap-6 md:grid-cols-3">
+    <% pageContent.values.forEach((item) => { %>
+      <article class="surface-panel rounded-[2rem] p-7">
+        <p class="text-xs font-bold uppercase tracking-[0.24em] text-secondary">Team Value</p>
+        <h2 class="mt-4 font-display text-3xl font-bold text-primary"><%= item.title %></h2>
+        <p class="mt-4 text-sm leading-8 text-slate-600"><%= item.copy %></p>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../components/team-showcase', {
+  eyebrow: 'Leadership and Team',
+  title: 'Meet the people behind CodexWEBZ.',
+  copy: 'Each public card is connected to the dashboard, so images, designations, social links, and full profile content stay editable from the backend.'
+}) %>
+
+<%- include('../components/site-cta', {
+  eyebrow: 'Work With CodexWEBZ',
+  title: 'Need a team that can build dependable digital systems and support business growth?',
+  copy: 'CodexWEBZ helps businesses move from fragmented digital presence to structured websites, software, integrations, and long-term technical support.',
+  primaryLabel: 'Contact the Team',
+  primaryHref: '/contact',
+  secondaryLabel: 'About Us',
+  secondaryHref: '/about-us'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

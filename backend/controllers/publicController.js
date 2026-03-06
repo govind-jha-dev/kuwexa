@@ -1,0 +1,378 @@
+const pageModel = require('../models/pageModel');
+const serviceModel = require('../models/serviceModel');
+const projectModel = require('../models/projectModel');
+const blogModel = require('../models/blogModel');
+const leadModel = require('../models/leadModel');
+const jobModel = require('../models/jobModel');
+const applicationModel = require('../models/applicationModel');
+const seoModel = require('../models/seoModel');
+const teamModel = require('../models/teamModel');
+const { generateSitemapXml } = require('../services/sitemapService');
+const { sendLeadAlert, sendApplicationAlert } = require('../services/emailService');
+const { sanitizePlainText, sanitizeRichText } = require('../utils/content');
+const {
+  excerpt,
+  resolveServiceProfile,
+  getHomeContent,
+  getServicesPageContent,
+  getPortfolioPageContent,
+  getBlogPageContent,
+  getCareersPageContent,
+  getContactPageContent,
+  getAboutPageContent,
+  getTeamPageContent
+} = require('../services/siteContentService');
+
+function buildSeo(defaults, overrides = {}) {
+  return {
+    metaTitle: overrides.metaTitle || defaults?.meta_title || 'CodexWebz',
+    metaDescription: overrides.metaDescription || defaults?.meta_description || 'CodexWebz web platform',
+    ogTitle: overrides.ogTitle || defaults?.og_title || overrides.metaTitle || defaults?.meta_title || 'CodexWebz',
+    ogDescription: overrides.ogDescription || defaults?.og_description || overrides.metaDescription || defaults?.meta_description || 'CodexWebz web platform',
+    canonicalUrl: overrides.canonicalUrl || defaults?.canonical_url || null,
+    schemaMarkup: overrides.schemaMarkup || defaults?.schema_markup || null
+  };
+}
+
+async function home(req, res) {
+  const [seoRecord, services, projects, posts, jobs] = await Promise.all([
+    seoModel.findByPageKey('home'),
+    serviceModel.listFeatured(3),
+    projectModel.listFeatured(3),
+    blogModel.latest(3),
+    jobModel.listOpen()
+  ]);
+
+  return res.render('frontend/pages/home', {
+    title: 'CodexWebz',
+    services: services.map((service) => ({
+      ...service,
+      profile: resolveServiceProfile(service)
+    })),
+    projects: projects.map((project) => ({
+      ...project,
+      summary: excerpt(project.description || project.results, 150)
+    })),
+    posts: posts.map((post) => ({
+      ...post,
+      summary: post.excerpt || excerpt(post.content, 170)
+    })),
+    jobs: jobs.slice(0, 3),
+    marketing: getHomeContent({ services, projects, posts, jobs }),
+    seo: buildSeo(seoRecord)
+  });
+}
+
+async function services(req, res) {
+  const [seoRecord, items] = await Promise.all([
+    seoModel.findByPageKey('services'),
+    serviceModel.listPublished()
+  ]);
+
+  return res.render('frontend/pages/services', {
+    title: 'Services',
+    services: items.map((service) => ({
+      ...service,
+      profile: resolveServiceProfile(service)
+    })),
+    pageContent: getServicesPageContent(items),
+    seo: buildSeo(seoRecord)
+  });
+}
+
+async function serviceDetail(req, res, next) {
+  const service = await serviceModel.findBySlug(req.params.slug);
+  if (!service) {
+    return next();
+  }
+
+  return res.render('frontend/pages/service-detail', {
+    title: service.title,
+    service,
+    profile: resolveServiceProfile(service),
+    seo: buildSeo(null, {
+      metaTitle: service.meta_title || `${service.title} | CodexWebz`,
+      metaDescription: service.meta_description || service.short_description,
+      schemaMarkup: service.schema_markup,
+      canonicalUrl: `/services/${service.slug}`
+    })
+  });
+}
+
+async function portfolio(req, res) {
+  const [seoRecord, projects] = await Promise.all([
+    seoModel.findByPageKey('portfolio'),
+    projectModel.listPublished()
+  ]);
+
+  return res.render('frontend/pages/portfolio', {
+    title: 'Portfolio',
+    projects: projects.map((project) => ({
+      ...project,
+      summary: excerpt(project.description || project.results, 150)
+    })),
+    pageContent: getPortfolioPageContent(projects),
+    seo: buildSeo(seoRecord)
+  });
+}
+
+async function projectDetail(req, res, next) {
+  const project = await projectModel.findBySlug(req.params.slug);
+  if (!project) {
+    return next();
+  }
+
+  return res.render('frontend/pages/project-detail', {
+    title: project.title,
+    project: {
+      ...project,
+      summary: excerpt(project.description || project.results, 180)
+    },
+    seo: buildSeo(null, {
+      metaTitle: project.meta_title || `${project.title} | CodexWebz`,
+      metaDescription: project.meta_description || project.category,
+      canonicalUrl: `/portfolio/${project.slug}`
+    })
+  });
+}
+
+async function blog(req, res) {
+  const [seoRecord, posts] = await Promise.all([
+    seoModel.findByPageKey('blog'),
+    blogModel.listPublished()
+  ]);
+
+  return res.render('frontend/pages/blog', {
+    title: 'Blog',
+    posts: posts.map((post) => ({
+      ...post,
+      summary: post.excerpt || excerpt(post.content, 170)
+    })),
+    pageContent: getBlogPageContent(posts),
+    seo: buildSeo(seoRecord)
+  });
+}
+
+async function blogDetail(req, res, next) {
+  const post = await blogModel.findBySlug(req.params.slug);
+  if (!post || post.status !== 'published') {
+    return next();
+  }
+
+  return res.render('frontend/pages/blog-detail', {
+    title: post.title,
+    post: {
+      ...post,
+      summary: post.excerpt || excerpt(post.content, 170)
+    },
+    seo: buildSeo(null, {
+      metaTitle: post.meta_title || post.title,
+      metaDescription: post.meta_description || post.excerpt,
+      ogTitle: post.og_title || post.title,
+      ogDescription: post.og_description || post.excerpt,
+      canonicalUrl: post.canonical_url || `/blog/${post.slug}`,
+      schemaMarkup: post.schema_markup
+    })
+  });
+}
+
+async function careers(req, res) {
+  const [seoRecord, jobs] = await Promise.all([
+    seoModel.findByPageKey('careers'),
+    jobModel.listOpen()
+  ]);
+
+  return res.render('frontend/pages/careers', {
+    title: 'Careers',
+    jobs,
+    pageContent: getCareersPageContent(jobs),
+    seo: buildSeo(seoRecord)
+  });
+}
+
+async function jobDetail(req, res, next) {
+  const job = await jobModel.findBySlug(req.params.slug);
+  if (!job || job.status !== 'open') {
+    return next();
+  }
+
+  return res.render('frontend/pages/job-detail', {
+    title: job.title,
+    job,
+    pageContent: getCareersPageContent([job]),
+    seo: buildSeo(null, {
+      metaTitle: job.meta_title || `${job.title} | Careers at CodexWebz`,
+      metaDescription: job.meta_description || job.location,
+      canonicalUrl: `/careers/${job.slug}`
+    }),
+    applied: req.query.applied || null
+  });
+}
+
+async function contact(req, res) {
+  const seoRecord = await seoModel.findByPageKey('contact');
+
+  return res.render('frontend/pages/contact', {
+    title: 'Contact',
+    sent: req.query.sent || null,
+    pageContent: getContactPageContent(),
+    seo: buildSeo(seoRecord)
+  });
+}
+
+async function about(req, res) {
+  const [seoRecord, teamShowcase] = await Promise.all([
+    seoModel.findByPageKey('about'),
+    teamModel.listGroupedActive()
+  ]);
+
+  return res.render('frontend/pages/about', {
+    title: 'About CodexWEBZ',
+    pageContent: getAboutPageContent(),
+    teamShowcase,
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'About CodexWEBZ | Technology Services by Kuwexa Private Limited',
+      metaDescription: 'Learn how CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems for growth, efficiency, and scalability.',
+      canonicalUrl: '/about-us'
+    })
+  });
+}
+
+async function team(req, res) {
+  const [seoRecord, teamShowcase] = await Promise.all([
+    seoModel.findByPageKey('team'),
+    teamModel.listGroupedActive()
+  ]);
+
+  return res.render('frontend/pages/team', {
+    title: 'Team',
+    pageContent: getTeamPageContent(teamShowcase),
+    teamShowcase,
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'Team | CodexWEBZ',
+      metaDescription: 'Meet the leadership and team behind CodexWEBZ and the delivery systems built for business growth.',
+      canonicalUrl: '/team'
+    })
+  });
+}
+
+async function teamProfile(req, res, next) {
+  const member = await teamModel.findBySlug(req.params.slug);
+  if (!member || member.status !== 'active') {
+    return next();
+  }
+
+  return res.render('frontend/pages/team-detail', {
+    title: member.name,
+    member,
+    seo: buildSeo(null, {
+      metaTitle: `${member.name} | ${member.designation} | CodexWEBZ`,
+      metaDescription: member.short_bio || `${member.name} serves as ${member.designation} at CodexWEBZ.`,
+      canonicalUrl: `/team/${member.slug}`
+    })
+  });
+}
+
+async function pageDetail(req, res, next) {
+  const page = await pageModel.findBySlug(req.params.slug);
+  if (!page || page.status !== 'published') {
+    return next();
+  }
+
+  return res.render('frontend/pages/page', {
+    title: page.title,
+    page,
+    seo: buildSeo(null, {
+      metaTitle: page.meta_title || page.title,
+      metaDescription: page.meta_description || page.title,
+      ogTitle: page.og_title || page.title,
+      ogDescription: page.og_description || page.meta_description,
+      canonicalUrl: page.canonical_url || `/${page.slug}`,
+      schemaMarkup: page.schema_markup
+    })
+  });
+}
+
+async function submitLead(req, res) {
+  const payload = {
+    name: sanitizePlainText(req.body.name),
+    email: sanitizePlainText(req.body.email),
+    phone: sanitizePlainText(req.body.phone),
+    message: sanitizePlainText(req.body.message),
+    source: sanitizePlainText(req.body.source) || 'Website Contact Form'
+  };
+
+  const lead = await leadModel.createLead(payload);
+  await sendLeadAlert(lead).catch(() => {});
+
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(201).json({ message: 'Lead submitted successfully.', lead });
+  }
+
+  return res.redirect('/contact?sent=Your%20message%20has%20been%20received.');
+}
+
+async function submitApplication(req, res) {
+  const job = req.params.slug
+    ? await jobModel.findBySlug(req.params.slug)
+    : await jobModel.findBySlug(req.body.job_slug);
+
+  if (!job) {
+    const error = 'Job opening not found.';
+    if (req.originalUrl.startsWith('/api/')) {
+      return res.status(404).json({ message: error });
+    }
+
+    return res.redirect('/careers');
+  }
+
+  const payload = {
+    job_id: job.id,
+    name: sanitizePlainText(req.body.name),
+    email: sanitizePlainText(req.body.email),
+    phone: sanitizePlainText(req.body.phone),
+    resume: req.file ? `/uploads/resumes/${req.file.filename}` : sanitizePlainText(req.body.resume),
+    cover_letter: sanitizeRichText(req.body.cover_letter)
+  };
+
+  const application = await applicationModel.createApplication(payload);
+  await sendApplicationAlert(application, job.title).catch(() => {});
+
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(201).json({ message: 'Application submitted successfully.', application });
+  }
+
+  return res.redirect(`/careers/${job.slug}?applied=Application%20submitted%20successfully.`);
+}
+
+async function sitemap(req, res) {
+  const xml = await generateSitemapXml();
+  res.type('application/xml');
+  return res.send(xml);
+}
+
+function robots(req, res) {
+  res.type('text/plain');
+  return res.send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
+}
+
+module.exports = {
+  home,
+  services,
+  serviceDetail,
+  portfolio,
+  projectDetail,
+  blog,
+  blogDetail,
+  careers,
+  jobDetail,
+  contact,
+  about,
+  team,
+  teamProfile,
+  pageDetail,
+  submitLead,
+  submitApplication,
+  sitemap,
+  robots
+};

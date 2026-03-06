@@ -1,0 +1,10 @@
+Jordan Hale
+Frontend Engineer Candidate
+
+Summary
+Builds responsive frontend systems, component libraries, and dashboard interfaces.
+
+Experience
+- Marketing website implementation
+- UI architecture in Tailwind CSS
+- QA and launch support

@@ -1,0 +1,23 @@
+<section class="mx-auto max-w-7xl px-6 pb-24 lg:px-8">
+  <% const eyebrowText = typeof eyebrow !== 'undefined' ? eyebrow : 'Next Step'; %>
+  <% const primaryLink = typeof primaryHref !== 'undefined' ? primaryHref : '/contact'; %>
+  <% const primaryText = typeof primaryLabel !== 'undefined' ? primaryLabel : 'Start a Project'; %>
+  <% const secondaryText = typeof secondaryLabel !== 'undefined' ? secondaryLabel : null; %>
+  <% const secondaryLink = typeof secondaryHref !== 'undefined' ? secondaryHref : '/'; %>
+  <div class="relative overflow-hidden rounded-[2.25rem] bg-primary px-8 py-12 text-white shadow-float">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(219,171,13,0.18),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_45%)]"></div>
+    <div class="relative grid gap-8 lg:grid-cols-[1fr,auto] lg:items-end">
+      <div>
+        <p class="text-xs uppercase tracking-[0.38em] text-secondary"><%= eyebrowText %></p>
+        <h2 class="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight md:text-5xl"><%= title %></h2>
+        <p class="mt-4 max-w-2xl text-base leading-8 text-white/72"><%= copy %></p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="<%= primaryLink %>" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20"><%= primaryText %></a>
+        <% if (secondaryText) { %>
+          <a href="<%= secondaryLink %>" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary"><%= secondaryText %></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

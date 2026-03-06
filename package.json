@@ -1,0 +1,45 @@
+{
+  "name": "codexwebz-platform",
+  "version": "1.0.0",
+  "description": "CodexWebz company website and management platform",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js",
+    "seed": "node scripts/seed.js",
+    "verify:frontend": "node scripts/verify-frontend.js"
+  },
+  "keywords": [
+    "express",
+    "mysql",
+    "tailwind",
+    "cms",
+    "rbac"
+  ],
+  "author": "Codex",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "express-validator": "^7.3.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.2",
+    "mysql2": "^3.15.0",
+    "nodemailer": "^7.0.3",
+    "sanitize-html": "^2.17.0",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

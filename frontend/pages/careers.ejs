@@ -1,0 +1,102 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Careers',
+      title: 'Join a team that builds with clarity, speed, and operational discipline.',
+      copy: 'The careers frontend is part of the same platform that stores resumes, manages application status, and gives managers a clean review workflow.'
+    }) %>
+    <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">How we work</p>
+      <div class="mt-5 grid gap-4">
+        <% pageContent.values.forEach((item) => { %>
+          <article class="rounded-[1.45rem] bg-white/85 p-5">
+            <h3 class="font-display text-2xl font-bold text-primary"><%= item.title %></h3>
+            <p class="mt-2 text-sm leading-7 text-slate-600"><%= item.copy %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-12 rounded-[2rem] bg-primary p-8 text-white lg:p-10">
+    <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Hiring Process</p>
+    <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <% pageContent.steps.forEach((step, index) => { %>
+        <article class="rounded-[1.6rem] border border-white/10 bg-white/6 p-5">
+          <p class="font-display text-3xl font-bold text-secondary"><%= `0${index + 1}` %></p>
+          <p class="mt-3 text-sm font-bold uppercase tracking-[0.2em] text-white/72"><%= step %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+
+  <section class="mt-12" data-filter-group>
+    <div class="surface-panel rounded-[2rem] p-6 lg:p-8">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Open Roles</p>
+          <p class="mt-2 text-sm text-slate-600"><span data-filter-count><%= jobs.length %></span> roles available</p>
+        </div>
+        <input type="search" placeholder="Search roles" class="w-full rounded-full border border-primary/10 bg-white px-5 py-3 text-sm focus:border-secondary focus:outline-none lg:max-w-sm" data-filter-control data-filter-key="search">
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-3">
+        <% pageContent.locations.forEach((location, index) => { %>
+          <button type="button" class="pill-filter <%= index === 0 ? 'is-active' : '' %>" data-filter-chip data-filter-key="location" data-filter-value="<%= location %>"><%= location %></button>
+        <% }) %>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-3">
+        <% pageContent.employmentTypes.forEach((type, index) => { %>
+          <button type="button" class="pill-filter <%= index === 0 ? 'is-active' : '' %>" data-filter-chip data-filter-key="employmentType" data-filter-value="<%= type %>"><%= type %></button>
+        <% }) %>
+      </div>
+
+      <div class="mt-8 grid gap-6">
+        <% jobs.forEach((job) => { %>
+          <article
+            class="reveal rounded-[1.9rem] bg-white p-7 shadow-sm ring-1 ring-primary/8"
+            data-reveal
+            data-filter-item
+            data-location="<%= job.location || 'All' %>"
+            data-employment-type="<%= job.employment_type || 'All' %>"
+            data-search="<%= `${job.title} ${job.location || ''} ${job.employment_type || ''}` %>">
+            <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= job.location || 'Remote' %></span>
+                  <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= job.employment_type || 'Full-time' %></span>
+                </div>
+                <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= job.title %></h2>
+                <p class="mt-4 text-sm leading-8 text-slate-600">Applications move directly into the careers workflow so review, status updates, and resume handling stay structured.</p>
+              </div>
+              <a href="/careers/<%= job.slug %>" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Role</a>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <%- include('../components/section-heading', {
+    eyebrow: 'FAQ',
+    title: 'Questions about the hiring flow.',
+    copy: 'The careers frontend is polished, but the important part is that the workflow behind it stays manageable for the team.'
+  }) %>
+  <div class="mt-10">
+    <%- include('../components/faq-list', { items: pageContent.faqs }) %>
+  </div>
+</section>
+
+<%- include('../components/team-showcase', {
+  eyebrow: 'Meet the Team',
+  title: 'Leadership and employees you would work with inside CodexWebz.',
+  copy: 'The careers system now connects directly to the real leadership and team section, so applicants can see who is running strategy and who is building day to day.'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

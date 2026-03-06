@@ -1,0 +1,219 @@
+<%
+  const showcase = typeof teamShowcase !== 'undefined' && teamShowcase ? teamShowcase : { leadership: [], employees: [] };
+  const leadership = Array.isArray(showcase.leadership) ? showcase.leadership : [];
+  const employees = Array.isArray(showcase.employees) ? showcase.employees : [];
+  const sectionEyebrow = typeof eyebrow !== 'undefined' ? eyebrow : 'Leadership and Team';
+  const sectionTitle = typeof title !== 'undefined' ? title : 'The people behind the platform.';
+  const sectionCopy = typeof copy !== 'undefined' ? copy : 'Leadership sets direction. The team turns that direction into delivery, content, and operational execution.';
+  const leadershipTitle = typeof leadershipHeading !== 'undefined' ? leadershipHeading : 'Leadership';
+  const employeeTitle = typeof employeeHeading !== 'undefined' ? employeeHeading : 'Team';
+  const memberTypeLabel = {
+    leadership: 'Leadership',
+    employee: 'Employee'
+  };
+
+  function initials(name) {
+    return String(name || 'CW')
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
+%>
+<% if (leadership.length || employees.length) { %>
+  <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+    <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
+      <%- include('section-heading', {
+        eyebrow: sectionEyebrow,
+        title: sectionTitle,
+        copy: sectionCopy
+      }) %>
+
+      <div class="mt-10">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Leadership</p>
+            <h3 class="mt-3 font-display text-3xl font-bold text-primary"><%= leadershipTitle %></h3>
+          </div>
+          <p class="max-w-2xl text-sm leading-7 text-slate-500">Leadership cards are designed to feel polished, editorial, and easy to scan without losing contact and profile access.</p>
+        </div>
+        <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <% leadership.forEach((member) => { %>
+            <article class="team-card team-card--leadership reveal" data-reveal>
+              <div class="team-card__media team-card__media--leadership">
+                <% if (member.image) { %>
+                  <img src="<%= member.image %>" alt="<%= member.name %>" class="team-card__image">
+                <% } else { %>
+                  <div class="team-card__fallback team-card__fallback--leadership">
+                    <div class="team-card__initials team-card__initials--leadership"><%= initials(member.name) %></div>
+                  </div>
+                <% } %>
+                <div class="team-card__overlay"></div>
+                <div class="team-card__snowglow team-card__snowglow--leadership"></div>
+                <div class="team-card__badge-row">
+                  <span class="team-card__badge team-card__badge--gold">Leadership</span>
+                  <% if (member.department) { %>
+                    <span class="team-card__badge team-card__badge--soft"><%= member.department %></span>
+                  <% } %>
+                </div>
+              </div>
+              <div class="team-card__body team-card__body--leadership">
+                <div>
+                  <h4 class="team-card__name team-card__name--light"><%= member.name %></h4>
+                  <p class="team-card__role team-card__role--light"><%= member.designation %></p>
+                </div>
+                <div class="team-card__meta-list team-card__meta-list--light">
+                  <div class="team-card__meta-item team-card__meta-item--light">
+                    <span class="team-card__meta-label">Department</span>
+                    <span class="team-card__meta-value"><%= member.department || 'Executive Office' %></span>
+                  </div>
+                  <div class="team-card__meta-item team-card__meta-item--light">
+                    <span class="team-card__meta-label">Member Type</span>
+                    <span class="team-card__meta-value"><%= memberTypeLabel[member.member_type] || 'Leadership' %></span>
+                  </div>
+                </div>
+                <% if (member.email) { %>
+                  <a href="mailto:<%= member.email %>" class="team-card__contact team-card__contact--light">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="team-card__contact-icon" aria-hidden="true">
+                      <path d="M3 5.5h14v9H3z"></path>
+                      <path d="m4 6 6 5 6-5"></path>
+                    </svg>
+                    <span><%= member.email %></span>
+                  </a>
+                <% } %>
+                <div class="team-card__footer">
+                  <div class="team-card__socials">
+                  <% if (member.linkedin_url) { %>
+                    <a href="<%= member.linkedin_url %>" class="team-card__social team-card__social--light" target="_blank" rel="noreferrer" aria-label="<%= member.name %> on LinkedIn">
+                      <svg viewBox="0 0 20 20" fill="currentColor" class="team-card__social-icon" aria-hidden="true">
+                        <path d="M4.5 6.5A1.5 1.5 0 1 0 4.5 3.5a1.5 1.5 0 0 0 0 3Z"></path>
+                        <path d="M3.25 7.75h2.5v8.5h-2.5zM8 7.75h2.4v1.2h.03c.33-.63 1.15-1.45 2.37-1.45 2.53 0 3 1.67 3 3.84v4.91h-2.5v-4.35c0-1.04-.02-2.37-1.45-2.37-1.45 0-1.67 1.13-1.67 2.3v4.42H8z"></path>
+                      </svg>
+                    </a>
+                  <% } %>
+                  <% if (member.twitter_url) { %>
+                    <a href="<%= member.twitter_url %>" class="team-card__social team-card__social--light" target="_blank" rel="noreferrer" aria-label="<%= member.name %> on Twitter">
+                      <svg viewBox="0 0 20 20" fill="currentColor" class="team-card__social-icon" aria-hidden="true">
+                        <path d="M11.52 8.41 16.47 3h-1.17l-4.3 4.7L7.57 3H3.6l5.2 7.57L3.6 16h1.17l4.55-4.97L12.72 16h3.97l-5.17-7.59Zm-1.6 1.74-.52-.75-4.13-5.9h1.81l3.33 4.76.52.75 4.33 6.2h-1.81l-3.53-5.05Z"></path>
+                      </svg>
+                    </a>
+                  <% } %>
+                  <% if (member.facebook_url) { %>
+                    <a href="<%= member.facebook_url %>" class="team-card__social team-card__social--light" target="_blank" rel="noreferrer" aria-label="<%= member.name %> on Facebook">
+                      <svg viewBox="0 0 20 20" fill="currentColor" class="team-card__social-icon" aria-hidden="true">
+                        <path d="M11.14 16.25v-5.7h1.92l.29-2.22h-2.2V6.91c0-.64.18-1.08 1.09-1.08h1.16V3.84c-.2-.03-.9-.09-1.7-.09-1.68 0-2.83 1.03-2.83 2.92v1.66H7v2.22h1.88v5.7h2.26Z"></path>
+                      </svg>
+                    </a>
+                  <% } %>
+                  </div>
+                  <a href="/team/<%= member.slug %>" class="team-card__cta team-card__cta--light">Know More</a>
+                </div>
+              </div>
+            </article>
+          <% }) %>
+          <% if (!leadership.length) { %>
+            <article class="rounded-[2rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 md:col-span-2 xl:col-span-3">
+              Add leadership profiles from the Team dashboard to display them here.
+            </article>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="mt-14">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Team</p>
+            <h3 class="mt-3 font-display text-3xl font-bold text-primary"><%= employeeTitle %></h3>
+          </div>
+          <p class="max-w-2xl text-sm leading-7 text-slate-500">The wider team is presented in a cleaner studio card style with clearer hierarchy and tighter contact actions.</p>
+        </div>
+        <% if (employees.length) { %>
+          <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <% employees.forEach((member) => { %>
+              <article class="team-card team-card--employee reveal" data-reveal>
+                <div class="team-card__media team-card__media--employee">
+                  <div class="team-card__badge-row">
+                    <% if (member.department) { %>
+                      <span class="team-card__badge team-card__badge--outline"><%= member.department %></span>
+                    <% } else { %>
+                      <span class="team-card__badge team-card__badge--outline">Team</span>
+                    <% } %>
+                  </div>
+                  <div class="team-card__media-shell">
+                    <% if (member.image) { %>
+                      <img src="<%= member.image %>" alt="<%= member.name %>" class="team-card__image">
+                    <% } else { %>
+                      <div class="team-card__fallback team-card__fallback--employee">
+                        <div class="team-card__initials team-card__initials--employee"><%= initials(member.name) %></div>
+                      </div>
+                    <% } %>
+                  </div>
+                  <div class="team-card__snowglow team-card__snowglow--employee"></div>
+                </div>
+                <div class="team-card__body team-card__body--employee">
+                  <div>
+                    <h4 class="team-card__name"><%= member.name %></h4>
+                    <p class="team-card__role"><%= member.designation %></p>
+                  </div>
+                  <div class="team-card__meta-list">
+                    <div class="team-card__meta-item">
+                      <span class="team-card__meta-label">Department</span>
+                      <span class="team-card__meta-value"><%= member.department || 'Core Team' %></span>
+                    </div>
+                    <div class="team-card__meta-item">
+                      <span class="team-card__meta-label">Member Type</span>
+                      <span class="team-card__meta-value"><%= memberTypeLabel[member.member_type] || 'Employee' %></span>
+                    </div>
+                  </div>
+                  <% if (member.email) { %>
+                    <a href="mailto:<%= member.email %>" class="team-card__contact">
+                      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="team-card__contact-icon" aria-hidden="true">
+                        <path d="M3 5.5h14v9H3z"></path>
+                        <path d="m4 6 6 5 6-5"></path>
+                      </svg>
+                      <span><%= member.email %></span>
+                    </a>
+                  <% } %>
+                  <div class="team-card__footer">
+                    <div class="team-card__socials">
+                    <% if (member.linkedin_url) { %>
+                      <a href="<%= member.linkedin_url %>" class="team-card__social" target="_blank" rel="noreferrer" aria-label="<%= member.name %> on LinkedIn">
+                        <svg viewBox="0 0 20 20" fill="currentColor" class="team-card__social-icon" aria-hidden="true">
+                          <path d="M4.5 6.5A1.5 1.5 0 1 0 4.5 3.5a1.5 1.5 0 0 0 0 3Z"></path>
+                          <path d="M3.25 7.75h2.5v8.5h-2.5zM8 7.75h2.4v1.2h.03c.33-.63 1.15-1.45 2.37-1.45 2.53 0 3 1.67 3 3.84v4.91h-2.5v-4.35c0-1.04-.02-2.37-1.45-2.37-1.45 0-1.67 1.13-1.67 2.3v4.42H8z"></path>
+                        </svg>
+                      </a>
+                    <% } %>
+                    <% if (member.twitter_url) { %>
+                      <a href="<%= member.twitter_url %>" class="team-card__social" target="_blank" rel="noreferrer" aria-label="<%= member.name %> on Twitter">
+                        <svg viewBox="0 0 20 20" fill="currentColor" class="team-card__social-icon" aria-hidden="true">
+                          <path d="M11.52 8.41 16.47 3h-1.17l-4.3 4.7L7.57 3H3.6l5.2 7.57L3.6 16h1.17l4.55-4.97L12.72 16h3.97l-5.17-7.59Zm-1.6 1.74-.52-.75-4.13-5.9h1.81l3.33 4.76.52.75 4.33 6.2h-1.81l-3.53-5.05Z"></path>
+                        </svg>
+                      </a>
+                    <% } %>
+                    <% if (member.facebook_url) { %>
+                      <a href="<%= member.facebook_url %>" class="team-card__social" target="_blank" rel="noreferrer" aria-label="<%= member.name %> on Facebook">
+                        <svg viewBox="0 0 20 20" fill="currentColor" class="team-card__social-icon" aria-hidden="true">
+                          <path d="M11.14 16.25v-5.7h1.92l.29-2.22h-2.2V6.91c0-.64.18-1.08 1.09-1.08h1.16V3.84c-.2-.03-.9-.09-1.7-.09-1.68 0-2.83 1.03-2.83 2.92v1.66H7v2.22h1.88v5.7h2.26Z"></path>
+                        </svg>
+                      </a>
+                    <% } %>
+                    </div>
+                    <a href="/team/<%= member.slug %>" class="team-card__cta">Know More</a>
+                  </div>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="mt-6 rounded-[2rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center">
+            <p class="font-display text-2xl font-bold text-primary">Employee cards appear here.</p>
+            <p class="mt-3 text-sm leading-7 text-slate-500">Add employee profiles from the Team dashboard with image, email, social links, and detailed profile content to populate this row.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+<% } %>

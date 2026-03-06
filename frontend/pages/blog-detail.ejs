@@ -1,0 +1,62 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<article class="mx-auto max-w-6xl px-6 py-20 lg:px-8">
+  <a href="/blog" class="text-sm font-bold text-primary underline decoration-secondary underline-offset-4">Back to blog</a>
+  <div class="mt-8 editorial-grid gap-10">
+    <div class="surface-panel rounded-[2.25rem] p-8 lg:p-10">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= post.category || 'Article' %></span>
+        <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= post.author_name || 'CodexWebz' %></span>
+      </div>
+      <h1 class="mt-6 font-display text-5xl font-bold leading-tight text-primary md:text-6xl"><%= post.title %></h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600"><%= post.summary %></p>
+      <div class="mt-6 flex flex-wrap gap-3 text-sm text-slate-500">
+        <span><%= new Date(post.published_at || post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+        <% (post.tags || []).slice(0, 4).forEach((tag) => { %>
+          <span class="rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600"><%= tag %></span>
+        <% }) %>
+      </div>
+      <% if (post.featured_image) { %>
+        <img src="<%= post.featured_image %>" alt="<%= post.title %>" class="mt-8 h-80 w-full rounded-[2rem] object-cover">
+      <% } %>
+      <div class="prose-content mt-10"><%- post.content || '<p>Article content is managed through the built-in blog CMS.</p>' %></div>
+    </div>
+
+    <aside class="space-y-6">
+      <div class="rounded-[2rem] bg-primary p-8 text-white">
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Editorial System</p>
+        <h2 class="mt-4 font-display text-3xl font-bold">This article lives inside the same SEO-ready CMS used by the platform.</h2>
+        <p class="mt-4 text-sm leading-8 text-white/72">Managers can draft, edit, publish, optimize metadata, and manage categories and tags without touching deployment code.</p>
+      </div>
+
+      <div class="surface-panel rounded-[2rem] p-7">
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Why it matters</p>
+        <div class="mt-5 space-y-3 text-sm leading-7 text-slate-600">
+          <p>Thoughtful editorial design increases trust on the frontend.</p>
+          <p>Metadata and schema controls keep the content search-ready.</p>
+          <p>Operational workflow keeps publishing consistent after launch.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</article>
+
+<%- include('../components/team-showcase', {
+  eyebrow: 'Editorial Team',
+  title: 'Meet the leadership and delivery team behind the content system.',
+  copy: 'The blog is run by the same people who build the website, dashboards, workflows, and SEO structure behind the platform.'
+}) %>
+
+<%- include('../components/site-cta', {
+  eyebrow: 'Build the CMS Too',
+  title: 'Need articles, landing pages, and SEO controls that stay manageable after launch?',
+  copy: 'CodexWebz can build the editorial frontend and the backend publishing workflow as one system.',
+  primaryLabel: 'Talk to CodexWebz',
+  primaryHref: '/contact',
+  secondaryLabel: 'More Articles',
+  secondaryHref: '/blog'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

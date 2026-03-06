@@ -1,0 +1,72 @@
+<% const activePath = typeof currentPath !== 'undefined' ? currentPath : ''; %>
+<% const user = typeof currentUser !== 'undefined' ? currentUser : null; %>
+<header class="sticky top-0 z-50 border-b border-primary/8 bg-[rgba(246,242,233,0.82)] backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+    <a href="/" class="flex items-center gap-3">
+      <% if (siteSettings?.logo_path) { %>
+        <span class="flex h-12 items-center justify-center rounded-[1.1rem] bg-white px-3 shadow-lg shadow-primary/10 ring-1 ring-primary/8">
+          <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="h-10 w-auto max-w-[10rem] object-contain">
+        </span>
+      <% } else { %>
+        <span class="flex h-12 w-12 items-center justify-center rounded-[1.35rem] bg-primary text-lg font-extrabold text-secondary shadow-lg shadow-primary/15">CW</span>
+      <% } %>
+      <span>
+        <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>
+        <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Web Platform Studio</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 text-sm font-semibold text-primary/70 lg:flex">
+      <a href="/services" class="transition <%= activePath.startsWith('/services') ? 'text-primary' : 'hover:text-primary' %>">Services</a>
+      <a href="/portfolio" class="transition <%= activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Portfolio</a>
+      <a href="/about-us" class="transition <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'text-primary' : 'hover:text-primary' %>">About Us</a>
+      <a href="/team" class="transition <%= activePath === '/team' || activePath.startsWith('/team/') ? 'text-primary' : 'hover:text-primary' %>">Team</a>
+      <a href="/blog" class="transition <%= activePath.startsWith('/blog') ? 'text-primary' : 'hover:text-primary' %>">Blog</a>
+      <a href="/careers" class="transition <%= activePath.startsWith('/careers') ? 'text-primary' : 'hover:text-primary' %>">Careers</a>
+      <a href="/contact" class="transition <%= activePath === '/contact' ? 'text-primary' : 'hover:text-primary' %>">Contact</a>
+    </nav>
+
+    <div class="hidden items-center gap-3 lg:flex">
+      <% if (user) { %>
+        <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="rounded-full border border-primary/12 px-4 py-2 text-sm font-semibold text-primary transition hover:border-secondary hover:bg-white">Dashboard</a>
+      <% } else { %>
+        <a href="/login" class="rounded-full border border-primary/12 px-4 py-2 text-sm font-semibold text-primary transition hover:border-secondary hover:bg-white">Login</a>
+      <% } %>
+      <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Start Project</a>
+    </div>
+
+    <button type="button" class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary/12 text-primary lg:hidden" data-nav-toggle aria-label="Open navigation">
+      <span class="space-y-1.5">
+        <span class="block h-0.5 w-5 bg-current"></span>
+        <span class="block h-0.5 w-5 bg-current"></span>
+        <span class="block h-0.5 w-5 bg-current"></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="hidden fixed inset-0 z-[60] bg-primary/35 backdrop-blur-sm lg:hidden" data-nav-panel>
+    <div class="ml-auto flex h-full w-[min(88vw,24rem)] flex-col bg-surface px-6 py-6 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <span class="font-display text-2xl font-bold text-primary">Menu</span>
+        <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/12 text-primary" data-nav-close aria-label="Close navigation">&times;</button>
+      </div>
+      <nav class="mt-10 space-y-3">
+        <a href="/services" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Services</a>
+        <a href="/portfolio" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Portfolio</a>
+        <a href="/about-us" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">About Us</a>
+        <a href="/team" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Team</a>
+        <a href="/blog" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Blog</a>
+        <a href="/careers" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Careers</a>
+        <a href="/contact" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Contact</a>
+      </nav>
+      <div class="mt-auto space-y-3">
+        <% if (user) { %>
+          <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="block rounded-full border border-primary/12 px-4 py-3 text-center font-semibold text-primary">Dashboard</a>
+        <% } else { %>
+          <a href="/login" class="block rounded-full border border-primary/12 px-4 py-3 text-center font-semibold text-primary">Login</a>
+        <% } %>
+        <a href="/contact" class="block rounded-full bg-primary px-4 py-3 text-center font-bold text-white">Start Project</a>
+      </div>
+    </div>
+  </div>
+</header>

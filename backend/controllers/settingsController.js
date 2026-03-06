@@ -1,0 +1,111 @@
+const settingsModel = require('../models/settingsModel');
+const userModel = require('../models/userModel');
+const { renderModule, getDashboardBasePath } = require('./dashboardController');
+const { sanitizePlainText, parseJsonInput } = require('../utils/content');
+
+function logoPath(file) {
+  return file ? `/uploads/images/${file.filename}` : null;
+}
+
+function respond(req, res, payload, redirectUrl) {
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.json(payload);
+  }
+
+  return res.redirect(redirectUrl);
+}
+
+async function renderSettingsPage(req, res) {
+  const [settings, users] = await Promise.all([
+    settingsModel.getSettings(),
+    userModel.listAll()
+  ]);
+  const managers = users.filter((user) => user.role_name === 'manager');
+
+  return renderModule(req, res, {
+    pageTitle: 'Website Settings',
+    activeMenu: 'Settings',
+    form: {
+      title: 'Website Settings',
+      action: `${getDashboardBasePath(req)}/settings`,
+      submitLabel: 'Save Settings',
+      enctype: 'multipart/form-data',
+      fields: [
+        { name: 'company_name', label: 'Company Name', type: 'text', required: true, value: settings?.company_name || '' },
+        { name: 'company_email', label: 'Company Email', type: 'email', value: settings?.company_email || '' },
+        { name: 'company_phone', label: 'Company Phone', type: 'text', value: settings?.company_phone || '' },
+        {
+          name: 'logo',
+          label: 'Website Logo',
+          type: 'file',
+          accept: 'image/png,image/webp,image/svg+xml,image/jpeg',
+          previewUrl: settings?.logo_path || '',
+          description: 'Upload a transparent PNG or SVG. Recommended size: around 320x120 px or any clean logo with similar aspect ratio. The site header displays it at roughly 48px tall.'
+        },
+        {
+          name: 'chat_manager_user_id',
+          label: 'Chat Notification Manager',
+          type: 'select',
+          value: settings?.chat_manager_user_id || '',
+          description: 'Only this manager will receive notifications from the website chat widget.',
+          options: [
+            { label: 'Not assigned', value: '' },
+            ...managers.map((manager) => ({
+              label: `${manager.name} (${manager.email})`,
+              value: manager.id
+            }))
+          ]
+        },
+        { name: 'address', label: 'Address', type: 'textarea', value: settings?.address || '' },
+        { name: 'hero_title', label: 'Hero Title', type: 'text', value: settings?.hero_title || '' },
+        { name: 'hero_subtitle', label: 'Hero Subtitle', type: 'textarea', value: settings?.hero_subtitle || '' },
+        { name: 'analytics_id', label: 'Google Analytics ID', type: 'text', value: settings?.analytics_id || '' },
+        { name: 'search_console_tag', label: 'Search Console Tag', type: 'text', value: settings?.search_console_tag || '' },
+        { name: 'default_meta_title', label: 'Default Meta Title', type: 'text', value: settings?.default_meta_title || '' },
+        { name: 'default_meta_description', label: 'Default Meta Description', type: 'textarea', value: settings?.default_meta_description || '' },
+        { name: 'social_links', label: 'Social Links JSON', type: 'textarea', value: settings?.social_links ? JSON.stringify(settings.social_links, null, 2) : '' }
+      ]
+    },
+    infoPanel: {
+      title: 'Brand Theme',
+      body: 'Primary color #00240a and secondary color #dbab0d are already configured globally. For the website logo, use a transparent PNG or SVG so it sits cleanly on the header across desktop and mobile.'
+    }
+  });
+}
+
+async function updateSettings(req, res) {
+  const chatManagerUserId = req.body.chat_manager_user_id ? Number(req.body.chat_manager_user_id) : null;
+  const payload = {
+    company_name: sanitizePlainText(req.body.company_name),
+    company_email: sanitizePlainText(req.body.company_email),
+    company_phone: sanitizePlainText(req.body.company_phone),
+    chat_manager_user_id: Number.isInteger(chatManagerUserId) ? chatManagerUserId : null,
+    address: sanitizePlainText(req.body.address),
+    hero_title: sanitizePlainText(req.body.hero_title),
+    hero_subtitle: sanitizePlainText(req.body.hero_subtitle),
+    analytics_id: sanitizePlainText(req.body.analytics_id),
+    search_console_tag: sanitizePlainText(req.body.search_console_tag),
+    default_meta_title: sanitizePlainText(req.body.default_meta_title),
+    default_meta_description: sanitizePlainText(req.body.default_meta_description),
+    social_links: parseJsonInput(req.body.social_links)
+  };
+
+  if (req.file) {
+    payload.logo_path = logoPath(req.file);
+  }
+
+  const settings = await settingsModel.updateSettings(payload);
+
+  return respond(req, res, { message: 'Settings updated successfully.', settings }, `${getDashboardBasePath(req)}/settings?success=Settings%20updated%20successfully.`);
+}
+
+async function apiShow(req, res) {
+  const settings = await settingsModel.getSettings();
+  return res.json({ settings });
+}
+
+module.exports = {
+  renderSettingsPage,
+  updateSettings,
+  apiShow
+};

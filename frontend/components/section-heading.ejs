@@ -1,0 +1,10 @@
+<% const wrapperClasses = typeof classes !== 'undefined' ? classes : ''; %>
+<div class="<%= wrapperClasses %>">
+  <% if (typeof eyebrow !== 'undefined' && eyebrow) { %>
+    <p class="text-xs font-bold uppercase tracking-[0.38em] text-primary/45"><%= eyebrow %></p>
+  <% } %>
+  <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-primary md:text-5xl"><%= title %></h2>
+  <% if (typeof copy !== 'undefined' && copy) { %>
+    <p class="mt-4 max-w-3xl text-base leading-8 text-slate-600 md:text-lg"><%= copy %></p>
+  <% } %>
+</div>

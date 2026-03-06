@@ -1,0 +1,12 @@
+node_modules/
+.env
+npm-debug.log*
+uploads/*
+!uploads/.gitkeep
+!uploads/resumes/
+!uploads/resumes/sample-jordan.txt
+!uploads/resumes/sample-priya.txt
+logs/
+coverage/
+dist/
+*.pid

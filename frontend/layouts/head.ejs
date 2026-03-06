@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= seo?.metaTitle || title || 'CodexWebz' %></title>
+  <meta name="description" content="<%= seo?.metaDescription || siteSettings?.default_meta_description || 'CodexWebz web platform' %>">
+  <meta name="theme-color" content="<%= siteSettings?.primary_color || '#00240a' %>">
+  <meta property="og:title" content="<%= seo?.ogTitle || seo?.metaTitle || title || 'CodexWebz' %>">
+  <meta property="og:description" content="<%= seo?.ogDescription || seo?.metaDescription || siteSettings?.default_meta_description || '' %>">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= appUrl %><%= seo?.canonicalUrl ? seo.canonicalUrl : currentPath %>">
+  <% if (seo?.canonicalUrl) { %>
+    <link rel="canonical" href="<%= appUrl %><%= seo.canonicalUrl %>">
+  <% } %>
+  <% if (siteSettings?.search_console_tag) { %>
+    <meta name="google-site-verification" content="<%= siteSettings.search_console_tag %>">
+  <% } %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '<%= siteSettings?.primary_color || "#00240a" %>',
+            secondary: '<%= siteSettings?.secondary_color || "#dbab0d" %>',
+            surface: '#f6f2e9'
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif']
+          },
+          boxShadow: {
+            float: '0 24px 60px rgba(0, 36, 10, 0.12)'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/styles/main.css">
+  <% if (siteSettings?.analytics_id) { %>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= siteSettings.analytics_id %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= siteSettings.analytics_id %>');
+    </script>
+  <% } %>
+  <% if (seo?.schemaMarkup) { %>
+    <script type="application/ld+json"><%- typeof seo.schemaMarkup === 'string' ? seo.schemaMarkup : JSON.stringify(seo.schemaMarkup) %></script>
+  <% } %>
+</head>
+<body class="site-shell font-sans text-slate-900 antialiased">

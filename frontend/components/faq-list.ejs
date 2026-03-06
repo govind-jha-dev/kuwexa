@@ -1,0 +1,13 @@
+<div class="space-y-4">
+  <% items.forEach((item, index) => { %>
+    <article class="reveal overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-sm" data-reveal>
+      <button type="button" class="flex w-full items-center justify-between gap-6 px-6 py-5 text-left" data-accordion-trigger>
+        <span class="font-display text-xl font-bold text-primary"><%= item.question %></span>
+        <span class="text-2xl font-light text-primary/60" data-accordion-icon><%= index === 0 ? '-' : '+' %></span>
+      </button>
+      <div class="<%= index === 0 ? '' : 'hidden' %> border-t border-slate-100 px-6 py-5 text-sm leading-8 text-slate-600" data-accordion-body>
+        <%= item.answer %>
+      </div>
+    </article>
+  <% }) %>
+</div>

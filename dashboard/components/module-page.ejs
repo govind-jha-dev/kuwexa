@@ -1,0 +1,168 @@
+<% const noticeData = typeof notice !== 'undefined' ? notice : null; %>
+<% const statItems = typeof stats !== 'undefined' ? stats : []; %>
+<% const formConfig = typeof form !== 'undefined' ? form : null; %>
+<% const infoPanelData = typeof infoPanel !== 'undefined' ? infoPanel : null; %>
+<% const tableConfig = typeof table !== 'undefined' ? table : null; %>
+<% const secondaryTableConfig = typeof secondaryTable !== 'undefined' ? secondaryTable : null; %>
+<% const viewHelpers = typeof helpers !== 'undefined' ? helpers : { formatDate: () => '', titleCase: (value) => String(value || '') }; %>
+<% const wideFieldTypes = ['textarea', 'richtext', 'file']; %>
+<%- include('layout-start') %>
+<% if (noticeData) { %>
+  <div class="mb-6 rounded-3xl px-5 py-4 text-sm font-semibold <%= noticeData.type === 'success' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' %>">
+    <%= noticeData.message %>
+  </div>
+<% } %>
+
+<% if (statItems.length) { %>
+  <div class="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <% statItems.forEach((item) => { %>
+      <div class="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+        <p class="text-sm text-slate-500"><%= item.label %></p>
+        <p class="mt-3 font-display text-4xl font-bold text-primary"><%= item.value %></p>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<div class="grid gap-6 xl:grid-cols-[1fr,1.35fr]">
+  <div class="space-y-6">
+    <% if (formConfig) { %>
+      <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div class="mb-6">
+          <h2 class="font-display text-2xl font-bold text-slate-900"><%= formConfig.title %></h2>
+          <p class="mt-2 text-sm text-slate-500">Changes are applied immediately across the website and dashboards.</p>
+        </div>
+        <form method="post" action="<%= formConfig.action %>" class="grid gap-4 md:grid-cols-2"<%- formConfig.enctype ? ` enctype="${formConfig.enctype}"` : '' %>>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <% formConfig.fields.forEach((field) => { %>
+            <% const isWideField = Boolean(field.fullWidth || wideFieldTypes.includes(field.type)); %>
+            <div class="<%= isWideField ? 'md:col-span-2' : '' %>">
+              <label class="mb-2 block text-sm font-semibold text-slate-700" for="<%= field.name %>"><%= field.label %><%= field.required ? ' *' : '' %></label>
+              <% if (field.type === 'textarea') { %>
+                <textarea id="<%= field.name %>" name="<%= field.name %>" rows="<%= field.rows || 4 %>" <%= field.required ? 'required' : '' %> <%= field.placeholder ? `placeholder="${field.placeholder}"` : '' %> class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"><%= field.value || '' %></textarea>
+              <% } else if (field.type === 'richtext') { %>
+                <textarea id="<%= field.name %>" name="<%= field.name %>" rows="<%= field.rows || 8 %>" <%= field.required ? 'required' : '' %> class="rich-editor w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"><%= field.value || '' %></textarea>
+              <% } else if (field.type === 'select') { %>
+                <select id="<%= field.name %>" name="<%= field.name %>" <%= field.required ? 'required' : '' %> class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20">
+                  <% field.options.forEach((option) => { %>
+                    <option value="<%= option.value %>" <%= String(field.value) === String(option.value) ? 'selected' : '' %>><%= option.label %></option>
+                  <% }) %>
+                </select>
+              <% } else if (field.type === 'file') { %>
+                <input id="<%= field.name %>" name="<%= field.name %>" type="file" <%= field.accept ? `accept="${field.accept}"` : '' %> <%= field.multiple ? 'multiple' : '' %> class="w-full rounded-2xl border border-dashed border-slate-300 px-4 py-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-secondary file:px-4 file:py-2 file:font-semibold file:text-primary">
+                <% if (field.previewUrl) { %>
+                  <div class="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                    <% if (field.previewUrl.startsWith('/uploads/images/')) { %>
+                      <img src="<%= field.previewUrl %>" alt="<%= field.label %>" class="h-40 w-full rounded-xl object-cover">
+                    <% } else { %>
+                      <a href="<%= field.previewUrl %>" class="text-sm font-semibold text-primary underline decoration-secondary underline-offset-4" target="_blank" rel="noreferrer">View current file</a>
+                    <% } %>
+                  </div>
+                <% } %>
+              <% } else { %>
+                <input id="<%= field.name %>" name="<%= field.name %>" type="<%= field.type || 'text' %>" value="<%= field.value || '' %>" <%= field.required ? 'required' : '' %> <%= typeof field.min !== 'undefined' ? `min="${field.min}"` : '' %> <%= typeof field.max !== 'undefined' ? `max="${field.max}"` : '' %> <%= typeof field.step !== 'undefined' ? `step="${field.step}"` : '' %> <%= field.placeholder ? `placeholder="${field.placeholder}"` : '' %> class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20">
+              <% } %>
+              <% if (field.description) { %>
+                <p class="mt-2 text-xs leading-6 text-slate-500"><%= field.description %></p>
+              <% } %>
+            </div>
+          <% }) %>
+          <button type="submit" class="w-full rounded-2xl bg-primary px-5 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 md:col-span-2"><%= formConfig.submitLabel %></button>
+        </form>
+      </section>
+    <% } %>
+
+    <% if (infoPanelData) { %>
+      <section class="rounded-3xl bg-primary p-6 text-white shadow-sm">
+        <p class="text-xs uppercase tracking-[0.32em] text-secondary">Operational Note</p>
+        <h2 class="mt-3 font-display text-2xl font-bold"><%= infoPanelData.title %></h2>
+        <p class="mt-3 text-sm leading-7 text-white/75"><%= infoPanelData.body %></p>
+      </section>
+    <% } %>
+  </div>
+
+  <% if (tableConfig) { %>
+    <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <div class="mb-5 flex items-start justify-between gap-4">
+        <div>
+          <h2 class="font-display text-2xl font-bold text-slate-900"><%= tableConfig.title %></h2>
+          <p class="mt-2 text-sm text-slate-500"><%= tableConfig.description %></p>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+          <thead>
+            <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-400">
+              <% tableConfig.columns.forEach((column) => { %>
+                <th class="px-3 py-3"><%= column.label %></th>
+              <% }) %>
+              <th class="px-3 py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <% tableConfig.rows.forEach((row) => { %>
+              <tr class="align-top text-sm text-slate-700">
+                <% tableConfig.columns.forEach((column) => { %>
+                  <% const value = row[column.key]; %>
+                  <td class="px-3 py-4">
+                    <% if (column.type === 'date') { %>
+                      <%= viewHelpers.formatDate(value) %>
+                    <% } else if (Array.isArray(value)) { %>
+                      <%= value.join(', ') %>
+                    <% } else { %>
+                      <%= value || '-' %>
+                    <% } %>
+                  </td>
+                <% }) %>
+                <td class="px-3 py-4"><%- tableConfig.rowActions ? tableConfig.rowActions(row) : '' %></td>
+              </tr>
+            <% }) %>
+            <% if (!tableConfig.rows.length) { %>
+              <tr>
+                <td colspan="<%= tableConfig.columns.length + 1 %>" class="px-3 py-8 text-center text-sm text-slate-500">No records yet.</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% } %>
+</div>
+
+<% if (secondaryTableConfig) { %>
+  <section class="mt-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <div class="mb-5">
+      <h2 class="font-display text-2xl font-bold text-slate-900"><%= secondaryTableConfig.title %></h2>
+      <p class="mt-2 text-sm text-slate-500"><%= secondaryTableConfig.description %></p>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200">
+        <thead>
+          <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-400">
+            <% secondaryTableConfig.columns.forEach((column) => { %>
+              <th class="px-3 py-3"><%= column.label %></th>
+            <% }) %>
+            <th class="px-3 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% secondaryTableConfig.rows.forEach((row) => { %>
+            <tr class="align-top text-sm text-slate-700">
+              <% secondaryTableConfig.columns.forEach((column) => { %>
+                <% const value = row[column.key]; %>
+                <td class="px-3 py-4"><%= column.type === 'date' ? viewHelpers.formatDate(value) : (value || '-') %></td>
+              <% }) %>
+              <td class="px-3 py-4"><%- secondaryTableConfig.rowActions ? secondaryTableConfig.rowActions(row) : '' %></td>
+            </tr>
+          <% }) %>
+          <% if (!secondaryTableConfig.rows.length) { %>
+            <tr>
+              <td colspan="<%= secondaryTableConfig.columns.length + 1 %>" class="px-3 py-8 text-center text-sm text-slate-500">No records yet.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% } %>
+<%- include('layout-end') %>

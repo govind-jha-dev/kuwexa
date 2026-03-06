@@ -1,0 +1,62 @@
+<footer class="mt-24 bg-primary text-white">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[1.25fr,0.8fr,0.8fr,0.8fr]">
+      <div>
+        <p class="text-xs uppercase tracking-[0.38em] text-secondary">CodexWebz</p>
+        <h2 class="mt-5 max-w-md font-display text-4xl font-bold leading-tight">Web presence, content systems, and operations tooling in one product.</h2>
+        <p class="mt-5 max-w-lg text-sm leading-8 text-white/68"><%= siteSettings?.hero_subtitle || 'CodexWebz builds websites and management systems that help service businesses sell clearly and operate cleanly.' %></p>
+        <div class="mt-8 flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-white/55">
+          <span class="rounded-full border border-white/10 px-4 py-2">Public Website</span>
+          <span class="rounded-full border border-white/10 px-4 py-2">RBAC Dashboard</span>
+          <span class="rounded-full border border-white/10 px-4 py-2">SEO CMS</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="font-display text-xl font-bold">Navigate</p>
+        <div class="mt-5 space-y-3 text-sm text-white/68">
+          <a class="block transition hover:text-secondary" href="/services">Services</a>
+          <a class="block transition hover:text-secondary" href="/portfolio">Portfolio</a>
+          <a class="block transition hover:text-secondary" href="/about-us">About Us</a>
+          <a class="block transition hover:text-secondary" href="/team">Team</a>
+          <a class="block transition hover:text-secondary" href="/blog">Blog</a>
+          <a class="block transition hover:text-secondary" href="/careers">Careers</a>
+          <a class="block transition hover:text-secondary" href="/contact">Contact</a>
+        </div>
+      </div>
+
+      <div>
+        <p class="font-display text-xl font-bold">Core System</p>
+        <div class="mt-5 space-y-3 text-sm text-white/68">
+          <p>Admin Dashboard</p>
+          <p>Manager Dashboard</p>
+          <p>Lead Pipeline</p>
+          <p>Blog + Portfolio CMS</p>
+          <p>Careers Workflow</p>
+          <p>SEO Controls</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="font-display text-xl font-bold">Contact</p>
+        <div class="mt-5 space-y-3 text-sm text-white/68">
+          <p><%= siteSettings?.company_email || 'hello@codexwebz.com' %></p>
+          <p><%= siteSettings?.company_phone || '+91 00000 00000' %></p>
+          <p><%= siteSettings?.address || 'Remote-first delivery across websites, SEO, and operational systems.' %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/45 md:flex-row md:items-center md:justify-between">
+      <p>&copy; <%= currentYear %> <%= siteSettings?.company_name || 'CodexWebz' %>. Built for production-ready delivery.</p>
+      <div class="flex flex-wrap gap-4">
+        <span>Node.js</span>
+        <span>Express</span>
+        <span>MySQL</span>
+        <span>Tailwind CSS</span>
+        <span>JWT RBAC</span>
+      </div>
+    </div>
+  </div>
+</footer>
+<%- include('../components/chat-widget') %>

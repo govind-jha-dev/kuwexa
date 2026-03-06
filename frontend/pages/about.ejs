@@ -1,0 +1,134 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<section class="hero-grid overflow-hidden bg-primary text-white">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+    <div class="grid gap-10 lg:grid-cols-[1.08fr,0.92fr] lg:items-end">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary"><%= pageContent.eyebrow %></p>
+        <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[1.02] md:text-6xl lg:text-7xl"><%= pageContent.title %></h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/74"><%= pageContent.intro %></p>
+        <p class="mt-5 max-w-3xl text-base leading-8 text-white/64"><%= pageContent.summary %></p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Talk to CodexWEBZ</a>
+          <a href="#team" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">Meet the Team</a>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="glass-card rounded-[2rem] p-6 text-slate-900 shadow-float ring-1 ring-white/10">
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Who We Support</p>
+          <div class="mt-5 grid gap-4">
+            <% pageContent.audience.forEach((item) => { %>
+              <article class="rounded-[1.5rem] border border-primary/8 bg-white/85 p-5">
+                <p class="text-sm font-semibold leading-7 text-slate-700"><%= item %></p>
+              </article>
+            <% }) %>
+          </div>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/6 p-6">
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Kuwexa Backing</p>
+          <p class="mt-4 text-base leading-8 text-white/72">As the technology services division of Kuwexa Private Limited, CodexWEBZ builds solutions that reflect real-world business operations, not just technical assumptions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 grid gap-4 md:grid-cols-3">
+      <% pageContent.highlights.forEach((item) => { %>
+        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/6 p-6" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Why It Matters</p>
+          <h2 class="mt-4 font-display text-3xl font-bold"><%= item.title %></h2>
+          <p class="mt-3 text-sm leading-8 text-white/68"><%= item.copy %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-[1.02fr,0.98fr]">
+    <div class="surface-panel rounded-[2.2rem] p-8 lg:p-10">
+      <%- include('../components/section-heading', {
+        eyebrow: 'Our Direction',
+        title: 'Digital systems should make business operations simpler, not more complicated.',
+        copy: 'CodexWEBZ works with businesses that need dependable digital infrastructure, stronger visibility, and solutions that continue to support growth after launch.'
+      }) %>
+      <div class="mt-8 space-y-5">
+        <% pageContent.narrative.forEach((item) => { %>
+          <p class="text-base leading-8 text-slate-600"><%= item %></p>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="rounded-[2.2rem] bg-primary p-8 text-white lg:p-10">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Core Principles</p>
+      <div class="mt-6 space-y-4">
+        <% pageContent.principles.forEach((item) => { %>
+          <article class="rounded-[1.6rem] border border-white/10 bg-white/6 p-5">
+            <h2 class="font-display text-2xl font-bold"><%= item.title %></h2>
+            <p class="mt-3 text-sm leading-8 text-white/70"><%= item.copy %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Service Coverage',
+      title: 'What CodexWEBZ helps businesses build, improve, and support.',
+      copy: 'The service mix is designed to support companies at different stages of their digital journey, from first launch to operational upgrade.'
+    }) %>
+    <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <% pageContent.serviceGroups.forEach((item) => { %>
+        <article class="reveal spotlight-card rounded-[1.8rem] bg-slate-50 p-6 ring-1 ring-primary/6" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Capability</p>
+          <h2 class="mt-4 font-display text-2xl font-bold text-primary"><%= item %></h2>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-6 lg:grid-cols-[0.95fr,1.05fr]">
+    <div class="rounded-[2.2rem] bg-primary p-8 text-white lg:p-10">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Why Businesses Choose Us</p>
+      <h2 class="mt-4 max-w-xl font-display text-4xl font-bold leading-tight">Technology decisions shaped by business reality.</h2>
+      <p class="mt-5 text-base leading-8 text-white/72">Because CodexWEBZ is backed by Kuwexa Private Limited, the work is approached with a stronger understanding of operational needs, growth priorities, and the importance of systems that teams can actually manage.</p>
+    </div>
+    <div class="surface-panel rounded-[2.2rem] p-8 lg:p-10">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">What We Believe</p>
+      <p class="mt-5 text-lg leading-8 text-slate-700"><%= pageContent.closing %></p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">Usability</span>
+        <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">Performance</span>
+        <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">Scalability</span>
+        <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">Reliability</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="team">
+  <%- include('../components/team-showcase', {
+    eyebrow: 'Leadership and Team',
+    title: 'The people behind CodexWEBZ.',
+    copy: 'Leadership sets the standard for reliability and business alignment. The wider team delivers websites, systems, content, integrations, and operational support.'
+  }) %>
+</div>
+
+<%- include('../components/site-cta', {
+  eyebrow: 'Build With CodexWEBZ',
+  title: 'Need a dependable digital platform that supports real business growth?',
+  copy: 'CodexWEBZ helps businesses build reliable websites, business applications, ecommerce systems, visibility channels, and ongoing technical support that stay practical to manage.',
+  primaryLabel: 'Start a Conversation',
+  primaryHref: '/contact',
+  secondaryLabel: 'Explore Services',
+  secondaryHref: '/services'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>
