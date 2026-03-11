@@ -1,19 +1,16 @@
 <% const activePath = typeof currentPath !== 'undefined' ? currentPath : ''; %>
 <% const user = typeof currentUser !== 'undefined' ? currentUser : null; %>
-<header class="sticky top-0 z-50 border-b border-primary/8 bg-[rgba(246,242,233,0.82)] backdrop-blur-xl">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-1 lg:px-4">
+<header class="sticky top-0 z-[120] border-b border-primary/8 bg-[rgba(246,242,233,0.94)] shadow-sm backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 lg:px-4">
     <a href="/" class="flex items-center gap-3">
       <% if (siteSettings?.logo_path) { %>
-       
-          <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="h-18 w-auto max-w-[10rem] object-contain">
-      
+        <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="site-logo h-12 w-auto max-w-[11rem] object-contain md:h-14">
       <% } else { %>
-          <span>
-        <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>
-        <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Web Platform Studio</span>
-      </span>
+        <span>
+          <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>
+          <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Web Platform Studio</span>
+        </span>
       <% } %>
-    
     </a>
 
     <nav class="hidden items-center gap-7 text-sm font-semibold text-primary/70 lg:flex">
@@ -38,7 +35,7 @@
       <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Start Project</a>
     </div>
 
-    <button type="button" class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary/12 text-primary lg:hidden" data-nav-toggle aria-label="Open navigation">
+    <button type="button" class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20 lg:hidden" data-nav-toggle aria-label="Open navigation" aria-expanded="false" aria-controls="site-mobile-nav">
       <span class="space-y-1.5">
         <span class="block h-0.5 w-5 bg-current"></span>
         <span class="block h-0.5 w-5 bg-current"></span>
@@ -47,31 +44,35 @@
     </button>
   </div>
 
-  <div class="hidden fixed inset-0 z-[60] bg-primary/35 backdrop-blur-sm lg:hidden" data-nav-panel>
-    <div class="ml-auto flex h-full w-[min(88vw,24rem)] flex-col bg-surface px-6 py-6 shadow-2xl">
+  <div id="site-mobile-nav" class="site-mobile-nav lg:hidden" data-nav-panel aria-hidden="true">
+    <button type="button" class="site-mobile-nav__scrim" data-nav-close aria-label="Close navigation"></button>
+    <div class="site-mobile-nav__panel">
       <div class="flex items-center justify-between">
-        <span class="font-display text-2xl font-bold text-primary">Menu</span>
-        <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/12 text-primary" data-nav-close aria-label="Close navigation">&times;</button>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">CodexWebz</span>
+          <span class="mt-2 block font-display text-2xl font-bold text-white">Menu</span>
+        </div>
+        <button type="button" class="site-mobile-nav__close" data-nav-close aria-label="Close navigation">&times;</button>
       </div>
-      <nav class="mt-10 space-y-3">
-        <a href="/services" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Services</a>
+      <nav class="site-mobile-nav__links">
+        <a href="/services" class="site-mobile-nav__link">Services</a>
         <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
-          <a href="/products" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Our Products</a>
+          <a href="/products" class="site-mobile-nav__link">Our Products</a>
         <% } %>
-        <a href="/projects" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Our Projects</a>
-        <a href="/about-us" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">About Us</a>
-        <a href="/team" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Team</a>
-        <a href="/blog" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Blog</a>
-        <a href="/careers" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Careers</a>
-        <a href="/contact" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Contact</a>
+        <a href="/projects" class="site-mobile-nav__link">Our Projects</a>
+        <a href="/about-us" class="site-mobile-nav__link">About Us</a>
+        <a href="/team" class="site-mobile-nav__link">Team</a>
+        <a href="/blog" class="site-mobile-nav__link">Blog</a>
+        <a href="/careers" class="site-mobile-nav__link">Careers</a>
+        <a href="/contact" class="site-mobile-nav__link">Contact</a>
       </nav>
-      <div class="mt-auto space-y-3">
+      <div class="site-mobile-nav__actions">
         <% if (user) { %>
-          <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="block rounded-full border border-primary/12 px-4 py-3 text-center font-semibold text-primary">Dashboard</a>
+          <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="site-mobile-nav__ghost">Dashboard</a>
         <% } else { %>
-          <a href="/login" class="block rounded-full border border-primary/12 px-4 py-3 text-center font-semibold text-primary">Login</a>
+          <a href="/login" class="site-mobile-nav__ghost">Login</a>
         <% } %>
-        <a href="/contact" class="block rounded-full bg-primary px-4 py-3 text-center font-bold text-white">Start Project</a>
+        <a href="/contact" class="site-mobile-nav__primary">Start Project</a>
       </div>
     </div>
   </div>

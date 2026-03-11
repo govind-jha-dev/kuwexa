@@ -37,24 +37,32 @@ function initAccordions() {
 function initNav() {
   const toggle = document.querySelector('[data-nav-toggle]');
   const panel = document.querySelector('[data-nav-panel]');
-  const closeButton = document.querySelector('[data-nav-close]');
 
   if (!toggle || !panel) {
     return;
   }
 
   const setOpen = (open) => {
-    panel.classList.toggle('hidden', !open);
+    panel.classList.toggle('is-open', open);
     document.body.classList.toggle('overflow-hidden', open);
+    document.body.classList.toggle('nav-open', open);
+    panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  toggle.addEventListener('click', () => setOpen(true));
-  if (closeButton) {
-    closeButton.addEventListener('click', () => setOpen(false));
-  }
+  toggle.addEventListener('click', () => setOpen(!panel.classList.contains('is-open')));
+  panel.querySelectorAll('[data-nav-close]').forEach((button) => {
+    button.addEventListener('click', () => setOpen(false));
+  });
 
   panel.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setOpen(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      setOpen(false);
+    }
   });
 }
 

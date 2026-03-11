@@ -38,9 +38,10 @@ async function renderSettingsPage(req, res) {
           name: 'logo',
           label: 'Website Logo',
           type: 'file',
-          accept: 'image/png,image/webp,image/svg+xml,image/jpeg',
+          accept: '.png,.jpg,.jpeg,.webp,.svg,image/png,image/jpeg,image/webp,image/svg+xml',
           previewUrl: settings?.logo_path || '',
-          description: 'Upload a transparent PNG or SVG. Recommended size: around 320x120 px or any clean logo with similar aspect ratio. The site header displays it at roughly 48px tall.'
+          previewMode: 'contain',
+          description: 'Upload JPG, JPEG, PNG, WEBP, or SVG logo files. Recommended size: around 320x120 px or any clean horizontal logo. PNG works best for transparent logos, while JPG/JPEG is also supported.'
         },
         {
           name: 'chat_manager_user_id',
@@ -79,7 +80,7 @@ async function renderSettingsPage(req, res) {
     },
     infoPanel: {
       title: 'Brand Theme',
-      body: 'Primary color #00240a and secondary color #dbab0d are already configured globally. For the website logo, use a transparent PNG or SVG so it sits cleanly on the header across desktop and mobile.'
+      body: 'Primary color #00240a and secondary color #dbab0d are already configured globally. The header now supports JPG, JPEG, PNG, WEBP, and SVG logo files, and renders them inside a clean brand container for desktop and mobile.'
     }
   });
 }

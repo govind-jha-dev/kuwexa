@@ -24,7 +24,18 @@ function createStorage(folderName) {
 
 function fileFilter(allowedTypes) {
   return (req, file, cb) => {
-    if (allowedTypes.includes(file.mimetype)) {
+    const mimeType = String(file.mimetype || '').toLowerCase();
+    const matchesPattern = allowedTypes.some((type) =>
+      type.endsWith('/*')
+        ? mimeType.startsWith(type.slice(0, -1))
+        : type === mimeType
+    );
+
+    const extension = path.extname(file.originalname || '').toLowerCase();
+    const allowedImageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.svg', '.jfif']);
+    const matchesExtension = allowedTypes.includes('image/*') && allowedImageExtensions.has(extension);
+
+    if (matchesPattern || matchesExtension) {
       return cb(null, true);
     }
 
@@ -41,7 +52,7 @@ const baseConfig = {
 const imageUpload = multer({
   ...baseConfig,
   storage: createStorage('images'),
-  fileFilter: fileFilter(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+  fileFilter: fileFilter(['image/*'])
 });
 
 const resumeUpload = multer({

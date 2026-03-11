@@ -47,6 +47,13 @@ app.use('/styles', express.static(path.join(env.rootDir, 'frontend', 'styles')))
 app.use('/scripts', express.static(path.join(env.rootDir, 'frontend', 'scripts')));
 app.use('/uploads', express.static(env.uploadDir));
 app.use(hydrateUser);
+app.use((req, res, next) => {
+  if (req.path.startsWith('/admin') || req.path.startsWith('/manager') || req.path === '/login') {
+    res.set('Cache-Control', 'no-store');
+  }
+
+  next();
+});
 app.use(async (req, res, next) => {
   res.locals.currentUser = req.user || null;
 
