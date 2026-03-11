@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2/promise');
 const env = require('../config/env');
-const { ensureTeamMemberColumns, ensureWebsiteSettingColumns } = require('./schemaMaintenanceService');
+const { ensureExtendedSchema } = require('./schemaMaintenanceService');
 
 let bootstrapPromise = null;
 
@@ -22,8 +22,7 @@ async function initializeDatabase() {
     const schemaPath = path.join(env.rootDir, 'database', 'schema.sql');
     const schema = fs.readFileSync(schemaPath, 'utf8');
     await connection.query(schema);
-    await ensureTeamMemberColumns(connection, env.db.database);
-    await ensureWebsiteSettingColumns(connection, env.db.database);
+    await ensureExtendedSchema(connection, env.db.database);
   } finally {
     await connection.end();
   }

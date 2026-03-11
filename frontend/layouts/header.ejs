@@ -1,24 +1,27 @@
 <% const activePath = typeof currentPath !== 'undefined' ? currentPath : ''; %>
 <% const user = typeof currentUser !== 'undefined' ? currentUser : null; %>
 <header class="sticky top-0 z-50 border-b border-primary/8 bg-[rgba(246,242,233,0.82)] backdrop-blur-xl">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-1 lg:px-4">
     <a href="/" class="flex items-center gap-3">
       <% if (siteSettings?.logo_path) { %>
-        <span class="flex h-12 items-center justify-center rounded-[1.1rem] bg-white px-3 shadow-lg shadow-primary/10 ring-1 ring-primary/8">
-          <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="h-10 w-auto max-w-[10rem] object-contain">
-        </span>
+       
+          <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="h-18 w-auto max-w-[10rem] object-contain">
+      
       <% } else { %>
-        <span class="flex h-12 w-12 items-center justify-center rounded-[1.35rem] bg-primary text-lg font-extrabold text-secondary shadow-lg shadow-primary/15">CW</span>
-      <% } %>
-      <span>
+          <span>
         <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>
         <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Web Platform Studio</span>
       </span>
+      <% } %>
+    
     </a>
 
     <nav class="hidden items-center gap-7 text-sm font-semibold text-primary/70 lg:flex">
       <a href="/services" class="transition <%= activePath.startsWith('/services') ? 'text-primary' : 'hover:text-primary' %>">Services</a>
-      <a href="/portfolio" class="transition <%= activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Portfolio</a>
+      <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
+        <a href="/products" class="transition <%= activePath.startsWith('/products') ? 'text-primary' : 'hover:text-primary' %>">Our Products</a>
+      <% } %>
+      <a href="/projects" class="transition <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Our Projects</a>
       <a href="/about-us" class="transition <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'text-primary' : 'hover:text-primary' %>">About Us</a>
       <a href="/team" class="transition <%= activePath === '/team' || activePath.startsWith('/team/') ? 'text-primary' : 'hover:text-primary' %>">Team</a>
       <a href="/blog" class="transition <%= activePath.startsWith('/blog') ? 'text-primary' : 'hover:text-primary' %>">Blog</a>
@@ -52,7 +55,10 @@
       </div>
       <nav class="mt-10 space-y-3">
         <a href="/services" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Services</a>
-        <a href="/portfolio" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Portfolio</a>
+        <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
+          <a href="/products" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Our Products</a>
+        <% } %>
+        <a href="/projects" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Our Projects</a>
         <a href="/about-us" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">About Us</a>
         <a href="/team" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Team</a>
         <a href="/blog" class="block rounded-2xl border border-transparent px-4 py-3 font-semibold text-primary/80 transition hover:border-primary/10 hover:bg-white">Blog</a>

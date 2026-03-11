@@ -30,6 +30,7 @@ async function renderSeoPage(req, res) {
         { name: 'slug', label: 'Slug', type: 'text', value: editingItem?.slug || '' },
         { name: 'meta_title', label: 'Meta Title', type: 'text', value: editingItem?.meta_title || '' },
         { name: 'meta_description', label: 'Meta Description', type: 'textarea', value: editingItem?.meta_description || '' },
+        { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: editingItem?.meta_keywords || '' },
         { name: 'og_title', label: 'OpenGraph Title', type: 'text', value: editingItem?.og_title || '' },
         { name: 'og_description', label: 'OpenGraph Description', type: 'textarea', value: editingItem?.og_description || '' },
         { name: 'canonical_url', label: 'Canonical URL', type: 'text', value: editingItem?.canonical_url || '' },
@@ -58,6 +59,7 @@ async function upsertSeo(req, res) {
   const seo = await seoModel.upsert(pageKey, {
     meta_title: sanitizePlainText(req.body.meta_title),
     meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     slug: sanitizePlainText(req.body.slug),
     schema_markup: parseJsonInput(req.body.schema_markup),
     og_title: sanitizePlainText(req.body.og_title),

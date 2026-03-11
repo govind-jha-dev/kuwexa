@@ -56,6 +56,17 @@ async function renderSettingsPage(req, res) {
             }))
           ]
         },
+        {
+          name: 'show_products_menu',
+          label: 'Our Products Menu',
+          type: 'select',
+          value: Number(settings?.show_products_menu) === 0 ? '0' : '1',
+          description: 'Show or hide the public Our Products navigation item and homepage product section.',
+          options: [
+            { label: 'Show Our Products', value: '1' },
+            { label: 'Hide Our Products', value: '0' }
+          ]
+        },
         { name: 'address', label: 'Address', type: 'textarea', value: settings?.address || '' },
         { name: 'hero_title', label: 'Hero Title', type: 'text', value: settings?.hero_title || '' },
         { name: 'hero_subtitle', label: 'Hero Subtitle', type: 'textarea', value: settings?.hero_subtitle || '' },
@@ -80,6 +91,7 @@ async function updateSettings(req, res) {
     company_email: sanitizePlainText(req.body.company_email),
     company_phone: sanitizePlainText(req.body.company_phone),
     chat_manager_user_id: Number.isInteger(chatManagerUserId) ? chatManagerUserId : null,
+    show_products_menu: req.body.show_products_menu === '0' ? 0 : 1,
     address: sanitizePlainText(req.body.address),
     hero_title: sanitizePlainText(req.body.hero_title),
     hero_subtitle: sanitizePlainText(req.body.hero_subtitle),

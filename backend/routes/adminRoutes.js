@@ -3,6 +3,7 @@ const dashboardController = require('../controllers/dashboardController');
 const userController = require('../controllers/userController');
 const pageController = require('../controllers/pageController');
 const serviceController = require('../controllers/serviceController');
+const productController = require('../controllers/productController');
 const projectController = require('../controllers/projectController');
 const teamController = require('../controllers/teamController');
 const chatController = require('../controllers/chatController');
@@ -23,6 +24,7 @@ const {
   passwordValidation,
   pageValidation,
   serviceValidation,
+  productValidation,
   projectValidation,
   teamValidation,
   blogValidation,
@@ -52,6 +54,11 @@ router.get('/services', authorize(PERMISSIONS.SERVICES_MANAGE), serviceControlle
 router.post('/services', authorize(PERMISSIONS.SERVICES_MANAGE), imageUpload.single('image'), validateCsrfToken, serviceValidation, handleValidationErrors, serviceController.createService);
 router.post('/services/:id/update', authorize(PERMISSIONS.SERVICES_MANAGE), imageUpload.single('image'), validateCsrfToken, serviceValidation, handleValidationErrors, serviceController.updateService);
 router.post('/services/:id/delete', authorize(PERMISSIONS.SERVICES_MANAGE), serviceController.deleteService);
+
+router.get('/products', authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.renderProductsPage);
+router.post('/products', authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), validateCsrfToken, productValidation, handleValidationErrors, productController.createProduct);
+router.post('/products/:id/update', authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), validateCsrfToken, productValidation, handleValidationErrors, productController.updateProduct);
+router.post('/products/:id/delete', authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteProduct);
 
 router.get('/portfolio', authorize(PERMISSIONS.PORTFOLIO_MANAGE), projectController.renderProjectsPage);
 router.post('/portfolio', authorize(PERMISSIONS.PORTFOLIO_MANAGE), imageUpload.array('images', 10), validateCsrfToken, projectValidation, handleValidationErrors, projectController.createProject);
@@ -87,5 +94,7 @@ router.get('/settings', authorize(PERMISSIONS.SETTINGS_MANAGE), settingsControll
 router.post('/settings', authorize(PERMISSIONS.SETTINGS_MANAGE), imageUpload.single('logo'), validateCsrfToken, settingsValidation, handleValidationErrors, settingsController.updateSettings);
 
 router.get('/analytics', authorize(PERMISSIONS.ANALYTICS_VIEW), analyticsController.renderAnalyticsPage);
+router.post('/analytics/block', authorize(PERMISSIONS.USERS_MANAGE), validateCsrfToken, analyticsController.blockVisitor);
+router.post('/analytics/unblock', authorize(PERMISSIONS.USERS_MANAGE), validateCsrfToken, analyticsController.unblockVisitor);
 
 module.exports = router;

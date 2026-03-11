@@ -21,11 +21,28 @@ const sampleProject = {
   slug: 'codexwebz-company-platform',
   category: 'Web Platform',
   client: 'CodexWebz Internal',
+  client_industry: 'Technology Services',
+  short_description: 'A full company website and management system combining frontend polish with dashboard control.',
   description: '<p>Sample project description.</p>',
+  problem_statement: '<p>Sample problem statement.</p>',
+  solution: '<p>Sample solution.</p>',
   results: '<ul><li>Improved workflow visibility</li></ul>',
   technologies: ['Node.js', 'Express', 'MySQL'],
   images: [],
   summary: 'Sample project summary.'
+};
+
+const sampleProduct = {
+  name: 'LeadPilot CRM',
+  slug: 'leadpilot-crm',
+  short_description: 'A sales-ready lead capture and pipeline platform.',
+  description: '<p>Sample product overview.</p>',
+  features: ['Lead intake pipeline', 'Manager assignment'],
+  tech_stack: ['Node.js', 'Express', 'MySQL'],
+  logo: null,
+  images: [],
+  demo_link: 'https://demo.codexwebz.com/leadpilot',
+  website_link: 'https://www.codexwebz.com'
 };
 
 const samplePost = {
@@ -108,7 +125,8 @@ const shared = {
     address: 'Remote-first',
     hero_subtitle: 'Sample subtitle',
     primary_color: '#00240a',
-    secondary_color: '#dbab0d'
+    secondary_color: '#dbab0d',
+    show_products_menu: 1
   },
   currentPath: '/',
   currentYear: 2026,
@@ -131,6 +149,7 @@ const dashboardShared = {
       'settings.manage',
       'pages.manage',
       'services.manage',
+      'products.manage',
       'portfolio.manage',
       'team.manage',
       'blog.manage',
@@ -153,6 +172,9 @@ const dashboardShared = {
     formatDate(value) {
       return value ? new Date(value).toLocaleDateString('en-US') : '';
     },
+    formatDateTime(value) {
+      return value ? new Date(value).toLocaleString('en-US') : '';
+    },
     titleCase(value) {
       return String(value || '');
     }
@@ -160,14 +182,16 @@ const dashboardShared = {
 };
 
 const pages = [
-  ['frontend/pages/home.ejs', { ...shared, services: [sampleService], projects: [sampleProject], posts: [samplePost], jobs: [sampleJob], marketing: content.getHomeContent({ services: [sampleService], projects: [sampleProject], posts: [samplePost], jobs: [sampleJob] }) }],
+  ['frontend/pages/home.ejs', { ...shared, services: [sampleService], products: [sampleProduct], projects: [sampleProject], posts: [samplePost], jobs: [sampleJob], marketing: content.getHomeContent({ services: [sampleService], products: [sampleProduct], projects: [sampleProject], posts: [samplePost], jobs: [sampleJob] }) }],
   ['frontend/pages/about.ejs', { ...shared, currentPath: '/about-us', title: 'About CodexWEBZ', pageContent: content.getAboutPageContent() }],
   ['frontend/pages/team.ejs', { ...shared, currentPath: '/team', title: 'Team', pageContent: content.getTeamPageContent(sampleTeamShowcase) }],
   ['frontend/pages/team-detail.ejs', { ...shared, currentPath: '/team/govind-jha', title: 'Govind Jha', member: sampleTeamShowcase.leadership[0] }],
   ['frontend/pages/services.ejs', { ...shared, currentPath: '/services', services: [sampleService], pageContent: content.getServicesPageContent([sampleService]) }],
   ['frontend/pages/service-detail.ejs', { ...shared, currentPath: '/services/web-platform-engineering', service: sampleService, profile: sampleService.profile }],
-  ['frontend/pages/portfolio.ejs', { ...shared, currentPath: '/portfolio', projects: [sampleProject], pageContent: content.getPortfolioPageContent([sampleProject]) }],
-  ['frontend/pages/project-detail.ejs', { ...shared, currentPath: '/portfolio/codexwebz-company-platform', project: sampleProject }],
+  ['frontend/pages/products.ejs', { ...shared, currentPath: '/products', products: [sampleProduct], pageContent: content.getProductsPageContent([sampleProduct]) }],
+  ['frontend/pages/product-detail.ejs', { ...shared, currentPath: '/products/leadpilot-crm', product: sampleProduct }],
+  ['frontend/pages/projects.ejs', { ...shared, currentPath: '/projects', projects: [sampleProject], pageContent: content.getProjectsPageContent([sampleProject]) }],
+  ['frontend/pages/project-detail.ejs', { ...shared, currentPath: '/projects/codexwebz-company-platform', project: sampleProject }],
   ['frontend/pages/blog.ejs', { ...shared, currentPath: '/blog', posts: [samplePost], pageContent: content.getBlogPageContent([samplePost]) }],
   ['frontend/pages/blog-detail.ejs', { ...shared, currentPath: '/blog/what-high-intent-service-websites-get-right', post: samplePost }],
   ['frontend/pages/careers.ejs', { ...shared, currentPath: '/careers', jobs: [sampleJob], pageContent: content.getCareersPageContent([sampleJob]) }],
@@ -176,6 +200,38 @@ const pages = [
   ['frontend/pages/login.ejs', { ...shared, currentPath: '/login', error: null }],
   ['frontend/pages/page.ejs', { ...shared, currentPath: '/about-codexwebz', page: { title: 'About CodexWebz', body: '<p>Sample page body.</p>' } }],
   ['frontend/pages/error.ejs', { ...shared, title: 'Error', message: 'Sample error message.' }],
+  ['dashboard/components/module-page.ejs', {
+    ...dashboardShared,
+    activeMenu: 'Products',
+    pageTitle: 'Products Management',
+    form: {
+      title: 'Create Product',
+      action: '/admin/products',
+      submitLabel: 'Create Product',
+      enctype: 'multipart/form-data',
+      fields: [
+        { name: 'name', label: 'Product Name', type: 'text', value: '' },
+        { name: 'description', label: 'Product Overview', type: 'richtext', value: '<p>Overview.</p>' },
+        { name: 'features', label: 'Features', type: 'textarea', value: 'Feature one, Feature two' },
+        { name: 'logo', label: 'Product Logo', type: 'file' },
+        { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: 'saas, crm' }
+      ]
+    },
+    table: {
+      title: 'Products',
+      description: 'Public products',
+      columns: [
+        { label: 'Name', key: 'name' },
+        { label: 'Status', key: 'status' }
+      ],
+      rows: [
+        { name: 'LeadPilot CRM', status: 'published' }
+      ],
+      rowActions(row) {
+        return `<span>${row.name}</span>`;
+      }
+    }
+  }],
   ['dashboard/components/module-page.ejs', {
     ...dashboardShared,
     activeMenu: 'Users',
@@ -307,14 +363,43 @@ const pages = [
     pageTitle: 'Analytics',
     overview: {
       visitors: 7,
+      uniqueVisitors: 2,
       leads: 2,
-      applications: 2
+      applications: 2,
+      products: 2,
+      blockedVisitors: 1
     },
     trafficSeries: [
       { day: new Date(), visits: 5 }
     ],
+    topLocations: [
+      { location: 'India', visits: 4 }
+    ],
     topPages: [
       { path: '/', visits: 3 }
+    ],
+    visitorJourneys: [
+      {
+        ip_address: '127.0.0.1',
+        city: 'Patna',
+        country_name: 'India',
+        first_seen: new Date(),
+        last_seen: new Date(),
+        total_hits: 3,
+        is_blocked: 0,
+        unique_paths: ['/', '/products', '/projects'],
+        pageHistory: [
+          { path: '/projects', visited_at: new Date() },
+          { path: '/products', visited_at: new Date() },
+          { path: '/', visited_at: new Date() }
+        ]
+      }
+    ],
+    recentVisitors: [
+      { visited_at: new Date(), path: '/', ip_address: '127.0.0.1', city: 'Patna', country_name: 'India', referrer: null, is_blocked: 0 }
+    ],
+    blockedVisitors: [
+      { ip_address: '203.0.113.1', reason: 'Sample block', created_by_name: 'Admin User', created_at: new Date() }
     ]
   }]
 ];

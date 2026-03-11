@@ -44,6 +44,7 @@ async function renderPagesPage(req, res) {
         { name: 'body', label: 'Body', type: 'richtext', value: editingPage?.body || '' },
         { name: 'meta_title', label: 'Meta Title', type: 'text', value: editingPage?.meta_title || '' },
         { name: 'meta_description', label: 'Meta Description', type: 'textarea', value: editingPage?.meta_description || '' },
+        { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: editingPage?.meta_keywords || '' },
         { name: 'canonical_url', label: 'Canonical URL', type: 'text', value: editingPage?.canonical_url || '' },
         {
           name: 'status',
@@ -93,6 +94,7 @@ async function createPage(req, res) {
     template: sanitizePlainText(req.body.template),
     meta_title: sanitizePlainText(req.body.meta_title),
     meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     schema_markup: toJson(null),
     og_title: sanitizePlainText(req.body.og_title),
     og_description: sanitizePlainText(req.body.og_description),
@@ -115,6 +117,7 @@ async function updatePage(req, res) {
     template: sanitizePlainText(req.body.template),
     meta_title: sanitizePlainText(req.body.meta_title),
     meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     canonical_url: sanitizePlainText(req.body.canonical_url),
     status: sanitizePlainText(req.body.status) || 'draft',
     updated_by: req.user.id

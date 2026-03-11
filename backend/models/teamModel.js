@@ -60,9 +60,10 @@ async function createTeamMember(data) {
     `
       INSERT INTO team_members (
         name, slug, member_type, designation, department, short_bio, bio,
-        email, phone, image, linkedin_url, twitter_url, facebook_url, status, sort_order
+        email, phone, image, linkedin_url, twitter_url, facebook_url,
+        meta_title, meta_description, meta_keywords, status, sort_order
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.name,
@@ -78,6 +79,9 @@ async function createTeamMember(data) {
       data.linkedin_url,
       data.twitter_url,
       data.facebook_url,
+      data.meta_title,
+      data.meta_description,
+      data.meta_keywords,
       data.status,
       data.sort_order
     ]

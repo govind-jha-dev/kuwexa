@@ -40,7 +40,7 @@ function splitCsv(value) {
   }
 
   return String(value)
-    .split(',')
+    .split(/[\n,]/)
     .map((item) => item.trim())
     .filter(Boolean);
 }

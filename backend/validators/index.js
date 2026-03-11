@@ -53,6 +53,11 @@ const serviceValidation = [
   body('slug').optional({ values: 'falsy' }).trim().isSlug().withMessage('Slug must be URL-safe.')
 ];
 
+const productValidation = [
+  body('name').trim().notEmpty().withMessage('Product name is required.'),
+  body('slug').optional({ values: 'falsy' }).trim().isSlug().withMessage('Slug must be URL-safe.')
+];
+
 const projectValidation = [
   body('title').trim().notEmpty().withMessage('Project title is required.'),
   body('slug').optional({ values: 'falsy' }).trim().isSlug().withMessage('Slug must be URL-safe.')
@@ -107,7 +112,8 @@ const seoValidation = [
 
 const settingsValidation = [
   body('company_name').trim().notEmpty().withMessage('Company name is required.'),
-  body('chat_manager_user_id').optional({ values: 'falsy' }).isInt().withMessage('Chat notification manager must be valid.')
+  body('chat_manager_user_id').optional({ values: 'falsy' }).isInt().withMessage('Chat notification manager must be valid.'),
+  body('show_products_menu').optional({ values: 'falsy' }).isIn(['0', '1']).withMessage('Products menu visibility must be valid.')
 ];
 
 module.exports = {
@@ -117,6 +123,7 @@ module.exports = {
   passwordValidation,
   pageValidation,
   serviceValidation,
+  productValidation,
   projectValidation,
   teamValidation,
   blogValidation,

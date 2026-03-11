@@ -38,7 +38,8 @@ async function renderServicesPage(req, res) {
         { name: 'icon', label: 'Icon Class', type: 'text', value: editingService?.icon || '' },
         { name: 'image', label: 'Service Image', type: 'file', accept: 'image/*' },
         { name: 'meta_title', label: 'Meta Title', type: 'text', value: editingService?.meta_title || '' },
-        { name: 'meta_description', label: 'Meta Description', type: 'textarea', value: editingService?.meta_description || '' }
+        { name: 'meta_description', label: 'Meta Description', type: 'textarea', value: editingService?.meta_description || '' },
+        { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: editingService?.meta_keywords || '' }
       ]
     },
     table: {
@@ -75,6 +76,7 @@ async function createService(req, res) {
     image: imagePath(req.file),
     meta_title: sanitizePlainText(req.body.meta_title),
     meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     schema_markup: null,
     created_by: req.user.id,
     updated_by: req.user.id
@@ -93,6 +95,7 @@ async function updateService(req, res) {
     icon: sanitizePlainText(req.body.icon),
     meta_title: sanitizePlainText(req.body.meta_title),
     meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     updated_by: req.user.id
   };
 

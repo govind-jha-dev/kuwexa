@@ -90,6 +90,9 @@ async function renderTeamPage(req, res) {
           previewUrl: editingMember?.image || '',
           description: 'Upload a square or portrait team image for the public profile cards.'
         },
+        { name: 'meta_title', label: 'Meta Title', type: 'text', value: editingMember?.meta_title || '' },
+        { name: 'meta_description', label: 'Meta Description', type: 'textarea', value: editingMember?.meta_description || '' },
+        { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: editingMember?.meta_keywords || '' },
         { name: 'sort_order', label: 'Display Order', type: 'number', value: editingMember?.sort_order ?? 0, min: 0, step: 1 },
         {
           name: 'status',
@@ -148,6 +151,9 @@ async function createTeamMember(req, res) {
     linkedin_url: sanitizePlainText(req.body.linkedin_url),
     twitter_url: sanitizePlainText(req.body.twitter_url),
     facebook_url: sanitizePlainText(req.body.facebook_url),
+    meta_title: sanitizePlainText(req.body.meta_title),
+    meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     status: normalizeStatus(sanitizePlainText(req.body.status)),
     sort_order: normalizeSortOrder(req.body.sort_order)
   });
@@ -170,6 +176,9 @@ async function updateTeamMember(req, res) {
     linkedin_url: sanitizePlainText(req.body.linkedin_url),
     twitter_url: sanitizePlainText(req.body.twitter_url),
     facebook_url: sanitizePlainText(req.body.facebook_url),
+    meta_title: sanitizePlainText(req.body.meta_title),
+    meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords),
     status: normalizeStatus(sanitizePlainText(req.body.status)),
     sort_order: normalizeSortOrder(req.body.sort_order)
   };

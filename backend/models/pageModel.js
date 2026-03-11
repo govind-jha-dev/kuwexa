@@ -21,10 +21,10 @@ async function createPage(data) {
   const result = await execute(
     `
       INSERT INTO pages (
-        title, slug, page_type, body, template, meta_title, meta_description,
+        title, slug, page_type, body, template, meta_title, meta_description, meta_keywords,
         schema_markup, og_title, og_description, canonical_url, status, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.title,
@@ -34,6 +34,7 @@ async function createPage(data) {
       data.template,
       data.meta_title,
       data.meta_description,
+      data.meta_keywords,
       data.schema_markup,
       data.og_title,
       data.og_description,

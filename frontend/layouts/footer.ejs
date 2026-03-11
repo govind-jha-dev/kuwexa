@@ -16,7 +16,10 @@
         <p class="font-display text-xl font-bold">Navigate</p>
         <div class="mt-5 space-y-3 text-sm text-white/68">
           <a class="block transition hover:text-secondary" href="/services">Services</a>
-          <a class="block transition hover:text-secondary" href="/portfolio">Portfolio</a>
+          <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
+            <a class="block transition hover:text-secondary" href="/products">Our Products</a>
+          <% } %>
+          <a class="block transition hover:text-secondary" href="/projects">Our Projects</a>
           <a class="block transition hover:text-secondary" href="/about-us">About Us</a>
           <a class="block transition hover:text-secondary" href="/team">Team</a>
           <a class="block transition hover:text-secondary" href="/blog">Blog</a>
@@ -31,7 +34,7 @@
           <p>Admin Dashboard</p>
           <p>Manager Dashboard</p>
           <p>Lead Pipeline</p>
-          <p>Blog + Portfolio CMS</p>
+          <p>Blog + Projects CMS</p>
           <p>Careers Workflow</p>
           <p>SEO Controls</p>
         </div>

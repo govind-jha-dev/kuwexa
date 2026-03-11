@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const mysql = require('mysql2/promise');
-const { ensureTeamMemberColumns } = require('../backend/services/schemaMaintenanceService');
+const { ensureExtendedSchema } = require('../backend/services/schemaMaintenanceService');
 
 const permissions = {
   super_admin: [
@@ -13,6 +13,7 @@ const permissions = {
     'settings.manage',
     'pages.manage',
     'services.manage',
+    'products.manage',
     'portfolio.manage',
     'team.manage',
     'chats.manage',
@@ -25,6 +26,7 @@ const permissions = {
   manager: [
     'dashboard.view',
     'services.manage',
+    'products.manage',
     'portfolio.manage',
     'team.manage',
     'chats.manage',
@@ -43,9 +45,9 @@ async function upsertService(connection, payload) {
   await connection.query(
     `
       INSERT INTO services (
-        title, slug, short_description, description, icon, meta_title, meta_description, created_by, updated_by
+        title, slug, short_description, description, icon, meta_title, meta_description, meta_keywords, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         title = VALUES(title),
         short_description = VALUES(short_description),
@@ -53,6 +55,35 @@ async function upsertService(connection, payload) {
         icon = VALUES(icon),
         meta_title = VALUES(meta_title),
         meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords),
+        updated_by = VALUES(updated_by)
+    `,
+    payload
+  );
+}
+
+async function upsertProduct(connection, payload) {
+  await connection.query(
+    `
+      INSERT INTO products (
+        name, slug, short_description, description, features, tech_stack, logo, images,
+        demo_link, website_link, status, meta_title, meta_description, meta_keywords, created_by, updated_by
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE
+        name = VALUES(name),
+        short_description = VALUES(short_description),
+        description = VALUES(description),
+        features = VALUES(features),
+        tech_stack = VALUES(tech_stack),
+        logo = VALUES(logo),
+        images = VALUES(images),
+        demo_link = VALUES(demo_link),
+        website_link = VALUES(website_link),
+        status = VALUES(status),
+        meta_title = VALUES(meta_title),
+        meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords),
         updated_by = VALUES(updated_by)
     `,
     payload
@@ -63,20 +94,25 @@ async function upsertProject(connection, payload) {
   await connection.query(
     `
       INSERT INTO projects (
-        title, slug, description, client, technologies, category, results, status,
-        meta_title, meta_description, created_by, updated_by
+        title, slug, short_description, description, client, client_industry, technologies, category,
+        problem_statement, solution, results, status, meta_title, meta_description, meta_keywords, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         title = VALUES(title),
+        short_description = VALUES(short_description),
         description = VALUES(description),
         client = VALUES(client),
+        client_industry = VALUES(client_industry),
         technologies = VALUES(technologies),
         category = VALUES(category),
+        problem_statement = VALUES(problem_statement),
+        solution = VALUES(solution),
         results = VALUES(results),
         status = VALUES(status),
         meta_title = VALUES(meta_title),
         meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords),
         updated_by = VALUES(updated_by)
     `,
     payload
@@ -88,9 +124,9 @@ async function upsertPost(connection, payload) {
     `
       INSERT INTO blog_posts (
         title, slug, excerpt, content, author_id, category, tags, meta_title, meta_description,
-        status, published_at
+        meta_keywords, status, published_at
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         title = VALUES(title),
         excerpt = VALUES(excerpt),
@@ -100,6 +136,7 @@ async function upsertPost(connection, payload) {
         tags = VALUES(tags),
         meta_title = VALUES(meta_title),
         meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords),
         status = VALUES(status),
         published_at = VALUES(published_at)
     `,
@@ -112,9 +149,10 @@ async function upsertTeamMember(connection, payload) {
     `
       INSERT INTO team_members (
         name, slug, member_type, designation, department, short_bio, bio,
-        email, phone, image, linkedin_url, twitter_url, facebook_url, status, sort_order
+        email, phone, image, linkedin_url, twitter_url, facebook_url,
+        meta_title, meta_description, meta_keywords, status, sort_order
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         name = VALUES(name),
         member_type = VALUES(member_type),
@@ -128,6 +166,9 @@ async function upsertTeamMember(connection, payload) {
         linkedin_url = VALUES(linkedin_url),
         twitter_url = VALUES(twitter_url),
         facebook_url = VALUES(facebook_url),
+        meta_title = VALUES(meta_title),
+        meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords),
         status = VALUES(status),
         sort_order = VALUES(sort_order)
     `,
@@ -139,9 +180,9 @@ async function upsertJob(connection, payload) {
   await connection.query(
     `
       INSERT INTO jobs (
-        title, slug, description, location, employment_type, status, meta_title, meta_description
+        title, slug, description, location, employment_type, status, meta_title, meta_description, meta_keywords
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         title = VALUES(title),
         description = VALUES(description),
@@ -149,7 +190,8 @@ async function upsertJob(connection, payload) {
         employment_type = VALUES(employment_type),
         status = VALUES(status),
         meta_title = VALUES(meta_title),
-        meta_description = VALUES(meta_description)
+        meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords)
     `,
     payload
   );
@@ -182,7 +224,7 @@ async function run() {
   const schemaPath = path.join(__dirname, '..', 'database', 'schema.sql');
   const schema = fs.readFileSync(schemaPath, 'utf8');
   await connection.query(schema);
-  await ensureTeamMemberColumns(connection, DB_NAME);
+  await ensureExtendedSchema(connection, DB_NAME);
 
   for (const [roleName, rolePermissions] of Object.entries(permissions)) {
     await connection.query(
@@ -228,7 +270,7 @@ async function run() {
   await connection.query(
     `
       UPDATE website_settings
-      SET chat_manager_user_id = ?
+      SET chat_manager_user_id = ?, show_products_menu = 1
       WHERE id = 1
     `,
     [managerUserId]
@@ -253,6 +295,7 @@ async function run() {
       'Platform Build',
       'Web Platform Engineering | CodexWebz',
       'Build a conversion-focused company website and operations platform with CodexWebz.',
+      'website development, dashboard software, seo cms',
       adminUserId,
       adminUserId
     ],
@@ -274,6 +317,7 @@ async function run() {
       'SEO System',
       'SEO and Editorial Systems | CodexWebz',
       'Operational SEO systems for teams that need publishing speed and search readiness.',
+      'seo cms, content workflow, metadata management',
       adminUserId,
       adminUserId
     ],
@@ -295,6 +339,7 @@ async function run() {
       'Ops Flow',
       'Lead and Workflow Automation | CodexWebz',
       'Replace manual marketing and hiring handoffs with a cleaner operational system.',
+      'lead management, workflow automation, dashboard reporting',
       adminUserId,
       adminUserId
     ],
@@ -316,6 +361,7 @@ async function run() {
       'Growth Pages',
       'Content-Led Growth Pages | CodexWebz',
       'Professional landing pages designed for credibility, discovery, and conversion.',
+      'landing page design, service pages, case study pages',
       adminUserId,
       adminUserId
     ]
@@ -325,17 +371,74 @@ async function run() {
     await upsertService(connection, service);
   }
 
+  const products = [
+    [
+      'LeadPilot CRM',
+      'leadpilot-crm',
+      'A sales-ready lead capture and pipeline platform for growing service businesses.',
+      `
+        <p>LeadPilot CRM helps businesses capture website inquiries, qualify leads, assign ownership, and track every conversation from first contact to close.</p>
+        <p>It combines a clean manager-facing pipeline with conversion-focused public forms and dashboard reporting.</p>
+      `,
+      JSON.stringify(['Lead intake pipeline', 'Manager assignment', 'Activity timeline', 'Performance reporting']),
+      JSON.stringify(['Node.js', 'Express', 'MySQL', 'Tailwind CSS']),
+      null,
+      JSON.stringify([]),
+      'https://demo.codexwebz.com/leadpilot',
+      'https://www.codexwebz.com',
+      'published',
+      'LeadPilot CRM | CodexWebz Product',
+      'LeadPilot CRM is a lead capture and pipeline platform for growing service businesses.',
+      'lead crm, sales pipeline software, service business crm',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'OpsDesk Flow',
+      'opsdesk-flow',
+      'A workflow control panel for projects, hiring, and internal operational visibility.',
+      `
+        <p>OpsDesk Flow centralizes projects, internal tasks, candidate workflows, and delivery reporting in one admin interface.</p>
+        <p>It is built for teams that have outgrown spreadsheets and disconnected tools.</p>
+      `,
+      JSON.stringify(['Project visibility', 'Hiring workflow', 'Role-based access', 'Analytics dashboard']),
+      JSON.stringify(['Express', 'RBAC', 'EJS', 'MySQL']),
+      null,
+      JSON.stringify([]),
+      'https://demo.codexwebz.com/opsdesk',
+      'https://www.codexwebz.com',
+      'published',
+      'OpsDesk Flow | CodexWebz Product',
+      'OpsDesk Flow helps teams manage projects, hiring, and operations from one dashboard.',
+      'operations dashboard, workflow software, team management platform',
+      adminUserId,
+      adminUserId
+    ]
+  ];
+
+  for (const product of products) {
+    await upsertProduct(connection, product);
+  }
+
   const projects = [
     [
       'CodexWebz Company Platform',
       'codexwebz-company-platform',
+      'A full company website and management system combining frontend polish with dashboard control.',
       `
         <p>A full company website and management platform for a service brand that needed public credibility and internal workflow control in one build.</p>
         <p>The solution combined a polished frontend, modular CMS, role-based dashboards, lead flow, hiring workflow, and deployment-ready infrastructure.</p>
       `,
       'CodexWebz Internal',
+      'Technology Services',
       JSON.stringify(['Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'JWT']),
       'Web Platform',
+      `
+        <p>The client needed a public website that looked credible while also giving internal teams a dependable system for leads, content, hiring, and SEO control.</p>
+      `,
+      `
+        <p>CodexWebz delivered a connected frontend and dashboard architecture with RBAC, CMS modules, public pages, analytics, and deployment-ready infrastructure.</p>
+      `,
       `
         <ul>
           <li>Unified public website and internal operations interface</li>
@@ -344,21 +447,30 @@ async function run() {
         </ul>
       `,
       'published',
-      'CodexWebz Company Platform | Portfolio',
+      'CodexWebz Company Platform | Projects',
       'A full-stack company website and dashboard system for delivery, content, and operations.',
+      'company website case study, dashboard project, codexwebz project',
       adminUserId,
       adminUserId
     ],
     [
       'Service Brand SEO Engine',
       'service-brand-seo-engine',
+      'An SEO-focused website rebuild for a service brand needing structured editorial operations.',
       `
         <p>An SEO-focused web rebuild for a services company that needed better category pages, structured editorial workflow, and cleaner metadata control.</p>
         <p>The project introduced search-ready templates, editorial operations, and a more persuasive service architecture.</p>
       `,
       'B2B Services Client',
+      'B2B Services',
       JSON.stringify(['Tailwind CSS', 'Express', 'Schema Markup', 'Blog CMS']),
       'SEO System',
+      `
+        <p>The previous site lacked scalable page structure, publishing workflow clarity, and practical control over metadata and search templates.</p>
+      `,
+      `
+        <p>The rebuilt platform introduced search-ready templates, blog workflow support, stronger service architecture, and dashboard-based SEO control.</p>
+      `,
       `
         <ul>
           <li>Faster publishing operations for internal teams</li>
@@ -367,21 +479,30 @@ async function run() {
         </ul>
       `,
       'published',
-      'Service Brand SEO Engine | Portfolio',
+      'Service Brand SEO Engine | Projects',
       'SEO-led website architecture and publishing workflow system for a B2B services brand.',
+      'seo project, editorial system case study, service website rebuild',
       adminUserId,
       adminUserId
     ],
     [
       'Operations Dashboard Modernization',
       'operations-dashboard-modernization',
+      'A workflow modernization project for a distributed team managing leads, projects, and hiring.',
       `
         <p>A workflow modernization project for a remote team handling leads, projects, and hiring activity through disconnected manual processes.</p>
         <p>CodexWebz replaced fragmented tracking with role-based views, clean status handling, and operational reporting.</p>
       `,
       'Remote Ops Team',
+      'Operations',
       JSON.stringify(['Express', 'MySQL', 'RBAC', 'Dashboard UI']),
       'Operations',
+      `
+        <p>Multiple workflows were being tracked manually across inboxes and spreadsheets, which made ownership and reporting unreliable.</p>
+      `,
+      `
+        <p>The solution created clear admin and manager views, status-driven workflows, and a single reporting layer for operational activity.</p>
+      `,
       `
         <ul>
           <li>Reduced ambiguity in lead and hiring ownership</li>
@@ -390,8 +511,9 @@ async function run() {
         </ul>
       `,
       'published',
-      'Operations Dashboard Modernization | Portfolio',
+      'Operations Dashboard Modernization | Projects',
       'Role-based operations dashboard and workflow design for a distributed team.',
+      'operations dashboard project, workflow modernization, role based system',
       adminUserId,
       adminUserId
     ]
@@ -422,6 +544,7 @@ async function run() {
       JSON.stringify(['conversion', 'positioning', 'service websites']),
       'What High-Intent Service Websites Get Right | CodexWebz',
       'How to structure service websites for clarity, trust, and conversion.',
+      'service websites, conversion pages, positioning',
       'published',
       publishedAt
     ],
@@ -439,6 +562,7 @@ async function run() {
       JSON.stringify(['seo', 'cms', 'content operations']),
       'Why SEO CMS Design Is an Operations Problem | CodexWebz',
       'SEO performance depends on publishing workflow design more than most teams realize.',
+      'seo cms, content operations, publishing workflow',
       'published',
       publishedAt
     ],
@@ -456,6 +580,7 @@ async function run() {
       JSON.stringify(['rbac', 'dashboard', 'small team systems']),
       'Role-Based Dashboards for Small Teams | CodexWebz',
       'Why smaller delivery teams benefit from role-based access and cleaner operational views.',
+      'rbac dashboard, small team systems, admin manager roles',
       'published',
       publishedAt
     ]
@@ -498,6 +623,9 @@ async function run() {
       'https://www.linkedin.com/in/govind-jha',
       'https://x.com/govindjha',
       'https://www.facebook.com/govindjha',
+      'Govind Jha | CEO | CodexWEBZ',
+      'Govind Jha is the Chief Executive Officer of CodexWEBZ.',
+      'Govind Jha, CodexWEBZ CEO, leadership profile',
       'active',
       1
     ],
@@ -518,6 +646,9 @@ async function run() {
       'https://www.linkedin.com/in/kundan-kumar',
       null,
       'https://www.facebook.com/kundankumar',
+      'Kundan Kumar | COO | CodexWEBZ',
+      'Kundan Kumar is the Chief Operating Officer of CodexWEBZ.',
+      'Kundan Kumar, CodexWEBZ COO, operations leadership',
       'active',
       2
     ],
@@ -538,6 +669,9 @@ async function run() {
       'https://www.linkedin.com/in/ravi-kumar',
       null,
       'https://www.facebook.com/ravikumar',
+      'Ravi Kumar | CFO | CodexWEBZ',
+      'Ravi Kumar is the Chief Financial Officer of CodexWEBZ.',
+      'Ravi Kumar, CodexWEBZ CFO, finance leadership',
       'active',
       3
     ]
@@ -565,7 +699,8 @@ async function run() {
       'Full-time',
       'open',
       'Frontend Engineer | Careers at CodexWebz',
-      'Join CodexWebz to build high-quality interfaces for websites and operational products.'
+      'Join CodexWebz to build high-quality interfaces for websites and operational products.',
+      'frontend engineer, codexwebz jobs, ui engineer role'
     ],
     [
       'Content and SEO Manager',
@@ -584,7 +719,8 @@ async function run() {
       'Full-time',
       'open',
       'Content and SEO Manager | Careers at CodexWebz',
-      'Lead editorial workflow and search-focused content strategy at CodexWebz.'
+      'Lead editorial workflow and search-focused content strategy at CodexWebz.',
+      'seo manager, content manager job, codexwebz careers'
     ]
   ];
 

@@ -3,6 +3,7 @@ const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const pageController = require('../controllers/pageController');
 const serviceController = require('../controllers/serviceController');
+const productController = require('../controllers/productController');
 const projectController = require('../controllers/projectController');
 const teamController = require('../controllers/teamController');
 const chatController = require('../controllers/chatController');
@@ -24,6 +25,7 @@ const {
   passwordValidation,
   pageValidation,
   serviceValidation,
+  productValidation,
   projectValidation,
   teamValidation,
   blogValidation,
@@ -42,6 +44,7 @@ router.post('/auth/logout', authController.logout);
 router.get('/auth/me', requireAuth, authController.me);
 
 router.get('/public/services', serviceController.apiList);
+router.get('/public/products', productController.apiList);
 router.get('/public/projects', projectController.apiList);
 router.get('/public/team', teamController.publicApiList);
 router.get('/public/blog', blogController.apiList);
@@ -64,6 +67,11 @@ router.get('/services', requireAuth, authorize(PERMISSIONS.SERVICES_MANAGE), ser
 router.post('/services', requireAuth, authorize(PERMISSIONS.SERVICES_MANAGE), imageUpload.single('image'), serviceValidation, handleValidationErrors, serviceController.createService);
 router.put('/services/:id', requireAuth, authorize(PERMISSIONS.SERVICES_MANAGE), imageUpload.single('image'), serviceValidation, handleValidationErrors, serviceController.updateService);
 router.delete('/services/:id', requireAuth, authorize(PERMISSIONS.SERVICES_MANAGE), serviceController.deleteService);
+
+router.get('/products', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.apiList);
+router.post('/products', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), productValidation, handleValidationErrors, productController.createProduct);
+router.put('/products/:id', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), productValidation, handleValidationErrors, productController.updateProduct);
+router.delete('/products/:id', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteProduct);
 
 router.get('/projects', requireAuth, authorize(PERMISSIONS.PORTFOLIO_MANAGE), projectController.apiList);
 router.post('/projects', requireAuth, authorize(PERMISSIONS.PORTFOLIO_MANAGE), imageUpload.array('images', 10), projectValidation, handleValidationErrors, projectController.createProject);
@@ -99,5 +107,7 @@ router.get('/settings', requireAuth, authorize(PERMISSIONS.SETTINGS_MANAGE), set
 router.put('/settings', requireAuth, authorize(PERMISSIONS.SETTINGS_MANAGE), settingsValidation, handleValidationErrors, settingsController.updateSettings);
 
 router.get('/analytics', requireAuth, authorize(PERMISSIONS.ANALYTICS_VIEW), analyticsController.apiOverview);
+router.post('/analytics/block', requireAuth, authorize(PERMISSIONS.USERS_MANAGE), analyticsController.blockVisitor);
+router.post('/analytics/unblock', requireAuth, authorize(PERMISSIONS.USERS_MANAGE), analyticsController.unblockVisitor);
 
 module.exports = router;

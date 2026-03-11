@@ -14,6 +14,7 @@ const teamModel = require('./models/teamModel');
 const { hydrateUser } = require('./middleware/authMiddleware');
 const { issueCsrfToken, validateCsrf } = require('./middleware/csrfMiddleware');
 const { generalLimiter } = require('./middleware/rateLimiters');
+const blockedVisitorGuard = require('./middleware/blockedVisitorGuard');
 const visitorTracker = require('./middleware/visitorTracker');
 const { notFoundHandler, errorHandler } = require('./middleware/errorHandler');
 
@@ -72,6 +73,7 @@ app.use(async (req, res, next) => {
 
   next();
 });
+app.use(blockedVisitorGuard);
 app.use(issueCsrfToken);
 app.use(validateCsrf);
 app.use(visitorTracker);

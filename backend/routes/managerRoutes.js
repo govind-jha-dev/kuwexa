@@ -1,6 +1,7 @@
 const express = require('express');
 const dashboardController = require('../controllers/dashboardController');
 const serviceController = require('../controllers/serviceController');
+const productController = require('../controllers/productController');
 const projectController = require('../controllers/projectController');
 const teamController = require('../controllers/teamController');
 const chatController = require('../controllers/chatController');
@@ -16,6 +17,7 @@ const { imageUpload } = require('../middleware/uploadMiddleware');
 const {
   handleValidationErrors,
   serviceValidation,
+  productValidation,
   projectValidation,
   teamValidation,
   blogValidation,
@@ -33,6 +35,11 @@ router.get('/services', authorize(PERMISSIONS.SERVICES_MANAGE), serviceControlle
 router.post('/services', authorize(PERMISSIONS.SERVICES_MANAGE), imageUpload.single('image'), validateCsrfToken, serviceValidation, handleValidationErrors, serviceController.createService);
 router.post('/services/:id/update', authorize(PERMISSIONS.SERVICES_MANAGE), imageUpload.single('image'), validateCsrfToken, serviceValidation, handleValidationErrors, serviceController.updateService);
 router.post('/services/:id/delete', authorize(PERMISSIONS.SERVICES_MANAGE), serviceController.deleteService);
+
+router.get('/products', authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.renderProductsPage);
+router.post('/products', authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), validateCsrfToken, productValidation, handleValidationErrors, productController.createProduct);
+router.post('/products/:id/update', authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), validateCsrfToken, productValidation, handleValidationErrors, productController.updateProduct);
+router.post('/products/:id/delete', authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteProduct);
 
 router.get('/portfolio', authorize(PERMISSIONS.PORTFOLIO_MANAGE), projectController.renderProjectsPage);
 router.post('/portfolio', authorize(PERMISSIONS.PORTFOLIO_MANAGE), imageUpload.array('images', 10), validateCsrfToken, projectValidation, handleValidationErrors, projectController.createProject);

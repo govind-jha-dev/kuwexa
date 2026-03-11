@@ -22,9 +22,9 @@ async function createJob(data) {
   const result = await execute(
     `
       INSERT INTO jobs (
-        title, slug, description, location, employment_type, status, meta_title, meta_description
+        title, slug, description, location, employment_type, status, meta_title, meta_description, meta_keywords
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.title,
@@ -34,7 +34,8 @@ async function createJob(data) {
       data.employment_type,
       data.status,
       data.meta_title,
-      data.meta_description
+      data.meta_description,
+      data.meta_keywords
     ]
   );
 

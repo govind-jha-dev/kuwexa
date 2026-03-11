@@ -1,5 +1,6 @@
 const pageModel = require('../models/pageModel');
 const serviceModel = require('../models/serviceModel');
+const productModel = require('../models/productModel');
 const projectModel = require('../models/projectModel');
 const blogModel = require('../models/blogModel');
 const leadModel = require('../models/leadModel');
@@ -15,7 +16,8 @@ const {
   resolveServiceProfile,
   getHomeContent,
   getServicesPageContent,
-  getPortfolioPageContent,
+  getProductsPageContent,
+  getProjectsPageContent,
   getBlogPageContent,
   getCareersPageContent,
   getContactPageContent,
@@ -27,6 +29,7 @@ function buildSeo(defaults, overrides = {}) {
   return {
     metaTitle: overrides.metaTitle || defaults?.meta_title || 'CodexWebz',
     metaDescription: overrides.metaDescription || defaults?.meta_description || 'CodexWebz web platform',
+    metaKeywords: overrides.metaKeywords || defaults?.meta_keywords || null,
     ogTitle: overrides.ogTitle || defaults?.og_title || overrides.metaTitle || defaults?.meta_title || 'CodexWebz',
     ogDescription: overrides.ogDescription || defaults?.og_description || overrides.metaDescription || defaults?.meta_description || 'CodexWebz web platform',
     canonicalUrl: overrides.canonicalUrl || defaults?.canonical_url || null,
@@ -34,10 +37,16 @@ function buildSeo(defaults, overrides = {}) {
   };
 }
 
+function isProductsEnabled(res) {
+  return Number(res.locals.siteSettings?.show_products_menu) !== 0;
+}
+
 async function home(req, res) {
-  const [seoRecord, services, projects, posts, jobs] = await Promise.all([
+  const showProducts = isProductsEnabled(res);
+  const [seoRecord, services, products, projects, posts, jobs] = await Promise.all([
     seoModel.findByPageKey('home'),
     serviceModel.listFeatured(3),
+    showProducts ? productModel.listFeatured(3) : Promise.resolve([]),
     projectModel.listFeatured(3),
     blogModel.latest(3),
     jobModel.listOpen()
@@ -49,16 +58,17 @@ async function home(req, res) {
       ...service,
       profile: resolveServiceProfile(service)
     })),
+    products,
     projects: projects.map((project) => ({
       ...project,
-      summary: excerpt(project.description || project.results, 150)
+      summary: project.short_description || excerpt(project.description || project.results, 150)
     })),
     posts: posts.map((post) => ({
       ...post,
       summary: post.excerpt || excerpt(post.content, 170)
     })),
     jobs: jobs.slice(0, 3),
-    marketing: getHomeContent({ services, projects, posts, jobs }),
+    marketing: getHomeContent({ services, products, projects, posts, jobs }),
     seo: buildSeo(seoRecord)
   });
 }
@@ -93,32 +103,77 @@ async function serviceDetail(req, res, next) {
     seo: buildSeo(null, {
       metaTitle: service.meta_title || `${service.title} | CodexWebz`,
       metaDescription: service.meta_description || service.short_description,
+      metaKeywords: service.meta_keywords,
       schemaMarkup: service.schema_markup,
       canonicalUrl: `/services/${service.slug}`
     })
   });
 }
 
-async function portfolio(req, res) {
-  const [seoRecord, projects] = await Promise.all([
-    seoModel.findByPageKey('portfolio'),
+async function products(req, res, next) {
+  if (!isProductsEnabled(res)) {
+    return next();
+  }
+
+  const [seoRecord, items] = await Promise.all([
+    seoModel.findByPageKey('products'),
+    productModel.listPublished()
+  ]);
+
+  return res.render('frontend/pages/products', {
+    title: 'Our Products',
+    products: items,
+    pageContent: getProductsPageContent(items),
+    seo: buildSeo(seoRecord, {
+      canonicalUrl: '/products'
+    })
+  });
+}
+
+async function productDetail(req, res, next) {
+  if (!isProductsEnabled(res)) {
+    return next();
+  }
+
+  const product = await productModel.findBySlug(req.params.slug);
+  if (!product || product.status !== 'published') {
+    return next();
+  }
+
+  return res.render('frontend/pages/product-detail', {
+    title: product.name,
+    product,
+    seo: buildSeo(null, {
+      metaTitle: product.meta_title || `${product.name} | CodexWebz Product`,
+      metaDescription: product.meta_description || product.short_description,
+      metaKeywords: product.meta_keywords,
+      canonicalUrl: `/products/${product.slug}`
+    })
+  });
+}
+
+async function projects(req, res) {
+  const [seoRecord, items] = await Promise.all([
+    seoModel.findByPageKey('projects'),
     projectModel.listPublished()
   ]);
 
-  return res.render('frontend/pages/portfolio', {
-    title: 'Portfolio',
-    projects: projects.map((project) => ({
+  return res.render('frontend/pages/projects', {
+    title: 'Our Projects',
+    projects: items.map((project) => ({
       ...project,
-      summary: excerpt(project.description || project.results, 150)
+      summary: project.short_description || excerpt(project.description || project.results, 150)
     })),
-    pageContent: getPortfolioPageContent(projects),
-    seo: buildSeo(seoRecord)
+    pageContent: getProjectsPageContent(items),
+    seo: buildSeo(seoRecord, {
+      canonicalUrl: '/projects'
+    })
   });
 }
 
 async function projectDetail(req, res, next) {
   const project = await projectModel.findBySlug(req.params.slug);
-  if (!project) {
+  if (!project || project.status !== 'published') {
     return next();
   }
 
@@ -126,12 +181,13 @@ async function projectDetail(req, res, next) {
     title: project.title,
     project: {
       ...project,
-      summary: excerpt(project.description || project.results, 180)
+      summary: project.short_description || excerpt(project.description || project.results, 180)
     },
     seo: buildSeo(null, {
       metaTitle: project.meta_title || `${project.title} | CodexWebz`,
-      metaDescription: project.meta_description || project.category,
-      canonicalUrl: `/portfolio/${project.slug}`
+      metaDescription: project.meta_description || project.short_description || project.category,
+      metaKeywords: project.meta_keywords,
+      canonicalUrl: `/projects/${project.slug}`
     })
   });
 }
@@ -168,6 +224,7 @@ async function blogDetail(req, res, next) {
     seo: buildSeo(null, {
       metaTitle: post.meta_title || post.title,
       metaDescription: post.meta_description || post.excerpt,
+      metaKeywords: post.meta_keywords,
       ogTitle: post.og_title || post.title,
       ogDescription: post.og_description || post.excerpt,
       canonicalUrl: post.canonical_url || `/blog/${post.slug}`,
@@ -203,6 +260,7 @@ async function jobDetail(req, res, next) {
     seo: buildSeo(null, {
       metaTitle: job.meta_title || `${job.title} | Careers at CodexWebz`,
       metaDescription: job.meta_description || job.location,
+      metaKeywords: job.meta_keywords,
       canonicalUrl: `/careers/${job.slug}`
     }),
     applied: req.query.applied || null
@@ -266,8 +324,9 @@ async function teamProfile(req, res, next) {
     title: member.name,
     member,
     seo: buildSeo(null, {
-      metaTitle: `${member.name} | ${member.designation} | CodexWEBZ`,
-      metaDescription: member.short_bio || `${member.name} serves as ${member.designation} at CodexWEBZ.`,
+      metaTitle: member.meta_title || `${member.name} | ${member.designation} | CodexWEBZ`,
+      metaDescription: member.meta_description || member.short_bio || `${member.name} serves as ${member.designation} at CodexWEBZ.`,
+      metaKeywords: member.meta_keywords,
       canonicalUrl: `/team/${member.slug}`
     })
   });
@@ -285,6 +344,7 @@ async function pageDetail(req, res, next) {
     seo: buildSeo(null, {
       metaTitle: page.meta_title || page.title,
       metaDescription: page.meta_description || page.title,
+      metaKeywords: page.meta_keywords,
       ogTitle: page.og_title || page.title,
       ogDescription: page.og_description || page.meta_description,
       canonicalUrl: page.canonical_url || `/${page.slug}`,
@@ -360,7 +420,9 @@ module.exports = {
   home,
   services,
   serviceDetail,
-  portfolio,
+  products,
+  productDetail,
+  projects,
   projectDetail,
   blog,
   blogDetail,

@@ -52,28 +52,13 @@
                 <% } %>
                 <div class="team-card__overlay"></div>
                 <div class="team-card__snowglow team-card__snowglow--leadership"></div>
-                <div class="team-card__badge-row">
-                  <span class="team-card__badge team-card__badge--gold">Leadership</span>
-                  <% if (member.department) { %>
-                    <span class="team-card__badge team-card__badge--soft"><%= member.department %></span>
-                  <% } %>
-                </div>
               </div>
               <div class="team-card__body team-card__body--leadership">
                 <div>
                   <h4 class="team-card__name team-card__name--light"><%= member.name %></h4>
                   <p class="team-card__role team-card__role--light"><%= member.designation %></p>
                 </div>
-                <div class="team-card__meta-list team-card__meta-list--light">
-                  <div class="team-card__meta-item team-card__meta-item--light">
-                    <span class="team-card__meta-label">Department</span>
-                    <span class="team-card__meta-value"><%= member.department || 'Executive Office' %></span>
-                  </div>
-                  <div class="team-card__meta-item team-card__meta-item--light">
-                    <span class="team-card__meta-label">Member Type</span>
-                    <span class="team-card__meta-value"><%= memberTypeLabel[member.member_type] || 'Leadership' %></span>
-                  </div>
-                </div>
+              
                 <% if (member.email) { %>
                   <a href="mailto:<%= member.email %>" class="team-card__contact team-card__contact--light">
                     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="team-card__contact-icon" aria-hidden="true">

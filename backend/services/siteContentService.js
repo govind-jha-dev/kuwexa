@@ -117,7 +117,7 @@ function resolveServiceProfile(service = {}) {
   return matched || defaultServiceProfile;
 }
 
-function getHomeContent({ services = [], projects = [], posts = [], jobs = [] }) {
+function getHomeContent({ services = [], products = [], projects = [], posts = [], jobs = [] }) {
   return {
     proofStats: [
       {
@@ -131,14 +131,14 @@ function getHomeContent({ services = [], projects = [], posts = [], jobs = [] })
         copy: 'Reusable modules across public website, CMS, careers, SEO, and operations.'
       },
       {
+        value: `${Math.max(products.length, 2)}+`,
+        label: 'Product-ready modules',
+        copy: 'SaaS product showcase, detail pages, media galleries, and dashboard publishing control.'
+      },
+      {
         value: '72h',
         label: 'Average strategy turnaround',
         copy: 'CodexWebz focuses on fast clarity, not long discovery theatre.'
-      },
-      {
-        value: `${Math.max(posts.length, 3)}+`,
-        label: 'Editorial templates',
-        copy: 'Search-ready publishing workflows built into the platform.'
       }
     ],
     highlights: [
@@ -212,6 +212,7 @@ function getHomeContent({ services = [], projects = [], posts = [], jobs = [] })
       'Website Strategy',
       'Tailwind Frontend',
       'Express + MySQL',
+      'SaaS Product Pages',
       'SEO CMS',
       'Lead Workflows',
       'Career Pipeline',
@@ -253,7 +254,18 @@ function getServicesPageContent(services = []) {
   };
 }
 
-function getPortfolioPageContent(projects = []) {
+function getProductsPageContent(products = []) {
+  return {
+    categories: ['All Products', ...new Set(products.map((product) => (product.status === 'published' ? 'Published' : 'Draft')))],
+    values: [
+      'Each product card links to a dedicated database-driven detail page.',
+      'Features, tech stack, screenshots, and CTA links are manageable from the dashboard.',
+      'The navigation can hide or show the entire product module from Website Settings.'
+    ]
+  };
+}
+
+function getProjectsPageContent(projects = []) {
   return {
     categories: ['All', ...new Set(projects.map((project) => project.category).filter(Boolean))],
     values: [
@@ -439,7 +451,9 @@ module.exports = {
   resolveServiceProfile,
   getHomeContent,
   getServicesPageContent,
-  getPortfolioPageContent,
+  getProductsPageContent,
+  getProjectsPageContent,
+  getPortfolioPageContent: getProjectsPageContent,
   getBlogPageContent,
   getCareersPageContent,
   getContactPageContent,

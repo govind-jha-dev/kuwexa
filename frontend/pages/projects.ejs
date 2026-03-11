@@ -1,0 +1,95 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Our Projects',
+      title: 'Case studies, client builds, and software delivery outcomes.',
+      copy: 'Projects are managed from the dashboard and published here as a proper two-level case study structure.'
+    }) %>
+    <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Delivery Principles</p>
+      <div class="mt-5 grid gap-4">
+        <% pageContent.values.forEach((item) => { %>
+          <article class="rounded-[1.45rem] bg-white/85 p-5 text-sm leading-7 text-slate-600"><%= item %></article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <% if (projects.length) { %>
+    <div class="mt-12 rounded-[2.2rem] bg-primary p-8 text-white lg:p-10">
+      <div class="flex flex-wrap items-start justify-between gap-6">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Featured Case Study</p>
+          <h2 class="mt-4 font-display text-4xl font-bold"><%= projects[0].title %></h2>
+          <p class="mt-4 max-w-2xl text-base leading-8 text-white/72"><%= projects[0].summary %></p>
+        </div>
+        <a href="/projects/<%= projects[0].slug %>" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary">View Case Study</a>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <% (projects[0].technologies || []).forEach((tech) => { %>
+          <span class="rounded-full border border-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/72"><%= tech %></span>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+  <section class="mt-12" data-filter-group>
+    <div class="surface-panel rounded-[2rem] p-6 lg:p-8">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Browse Work</p>
+          <p class="mt-2 text-sm text-slate-600"><span data-filter-count><%= projects.length %></span> case studies shown</p>
+        </div>
+        <input type="search" placeholder="Search by title, client, category, or stack" class="w-full rounded-full border border-primary/10 bg-white px-5 py-3 text-sm focus:border-secondary focus:outline-none lg:max-w-md" data-filter-control data-filter-key="search">
+      </div>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <% pageContent.categories.forEach((category, index) => { %>
+          <button type="button" class="pill-filter <%= index === 0 ? 'is-active' : '' %>" data-filter-chip data-filter-key="category" data-filter-value="<%= category %>"><%= category %></button>
+        <% }) %>
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-2">
+        <% projects.forEach((project) => { %>
+          <article
+            class="reveal rounded-[1.9rem] bg-white p-7 shadow-sm ring-1 ring-primary/8"
+            data-reveal
+            data-filter-item
+            data-category="<%= project.category || 'All' %>"
+            data-search="<%= `${project.title} ${project.client || ''} ${project.category || ''} ${(project.technologies || []).join(' ')}` %>">
+            <% if (project.featured_image) { %>
+              <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-56 w-full rounded-[1.5rem] object-cover">
+            <% } %>
+            <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+              <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= project.category || 'Project' %></span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/35"><%= project.client || 'CodexWebz' %></span>
+            </div>
+            <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= project.title %></h2>
+            <p class="mt-4 text-sm leading-8 text-slate-600"><%= project.summary %></p>
+            <a href="/projects/<%= project.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">View case study <span aria-hidden="true">→</span></a>
+          </article>
+        <% }) %>
+        <% if (!projects.length) { %>
+          <article class="rounded-[1.9rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 lg:col-span-2">
+            No projects are published yet. Add them from the dashboard Projects module.
+          </article>
+        <% } %>
+      </div>
+    </div>
+  </section>
+</section>
+
+<%- include('../components/site-cta', {
+  eyebrow: 'Need a Project Like This?',
+  title: 'Want CodexWebz to build your next software platform, business website, or operations system?',
+  copy: 'Each project shown here started with a business requirement and ended with a system that teams can actually use.',
+  primaryLabel: 'Start a Project',
+  primaryHref: '/contact',
+  secondaryLabel: 'Our Products',
+  secondaryHref: Number(siteSettings?.show_products_menu) !== 0 ? '/products' : '/services'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

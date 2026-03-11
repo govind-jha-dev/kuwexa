@@ -65,9 +65,9 @@ async function createPost(data) {
     `
       INSERT INTO blog_posts (
         title, slug, excerpt, content, author_id, category, tags, featured_image,
-        meta_title, meta_description, schema_markup, og_title, og_description, canonical_url, status, published_at
+        meta_title, meta_description, meta_keywords, schema_markup, og_title, og_description, canonical_url, status, published_at
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.title,
@@ -80,6 +80,7 @@ async function createPost(data) {
       data.featured_image,
       data.meta_title,
       data.meta_description,
+      data.meta_keywords,
       data.schema_markup,
       data.og_title,
       data.og_description,

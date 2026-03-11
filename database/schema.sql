@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS website_settings (
   secondary_color VARCHAR(20) NOT NULL DEFAULT '#dbab0d',
   logo_path VARCHAR(255) NULL,
   favicon_path VARCHAR(255) NULL,
+  show_products_menu TINYINT(1) NOT NULL DEFAULT 1,
   analytics_id VARCHAR(120) NULL,
   search_console_tag VARCHAR(255) NULL,
   default_meta_title VARCHAR(255) NULL,
@@ -48,6 +49,7 @@ CREATE TABLE IF NOT EXISTS pages (
   template VARCHAR(100) NULL,
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   schema_markup JSON NULL,
   og_title VARCHAR(255) NULL,
   og_description TEXT NULL,
@@ -71,6 +73,7 @@ CREATE TABLE IF NOT EXISTS services (
   image VARCHAR(255) NULL,
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   schema_markup JSON NULL,
   created_by INT NULL,
   updated_by INT NULL,
@@ -80,20 +83,49 @@ CREATE TABLE IF NOT EXISTS services (
   CONSTRAINT fk_services_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(160) NOT NULL,
+  slug VARCHAR(180) NOT NULL UNIQUE,
+  short_description VARCHAR(255) NULL,
+  description LONGTEXT NULL,
+  features JSON NULL,
+  tech_stack JSON NULL,
+  logo VARCHAR(255) NULL,
+  images JSON NULL,
+  demo_link VARCHAR(255) NULL,
+  website_link VARCHAR(255) NULL,
+  status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
+  meta_title VARCHAR(255) NULL,
+  meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
+  created_by INT NULL,
+  updated_by INT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_products_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  CONSTRAINT fk_products_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
 CREATE TABLE IF NOT EXISTS projects (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(160) NOT NULL,
   slug VARCHAR(180) NOT NULL UNIQUE,
+  short_description VARCHAR(255) NULL,
   description LONGTEXT NULL,
   client VARCHAR(160) NULL,
+  client_industry VARCHAR(160) NULL,
   technologies JSON NULL,
   category VARCHAR(120) NULL,
+  problem_statement LONGTEXT NULL,
+  solution LONGTEXT NULL,
   results LONGTEXT NULL,
   images JSON NULL,
   featured_image VARCHAR(255) NULL,
   status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   created_by INT NULL,
   updated_by INT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -114,6 +146,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   featured_image VARCHAR(255) NULL,
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   schema_markup JSON NULL,
   og_title VARCHAR(255) NULL,
   og_description TEXT NULL,
@@ -150,6 +183,7 @@ CREATE TABLE IF NOT EXISTS jobs (
   status ENUM('draft', 'open', 'closed') NOT NULL DEFAULT 'draft',
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -183,6 +217,9 @@ CREATE TABLE IF NOT EXISTS team_members (
   linkedin_url VARCHAR(255) NULL,
   twitter_url VARCHAR(255) NULL,
   facebook_url VARCHAR(255) NULL,
+  meta_title VARCHAR(255) NULL,
+  meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   status ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
   sort_order INT NOT NULL DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -211,6 +248,7 @@ CREATE TABLE IF NOT EXISTS seo_settings (
   page_key VARCHAR(120) NOT NULL UNIQUE,
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
+  meta_keywords VARCHAR(255) NULL,
   slug VARCHAR(180) NULL,
   schema_markup JSON NULL,
   og_title VARCHAR(255) NULL,
@@ -223,11 +261,25 @@ CREATE TABLE IF NOT EXISTS visitor_logs (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   path VARCHAR(255) NOT NULL,
   ip_address VARCHAR(80) NULL,
+  request_method VARCHAR(10) NULL,
   user_agent VARCHAR(255) NULL,
   referrer VARCHAR(255) NULL,
+  country_code VARCHAR(10) NULL,
+  country_name VARCHAR(120) NULL,
+  city VARCHAR(120) NULL,
   visited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_visitor_logs_path (path),
-  INDEX idx_visitor_logs_visited_at (visited_at)
+  INDEX idx_visitor_logs_visited_at (visited_at),
+  INDEX idx_visitor_logs_ip_address (ip_address)
+);
+
+CREATE TABLE IF NOT EXISTS blocked_visitors (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ip_address VARCHAR(80) NOT NULL UNIQUE,
+  reason VARCHAR(255) NULL,
+  created_by INT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_blocked_visitors_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 INSERT INTO website_settings (
@@ -271,7 +323,9 @@ VALUES
   ('about', 'About CodexWEBZ | Technology Services by Kuwexa Private Limited', 'Learn how CodexWEBZ helps businesses build reliable digital systems for growth, efficiency, and scalability.', 'about-us', '/about-us'),
   ('team', 'Team | CodexWEBZ', 'Meet the leadership and team behind CodexWEBZ.', 'team', '/team'),
   ('services', 'Services | CodexWebz', 'Explore CodexWebz web development, SEO, and growth services.', 'services', '/services'),
-  ('portfolio', 'Portfolio | CodexWebz', 'Selected CodexWebz client projects and product delivery outcomes.', 'portfolio', '/portfolio'),
+  ('products', 'Our Products | CodexWebz', 'Explore SaaS products and business software developed by CodexWebz.', 'products', '/products'),
+  ('projects', 'Our Projects | CodexWebz', 'Selected CodexWebz case studies, software builds, and delivery outcomes.', 'projects', '/projects'),
+  ('portfolio', 'Portfolio | CodexWebz', 'Selected CodexWebz client projects and product delivery outcomes.', 'projects', '/projects'),
   ('blog', 'Blog | CodexWebz', 'Insights on engineering, SEO, automation, and digital growth.', 'blog', '/blog'),
   ('careers', 'Careers | CodexWebz', 'Join CodexWebz and build products that matter.', 'careers', '/careers'),
   ('contact', 'Contact | CodexWebz', 'Talk to CodexWebz about your next web platform.', 'contact', '/contact')

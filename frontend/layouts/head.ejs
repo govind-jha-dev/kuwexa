@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= seo?.metaTitle || title || 'CodexWebz' %></title>
   <meta name="description" content="<%= seo?.metaDescription || siteSettings?.default_meta_description || 'CodexWebz web platform' %>">
+  <% if (seo?.metaKeywords) { %>
+    <meta name="keywords" content="<%= seo.metaKeywords %>">
+  <% } %>
   <meta name="theme-color" content="<%= siteSettings?.primary_color || '#00240a' %>">
   <meta property="og:title" content="<%= seo?.ogTitle || seo?.metaTitle || title || 'CodexWebz' %>">
   <meta property="og:description" content="<%= seo?.ogDescription || seo?.metaDescription || siteSettings?.default_meta_description || '' %>">

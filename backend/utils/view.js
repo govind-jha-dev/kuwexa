@@ -12,6 +12,20 @@ function formatDate(dateValue) {
   });
 }
 
+function formatDateTime(dateValue) {
+  if (!dateValue) {
+    return '';
+  }
+
+  return new Date(dateValue).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit'
+  });
+}
+
 function titleCase(value) {
   return String(value || '')
     .replace(/_/g, ' ')
@@ -23,7 +37,8 @@ function buildDashboardMenu(user, basePath) {
     { label: 'Dashboard', href: `${basePath}/dashboard`, permission: PERMISSIONS.DASHBOARD_VIEW },
     { label: 'Pages', href: `${basePath}/pages`, permission: PERMISSIONS.PAGES_MANAGE },
     { label: 'Services', href: `${basePath}/services`, permission: PERMISSIONS.SERVICES_MANAGE },
-    { label: 'Portfolio', href: `${basePath}/portfolio`, permission: PERMISSIONS.PORTFOLIO_MANAGE },
+    { label: 'Products', href: `${basePath}/products`, permission: PERMISSIONS.PRODUCTS_MANAGE },
+    { label: 'Projects', href: `${basePath}/portfolio`, permission: PERMISSIONS.PORTFOLIO_MANAGE },
     { label: 'Team', href: `${basePath}/team`, permission: PERMISSIONS.TEAM_MANAGE },
     { label: 'Chats', href: `${basePath}/chats`, permission: PERMISSIONS.CHATS_MANAGE },
     { label: 'Blog', href: `${basePath}/blog`, permission: PERMISSIONS.BLOG_MANAGE },
@@ -41,5 +56,6 @@ function buildDashboardMenu(user, basePath) {
 module.exports = {
   buildDashboardMenu,
   formatDate,
+  formatDateTime,
   titleCase
 };

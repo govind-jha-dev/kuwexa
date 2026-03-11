@@ -31,9 +31,9 @@ async function createService(data) {
     `
       INSERT INTO services (
         title, slug, short_description, description, icon, image,
-        meta_title, meta_description, schema_markup, created_by, updated_by
+        meta_title, meta_description, meta_keywords, schema_markup, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.title,
@@ -44,6 +44,7 @@ async function createService(data) {
       data.image,
       data.meta_title,
       data.meta_description,
+      data.meta_keywords,
       data.schema_markup,
       data.created_by,
       data.updated_by

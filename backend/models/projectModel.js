@@ -34,24 +34,30 @@ async function createProject(data) {
   const result = await execute(
     `
       INSERT INTO projects (
-        title, slug, description, client, technologies, category, results,
-        images, featured_image, status, meta_title, meta_description, created_by, updated_by
+        title, slug, short_description, description, client, client_industry, technologies, category,
+        problem_statement, solution, results, images, featured_image, status,
+        meta_title, meta_description, meta_keywords, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.title,
       data.slug,
+      data.short_description,
       data.description,
       data.client,
+      data.client_industry,
       data.technologies,
       data.category,
+      data.problem_statement,
+      data.solution,
       data.results,
       data.images,
       data.featured_image,
       data.status,
       data.meta_title,
       data.meta_description,
+      data.meta_keywords,
       data.created_by,
       data.updated_by
     ]

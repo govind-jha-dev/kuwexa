@@ -40,6 +40,7 @@ async function renderCareersPage(req, res) {
         { name: 'description', label: 'Description', type: 'richtext', value: editingJob?.description || '' },
         { name: 'meta_title', label: 'Meta Title', type: 'text', value: editingJob?.meta_title || '' },
         { name: 'meta_description', label: 'Meta Description', type: 'textarea', value: editingJob?.meta_description || '' },
+        { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: editingJob?.meta_keywords || '' },
         {
           name: 'status',
           label: 'Status',
@@ -111,7 +112,8 @@ async function createJob(req, res) {
     employment_type: sanitizePlainText(req.body.employment_type),
     status: sanitizePlainText(req.body.status) || 'draft',
     meta_title: sanitizePlainText(req.body.meta_title),
-    meta_description: sanitizePlainText(req.body.meta_description)
+    meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords)
   });
 
   return respond(req, res, { message: 'Job created successfully.', job }, `${getDashboardBasePath(req)}/careers?success=Job%20created%20successfully.`);
@@ -127,7 +129,8 @@ async function updateJob(req, res) {
     employment_type: sanitizePlainText(req.body.employment_type),
     status: sanitizePlainText(req.body.status) || 'draft',
     meta_title: sanitizePlainText(req.body.meta_title),
-    meta_description: sanitizePlainText(req.body.meta_description)
+    meta_description: sanitizePlainText(req.body.meta_description),
+    meta_keywords: sanitizePlainText(req.body.meta_keywords)
   });
 
   return respond(req, res, { message: 'Job updated successfully.', job }, `${getDashboardBasePath(req)}/careers?success=Job%20updated%20successfully.`);

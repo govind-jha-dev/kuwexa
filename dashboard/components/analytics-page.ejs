@@ -1,8 +1,23 @@
 <%- include('layout-start') %>
-<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+<% const noticeData = typeof notice !== 'undefined' ? notice : null; %>
+<% const canManageVisitors = currentUser?.role_name === 'super_admin'; %>
+<% const maxVisits = Math.max(...trafficSeries.map((point) => Number(point.visits)), 1); %>
+<% const maxLocationVisits = Math.max(...topLocations.map((point) => Number(point.visits)), 1); %>
+
+<% if (noticeData) { %>
+  <div class="mb-6 rounded-3xl px-5 py-4 text-sm font-semibold <%= noticeData.type === 'success' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' %>">
+    <%= noticeData.message %>
+  </div>
+<% } %>
+
+<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
   <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-    <p class="text-sm text-slate-500">Visitors</p>
+    <p class="text-sm text-slate-500">Page Hits</p>
     <p class="mt-3 font-display text-4xl font-bold text-primary"><%= overview.visitors %></p>
+  </div>
+  <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <p class="text-sm text-slate-500">Unique Visitors</p>
+    <p class="mt-3 font-display text-4xl font-bold text-primary"><%= overview.uniqueVisitors %></p>
   </div>
   <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
     <p class="text-sm text-slate-500">Leads</p>
@@ -12,11 +27,25 @@
     <p class="text-sm text-slate-500">Applications</p>
     <p class="mt-3 font-display text-4xl font-bold text-primary"><%= overview.applications %></p>
   </div>
+  <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <p class="text-sm text-slate-500">Products</p>
+    <p class="mt-3 font-display text-4xl font-bold text-primary"><%= overview.products %></p>
+  </div>
+  <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <p class="text-sm text-slate-500">Blocked IPs</p>
+    <p class="mt-3 font-display text-4xl font-bold text-primary"><%= overview.blockedVisitors %></p>
+  </div>
 </div>
-<div class="mt-6 grid gap-6 xl:grid-cols-[1.1fr,0.9fr]">
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[1.12fr,0.88fr]">
   <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-    <h2 class="font-display text-2xl font-bold text-slate-900">Traffic Trend</h2>
-    <% const maxVisits = Math.max(...trafficSeries.map((point) => Number(point.visits)), 1); %>
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-slate-900">Traffic Trend</h2>
+        <p class="mt-2 text-sm text-slate-500">Daily public traffic events over the last 14 days.</p>
+      </div>
+      <span class="rounded-full bg-secondary/15 px-3 py-1 text-xs font-semibold text-primary">Graph View</span>
+    </div>
     <div class="mt-6 space-y-4">
       <% trafficSeries.forEach((point) => { %>
         <div>
@@ -34,6 +63,35 @@
       <% } %>
     </div>
   </section>
+
+  <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-slate-900">Visitor Locations</h2>
+        <p class="mt-2 text-sm text-slate-500">Location data comes from proxy and CDN headers when available.</p>
+      </div>
+      <span class="rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Geo Signals</span>
+    </div>
+    <div class="mt-6 space-y-4">
+      <% topLocations.forEach((item) => { %>
+        <div>
+          <div class="mb-1 flex items-center justify-between text-sm">
+            <span class="text-slate-500"><%= item.location %></span>
+            <span class="font-semibold text-slate-900"><%= item.visits %></span>
+          </div>
+          <div class="h-3 overflow-hidden rounded-full bg-slate-100">
+            <div class="h-full rounded-full bg-secondary" style="width: <%= Math.max((Number(item.visits) / maxLocationVisits) * 100, 4) %>%"></div>
+          </div>
+        </div>
+      <% }) %>
+      <% if (!topLocations.length) { %>
+        <p class="text-sm text-slate-500">Location signals will appear here when the proxy passes them through.</p>
+      <% } %>
+    </div>
+  </section>
+</div>
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[0.88fr,1.12fr]">
   <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
     <h2 class="font-display text-2xl font-bold text-slate-900">Top Pages</h2>
     <div class="mt-6 space-y-4">
@@ -48,5 +106,194 @@
       <% } %>
     </div>
   </section>
+
+  <section class="rounded-3xl bg-primary p-6 text-white shadow-sm">
+    <p class="text-xs uppercase tracking-[0.32em] text-secondary">Admin Controls</p>
+    <h2 class="mt-3 font-display text-2xl font-bold">Visitor monitoring and IP access control.</h2>
+    <p class="mt-3 text-sm leading-7 text-white/75">
+      Track where traffic comes from, inspect visitor IP details, and block abusive visitors directly from the dashboard.
+    </p>
+    <% if (canManageVisitors) { %>
+      <form method="post" action="<%= basePath %>/analytics/block" class="mt-6 grid gap-3 md:grid-cols-[1fr,1fr,auto]">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="text" name="ip_address" placeholder="IP address" class="w-full rounded-2xl border border-white/14 bg-white/8 px-4 py-3 text-sm text-white placeholder:text-white/45 focus:border-secondary focus:outline-none">
+        <input type="text" name="reason" placeholder="Reason for block" class="w-full rounded-2xl border border-white/14 bg-white/8 px-4 py-3 text-sm text-white placeholder:text-white/45 focus:border-secondary focus:outline-none">
+        <button type="submit" class="rounded-2xl bg-secondary px-5 py-3 text-sm font-bold text-primary">Block Visitor</button>
+      </form>
+    <% } else { %>
+      <p class="mt-6 rounded-2xl border border-white/14 bg-white/8 px-4 py-4 text-sm text-white/75">Managers can review analytics, but only Super Admin can block or unblock visitor IPs.</p>
+    <% } %>
+  </section>
 </div>
+
+<section class="mt-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+  <div class="mb-5">
+    <h2 class="font-display text-2xl font-bold text-slate-900">Visitor Journeys</h2>
+    <p class="mt-2 text-sm text-slate-500">Repeated hits from the same IP are grouped as one visitor, with the pages they clicked shown in detail.</p>
+  </div>
+  <div class="grid gap-5 xl:grid-cols-2">
+    <% visitorJourneys.forEach((journey) => { %>
+      <article class="rounded-[1.85rem] border border-slate-200 bg-slate-50/70 p-5">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p class="font-mono text-xs text-slate-500"><%= journey.ip_address %></p>
+            <h3 class="mt-2 font-display text-2xl font-bold text-primary"><%= [journey.city, journey.country_name || journey.country_code].filter(Boolean).join(', ') || 'Unknown location' %></h3>
+            <p class="mt-2 text-sm text-slate-500">First seen <%= helpers.formatDateTime(journey.first_seen) %> · Last seen <%= helpers.formatDateTime(journey.last_seen) %></p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700"><%= journey.total_hits %> hits</span>
+            <span class="rounded-full px-3 py-1 text-xs font-semibold <%= Number(journey.is_blocked) ? 'bg-rose-50 text-rose-700' : 'bg-emerald-50 text-emerald-700' %>"><%= Number(journey.is_blocked) ? 'Blocked' : 'Allowed' %></span>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <% (journey.unique_paths || []).forEach((path) => { %>
+            <span class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-slate-700"><%= path %></span>
+          <% }) %>
+          <% if (!(journey.unique_paths || []).length) { %>
+            <span class="text-sm text-slate-500">No pages recorded yet.</span>
+          <% } %>
+        </div>
+        <div class="mt-5 rounded-[1.35rem] bg-white p-4 ring-1 ring-slate-200">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Click History</p>
+          <div class="mt-3 space-y-3">
+            <% journey.pageHistory.forEach((event) => { %>
+              <div class="flex items-center justify-between gap-4 text-sm">
+                <span class="font-semibold text-slate-700"><%= event.path %></span>
+                <span class="text-slate-500"><%= helpers.formatDateTime(event.visited_at) %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+        <% if (canManageVisitors) { %>
+          <div class="mt-5">
+            <% if (!Number(journey.is_blocked)) { %>
+              <form method="post" action="<%= basePath %>/analytics/block" class="flex flex-wrap gap-2">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="hidden" name="ip_address" value="<%= journey.ip_address %>">
+                <input type="hidden" name="reason" value="Blocked from grouped visitor journey view.">
+                <button type="submit" class="rounded-full bg-rose-600 px-4 py-2 text-xs font-semibold text-white">Block Visitor</button>
+              </form>
+            <% } else { %>
+              <form method="post" action="<%= basePath %>/analytics/unblock" class="flex flex-wrap gap-2">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="hidden" name="ip_address" value="<%= journey.ip_address %>">
+                <button type="submit" class="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white">Unblock Visitor</button>
+              </form>
+            <% } %>
+          </div>
+        <% } %>
+      </article>
+    <% }) %>
+    <% if (!visitorJourneys.length) { %>
+      <article class="rounded-[1.85rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 xl:col-span-2">
+        Visitor journeys will appear here once multiple page hits are recorded for the same IP.
+      </article>
+    <% } %>
+  </div>
+</section>
+
+<section class="mt-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+  <div class="mb-5">
+    <h2 class="font-display text-2xl font-bold text-slate-900">Recent Visit Events</h2>
+    <p class="mt-2 text-sm text-slate-500">Raw page-hit events are still available below for line-by-line inspection.</p>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead>
+        <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-400">
+          <th class="px-3 py-3">Date</th>
+          <th class="px-3 py-3">Path</th>
+          <th class="px-3 py-3">IP</th>
+          <th class="px-3 py-3">Location</th>
+          <th class="px-3 py-3">Referrer</th>
+          <th class="px-3 py-3">Status</th>
+          <% if (canManageVisitors) { %>
+            <th class="px-3 py-3">Actions</th>
+          <% } %>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+        <% recentVisitors.forEach((visitor) => { %>
+          <tr class="align-top">
+            <td class="px-3 py-4"><%= helpers.formatDate(visitor.visited_at) %></td>
+            <td class="px-3 py-4"><%= visitor.path %></td>
+            <td class="px-3 py-4 font-mono text-xs"><%= visitor.ip_address || '-' %></td>
+            <td class="px-3 py-4"><%= [visitor.city, visitor.country_name || visitor.country_code].filter(Boolean).join(', ') || 'Unknown' %></td>
+            <td class="px-3 py-4"><%= visitor.referrer || 'Direct' %></td>
+            <td class="px-3 py-4">
+              <span class="rounded-full px-3 py-1 text-xs font-semibold <%= visitor.is_blocked ? 'bg-rose-50 text-rose-700' : 'bg-emerald-50 text-emerald-700' %>">
+                <%= visitor.is_blocked ? 'Blocked' : 'Allowed' %>
+              </span>
+            </td>
+            <% if (canManageVisitors) { %>
+              <td class="px-3 py-4">
+                <% if (!visitor.is_blocked && visitor.ip_address) { %>
+                  <form method="post" action="<%= basePath %>/analytics/block" class="flex flex-wrap gap-2">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="ip_address" value="<%= visitor.ip_address %>">
+                    <input type="hidden" name="reason" value="Blocked from recent visitor list.">
+                    <button type="submit" class="rounded-full bg-rose-600 px-3 py-1 text-xs font-semibold text-white">Block</button>
+                  </form>
+                <% } else { %>
+                  <span class="text-xs text-slate-400">No action</span>
+                <% } %>
+              </td>
+            <% } %>
+          </tr>
+        <% }) %>
+        <% if (!recentVisitors.length) { %>
+          <tr>
+            <td colspan="<%= canManageVisitors ? 7 : 6 %>" class="px-3 py-8 text-center text-sm text-slate-500">Visitor records will appear here once public traffic is captured.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="mt-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+  <div class="mb-5">
+    <h2 class="font-display text-2xl font-bold text-slate-900">Blocked Visitors</h2>
+    <p class="mt-2 text-sm text-slate-500">These IPs are prevented from loading the public website.</p>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead>
+        <tr class="text-left text-xs uppercase tracking-[0.2em] text-slate-400">
+          <th class="px-3 py-3">IP</th>
+          <th class="px-3 py-3">Reason</th>
+          <th class="px-3 py-3">Blocked By</th>
+          <th class="px-3 py-3">Date</th>
+          <% if (canManageVisitors) { %>
+            <th class="px-3 py-3">Actions</th>
+          <% } %>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+        <% blockedVisitors.forEach((item) => { %>
+          <tr>
+            <td class="px-3 py-4 font-mono text-xs"><%= item.ip_address %></td>
+            <td class="px-3 py-4"><%= item.reason || '-' %></td>
+            <td class="px-3 py-4"><%= item.created_by_name || 'System' %></td>
+            <td class="px-3 py-4"><%= helpers.formatDate(item.created_at) %></td>
+            <% if (canManageVisitors) { %>
+              <td class="px-3 py-4">
+                <form method="post" action="<%= basePath %>/analytics/unblock" class="inline-flex">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="ip_address" value="<%= item.ip_address %>">
+                  <button type="submit" class="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white">Unblock</button>
+                </form>
+              </td>
+            <% } %>
+          </tr>
+        <% }) %>
+        <% if (!blockedVisitors.length) { %>
+          <tr>
+            <td colspan="<%= canManageVisitors ? 5 : 4 %>" class="px-3 py-8 text-center text-sm text-slate-500">No blocked visitors configured.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
 <%- include('layout-end') %>

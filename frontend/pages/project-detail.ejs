@@ -2,12 +2,16 @@
 <%- include('../layouts/header') %>
 
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-  <a href="/portfolio" class="text-sm font-bold text-primary underline decoration-secondary underline-offset-4">Back to portfolio</a>
+  <a href="/projects" class="text-sm font-bold text-primary underline decoration-secondary underline-offset-4">Back to projects</a>
+
   <div class="mt-8 editorial-grid gap-10">
     <article class="surface-panel rounded-[2.25rem] p-8 lg:p-10">
       <div class="flex flex-wrap items-center gap-3">
         <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= project.category || 'Project' %></span>
         <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= project.client || 'CodexWebz' %></span>
+        <% if (project.client_industry) { %>
+          <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600"><%= project.client_industry %></span>
+        <% } %>
       </div>
       <h1 class="mt-6 font-display text-5xl font-bold leading-tight text-primary md:text-6xl"><%= project.title %></h1>
       <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600"><%= project.summary %></p>
@@ -21,7 +25,7 @@
       <div class="rounded-[2rem] bg-primary p-8 text-white">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Project Angle</p>
         <h2 class="mt-4 font-display text-3xl font-bold">Delivery built around credibility and control.</h2>
-        <p class="mt-4 text-sm leading-8 text-white/72">This case study highlights how the frontend experience and internal workflow design support each other instead of competing.</p>
+        <p class="mt-4 text-sm leading-8 text-white/72">This case study shows the overview, problem, solution, and results as separate content blocks so the page reads like a real case study instead of a generic gallery.</p>
       </div>
       <div class="surface-panel rounded-[2rem] p-7">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Technology Stack</p>
@@ -37,12 +41,37 @@
     </aside>
   </div>
 
+  <% if (project.problem_statement || project.solution) { %>
+    <div class="mt-12 grid gap-6 lg:grid-cols-2">
+      <% if (project.problem_statement) { %>
+        <section class="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-primary/8">
+          <%- include('../components/section-heading', {
+            eyebrow: 'Problem',
+            title: 'What needed to be solved.',
+            copy: 'The case study structure keeps the client challenge visible instead of hiding it behind visuals.'
+          }) %>
+          <div class="prose-content mt-8"><%- project.problem_statement %></div>
+        </section>
+      <% } %>
+      <% if (project.solution) { %>
+        <section class="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-primary/8">
+          <%- include('../components/section-heading', {
+            eyebrow: 'Solution',
+            title: 'How the system was designed and delivered.',
+            copy: 'Solution details are editable from the dashboard and published here automatically.'
+          }) %>
+          <div class="prose-content mt-8"><%- project.solution %></div>
+        </section>
+      <% } %>
+    </div>
+  <% } %>
+
   <% if (project.results) { %>
     <div class="mt-12 rounded-[2.2rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
       <%- include('../components/section-heading', {
         eyebrow: 'Results',
         title: 'What the system improved.',
-        copy: 'Portfolio should show what changed in the business or workflow, not just what the interface looked like.'
+        copy: 'Projects should show impact, not just interface screenshots.'
       }) %>
       <div class="prose-content mt-8"><%- project.results %></div>
     </div>
@@ -53,7 +82,7 @@
       <%- include('../components/section-heading', {
         eyebrow: 'Gallery',
         title: 'Additional project views.',
-        copy: 'Visual assets uploaded through the portfolio module remain reusable in future marketing and proposal work.'
+        copy: 'Uploaded screenshots and gallery assets remain reusable across marketing and proposal workflows.'
       }) %>
       <div class="mt-8 grid gap-6 md:grid-cols-2">
         <% project.images.forEach((image) => { %>
@@ -64,20 +93,14 @@
   <% } %>
 </section>
 
-<%- include('../components/team-showcase', {
-  eyebrow: 'Project Team',
-  title: 'Leadership and delivery roles behind work like this.',
-  copy: 'The public result looks polished because the execution team, project structure, and operational process stay tightly connected.'
-}) %>
-
 <%- include('../components/site-cta', {
   eyebrow: 'Your Next Build',
-  title: 'Want a portfolio piece like this that also leaves your team with a usable backend?',
-  copy: 'CodexWebz can scope the public site, management system, and content architecture as one project.',
+  title: 'Want a project like this with a public frontend and a usable backend for your team?',
+  copy: 'CodexWebz can scope the public site, product pages, dashboard workflows, and deployment architecture as one delivery.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
-  secondaryLabel: 'More Case Studies',
-  secondaryHref: '/portfolio'
+  secondaryLabel: 'More Projects',
+  secondaryHref: '/projects'
 }) %>
 
 <%- include('../layouts/footer') %>

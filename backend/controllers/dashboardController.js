@@ -3,7 +3,7 @@ const leadModel = require('../models/leadModel');
 const applicationModel = require('../models/applicationModel');
 const projectModel = require('../models/projectModel');
 const blogModel = require('../models/blogModel');
-const { buildDashboardMenu, formatDate, titleCase } = require('../utils/view');
+const { buildDashboardMenu, formatDate, formatDateTime, titleCase } = require('../utils/view');
 
 function getDashboardBasePath(req) {
   return req.baseUrl.startsWith('/admin') ? '/admin' : '/manager';
@@ -54,14 +54,22 @@ function buildDashboardViewModel(req, options = {}) {
     featuredProjects: [],
     latestPosts: [],
     trafficSeries: [],
+    topLocations: [],
+    recentVisitors: [],
+    visitorJourneys: [],
+    blockedVisitors: [],
     overview: {
       visitors: 0,
+      uniqueVisitors: 0,
       leads: 0,
-      applications: 0
+      applications: 0,
+      products: 0,
+      blockedVisitors: 0
     },
     topPages: [],
     helpers: {
       formatDate,
+      formatDateTime,
       titleCase
     },
     ...options
@@ -83,14 +91,16 @@ async function renderHome(req, res) {
     ? [
         { label: 'Website Visitors', value: overview.visitors },
         { label: 'Total Leads', value: overview.leads },
+        { label: 'Products', value: overview.products },
         { label: 'Blog Posts', value: overview.blogPosts },
-        { label: 'Portfolio Projects', value: overview.projects },
+        { label: 'Projects', value: overview.projects },
         { label: 'Job Applications', value: overview.applications },
         { label: 'System Users', value: overview.users }
       ]
     : [
         { label: 'New Leads', value: operationalCounts.newLeads },
         { label: 'Active Projects', value: operationalCounts.activeProjects },
+        { label: 'Published Products', value: operationalCounts.publishedProducts },
         { label: 'Published Posts', value: operationalCounts.publishedPosts },
         { label: 'Pending Applications', value: operationalCounts.pendingApplications },
         { label: 'Traffic Events', value: overview.visitors }

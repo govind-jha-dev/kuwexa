@@ -1,26 +1,27 @@
 const { execute } = require('../config/database');
+const { getClientIp, getGeoFromHeaders, isPublicWebsiteRequest } = require('../utils/visitor');
 
 async function visitorTracker(req, res, next) {
-  const isPublicGet = req.method === 'GET' &&
-    !req.path.startsWith('/admin') &&
-    !req.path.startsWith('/manager') &&
-    !req.path.startsWith('/api') &&
-    !req.path.startsWith('/uploads') &&
-    !req.path.startsWith('/styles') &&
-    !req.path.startsWith('/login') &&
-    !req.path.startsWith('/favicon');
+  const isPublicGet = req.method === 'GET' && isPublicWebsiteRequest(req);
 
   if (isPublicGet) {
+    const geo = getGeoFromHeaders(req);
     execute(
       `
-        INSERT INTO visitor_logs (path, ip_address, user_agent, referrer)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO visitor_logs (
+          path, ip_address, request_method, user_agent, referrer, country_code, country_name, city
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `,
       [
         req.path,
-        req.ip,
+        getClientIp(req),
+        req.method,
         req.get('user-agent') || null,
-        req.get('referer') || null
+        req.get('referer') || null,
+        geo.countryCode,
+        geo.countryName,
+        geo.city
       ]
     ).catch(() => {});
   }

@@ -15,12 +15,13 @@ async function upsert(pageKey, data) {
   await execute(
     `
       INSERT INTO seo_settings (
-        page_key, meta_title, meta_description, slug, schema_markup, og_title, og_description, canonical_url
+        page_key, meta_title, meta_description, meta_keywords, slug, schema_markup, og_title, og_description, canonical_url
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         meta_title = VALUES(meta_title),
         meta_description = VALUES(meta_description),
+        meta_keywords = VALUES(meta_keywords),
         slug = VALUES(slug),
         schema_markup = VALUES(schema_markup),
         og_title = VALUES(og_title),
@@ -31,6 +32,7 @@ async function upsert(pageKey, data) {
       pageKey,
       data.meta_title,
       data.meta_description,
+      data.meta_keywords,
       data.slug,
       data.schema_markup,
       data.og_title,
