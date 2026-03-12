@@ -119,106 +119,108 @@ function resolveServiceProfile(service = {}) {
 
 function getHomeContent({ services = [], products = [], projects = [], posts = [], jobs = [] }) {
   return {
+    heroTitle: 'Technology solutions for modern businesses.',
+    heroSubtitle: 'CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term business success.',
     proofStats: [
       {
         value: `${Math.max(services.length, 4)}+`,
-        label: 'Launch-ready service lines',
-        copy: 'From website delivery to dashboards, content systems, and workflow automation.'
+        label: 'Core technology services',
+        copy: 'Website development, web applications, ecommerce systems, SEO support, and long-term technical delivery.'
       },
       {
         value: `${Math.max(projects.length, 8)}+`,
-        label: 'Structured build components',
-        copy: 'Reusable modules across public website, CMS, careers, SEO, and operations.'
+        label: 'Scalable delivery modules',
+        copy: 'Reusable frontend, backend, CMS, analytics, and workflow blocks for growing digital platforms.'
       },
       {
         value: `${Math.max(products.length, 2)}+`,
-        label: 'Product-ready modules',
-        copy: 'SaaS product showcase, detail pages, media galleries, and dashboard publishing control.'
+        label: 'Software showcase modules',
+        copy: 'Product pages, screenshots, feature libraries, demo links, and dashboard-driven publishing control.'
       },
       {
-        value: '72h',
-        label: 'Average strategy turnaround',
-        copy: 'CodexWebz focuses on fast clarity, not long discovery theatre.'
+        value: 'Ongoing',
+        label: 'Support mindset',
+        copy: 'CodexWEBZ focuses on reliable systems, continued improvement, and practical long-term support.'
       }
     ],
     highlights: [
       {
-        title: 'Public website that actually converts',
-        copy: 'Messaging, page structure, SEO, and forms are treated as one acquisition system instead of separate tasks.'
+        title: 'Reliable digital systems',
+        copy: 'CodexWEBZ helps businesses move beyond basic web presence into structured platforms that support operations and growth.'
       },
       {
-        title: 'Role-based operational backend',
-        copy: 'Admins control settings and users. Managers handle delivery, leads, content, and hiring without touching system-critical config.'
+        title: 'Business-aligned technology delivery',
+        copy: 'Solutions are planned around real business goals so websites, applications, and support systems remain practical to use.'
       },
       {
-        title: 'Deployment-ready from day one',
-        copy: 'Nginx, PM2, Docker, uploads, analytics, and sitemap support are already part of the architecture.'
+        title: 'Scalable and support-ready',
+        copy: 'The focus stays on performance, usability, maintainability, and the technical support needed after launch.'
       }
     ],
     workflow: [
       {
         step: '01',
-        title: 'Position the offer',
-        copy: 'Clarify what the company sells, who it sells to, and which pages need to move the buyer forward.'
+        title: 'Understand business objectives',
+        copy: 'Start with the company goal, operational challenge, and growth target so the solution fits real business needs.'
       },
       {
         step: '02',
-        title: 'Design the system',
-        copy: 'Create a frontend language and backend workflows that fit the team instead of forcing generic admin tools.'
+        title: 'Design aligned technology',
+        copy: 'Shape websites, applications, integrations, and workflows around the business instead of forcing generic tools.'
       },
       {
         step: '03',
-        title: 'Ship the engine',
-        copy: 'Build the public website, dashboards, CMS modules, automation hooks, and deployment assets as one product.'
+        title: 'Build scalable platforms',
+        copy: 'Develop digital systems that are structured, reliable, and ready to support current operations as well as future scale.'
       },
       {
         step: '04',
-        title: 'Measure and refine',
-        copy: 'Use analytics, lead flow, publishing cadence, and search visibility to tighten the system after launch.'
+        title: 'Support and improve',
+        copy: 'Continue with optimization, maintenance, and technical support so the platform keeps delivering value after launch.'
       }
     ],
     testimonials: [
       {
-        quote: 'CodexWebz thinks in systems. The website, CMS, and operational workflows were designed as one machine.',
-        name: 'Growth Lead',
-        company: 'B2B Services Team'
+        quote: 'CodexWEBZ translated the business requirement into a structured digital system that the team could use confidently every day.',
+        name: 'Operations Lead',
+        company: 'Growing Business'
       },
       {
-        quote: 'The difference was speed with structure. Content, SEO, and lead routing started working together instead of fighting each other.',
+        quote: 'The delivery stayed practical from start to finish. We got a stronger digital presence and a platform that supported the business properly.',
         name: 'Founder',
-        company: 'Services Startup'
+        company: 'Startup Team'
       },
       {
-        quote: 'We replaced spreadsheets and disconnected pages with a clean admin flow the team could actually use.',
-        name: 'Operations Manager',
-        company: 'Remote Delivery Team'
+        quote: 'What stood out was the balance of technical execution and business understanding. The system felt dependable from day one.',
+        name: 'Business Manager',
+        company: 'SME Client'
       }
     ],
     faqs: [
       {
-        question: 'What does CodexWebz actually deliver?',
-        answer: 'A public website, internal dashboards, CMS features, lead management, careers, SEO controls, and deployment-ready backend architecture.'
+        question: 'What does CodexWEBZ help businesses build?',
+        answer: 'Professional websites, custom web applications, ecommerce systems, SEO-ready platforms, integrations, and dependable technical support.'
       },
       {
-        question: 'Can managers operate the platform without developer support?',
-        answer: 'Yes. The manager dashboard is intended for everyday content, lead, portfolio, and hiring workflows while system settings stay locked to admin roles.'
+        question: 'Who does CodexWEBZ usually work with?',
+        answer: 'Startups, enterprises, growing companies, agencies needing development support, and organizations building digital platforms.'
       },
       {
-        question: 'Is the platform ready for production hosting?',
-        answer: 'Yes. The project includes Docker, PM2, Nginx configuration, uploads handling, and environment-based configuration for VPS or cloud deployment.'
+        question: 'Does CodexWEBZ support businesses after the initial build?',
+        answer: 'Yes. Ongoing improvements, maintenance, support, and optimization are part of the long-term delivery mindset.'
       }
     ],
     capabilityBands: [
-      'Website Strategy',
-      'Tailwind Frontend',
-      'Express + MySQL',
-      'SaaS Product Pages',
-      'SEO CMS',
-      'Lead Workflows',
-      'Career Pipeline',
-      'Analytics'
+      'Website Development',
+      'Custom Web Apps',
+      'Ecommerce Platforms',
+      'SEO and Marketing',
+      'Mobile Apps',
+      'Cloud Solutions',
+      'Integrations',
+      'Technical Support'
     ],
-    jobsSummary: jobs.length ? `${jobs.length} open roles live in the careers engine.` : 'Career workflows are built in and ready once jobs are added.'
+    jobsSummary: jobs.length ? `${jobs.length} open roles are available for the growing delivery team.` : 'Career workflows are ready whenever new technology and growth roles are published.'
   };
 }
 
@@ -229,26 +231,72 @@ function getServicesPageContent(services = []) {
     categories,
     engagementModels: [
       {
-        title: 'Launch Sprint',
-        copy: 'Ideal for teams that need a company website, CMS, and foundational analytics live fast.'
+        title: 'Website and Platform Launch',
+        copy: 'Best for businesses that need a professional website, structured platform, and strong digital foundation.'
       },
       {
-        title: 'Growth System',
-        copy: 'Best for businesses that need SEO, blog workflows, portfolio proof, and lead capture aligned.'
+        title: 'Custom Software and Workflow Build',
+        copy: 'Ideal for organizations that need web applications, internal workflows, or operational systems tailored to the business.'
       },
       {
-        title: 'Ops Upgrade',
-        copy: 'Focused on dashboards, roles, workflows, and operational clarity after the frontend goes live.'
+        title: 'Support and Growth Partnership',
+        copy: 'Ongoing maintenance, SEO support, platform improvements, and technical assistance for teams scaling digitally.'
       }
+    ],
+    serviceDepth: [
+      {
+        title: 'Business websites with structure',
+        copy: 'CodexWEBZ builds responsive websites that combine presentation, performance, conversion clarity, and long-term manageability.'
+      },
+      {
+        title: 'Custom systems for day-to-day operations',
+        copy: 'Web applications, dashboards, and workflow tools are shaped around how the business actually functions.'
+      },
+      {
+        title: 'Visibility and growth support',
+        copy: 'SEO, content structure, analytics readiness, and digital marketing support help businesses strengthen online reach.'
+      },
+      {
+        title: 'Reliable post-launch support',
+        copy: 'Maintenance, optimization, and technical support keep digital systems stable and useful after launch.'
+      }
+    ],
+    workflow: [
+      {
+        step: '01',
+        title: 'Understand the requirement',
+        copy: 'The engagement starts with the business objective, the operational challenge, and the expected outcome.'
+      },
+      {
+        step: '02',
+        title: 'Define the right delivery path',
+        copy: 'The service scope is aligned to business priorities, platform needs, and the most practical implementation route.'
+      },
+      {
+        step: '03',
+        title: 'Build the working solution',
+        copy: 'Frontend, backend, integrations, content structure, and workflow logic are delivered as one consistent system.'
+      },
+      {
+        step: '04',
+        title: 'Support long-term growth',
+        copy: 'After launch, the system can continue improving through support, optimization, and additional delivery phases.'
+      }
+    ],
+    audiences: [
+      'Startups launching digital products or modern service brands',
+      'SMEs improving digital presence and internal processes',
+      'Ecommerce businesses building structured online sales systems',
+      'Organizations replacing fragmented digital tools with dependable platforms'
     ],
     faqs: [
       {
-        question: 'Can each service page be updated by managers?',
-        answer: 'Yes. Service content, descriptions, media, and metadata are editable from the role-based dashboard.'
+        question: 'Can service content be updated after launch?',
+        answer: 'Yes. Service pages, descriptions, media, and metadata remain editable from the role-based dashboard.'
       },
       {
-        question: 'Are these one-off services or a connected system?',
-        answer: 'They are designed to work together. The strongest results come from connecting acquisition, proof, content, and operations.'
+        question: 'Are the services standalone or connected?',
+        answer: 'They can be delivered individually or combined into a broader digital system that supports websites, software, visibility, and operations together.'
       }
     ]
   };
@@ -258,9 +306,9 @@ function getProductsPageContent(products = []) {
   return {
     categories: ['All Products', ...new Set(products.map((product) => (product.status === 'published' ? 'Published' : 'Draft')))],
     values: [
-      'Each product card links to a dedicated database-driven detail page.',
-      'Features, tech stack, screenshots, and CTA links are manageable from the dashboard.',
-      'The navigation can hide or show the entire product module from Website Settings.'
+      'Each software product can be presented with overview, features, screenshots, technology stack, and demo links.',
+      'Admin and manager roles can update product content, images, and publishing state directly from the dashboard.',
+      'The products section can be shown or hidden from Website Settings when needed.'
     ]
   };
 }
@@ -269,9 +317,9 @@ function getProjectsPageContent(projects = []) {
   return {
     categories: ['All', ...new Set(projects.map((project) => project.category).filter(Boolean))],
     values: [
-      'Case studies emphasize business results, not just screenshots.',
-      'Technology choices stay tied to workflow and growth requirements.',
-      'Project records are manageable from the dashboard after launch.'
+      'Each case study connects business objective, delivery approach, technology choices, and measurable outcome.',
+      'Projects are presented as practical business solutions rather than visual mockups alone.',
+      'All project records stay editable from the dashboard after launch.'
     ]
   };
 }
@@ -327,33 +375,71 @@ function getCareersPageContent(jobs = []) {
 function getContactPageContent() {
   return {
     promises: [
-      'Clear response path for every inquiry',
-      'Lead record created inside the dashboard',
-      'Email alerts available for follow-up',
-      'Project scoping aligned to real delivery constraints'
+      'Clear discovery and response process for every inquiry',
+      'Lead record created inside the dashboard for structured follow-up',
+      'Business-focused scoping before implementation begins',
+      'Delivery support aligned to practical timelines and requirements'
     ],
     engagementModels: [
       {
-        title: 'Website Build',
-        copy: 'New company site with positioning, pages, and conversion flow.'
+        title: 'Website and Digital Presence',
+        copy: 'Professional website builds, ecommerce setups, and visibility-focused digital foundations.'
       },
       {
-        title: 'Growth System',
-        copy: 'SEO CMS, content workflow, analytics, and lead capture tuned together.'
+        title: 'Custom Software and Platforms',
+        copy: 'Business web applications, workflow tools, integrations, and scalable digital systems.'
       },
       {
-        title: 'Ops Platform',
-        copy: 'Internal dashboard, workflows, permissions, and reporting for operational teams.'
+        title: 'Support and Growth Services',
+        copy: 'SEO, optimization, maintenance, and technical support for businesses improving existing platforms.'
       }
+    ],
+    contactCards: [
+      {
+        title: 'Plan a new digital build',
+        copy: 'Best for new websites, digital products, ecommerce setups, and software platforms.'
+      },
+      {
+        title: 'Improve an existing system',
+        copy: 'Useful when the current website or software platform needs stronger structure, performance, or usability.'
+      },
+      {
+        title: 'Get ongoing technical support',
+        copy: 'Ideal for companies that need maintenance, issue resolution, support, and continuous platform improvement.'
+      }
+    ],
+    responseSteps: [
+      {
+        step: '01',
+        title: 'Inquiry review',
+        copy: 'The request is reviewed and added to the lead management workflow for structured follow-up.'
+      },
+      {
+        step: '02',
+        title: 'Requirement clarification',
+        copy: 'The team aligns on business goals, current gaps, and the most practical direction for delivery.'
+      },
+      {
+        step: '03',
+        title: 'Recommended next step',
+        copy: 'A suitable engagement path is outlined for discussion, scoping, implementation, or support.'
+      }
+    ],
+    checklist: [
+      'Your business objective or target outcome',
+      'The current problem, gap, or platform issue',
+      'Required integrations or systems involved',
+      'Expected timeline or urgency',
+      'Whether the need is a new build, upgrade, or support request'
     ],
     faqs: [
       {
         question: 'What should be included in the inquiry?',
-        answer: 'Describe the current bottleneck, target outcome, urgency, and any systems the new platform needs to replace or integrate with.'
+        answer: 'Share the business goal, current challenge, required platform or service, timeline, and any systems that need to be integrated or improved.'
       },
       {
-        question: 'Does CodexWebz handle both frontend and backend?',
-        answer: 'Yes. Design, frontend, backend, CMS, operations workflows, and deployment are treated as one delivery scope.'
+        question: 'Does CodexWEBZ handle both frontend and backend delivery?',
+        answer: 'Yes. Websites, software interfaces, backend workflows, integrations, CMS, and deployment support can all be handled within one delivery scope.'
       }
     ]
   };
@@ -363,58 +449,97 @@ function getAboutPageContent() {
   return {
     eyebrow: 'About CodexWEBZ',
     title: 'Technology systems built to support business growth, efficiency, and long-term scalability.',
-    intro: 'CodexWEBZ is the technology services division of Kuwexa Private Limited, focused on helping businesses build reliable digital systems that support growth, efficiency, and long-term scalability.',
-    summary: 'Businesses operating in a digital-first market need more than a basic website. They need structured platforms, strong online presence, practical automation, and dependable technical support that keeps the business moving.',
+    intro: 'CodexWEBZ is a technology services brand under Kuwexa Private Limited, focused on helping businesses build reliable digital systems and scalable technology platforms.',
+    overview: 'In today\'s competitive environment, businesses need more than online presence. They need structured digital platforms, efficient systems, and reliable technical support that strengthens operations and long-term growth.',
+    summary: 'In today’s competitive environment, businesses need more than online presence. They need structured digital platforms, efficient systems, and reliable technical support that strengthens operations and long-term growth.',
     highlights: [
       {
         title: 'Built for real operations',
-        copy: 'CodexWEBZ designs systems that are practical for teams to use every day, not just impressive during launch week.'
+        copy: 'CodexWEBZ develops practical digital systems that businesses can operate, improve, and scale over time.'
       },
       {
         title: 'Technology aligned with business needs',
-        copy: 'Being backed by Kuwexa Private Limited gives the team direct understanding of operational realities beyond pure engineering.'
+        copy: 'The work is shaped around real-world business objectives so technology remains useful beyond the build phase.'
       },
       {
         title: 'Reliable and scalable by design',
-        copy: 'The priority is usability, performance, maintainability, and a platform structure that can grow with the business.'
+        copy: 'Usability, performance, maintainability, and scalability stay at the center of every platform decision.'
       }
     ],
     narrative: [
-      'At CodexWEBZ, we work with startups, small and medium enterprises, and growing organizations to turn business ideas into practical digital solutions.',
-      'The focus is not on building complicated technology structures. The focus is on helping businesses strengthen their online presence, streamline operations, and reach customers more effectively through modern technology.',
-      'Every solution is shaped to support dependable execution, long-term reliability, and measurable business value.'
+      'CodexWEBZ collaborates with startups, enterprises, and growing companies to transform ideas into functional digital solutions that align with real business needs.',
+      'The approach focuses on practical and scalable technology services that help organizations improve operations, expand their reach, and strengthen their digital infrastructure.',
+      'Through structured delivery and dependable support, each platform is built to remain useful, efficient, and adaptable as the business grows.'
+    ],
+    vision: 'Our vision is to become a trusted technology partner for businesses by helping organizations grow through reliable digital infrastructure, practical innovation, and scalable technology platforms. CodexWEBZ aims to support companies as they adapt to a digital-first environment with systems that improve efficiency, strengthen online presence, and remain dependable over the long term. The goal is not only to build digital solutions, but to help businesses create a stronger operational foundation that supports sustainable growth, better customer reach, and long-term technology readiness.',
+    visionPoints: [
+      'Enable businesses to grow through reliable digital infrastructure and scalable technology systems.',
+      'Help organizations adapt to digital transformation with practical, efficient, and manageable solutions.',
+      'Build long-term technology readiness so businesses can operate with greater confidence, stability, and reach.'
+    ],
+    mission: 'To help businesses build, optimize, and scale their digital ecosystem through dependable technology services, structured systems, and development support aligned to real operational needs.',
+    focusAreas: [
+      'Building reliable and scalable digital platforms',
+      'Supporting businesses with structured technical systems',
+      'Helping organizations adopt modern technology with clarity',
+      'Delivering practical solutions aligned with business growth'
     ],
     serviceGroups: [
       'Website Development',
+      'Custom Web Application Development',
       'Ecommerce Website Development',
       'Ecommerce Seller Account Setup (Amazon and Flipkart)',
       'Custom Software Development',
-      'Business Web Applications',
       'SEO and Digital Marketing',
-      'Google Business Listing and Optimization',
+      'Mobile App Development',
       'Cloud-Based Solutions',
-      'Platform Integration and Technical Support'
+      'Website Maintenance and Technical Support'
     ],
     principles: [
       {
         title: 'Practical systems over unnecessary complexity',
-        copy: 'Solutions are designed to be manageable, stable, and easy for businesses to operate after implementation.'
+        copy: 'The focus stays on solutions that are manageable, stable, and aligned with everyday business operations.'
       },
       {
         title: 'Scalability without friction',
-        copy: 'The platform architecture is meant to grow with customer acquisition, internal workflows, and new business requirements.'
+        copy: 'Platforms are designed to support digital transformation, future growth, and new operational requirements.'
       },
       {
         title: 'Support that stays dependable',
-        copy: 'CodexWEBZ treats technical support and platform reliability as part of the product, not an afterthought.'
+        copy: 'Maintenance, support, and ongoing optimization are treated as part of the service, not an afterthought.'
       }
     ],
     audience: [
-      'Startups launching digital-first businesses',
-      'SMEs improving customer reach and internal workflows',
-      'Growing companies upgrading legacy websites or fragmented software tools'
+      'Startups launching digital products and services',
+      'Small and medium businesses expanding online',
+      'Tech companies and agencies needing dependable development support',
+      'Organizations building or upgrading digital platforms'
     ],
-    closing: 'At its core, CodexWEBZ believes technology should simplify business operations and enable sustainable growth. Whether a company is starting its digital journey or upgrading its existing systems, CodexWEBZ aims to be a trusted partner in building dependable digital platforms.'
+    approach: [
+      {
+        title: 'Understand business objectives',
+        copy: 'Every engagement starts with the company context, the operational challenge, and the intended growth outcome.'
+      },
+      {
+        title: 'Design the right technology structure',
+        copy: 'Websites, applications, integrations, and workflows are planned around usability, clarity, and long-term maintainability.'
+      },
+      {
+        title: 'Deliver scalable implementation',
+        copy: 'The build phase focuses on reliable execution, stable systems, and digital platforms that can grow with the organization.'
+      },
+      {
+        title: 'Support continuous improvement',
+        copy: 'After launch, the platform can keep improving through maintenance, optimization, and ongoing technical support.'
+      }
+    ],
+    advantages: [
+      'Scalable and structured technology solutions',
+      'Experienced development support across business platforms',
+      'Flexible collaboration for projects and long-term partnerships',
+      'Strong focus on practical systems and sustainable client success'
+    ],
+    closing: 'At its core, CodexWEBZ believes technology should empower businesses, simplify operations, and create opportunities for growth. Whether a company is launching a new platform or improving an existing system, CodexWEBZ aims to be a trusted technology partner.'
   };
 }
 
@@ -426,15 +551,15 @@ function getTeamPageContent(teamShowcase = { leadership: [], employees: [] }) {
     values: [
       {
         title: 'Business-aligned thinking',
-        copy: 'The team works with a strong understanding of real business operations, not just isolated technical tasks.'
+        copy: 'The team approaches delivery with a clear understanding of both technical execution and practical business needs.'
       },
       {
         title: 'Dependable execution',
-        copy: 'Every profile here contributes to structured delivery, stable systems, and clear ownership.'
+        copy: 'Every profile contributes to structured delivery, stable systems, and reliable support across projects.'
       },
       {
         title: 'Growth with usability',
-        copy: 'The priority is always to build systems that remain scalable, manageable, and practical to use.'
+        copy: 'The goal is to build systems that remain scalable, manageable, and practical for businesses to operate long term.'
       }
     ],
     metrics: [

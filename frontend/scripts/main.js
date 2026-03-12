@@ -64,6 +64,23 @@ function initNav() {
       setOpen(false);
     }
   });
+
+  const desktopMedia = window.matchMedia('(min-width: 1024px)');
+  const handleDesktopMode = (event) => {
+    if (event.matches) {
+      setOpen(false);
+    }
+  };
+
+  if (typeof desktopMedia.addEventListener === 'function') {
+    desktopMedia.addEventListener('change', handleDesktopMode);
+  } else if (typeof desktopMedia.addListener === 'function') {
+    desktopMedia.addListener(handleDesktopMode);
+  }
+
+  if (desktopMedia.matches) {
+    setOpen(false);
+  }
 }
 
 function initFilters() {

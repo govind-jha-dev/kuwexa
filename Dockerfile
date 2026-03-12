@@ -7,6 +7,8 @@ RUN npm install --omit=dev
 
 COPY . .
 
+RUN mkdir -p /app/uploads/images /app/uploads/resumes
+
 EXPOSE 4000
 
 CMD ["npm", "start"]

@@ -8,12 +8,12 @@
       <% } else { %>
         <span>
           <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>
-          <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Web Platform Studio</span>
+          <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Technology Solutions</span>
         </span>
       <% } %>
     </a>
 
-    <nav class="hidden items-center gap-7 text-sm font-semibold text-primary/70 lg:flex">
+    <nav class="site-header__desktop-nav items-center gap-7 text-sm font-semibold text-primary/70">
       <a href="/services" class="transition <%= activePath.startsWith('/services') ? 'text-primary' : 'hover:text-primary' %>">Services</a>
       <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
         <a href="/products" class="transition <%= activePath.startsWith('/products') ? 'text-primary' : 'hover:text-primary' %>">Our Products</a>
@@ -21,12 +21,11 @@
       <a href="/projects" class="transition <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Our Projects</a>
       <a href="/about-us" class="transition <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'text-primary' : 'hover:text-primary' %>">About Us</a>
       <a href="/team" class="transition <%= activePath === '/team' || activePath.startsWith('/team/') ? 'text-primary' : 'hover:text-primary' %>">Team</a>
-      <a href="/blog" class="transition <%= activePath.startsWith('/blog') ? 'text-primary' : 'hover:text-primary' %>">Blog</a>
       <a href="/careers" class="transition <%= activePath.startsWith('/careers') ? 'text-primary' : 'hover:text-primary' %>">Careers</a>
       <a href="/contact" class="transition <%= activePath === '/contact' ? 'text-primary' : 'hover:text-primary' %>">Contact</a>
     </nav>
 
-    <div class="hidden items-center gap-3 lg:flex">
+    <div class="site-header__actions items-center gap-3">
       <% if (user) { %>
         <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="rounded-full border border-primary/12 px-4 py-2 text-sm font-semibold text-primary transition hover:border-secondary hover:bg-white">Dashboard</a>
       <% } else { %>
@@ -35,7 +34,7 @@
       <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Start Project</a>
     </div>
 
-    <button type="button" class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20 lg:hidden" data-nav-toggle aria-label="Open navigation" aria-expanded="false" aria-controls="site-mobile-nav">
+    <button type="button" class="site-header__toggle inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20" data-nav-toggle aria-label="Open navigation" aria-expanded="false" aria-controls="site-mobile-nav">
       <span class="space-y-1.5">
         <span class="block h-0.5 w-5 bg-current"></span>
         <span class="block h-0.5 w-5 bg-current"></span>
@@ -44,7 +43,7 @@
     </button>
   </div>
 
-  <div id="site-mobile-nav" class="site-mobile-nav lg:hidden" data-nav-panel aria-hidden="true">
+  <div id="site-mobile-nav" class="site-mobile-nav" data-nav-panel aria-hidden="true">
     <button type="button" class="site-mobile-nav__scrim" data-nav-close aria-label="Close navigation"></button>
     <div class="site-mobile-nav__panel">
       <div class="flex items-center justify-between">
@@ -62,7 +61,6 @@
         <a href="/projects" class="site-mobile-nav__link">Our Projects</a>
         <a href="/about-us" class="site-mobile-nav__link">About Us</a>
         <a href="/team" class="site-mobile-nav__link">Team</a>
-        <a href="/blog" class="site-mobile-nav__link">Blog</a>
         <a href="/careers" class="site-mobile-nav__link">Careers</a>
         <a href="/contact" class="site-mobile-nav__link">Contact</a>
       </nav>

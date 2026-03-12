@@ -13,7 +13,7 @@ services:
         condition: service_healthy
     command: sh -c "npm run seed && npm start"
     volumes:
-      - ./uploads:/app/uploads
+      - uploads_data:/app/uploads
 
   mysql:
     image: mysql:8.0
@@ -34,3 +34,4 @@ services:
 
 volumes:
   mysql_data:
+  uploads_data:

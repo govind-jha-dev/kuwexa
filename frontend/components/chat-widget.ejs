@@ -1,3 +1,4 @@
+<% const safeCsrfToken = typeof csrfToken !== 'undefined' ? csrfToken : ''; %>
 <section class="chat-dock" data-chat-widget>
   <div class="chat-dock__panel hidden" data-chat-panel>
     <div class="chat-dock__panel-shell">
@@ -37,7 +38,7 @@
         </div>
 
         <form method="post" action="/chat" class="chat-dock__form" data-chat-form>
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="_csrf" value="<%= safeCsrfToken %>">
           <input type="hidden" name="page_path" value="<%= currentPath || '/' %>">
           <input type="hidden" name="topic" value="">
 

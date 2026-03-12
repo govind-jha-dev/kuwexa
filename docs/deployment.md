@@ -51,10 +51,13 @@
 2. Start services:
    `docker compose up --build`
 
+The Docker setup now creates and mounts a Docker-managed `uploads_data` volume automatically. That means you do not need to create an `uploads` folder manually on the live server before deployment.
+
 The compose stack provisions:
 
 - Node application on port `4000`
 - MySQL on port `3306`
+- Persistent uploads volume mounted at `/app/uploads`
 
 ## Cloud targets
 

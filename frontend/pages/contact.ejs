@@ -5,8 +5,8 @@
   <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
     <%- include('../components/section-heading', {
       eyebrow: 'Contact',
-      title: 'Tell CodexWebz what needs to be built, improved, or replaced.',
-      copy: 'The contact frontend is designed to look polished and route the inquiry into a backend lead pipeline that managers can actually work with.'
+      title: 'Tell CodexWEBZ what needs to be built, improved, supported, or replaced.',
+      copy: 'Use this page to start a structured conversation about websites, software platforms, ecommerce systems, visibility support, or ongoing technical delivery.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">What happens next</p>
@@ -18,15 +18,34 @@
     </div>
   </div>
 
+  <div class="mt-10 grid gap-5 md:grid-cols-3">
+    <% pageContent.contactCards.forEach((item) => { %>
+      <article class="reveal rounded-[1.8rem] bg-white p-6 shadow-sm ring-1 ring-primary/8" data-reveal>
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Contact Focus</p>
+        <h2 class="mt-4 font-display text-2xl font-bold text-primary"><%= item.title %></h2>
+        <p class="mt-3 text-sm leading-8 text-slate-600"><%= item.copy %></p>
+      </article>
+    <% }) %>
+  </div>
+
   <div class="mt-12 grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
     <div class="rounded-[2.2rem] bg-primary p-8 text-white lg:p-10">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Project Inquiry</p>
-      <h2 class="mt-4 font-display text-4xl font-bold">A professional frontend is only useful if the lead handoff works.</h2>
-      <p class="mt-4 text-base leading-8 text-white/72">This form writes directly into the lead management workflow and can trigger alert emails for the team.</p>
-      <div class="mt-8 space-y-3 text-sm text-white/68">
-        <p><%= siteSettings?.company_email || 'hello@codexwebz.com' %></p>
-        <p><%= siteSettings?.company_phone || '+91 00000 00000' %></p>
-        <p><%= siteSettings?.address || 'Remote-first delivery for websites, content systems, and operations tools.' %></p>
+      <h2 class="mt-4 font-display text-4xl font-bold">A polished inquiry experience backed by a real delivery workflow.</h2>
+      <p class="mt-4 text-base leading-8 text-white/72">This form routes directly into the lead pipeline so the inquiry can be reviewed, assigned, and handled with structure instead of getting lost in scattered messages.</p>
+      <div class="mt-8 grid gap-4">
+        <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Email</p>
+          <p class="mt-3 text-sm font-semibold text-white/80"><%= siteSettings?.company_email || 'hello@codexwebz.com' %></p>
+        </article>
+        <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Phone</p>
+          <p class="mt-3 text-sm font-semibold text-white/80"><%= siteSettings?.company_phone || '+91 00000 00000' %></p>
+        </article>
+        <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Address / Delivery Base</p>
+          <p class="mt-3 text-sm font-semibold leading-7 text-white/80"><%= siteSettings?.address || 'Remote-first delivery for websites, software systems, ecommerce support, and business technology solutions.' %></p>
+        </article>
       </div>
       <div class="mt-8 grid gap-4">
         <% pageContent.engagementModels.forEach((item) => { %>
@@ -35,6 +54,22 @@
             <p class="mt-2 text-sm leading-7 text-white/68"><%= item.copy %></p>
           </article>
         <% }) %>
+      </div>
+      <div class="mt-8">
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Response Flow</p>
+        <div class="mt-5 space-y-4">
+          <% pageContent.responseSteps.forEach((item) => { %>
+            <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
+              <div class="flex gap-4">
+                <span class="font-display text-3xl font-bold text-secondary"><%= item.step %></span>
+                <div>
+                  <h3 class="font-display text-2xl font-bold"><%= item.title %></h3>
+                  <p class="mt-2 text-sm leading-7 text-white/68"><%= item.copy %></p>
+                </div>
+              </div>
+            </article>
+          <% }) %>
+        </div>
       </div>
     </div>
 
@@ -74,6 +109,14 @@
           <label class="mb-2 block text-sm font-semibold text-slate-700" for="message">Project Brief</label>
           <textarea id="message" name="message" rows="7" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none" placeholder="What needs to change, what is not working, and what outcome are you targeting?"></textarea>
         </div>
+        <div class="rounded-[1.45rem] bg-slate-50 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary/38">Helpful Information to Include</p>
+          <div class="mt-4 grid gap-3">
+            <% pageContent.checklist.forEach((item) => { %>
+              <div class="rounded-[1.1rem] bg-white px-4 py-3 text-sm font-semibold text-slate-700 ring-1 ring-primary/6"><%= item %></div>
+            <% }) %>
+          </div>
+        </div>
         <button type="submit" class="w-full rounded-[1.35rem] bg-primary px-5 py-3 text-sm font-bold text-white">Send Inquiry</button>
       </form>
     </div>
@@ -90,12 +133,6 @@
     <%- include('../components/faq-list', { items: pageContent.faqs }) %>
   </div>
 </section>
-
-<%- include('../components/team-showcase', {
-  eyebrow: 'Who You Will Work With',
-  title: 'Leadership and team members behind the delivery process.',
-  copy: 'Every inquiry routes into the platform, but the work is still done by real people with clear leadership, delivery, engineering, and content ownership.'
-}) %>
 
 <%- include('../layouts/footer') %>
 <%- include('../layouts/scripts') %>

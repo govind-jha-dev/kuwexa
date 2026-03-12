@@ -5,8 +5,8 @@
   <div class="grid gap-10 lg:grid-cols-[1fr,0.85fr] lg:items-end">
     <%- include('../components/section-heading', {
       eyebrow: 'Services',
-      title: 'Professional landing-page execution backed by CMS, SEO, and operational logic.',
-      copy: 'These services are not isolated deliverables. Each one plugs into a broader website and management system that can be run by admins and managers after launch.'
+      title: 'Technology services designed for modern businesses and practical digital growth.',
+      copy: 'These services support companies that need structured websites, digital platforms, custom workflows, stronger visibility, and dependable technology support.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Engagement Models</p>
@@ -65,6 +65,57 @@
 </section>
 
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Service Depth',
+      title: 'More than standalone tasks: services designed to support the full digital journey.',
+      copy: 'CodexWEBZ works across presentation, systems, visibility, and support so businesses can move from fragmented digital activity to dependable digital infrastructure.'
+    }) %>
+    <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+      <% pageContent.serviceDepth.forEach((item) => { %>
+        <article class="reveal rounded-[1.7rem] bg-slate-50 p-6 ring-1 ring-primary/6" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Focus Area</p>
+          <h2 class="mt-4 font-display text-2xl font-bold text-primary"><%= item.title %></h2>
+          <p class="mt-3 text-sm leading-8 text-slate-600"><%= item.copy %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
+    <div class="rounded-[2.2rem] bg-primary p-8 text-white lg:p-10">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">How We Deliver</p>
+      <div class="mt-6 space-y-4">
+        <% pageContent.workflow.forEach((item) => { %>
+          <article class="rounded-[1.6rem] border border-white/10 bg-white/6 p-5">
+            <div class="flex gap-4">
+              <span class="font-display text-3xl font-bold text-secondary"><%= item.step %></span>
+              <div>
+                <h2 class="font-display text-2xl font-bold"><%= item.title %></h2>
+                <p class="mt-3 text-sm leading-8 text-white/72"><%= item.copy %></p>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="surface-panel rounded-[2.2rem] p-8 lg:p-10">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Who These Services Help</p>
+      <div class="mt-6 grid gap-4">
+        <% pageContent.audiences.forEach((item) => { %>
+          <article class="rounded-[1.45rem] bg-slate-50 p-5">
+            <p class="text-sm font-semibold leading-7 text-slate-700"><%= item %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <%- include('../components/section-heading', {
     eyebrow: 'Questions',
     title: 'What teams usually ask before starting.',
@@ -77,8 +128,8 @@
 
 <%- include('../components/site-cta', {
   eyebrow: 'Need a Custom Scope',
-  title: 'Choose the service track that fits now, then expand the platform without rebuilding from scratch.',
-  copy: 'The backend architecture is already structured for services, products, projects, blog, leads, careers, SEO, and analytics.',
+  title: 'Start with the service your business needs now, then expand into a stronger digital ecosystem over time.',
+  copy: 'CodexWEBZ supports websites, software platforms, ecommerce systems, integrations, and ongoing technical delivery without changing the design framework.',
   primaryLabel: 'Talk to CodexWebz',
   primaryHref: '/contact',
   secondaryLabel: 'See Projects',

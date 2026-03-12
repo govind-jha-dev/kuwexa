@@ -270,7 +270,14 @@ async function run() {
   await connection.query(
     `
       UPDATE website_settings
-      SET chat_manager_user_id = ?, show_products_menu = 1
+      SET
+        company_name = 'CodexWEBZ',
+        hero_title = 'Technology Solutions for Modern Businesses',
+        hero_subtitle = 'CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term business success.',
+        default_meta_title = 'CodexWEBZ | Technology Solutions for Modern Businesses',
+        default_meta_description = 'CodexWEBZ builds reliable digital systems, scalable technology platforms, business websites, custom applications, ecommerce solutions, and ongoing technical support for modern businesses.',
+        chat_manager_user_id = ?,
+        show_products_menu = 1
       WHERE id = 1
     `,
     [managerUserId]

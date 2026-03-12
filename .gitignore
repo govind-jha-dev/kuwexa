@@ -3,7 +3,12 @@ node_modules/
 npm-debug.log*
 uploads/*
 !uploads/.gitkeep
+!uploads/images/
+uploads/images/*
+!uploads/images/.gitkeep
 !uploads/resumes/
+uploads/resumes/*
+!uploads/resumes/.gitkeep
 !uploads/resumes/sample-jordan.txt
 !uploads/resumes/sample-priya.txt
 logs/

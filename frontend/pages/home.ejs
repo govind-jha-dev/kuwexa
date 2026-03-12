@@ -5,12 +5,12 @@
   <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
     <div class="grid gap-12 lg:grid-cols-[1.08fr,0.92fr] lg:items-end">
       <div>
-        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">CodexWebz Web Platform</p>
+        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Technology Solutions by CodexWEBZ</p>
         <h1 class="mt-6 max-w-4xl font-display text-5xl font-bold leading-[1.02] md:text-6xl lg:text-7xl">
-          Detailed landing pages and operational software in one delivery system.
+          <%= marketing.heroTitle %>
         </h1>
         <p class="mt-6 max-w-2xl text-lg leading-8 text-white/72">
-          CodexWebz builds attractive, high-trust company websites with connected dashboards, SEO controls, lead workflows, hiring workflows, and production-ready backend infrastructure.
+          <%= marketing.heroSubtitle %>
         </p>
         <div class="mt-10 flex flex-wrap gap-4">
           <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Request a Build Plan</a>
@@ -27,10 +27,10 @@
         <div class="glass-card rounded-[2rem] p-6 text-slate-900 shadow-float ring-1 ring-white/10">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Platform Scope</p>
-              <h2 class="mt-3 font-display text-3xl font-bold text-primary">Built for both credibility and control</h2>
+              <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Company Focus</p>
+              <h2 class="mt-3 font-display text-3xl font-bold text-primary">Digital infrastructure built for business growth</h2>
             </div>
-            <span class="rounded-full bg-secondary px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">Live System</span>
+            <span class="rounded-full bg-secondary px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">Software Company</span>
           </div>
           <div class="mt-6 space-y-4">
             <% marketing.highlights.forEach((item) => { %>
@@ -63,8 +63,8 @@
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
   <%- include('../components/section-heading', {
     eyebrow: 'Services',
-    title: 'The frontend looks premium because the system behind it is structured.',
-    copy: 'Every landing page is backed by a manager-editable service module, media support, SEO controls, and content architecture that is ready for growth.'
+    title: 'Technology services built to help businesses launch, operate, and scale with confidence.',
+    copy: 'From websites to custom applications and long-term support, every service is structured around practical delivery, business usability, and dependable growth.'
   }) %>
   <div class="mt-12 grid gap-6 lg:grid-cols-2">
     <% services.forEach((service) => { %>
@@ -95,8 +95,8 @@
       <div class="flex flex-wrap items-end justify-between gap-6">
         <%- include('../components/section-heading', {
           eyebrow: 'Our Products',
-          title: 'SaaS products and internal software built with the same delivery discipline.',
-          copy: 'Each product card below is connected to the Products dashboard module, so product overview, features, screenshots, and CTA links stay editable from the backend.'
+          title: 'Software products and digital platforms presented with the same structured delivery approach.',
+          copy: 'Each product page is connected to the dashboard so teams can manage overviews, features, screenshots, technology details, and action links without breaking the public experience.'
         }) %>
         <a href="/products" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View All Products</a>
       </div>
@@ -126,8 +126,8 @@
       <div>
         <%- include('../components/section-heading', {
           eyebrow: 'Workflow',
-          title: 'A deliberate delivery sequence from positioning to launch.',
-          copy: 'The frontend is attractive because the content system, user roles, and backend workflows are designed at the same time.'
+          title: 'A structured approach from business understanding to ongoing improvement.',
+          copy: 'The visual experience stays strong because the platform, workflows, and support model are planned together from the start.'
         }) %>
       </div>
       <div class="space-y-4">
@@ -151,7 +151,7 @@
   <div class="grid gap-6 xl:grid-cols-[1.12fr,0.88fr]">
     <div class="rounded-[2.25rem] bg-primary p-8 text-white lg:p-10">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Our Projects</p>
-      <h2 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight">Proof built into the public experience.</h2>
+      <h2 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight">Client outcomes built around real business needs.</h2>
       <div class="mt-8 space-y-4">
         <% projects.forEach((project) => { %>
           <a href="/projects/<%= project.slug %>" class="reveal block rounded-[1.7rem] border border-white/10 bg-white/6 p-5 transition hover:bg-white/10" data-reveal>
@@ -201,8 +201,8 @@
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <%- include('../components/section-heading', {
     eyebrow: 'FAQ',
-    title: 'Common questions before a platform build starts.',
-    copy: 'The public frontend, backend architecture, and management modules are designed as one delivery scope, so the questions are usually operational as much as visual.'
+    title: 'Common questions before a technology engagement starts.',
+    copy: 'Most early conversations are about business goals, scalability, support, and how the platform will fit real operational needs.'
   }) %>
   <div class="mt-10">
     <%- include('../components/faq-list', { items: marketing.faqs }) %>
@@ -211,8 +211,8 @@
 
 <%- include('../components/site-cta', {
   eyebrow: 'Ready to Build',
-  title: 'Want the public website to look polished and the backend to actually run the business logic?',
-  copy: 'CodexWebz delivers both. Start with the landing pages and system architecture, then turn the entire platform into an operating asset.',
+  title: 'Need a dependable technology partner for your next website, platform, or software system?',
+  copy: 'CodexWEBZ helps businesses build digital solutions that stay practical, scalable, and reliable long after launch.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
   secondaryLabel: 'Explore Services',
