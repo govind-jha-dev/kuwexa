@@ -1,4 +1,4 @@
-const { getOne, query } = require('../config/database');
+const { getOne, query, execute } = require('../config/database');
 const blockedVisitorModel = require('./blockedVisitorModel');
 
 async function getOverview() {
@@ -154,6 +154,10 @@ async function getOperationalCounts() {
   };
 }
 
+async function clearVisitorLogs() {
+  await execute('DELETE FROM visitor_logs');
+}
+
 module.exports = {
   getOverview,
   getTrafficSeries,
@@ -162,5 +166,6 @@ module.exports = {
   getRecentVisitors,
   getVisitorJourneys,
   getBlockedVisitors,
-  getOperationalCounts
+  getOperationalCounts,
+  clearVisitorLogs
 };

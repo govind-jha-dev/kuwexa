@@ -69,5 +69,8 @@ router.post('/careers/jobs/:id/delete', authorize(PERMISSIONS.CAREERS_MANAGE), c
 router.post('/careers/applications/:id/status', authorize(PERMISSIONS.CAREERS_MANAGE), careerController.updateApplicationStatus);
 
 router.get('/analytics', authorize(PERMISSIONS.ANALYTICS_VIEW), analyticsController.renderAnalyticsPage);
+router.post('/analytics/block', authorize(PERMISSIONS.USERS_MANAGE), validateCsrfToken, analyticsController.blockVisitor);
+router.post('/analytics/unblock', authorize(PERMISSIONS.USERS_MANAGE), validateCsrfToken, analyticsController.unblockVisitor);
+router.post('/analytics/clear', authorize(PERMISSIONS.USERS_MANAGE), validateCsrfToken, analyticsController.clearVisitorData);
 
 module.exports = router;

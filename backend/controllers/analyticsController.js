@@ -73,6 +73,16 @@ async function unblockVisitor(req, res) {
   return res.redirect(`${getDashboardBasePath(req)}/analytics?success=Visitor%20unblocked%20successfully.`);
 }
 
+async function clearVisitorData(req, res) {
+  await analyticsModel.clearVisitorLogs();
+
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.json({ message: 'Visitor analytics data cleared successfully.' });
+  }
+
+  return res.redirect(`${getDashboardBasePath(req)}/analytics?success=Visitor%20analytics%20data%20cleared%20successfully.`);
+}
+
 async function apiOverview(req, res) {
   return res.json(await getAnalyticsPayload());
 }
@@ -81,5 +91,6 @@ module.exports = {
   renderAnalyticsPage,
   blockVisitor,
   unblockVisitor,
+  clearVisitorData,
   apiOverview
 };
