@@ -8,6 +8,9 @@ if (env.mail.host && env.mail.user && env.mail.password) {
     host: env.mail.host,
     port: env.mail.port,
     secure: env.mail.secure,
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
     auth: {
       user: env.mail.user,
       pass: env.mail.password
@@ -16,14 +19,23 @@ if (env.mail.host && env.mail.user && env.mail.password) {
 }
 
 async function sendMail(options) {
-  if (!transporter) {
+  if (!transporter || !options?.to) {
+    if (!transporter) {
+      console.warn('Email transport is not configured. Skipping outgoing mail.');
+    }
     return false;
   }
 
-  await transporter.sendMail({
-    from: env.mail.from,
-    ...options
-  });
+  try {
+    await transporter.sendMail({
+      from: env.mail.from,
+      replyTo: env.mail.replyTo || undefined,
+      ...options
+    });
+  } catch (error) {
+    console.error(`Email send failed for ${options.to}:`, error.message);
+    return false;
+  }
 
   return true;
 }
@@ -39,6 +51,32 @@ async function sendLeadAlert(lead) {
       `Source: ${lead.source || 'Website'}`,
       '',
       lead.message
+    ].join('\n')
+  });
+}
+
+async function sendLeadConfirmation(lead) {
+  if (!lead?.email) {
+    return false;
+  }
+
+  return sendMail({
+    to: lead.email,
+    subject: 'We received your inquiry | CodexWEBZ',
+    text: [
+      `Hello ${lead.name || 'there'},`,
+      '',
+      'Thank you for contacting CodexWEBZ.',
+      'Your inquiry has been received and routed to our team for review.',
+      '',
+      `Inquiry type: ${lead.source || 'Website Contact Form'}`,
+      `Submitted email: ${lead.email}`,
+      `Phone: ${lead.phone || 'Not provided'}`,
+      '',
+      'Our team will review your message and get back to you as soon as possible.',
+      '',
+      'Regards,',
+      'CodexWEBZ'
     ].join('\n')
   });
 }
@@ -80,8 +118,37 @@ async function sendChatAlert(chat, manager) {
   });
 }
 
+async function sendChatConfirmation(chat) {
+  if (!chat?.email) {
+    return false;
+  }
+
+  return sendMail({
+    to: chat.email,
+    subject: 'We received your chat inquiry | CodexWEBZ',
+    text: [
+      `Hello ${chat.name || 'there'},`,
+      '',
+      'Thank you for reaching out to CodexWEBZ.',
+      'Your chat inquiry has been delivered to the designated manager.',
+      '',
+      `Topic: ${chat.topic || 'General Inquiry'}`,
+      `Page: ${chat.page_path || '/'}`,
+      `Submitted email: ${chat.email}`,
+      `Phone: ${chat.phone || 'Not provided'}`,
+      '',
+      'We will follow up with you shortly.',
+      '',
+      'Regards,',
+      'CodexWEBZ'
+    ].join('\n')
+  });
+}
+
 module.exports = {
   sendLeadAlert,
+  sendLeadConfirmation,
   sendApplicationAlert,
-  sendChatAlert
+  sendChatAlert,
+  sendChatConfirmation
 };

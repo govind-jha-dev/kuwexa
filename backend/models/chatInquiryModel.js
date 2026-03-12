@@ -34,14 +34,14 @@ async function createChat(data) {
     [
       data.name,
       data.email,
-      data.phone,
-      data.topic,
+      data.phone ?? null,
+      data.topic ?? null,
       data.message,
-      data.page_path,
+      data.page_path ?? null,
       data.status || 'new',
-      data.manager_notes || null,
-      data.manager_user_id || null,
-      data.notified_at || null
+      data.manager_notes ?? null,
+      data.manager_user_id ?? null,
+      data.notified_at ?? null
     ]
   );
 

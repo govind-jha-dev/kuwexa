@@ -3,7 +3,7 @@ const settingsModel = require('../models/settingsModel');
 const userModel = require('../models/userModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText } = require('../utils/content');
-const { sendChatAlert } = require('../services/emailService');
+const { sendChatAlert, sendChatConfirmation } = require('../services/emailService');
 
 function wantsJson(req) {
   return req.originalUrl.startsWith('/api/')
@@ -89,6 +89,8 @@ async function submitChat(req, res) {
     page_path: sanitizePlainText(req.body.page_path) || req.path,
     manager_user_id: manager?.id || null
   });
+
+  await sendChatConfirmation(chat).catch(() => false);
 
   if (manager?.email) {
     const sent = await sendChatAlert(chat, manager).catch(() => false);

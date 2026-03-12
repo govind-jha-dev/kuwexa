@@ -9,7 +9,7 @@ const applicationModel = require('../models/applicationModel');
 const seoModel = require('../models/seoModel');
 const teamModel = require('../models/teamModel');
 const { generateSitemapXml } = require('../services/sitemapService');
-const { sendLeadAlert, sendApplicationAlert } = require('../services/emailService');
+const { sendLeadAlert, sendLeadConfirmation, sendApplicationAlert } = require('../services/emailService');
 const { sanitizePlainText, sanitizeRichText } = require('../utils/content');
 const {
   excerpt,
@@ -363,7 +363,10 @@ async function submitLead(req, res) {
   };
 
   const lead = await leadModel.createLead(payload);
-  await sendLeadAlert(lead).catch(() => {});
+  await Promise.allSettled([
+    sendLeadAlert(lead),
+    sendLeadConfirmation(lead)
+  ]);
 
   if (req.originalUrl.startsWith('/api/')) {
     return res.status(201).json({ message: 'Lead submitted successfully.', lead });

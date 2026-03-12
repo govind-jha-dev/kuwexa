@@ -23,12 +23,12 @@ async function createLead(data) {
     [
       data.name,
       data.email,
-      data.phone,
+      data.phone ?? null,
       data.message,
       data.status || 'new',
-      data.source,
-      data.notes,
-      data.assigned_to || null
+      data.source ?? null,
+      data.notes ?? null,
+      data.assigned_to ?? null
     ]
   );
 
