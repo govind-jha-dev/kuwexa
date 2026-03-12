@@ -335,11 +335,11 @@ body.nav-open .chat-dock {
 }
 
 .team-card__media--leadership {
-  min-height: 20rem;
+  min-height: 18.5rem;
 }
 
 .team-card__media--employee {
-  min-height: 17rem;
+  min-height: 14.75rem;
 }
 
 .team-card__media-shell {
@@ -353,7 +353,7 @@ body.nav-open .chat-dock {
 .team-card__image {
   display: block;
   width: 100%;
-  height: 18rem;
+  height: 20rem;
   object-fit: cover;
 }
 
@@ -362,7 +362,7 @@ body.nav-open .chat-dock {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 18rem;
+  height: 15.5rem;
   border-radius: 1.4rem;
 }
 
@@ -403,7 +403,7 @@ body.nav-open .chat-dock {
 .team-card__overlay {
   position: absolute;
   inset: auto 1rem 0 1rem;
-  height: 5rem;
+  height: 4.2rem;
   border-radius: 0 0 1.4rem 1.4rem;
   background: linear-gradient(180deg, transparent, rgba(0, 36, 10, 0.94));
   pointer-events: none;
@@ -414,7 +414,7 @@ body.nav-open .chat-dock {
   left: 12%;
   right: 12%;
   bottom: 0.35rem;
-  height: 4.4rem;
+  height: 3.6rem;
   border-radius: 999px;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.58) 34%, rgba(255, 255, 255, 0) 76%);
   filter: blur(16px);
@@ -672,30 +672,92 @@ body.nav-open .chat-dock {
     font-size: 0.98rem;
   }
 
+  .team-card {
+    border-radius: 1.55rem;
+  }
+
+  .team-card__media {
+    padding: 0.85rem 0.85rem 0;
+  }
+
+  .team-card__media--leadership {
+    min-height: 12.75rem;
+  }
+
+  .team-card__media--employee {
+    min-height: 11.55rem;
+  }
+
+  .team-card__media-shell,
+  .team-card__fallback {
+    border-radius: 1.15rem;
+  }
+
   .team-card__image,
   .team-card__fallback {
-    height: 15rem;
+    height: 20rem;
+  }
+
+  .team-card__snowglow {
+    left: 10%;
+    right: 10%;
+    bottom: 0.2rem;
+    height: 3rem;
+    filter: blur(12px);
   }
 
   .team-card__body {
-    padding: 1rem;
+    gap: 0.85rem;
+    padding: 0.9rem;
   }
 
   .team-card__name {
-    font-size: 1.32rem;
+    font-size: 1.2rem;
+  }
+
+  .team-card__role {
+    margin-top: 0.38rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+  }
+
+  .team-card__badge-row {
+    inset: 0.9rem 0.9rem auto 0.9rem;
+  }
+
+  .team-card__badge {
+    padding: 0.34rem 0.58rem;
+    font-size: 0.54rem;
+  }
+
+  .team-card__meta-item {
+    padding: 0.68rem 0.74rem;
+  }
+
+  .team-card__contact {
+    font-size: 0.8rem;
+  }
+
+  .team-card__social {
+    width: 2.05rem;
+    height: 2.05rem;
   }
 
   .team-card__footer {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.75rem;
   }
 
   .team-card__meta-list {
     grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 
   .team-card__cta {
     width: 100%;
+    padding: 0.72rem 0.9rem;
+    font-size: 0.66rem;
   }
 }
 
