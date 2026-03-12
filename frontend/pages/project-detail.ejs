@@ -20,7 +20,7 @@
 
     <aside class="space-y-6">
       <% if (project.featured_image) { %>
-        <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-80 w-full rounded-[2rem] object-cover shadow-float">
+        <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-80 w-full rounded-[2rem] object-cover shadow-float" decoding="async" fetchpriority="high">
       <% } %>
       <div class="rounded-[2rem] bg-primary p-8 text-white">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Project Angle</p>
@@ -86,7 +86,7 @@
       }) %>
       <div class="mt-8 grid gap-6 md:grid-cols-2">
         <% project.images.forEach((image) => { %>
-          <img src="<%= image %>" alt="<%= project.title %>" class="reveal h-72 w-full rounded-[1.85rem] object-cover shadow-sm" data-reveal>
+          <img src="<%= image %>" alt="<%= project.title %>" class="reveal h-72 w-full rounded-[1.85rem] object-cover shadow-sm" data-reveal loading="lazy" decoding="async">
         <% }) %>
       </div>
     </div>

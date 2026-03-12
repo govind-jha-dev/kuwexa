@@ -4,7 +4,7 @@
   <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 lg:px-4">
     <a href="/" class="flex items-center gap-3">
       <% if (siteSettings?.logo_path) { %>
-        <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="site-logo h-12 w-auto max-w-[11rem] object-contain md:h-14">
+        <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="site-logo h-12 w-auto max-w-[11rem] object-contain md:h-14" decoding="async" fetchpriority="high">
       <% } else { %>
         <span>
           <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>

@@ -9,7 +9,7 @@
       <div class="flex flex-wrap items-center gap-4">
         <div class="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.4rem] bg-slate-50 ring-1 ring-primary/8">
           <% if (product.logo) { %>
-            <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-14 w-14 object-contain">
+            <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-14 w-14 object-contain" decoding="async">
           <% } else { %>
             <span class="font-display text-3xl font-bold text-primary"><%= String(product.name || 'P').charAt(0) %></span>
           <% } %>
@@ -25,7 +25,7 @@
 
     <aside class="space-y-6">
       <% if (product.logo) { %>
-        <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-80 w-full rounded-[2rem] object-contain bg-white p-8 shadow-float ring-1 ring-primary/8">
+        <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-80 w-full rounded-[2rem] object-contain bg-white p-8 shadow-float ring-1 ring-primary/8" decoding="async" fetchpriority="high">
       <% } %>
       <div class="rounded-[2rem] bg-primary p-8 text-white">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Action</p>
@@ -79,7 +79,7 @@
       }) %>
       <div class="mt-8 grid gap-6 md:grid-cols-2">
         <% product.images.forEach((image) => { %>
-          <img src="<%= image %>" alt="<%= product.name %>" class="reveal h-72 w-full rounded-[1.85rem] object-cover shadow-sm" data-reveal>
+          <img src="<%= image %>" alt="<%= product.name %>" class="reveal h-72 w-full rounded-[1.85rem] object-cover shadow-sm" data-reveal loading="lazy" decoding="async">
         <% }) %>
       </div>
     </section>

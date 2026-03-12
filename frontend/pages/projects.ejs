@@ -60,7 +60,7 @@
             data-category="<%= project.category || 'All' %>"
             data-search="<%= `${project.title} ${project.client || ''} ${project.category || ''} ${(project.technologies || []).join(' ')}` %>">
             <% if (project.featured_image) { %>
-              <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-56 w-full rounded-[1.5rem] object-cover">
+              <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-56 w-full rounded-[1.5rem] object-cover" loading="lazy" decoding="async">
             <% } %>
             <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
               <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= project.category || 'Project' %></span>

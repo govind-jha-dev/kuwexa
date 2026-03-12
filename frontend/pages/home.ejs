@@ -105,7 +105,7 @@
           <article class="reveal rounded-[1.9rem] border border-primary/8 bg-slate-50 p-6" data-reveal>
             <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white ring-1 ring-primary/10">
               <% if (product.logo) { %>
-                <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-12 w-12 object-contain">
+                <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-12 w-12 object-contain" loading="lazy" decoding="async">
               <% } else { %>
                 <span class="font-display text-2xl font-bold text-primary"><%= String(product.name || 'P').charAt(0) %></span>
               <% } %>

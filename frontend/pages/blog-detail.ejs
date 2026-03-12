@@ -18,7 +18,7 @@
         <% }) %>
       </div>
       <% if (post.featured_image) { %>
-        <img src="<%= post.featured_image %>" alt="<%= post.title %>" class="mt-8 h-80 w-full rounded-[2rem] object-cover">
+        <img src="<%= post.featured_image %>" alt="<%= post.title %>" class="mt-8 h-80 w-full rounded-[2rem] object-cover" decoding="async" fetchpriority="high">
       <% } %>
       <div class="prose-content mt-10"><%- post.content || '<p>Article content is managed through the built-in blog CMS.</p>' %></div>
     </div>

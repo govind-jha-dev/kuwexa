@@ -8,7 +8,7 @@
     <aside class="space-y-6">
       <div class="overflow-hidden rounded-[2.2rem] bg-primary text-white shadow-float">
         <% if (member.image) { %>
-          <img src="<%= member.image %>" alt="<%= member.name %>" class="h-[28rem] w-full object-cover">
+          <img src="<%= member.image %>" alt="<%= member.name %>" class="h-[28rem] w-full object-cover" decoding="async" fetchpriority="high">
         <% } else { %>
           <div class="flex h-[28rem] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(219,171,13,0.24),_transparent_40%),linear-gradient(180deg,_rgba(255,255,255,0.08),_rgba(255,255,255,0.02))]">
             <div class="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-secondary text-4xl font-bold text-primary">

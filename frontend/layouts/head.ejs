@@ -25,28 +25,16 @@
   <% } %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '<%= siteSettings?.primary_color || "#00240a" %>',
-            secondary: '<%= siteSettings?.secondary_color || "#dbab0d" %>',
-            surface: '#f6f2e9'
-          },
-          fontFamily: {
-            sans: ['Manrope', 'sans-serif'],
-            display: ['Space Grotesk', 'sans-serif']
-          },
-          boxShadow: {
-            float: '0 24px 60px rgba(0, 36, 10, 0.12)'
-          }
-        }
-      }
-    };
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: <%= siteSettings?.primary_color || '#00240a' %>;
+      --secondary: <%= siteSettings?.secondary_color || '#dbab0d' %>;
+      --surface: #f6f2e9;
+    }
+  </style>
+  <link rel="preload" href="/styles/tailwind.css" as="style">
+  <link rel="stylesheet" href="/styles/tailwind.css">
   <link rel="stylesheet" href="/styles/main.css">
   <% if (siteSettings?.analytics_id) { %>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= siteSettings.analytics_id %>"></script>

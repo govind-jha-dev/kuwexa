@@ -27,7 +27,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.tailwindcss.com', 'https://cdn.jsdelivr.net', 'https://www.googletagmanager.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net', 'https://www.googletagmanager.com'],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdn.jsdelivr.net'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net'],
       imgSrc: ["'self'", 'data:', 'https:'],
@@ -43,9 +43,16 @@ app.use(generalLimiter);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(env.cookieSecret));
-app.use('/styles', express.static(path.join(env.rootDir, 'frontend', 'styles')));
-app.use('/scripts', express.static(path.join(env.rootDir, 'frontend', 'scripts')));
-app.use('/uploads', express.static(env.uploadDir));
+const immutableAssetOptions = env.isProduction
+  ? {
+      maxAge: '30d',
+      immutable: true
+    }
+  : {};
+
+app.use('/styles', express.static(path.join(env.rootDir, 'frontend', 'styles'), immutableAssetOptions));
+app.use('/scripts', express.static(path.join(env.rootDir, 'frontend', 'scripts'), immutableAssetOptions));
+app.use('/uploads', express.static(env.uploadDir, immutableAssetOptions));
 app.use(hydrateUser);
 app.use((req, res, next) => {
   if (req.path.startsWith('/admin') || req.path.startsWith('/manager') || req.path === '/login' || req.path === env.privateLoginPath) {
