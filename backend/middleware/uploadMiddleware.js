@@ -32,7 +32,7 @@ function fileFilter(allowedTypes) {
     );
 
     const extension = path.extname(file.originalname || '').toLowerCase();
-    const allowedImageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.svg', '.jfif']);
+    const allowedImageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.svg', '.jfif', '.ico']);
     const matchesExtension = allowedTypes.includes('image/*') && allowedImageExtensions.has(extension);
 
     if (matchesPattern || matchesExtension) {

@@ -3,7 +3,7 @@ const userModel = require('../models/userModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, parseJsonInput } = require('../utils/content');
 
-function logoPath(file) {
+function uploadedImagePath(file) {
   return file ? `/uploads/images/${file.filename}` : null;
 }
 
@@ -44,6 +44,15 @@ async function renderSettingsPage(req, res) {
           description: 'Upload JPG, JPEG, PNG, WEBP, or SVG logo files. Recommended size: around 320x120 px or any clean horizontal logo. PNG works best for transparent logos, while JPG/JPEG is also supported.'
         },
         {
+          name: 'favicon',
+          label: 'Website Favicon',
+          type: 'file',
+          accept: '.ico,.png,.svg,image/x-icon,image/vnd.microsoft.icon,image/png,image/svg+xml',
+          previewUrl: settings?.favicon_path || '',
+          previewMode: 'contain',
+          description: 'Upload ICO, PNG, or SVG favicon files. Recommended size: square 64x64 px or 128x128 px for sharp browser tab icons.'
+        },
+        {
           name: 'chat_manager_user_id',
           label: 'Chat Notification Manager',
           type: 'select',
@@ -80,7 +89,7 @@ async function renderSettingsPage(req, res) {
     },
     infoPanel: {
       title: 'Brand Theme',
-      body: 'Primary color #00240a and secondary color #dbab0d are already configured globally. The header now supports JPG, JPEG, PNG, WEBP, and SVG logo files, and renders them inside a clean brand container for desktop and mobile.'
+      body: 'Primary color #00240a and secondary color #dbab0d are already configured globally. The branding section supports JPG, JPEG, PNG, WEBP, SVG logo uploads and favicon uploads in ICO, PNG, or SVG format.'
     }
   });
 }
@@ -103,8 +112,15 @@ async function updateSettings(req, res) {
     social_links: parseJsonInput(req.body.social_links)
   };
 
-  if (req.file) {
-    payload.logo_path = logoPath(req.file);
+  const logoFile = req.files?.logo?.[0] || req.file || null;
+  const faviconFile = req.files?.favicon?.[0] || null;
+
+  if (logoFile) {
+    payload.logo_path = uploadedImagePath(logoFile);
+  }
+
+  if (faviconFile) {
+    payload.favicon_path = uploadedImagePath(faviconFile);
   }
 
   const settings = await settingsModel.updateSettings(payload);

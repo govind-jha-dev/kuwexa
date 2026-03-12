@@ -91,7 +91,18 @@ router.get('/seo', authorize(PERMISSIONS.SEO_MANAGE), seoController.renderSeoPag
 router.post('/seo', authorize(PERMISSIONS.SEO_MANAGE), seoValidation, handleValidationErrors, seoController.upsertSeo);
 
 router.get('/settings', authorize(PERMISSIONS.SETTINGS_MANAGE), settingsController.renderSettingsPage);
-router.post('/settings', authorize(PERMISSIONS.SETTINGS_MANAGE), imageUpload.single('logo'), validateCsrfToken, settingsValidation, handleValidationErrors, settingsController.updateSettings);
+router.post(
+  '/settings',
+  authorize(PERMISSIONS.SETTINGS_MANAGE),
+  imageUpload.fields([
+    { name: 'logo', maxCount: 1 },
+    { name: 'favicon', maxCount: 1 }
+  ]),
+  validateCsrfToken,
+  settingsValidation,
+  handleValidationErrors,
+  settingsController.updateSettings
+);
 
 router.get('/analytics', authorize(PERMISSIONS.ANALYTICS_VIEW), analyticsController.renderAnalyticsPage);
 router.post('/analytics/block', authorize(PERMISSIONS.USERS_MANAGE), validateCsrfToken, analyticsController.blockVisitor);

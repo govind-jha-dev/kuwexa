@@ -13,6 +13,10 @@
   <meta property="og:description" content="<%= seo?.ogDescription || seo?.metaDescription || siteSettings?.default_meta_description || '' %>">
   <meta property="og:type" content="website">
   <meta property="og:url" content="<%= appUrl %><%= seo?.canonicalUrl ? seo.canonicalUrl : currentPath %>">
+  <% if (siteSettings?.favicon_path) { %>
+    <link rel="icon" href="<%= siteSettings.favicon_path %>">
+    <link rel="shortcut icon" href="<%= siteSettings.favicon_path %>">
+  <% } %>
   <% if (seo?.canonicalUrl) { %>
     <link rel="canonical" href="<%= appUrl %><%= seo.canonicalUrl %>">
   <% } %>
