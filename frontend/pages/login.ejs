@@ -1,18 +1,11 @@
 <%- include('../layouts/head', { title, seo }) %>
+<% const secureLoginPath = typeof loginPath !== 'undefined' ? loginPath : (typeof privateLoginPath !== 'undefined' ? privateLoginPath : '/login'); %>
 <section class="flex min-h-screen items-center justify-center px-6 py-16">
   <div class="grid w-full max-w-6xl overflow-hidden rounded-[2.4rem] bg-white shadow-float ring-1 ring-primary/8 lg:grid-cols-[1.05fr,0.95fr]">
     <div class="hero-grid bg-primary p-10 text-white lg:p-12">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Secure Access</p>
       <h1 class="mt-6 max-w-xl font-display text-5xl font-bold leading-tight">Management access for the CodexWebz platform.</h1>
       <p class="mt-5 max-w-lg text-lg leading-8 text-white/72">Admins and managers get role-based access to website settings, content modules, leads, careers, SEO, and analytics.</p>
-      <div class="mt-10 rounded-[1.8rem] border border-white/10 bg-white/6 p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.3em] text-secondary">Seeded Accounts</p>
-        <div class="mt-4 space-y-3 text-sm leading-7 text-white/72">
-          <p><code>admin@codexwebz.com</code> / <code>ChangeMe123!</code></p>
-          <p><code>manager@codexwebz.com</code> / <code>ChangeMe123!</code></p>
-          <p><code>editor@codexwebz.com</code> / <code>ChangeMe123!</code></p>
-        </div>
-      </div>
     </div>
 
     <div class="p-10 lg:p-12">
@@ -22,7 +15,7 @@
       <% if (error) { %>
         <div class="mt-6 rounded-[1.5rem] bg-rose-50 px-5 py-4 text-sm font-semibold text-rose-700"><%= error %></div>
       <% } %>
-      <form method="post" action="/login" class="mt-8 space-y-4">
+      <form method="post" action="<%= secureLoginPath %>" class="mt-8 space-y-4">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div>
           <label class="mb-2 block text-sm font-semibold text-slate-700" for="email">Email</label>

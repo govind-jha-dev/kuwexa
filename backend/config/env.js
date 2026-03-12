@@ -2,6 +2,7 @@ const path = require('path');
 require('dotenv').config();
 
 const rootDir = path.join(__dirname, '..', '..');
+const privateLoginPath = String(process.env.PRIVATE_LOGIN_PATH || '/access/codexwebz-control-room-7f3b91d24c6e8a5').trim();
 
 module.exports = {
   rootDir,
@@ -13,6 +14,7 @@ module.exports = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   cookieSecret: process.env.COOKIE_SECRET || 'change_this_cookie_secret',
   csrfSecret: process.env.CSRF_SECRET || 'change_this_csrf_secret',
+  privateLoginPath: privateLoginPath.startsWith('/') ? privateLoginPath : `/${privateLoginPath}`,
   uploadDir: path.join(rootDir, process.env.UPLOAD_DIR || 'uploads'),
   maxFileSizeBytes: Number(process.env.MAX_FILE_SIZE_MB || 10) * 1024 * 1024,
   db: {

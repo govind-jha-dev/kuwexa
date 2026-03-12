@@ -43,7 +43,7 @@ function requireAuth(req, res, next) {
     return res.status(401).json({ message: 'Authentication required.' });
   }
 
-  return res.redirect('/login');
+  return res.redirect(env.privateLoginPath);
 }
 
 function ensureGuest(req, res, next) {

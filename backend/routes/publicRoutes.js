@@ -2,6 +2,7 @@ const express = require('express');
 const publicController = require('../controllers/publicController');
 const authController = require('../controllers/authController');
 const chatController = require('../controllers/chatController');
+const env = require('../config/env');
 const { ensureGuest } = require('../middleware/authMiddleware');
 const { validateCsrfToken } = require('../middleware/csrfMiddleware');
 const { authLimiter } = require('../middleware/rateLimiters');
@@ -16,8 +17,10 @@ const {
 
 const router = express.Router();
 
-router.get('/login', ensureGuest, authController.showLogin);
-router.post('/login', ensureGuest, authLimiter, loginValidation, handleValidationErrors, authController.login);
+router.get('/login', (req, res) => res.redirect('/'));
+router.post('/login', (req, res) => res.redirect(303, '/'));
+router.get(env.privateLoginPath, ensureGuest, authController.showLogin);
+router.post(env.privateLoginPath, ensureGuest, authLimiter, loginValidation, handleValidationErrors, authController.login);
 router.post('/logout', authController.logout);
 
 router.get('/', publicController.home);

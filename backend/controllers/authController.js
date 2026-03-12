@@ -10,7 +10,7 @@ function getLoginSeo(seoRecord) {
     metaDescription: seoRecord?.meta_description || 'Sign in to the CodexWebz management platform.',
     ogTitle: seoRecord?.og_title || seoRecord?.meta_title || 'Login | CodexWebz',
     ogDescription: seoRecord?.og_description || seoRecord?.meta_description || 'Sign in to the CodexWebz management platform.',
-    canonicalUrl: seoRecord?.canonical_url || '/login',
+    canonicalUrl: seoRecord?.canonical_url || env.privateLoginPath,
     schemaMarkup: seoRecord?.schema_markup || null
   };
 }
@@ -21,7 +21,8 @@ async function showLogin(req, res) {
   return res.render('frontend/pages/login', {
     title: 'Login',
     error: req.query.error || null,
-    seo: getLoginSeo(seoRecord)
+    seo: getLoginSeo(seoRecord),
+    loginPath: env.privateLoginPath
   });
 }
 
@@ -47,7 +48,7 @@ async function login(req, res) {
       return res.status(401).json({ message });
     }
 
-    return res.redirect(`/login?error=${encodeURIComponent(message)}`);
+    return res.redirect(`${env.privateLoginPath}?error=${encodeURIComponent(message)}`);
   }
 
   const isValidPassword = await bcrypt.compare(req.body.password, user.password);
@@ -57,7 +58,7 @@ async function login(req, res) {
       return res.status(401).json({ message });
     }
 
-    return res.redirect(`/login?error=${encodeURIComponent(message)}`);
+    return res.redirect(`${env.privateLoginPath}?error=${encodeURIComponent(message)}`);
   }
 
   await userModel.updateUser(user.id, {
@@ -91,7 +92,7 @@ function logout(req, res) {
     return res.json({ message: 'Logged out successfully.' });
   }
 
-  return res.redirect('/login');
+  return res.redirect(env.privateLoginPath);
 }
 
 function me(req, res) {

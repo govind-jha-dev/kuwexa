@@ -48,7 +48,7 @@ app.use('/scripts', express.static(path.join(env.rootDir, 'frontend', 'scripts')
 app.use('/uploads', express.static(env.uploadDir));
 app.use(hydrateUser);
 app.use((req, res, next) => {
-  if (req.path.startsWith('/admin') || req.path.startsWith('/manager') || req.path === '/login') {
+  if (req.path.startsWith('/admin') || req.path.startsWith('/manager') || req.path === '/login' || req.path === env.privateLoginPath) {
     res.set('Cache-Control', 'no-store');
   }
 
@@ -66,6 +66,7 @@ app.use(async (req, res, next) => {
   res.locals.currentPath = req.path;
   res.locals.currentYear = new Date().getFullYear();
   res.locals.appUrl = env.appUrl;
+  res.locals.privateLoginPath = env.privateLoginPath;
 
   if (req.path.startsWith('/api') || req.path.startsWith('/admin') || req.path.startsWith('/manager') || req.path.endsWith('.xml') || req.path.endsWith('.txt')) {
     res.locals.teamShowcase = { leadership: [], employees: [] };

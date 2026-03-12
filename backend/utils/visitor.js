@@ -1,3 +1,5 @@
+const env = require('../config/env');
+
 function firstHeaderValue(value) {
   if (!value) {
     return null;
@@ -69,6 +71,7 @@ function isPublicWebsiteRequest(req) {
     && !req.path.startsWith('/scripts')
     && !req.path.startsWith('/favicon')
     && !req.path.startsWith('/login')
+    && !req.path.startsWith(env.privateLoginPath)
     && !req.path.endsWith('.xml')
     && !req.path.endsWith('.txt');
 }
