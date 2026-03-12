@@ -1,3 +1,13 @@
+<%
+  const socialLinks = siteSettings?.social_links && typeof siteSettings.social_links === 'object'
+    ? siteSettings.social_links
+    : {};
+  const socialItems = [
+    { key: 'linkedin', label: 'LinkedIn', href: socialLinks.linkedin },
+    { key: 'facebook', label: 'Facebook', href: socialLinks.facebook },
+    { key: 'instagram', label: 'Instagram', href: socialLinks.instagram }
+  ].filter((item) => item.href);
+%>
 <footer class="mt-24 bg-primary text-white">
   <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
     <div class="grid gap-12 lg:grid-cols-[1.25fr,0.8fr,0.8fr,0.8fr]">
@@ -47,6 +57,40 @@
           <p><%= siteSettings?.company_phone || '+91 00000 00000' %></p>
           <p><%= siteSettings?.address || 'Remote-first delivery across websites, SEO, and operational systems.' %></p>
         </div>
+        <% if (socialItems.length) { %>
+          <div class="mt-6">
+            <p class="text-xs font-bold uppercase tracking-[0.28em] text-secondary">Follow Us</p>
+            <div class="footer-socials mt-4">
+              <% socialItems.forEach((item) => { %>
+                <a
+                  href="<%= item.href %>"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="<%= item.label %>"
+                  title="<%= item.label %>"
+                  class="footer-social-link footer-social-link--<%= item.key %>"
+                >
+                  <% if (item.key === 'linkedin') { %>
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="footer-social-icon" aria-hidden="true">
+                      <path d="M4.5 6.5A1.5 1.5 0 1 0 4.5 3.5a1.5 1.5 0 0 0 0 3Z"></path>
+                      <path d="M3.25 7.75h2.5v8.5h-2.5zM8 7.75h2.4v1.2h.03c.33-.63 1.15-1.45 2.37-1.45 2.53 0 3 1.67 3 3.84v4.91h-2.5v-4.35c0-1.04-.02-2.37-1.45-2.37-1.45 0-1.67 1.13-1.67 2.3v4.42H8z"></path>
+                    </svg>
+                  <% } else if (item.key === 'facebook') { %>
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="footer-social-icon" aria-hidden="true">
+                      <path d="M11.14 16.25v-5.7h1.92l.29-2.22h-2.2V6.91c0-.64.18-1.08 1.09-1.08h1.16V3.84c-.2-.03-.9-.09-1.7-.09-1.68 0-2.83 1.03-2.83 2.92v1.66H7v2.22h1.88v5.7h2.26Z"></path>
+                    </svg>
+                  <% } else if (item.key === 'instagram') { %>
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" class="footer-social-icon" aria-hidden="true">
+                      <rect x="3.25" y="3.25" width="13.5" height="13.5" rx="4"></rect>
+                      <circle cx="10" cy="10" r="3.1"></circle>
+                      <circle cx="14.1" cy="5.9" r="0.8" fill="currentColor" stroke="none"></circle>
+                    </svg>
+                  <% } %>
+                </a>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
       </div>
     </div>
 

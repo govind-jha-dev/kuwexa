@@ -58,6 +58,11 @@ async function ensurePageColumns(connection, databaseName) {
 }
 
 async function ensureServiceColumns(connection, databaseName) {
+  await ensureColumn(connection, databaseName, 'services', 'category', 'VARCHAR(160) NULL AFTER image');
+  await ensureColumn(connection, databaseName, 'services', 'kicker', 'VARCHAR(255) NULL AFTER category');
+  await ensureColumn(connection, databaseName, 'services', 'deliverables', 'JSON NULL AFTER kicker');
+  await ensureColumn(connection, databaseName, 'services', 'outcomes', 'JSON NULL AFTER deliverables');
+  await ensureColumn(connection, databaseName, 'services', 'process', 'JSON NULL AFTER outcomes');
   await ensureColumn(connection, databaseName, 'services', 'meta_keywords', 'VARCHAR(255) NULL AFTER meta_description');
 }
 

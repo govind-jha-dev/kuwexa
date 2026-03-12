@@ -4,7 +4,7 @@ const { parseJsonFields, parseMany } = require('../utils/serializers');
 
 async function listAll() {
   const rows = await query('SELECT * FROM services ORDER BY updated_at DESC');
-  return parseMany(rows, ['schema_markup']);
+  return parseMany(rows, ['schema_markup', 'deliverables', 'outcomes', 'process']);
 }
 
 async function listPublished() {
@@ -13,12 +13,12 @@ async function listPublished() {
 
 async function listFeatured(limit = 3) {
   const rows = await query('SELECT * FROM services ORDER BY created_at DESC LIMIT ?', [Number(limit)]);
-  return parseMany(rows, ['schema_markup']);
+  return parseMany(rows, ['schema_markup', 'deliverables', 'outcomes', 'process']);
 }
 
 async function findBySlug(slug) {
   const row = await getOne('SELECT * FROM services WHERE slug = ?', [slug]);
-  return parseJsonFields(row, ['schema_markup']);
+  return parseJsonFields(row, ['schema_markup', 'deliverables', 'outcomes', 'process']);
 }
 
 async function countAll() {
@@ -30,10 +30,10 @@ async function createService(data) {
   const result = await execute(
     `
       INSERT INTO services (
-        title, slug, short_description, description, icon, image,
+        title, slug, short_description, description, icon, image, category, kicker, deliverables, outcomes, process,
         meta_title, meta_description, meta_keywords, schema_markup, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       data.title,
@@ -42,6 +42,11 @@ async function createService(data) {
       data.description,
       data.icon,
       data.image,
+      data.category,
+      data.kicker,
+      data.deliverables,
+      data.outcomes,
+      data.process,
       data.meta_title,
       data.meta_description,
       data.meta_keywords,
@@ -52,7 +57,7 @@ async function createService(data) {
   );
 
   const row = await getOne('SELECT * FROM services WHERE id = ?', [result.insertId]);
-  return parseJsonFields(row, ['schema_markup']);
+  return parseJsonFields(row, ['schema_markup', 'deliverables', 'outcomes', 'process']);
 }
 
 async function updateService(id, data) {
@@ -62,7 +67,7 @@ async function updateService(id, data) {
   }
 
   const row = await getOne('SELECT * FROM services WHERE id = ?', [id]);
-  return parseJsonFields(row, ['schema_markup']);
+  return parseJsonFields(row, ['schema_markup', 'deliverables', 'outcomes', 'process']);
 }
 
 async function deleteService(id) {

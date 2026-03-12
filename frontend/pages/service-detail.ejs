@@ -11,6 +11,16 @@
       </div>
       <h1 class="mt-6 font-display text-5xl font-bold leading-tight text-primary md:text-6xl"><%= service.title %></h1>
       <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600"><%= service.short_description || profile.kicker %></p>
+      <% if (service.image) { %>
+        <div class="mt-8 overflow-hidden rounded-[2rem] bg-slate-100 shadow-sm ring-1 ring-primary/8">
+          <img
+            src="<%= service.image %>"
+            alt="<%= service.title %>"
+            class="h-[18rem] w-full object-cover md:h-[22rem] xl:h-[26rem]"
+            loading="eager"
+            decoding="async">
+        </div>
+      <% } %>
       <div class="prose-content mt-10"><%- service.description || '<p>This service is structured to connect visual polish, CMS control, SEO readiness, and backend workflows.</p>' %></div>
     </article>
 
@@ -18,7 +28,7 @@
       <div class="rounded-[2rem] bg-primary p-8 text-white">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Service Focus</p>
         <h2 class="mt-4 font-display text-3xl font-bold"><%= profile.kicker %></h2>
-        <p class="mt-4 text-sm leading-8 text-white/72">CodexWebz uses this service to connect frontend quality with a backend workflow the team can run after launch.</p>
+        <p class="mt-4 text-sm leading-8 text-white/72">CodexWEBZ structures this service around real business requirements, practical implementation, and long-term usability after launch.</p>
         <a href="/contact" class="mt-6 inline-flex rounded-full bg-secondary px-5 py-3 text-sm font-bold text-primary">Request a Proposal</a>
       </div>
 

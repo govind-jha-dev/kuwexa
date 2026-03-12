@@ -6,7 +6,7 @@
     <%- include('../components/section-heading', {
       eyebrow: 'Services',
       title: 'Technology services designed for modern businesses and practical digital growth.',
-      copy: 'These services support companies that need structured websites, digital platforms, custom workflows, stronger visibility, and dependable technology support.'
+      copy: 'These services support companies that need structured websites, ecommerce systems, business software, mobile applications, stronger digital visibility, and dependable long-term technical support.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Engagement Models</p>
@@ -62,6 +62,45 @@
       </div>
     </div>
   </section>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="surface-panel rounded-[2.2rem] p-8 lg:p-10">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Core Services',
+      title: 'The main service lines CodexWEBZ uses in marketing, sales conversations, and project scoping.',
+      copy: 'These are the core categories most businesses ask for first. Each one can be delivered as a standalone engagement or combined into a broader digital system.'
+    }) %>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <% pageContent.marketingServices.forEach((item) => { %>
+        <span class="rounded-full bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.18em] text-white"><%= item %></span>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Complete Service List',
+      title: 'A full category-wise view of what CodexWEBZ delivers.',
+      copy: 'The service structure covers web presence, ecommerce, software, mobile, growth, creative support, maintenance, infrastructure, and technology collaboration.'
+    }) %>
+    <div class="mt-10 grid gap-5 xl:grid-cols-2">
+      <% pageContent.serviceCatalog.forEach((group) => { %>
+        <article class="reveal pattern-panel rounded-[1.9rem] p-6 shadow-sm ring-1 ring-primary/8" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.24em] text-secondary">Service Category</p>
+          <h2 class="mt-4 font-display text-3xl font-bold text-primary"><%= group.title %></h2>
+          <p class="mt-3 text-sm leading-8 text-slate-600"><%= group.summary %></p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <% group.items.forEach((item) => { %>
+              <span class="rounded-full bg-white/88 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary ring-1 ring-primary/8"><%= item %></span>
+            <% }) %>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </div>
 </section>
 
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">

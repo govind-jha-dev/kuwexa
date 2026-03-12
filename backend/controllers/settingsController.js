@@ -84,7 +84,13 @@ async function renderSettingsPage(req, res) {
         { name: 'search_console_tag', label: 'Search Console Tag', type: 'text', value: settings?.search_console_tag || '' },
         { name: 'default_meta_title', label: 'Default Meta Title', type: 'text', value: settings?.default_meta_title || '' },
         { name: 'default_meta_description', label: 'Default Meta Description', type: 'textarea', value: settings?.default_meta_description || '' },
-        { name: 'social_links', label: 'Social Links JSON', type: 'textarea', value: settings?.social_links ? JSON.stringify(settings.social_links, null, 2) : '' }
+        {
+          name: 'social_links',
+          label: 'Social Links JSON',
+          type: 'textarea',
+          value: settings?.social_links ? JSON.stringify(settings.social_links, null, 2) : '',
+          description: 'Use a JSON object with keys like linkedin, facebook, instagram. Example: {"linkedin":"https://...","facebook":"https://...","instagram":"https://..."}'
+        }
       ]
     },
     infoPanel: {

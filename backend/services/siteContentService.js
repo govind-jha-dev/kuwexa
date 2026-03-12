@@ -14,107 +14,455 @@ function excerpt(value, length = 170) {
   return `${plain.slice(0, length).trim()}...`;
 }
 
+const serviceCatalog = [
+  {
+    title: 'Web Development Services',
+    summary: 'Structured websites, custom web experiences, and scalable web applications for businesses that need more than a basic online presence.',
+    items: [
+      'Website Development',
+      'Custom Website Design',
+      'Business Website Development',
+      'Corporate Website Development',
+      'Landing Page Development',
+      'Portfolio Website Development',
+      'Web Application Development',
+      'Custom Web Application Development',
+      'Progressive Web Apps (PWA)'
+    ]
+  },
+  {
+    title: 'Ecommerce Solutions',
+    summary: 'Commerce-ready websites, seller setup, store operations, and integrations that support online sales and marketplace visibility.',
+    items: [
+      'Ecommerce Website Development',
+      'Ecommerce Platform Setup',
+      'Online Store Development',
+      'Product Catalog Management',
+      'Payment Gateway Integration',
+      'Ecommerce Seller Account Setup',
+      'Amazon Seller Account Setup',
+      'Flipkart Seller Account Setup',
+      'Marketplace Integration'
+    ]
+  },
+  {
+    title: 'Software Development',
+    summary: 'Business software systems, SaaS platforms, and internal tools designed around real operational requirements.',
+    items: [
+      'Custom Software Development',
+      'Business Software Solutions',
+      'CRM Development',
+      'Internal Business Systems',
+      'API Integration',
+      'SaaS Platform Development'
+    ]
+  },
+  {
+    title: 'Mobile Application Development',
+    summary: 'Mobile-first business applications for Android, iOS, and cross-platform delivery requirements.',
+    items: [
+      'Android App Development',
+      'iOS App Development',
+      'Cross Platform Mobile Apps',
+      'Business Mobile Applications'
+    ]
+  },
+  {
+    title: 'Digital Marketing Services',
+    summary: 'Search visibility and growth support that helps businesses attract traffic, leads, and stronger digital positioning.',
+    items: [
+      'Search Engine Optimization (SEO)',
+      'Technical SEO',
+      'Local SEO',
+      'Digital Marketing Strategy',
+      'Lead Generation Marketing'
+    ]
+  },
+  {
+    title: 'Social Media & Branding',
+    summary: 'Brand presence and social media support for businesses building awareness, credibility, and stronger market visibility.',
+    items: [
+      'Social Media Marketing',
+      'Social Media Management',
+      'Brand Development',
+      'Online Branding Strategy'
+    ]
+  },
+  {
+    title: 'Creative & Content Services',
+    summary: 'Design and content support for businesses that need stronger creative assets, UI quality, and marketing communication.',
+    items: [
+      'Graphic Designing',
+      'UI/UX Design',
+      'Video Editing',
+      'Content Writing',
+      'Marketing Content Creation'
+    ]
+  },
+  {
+    title: 'Website Support & Maintenance',
+    summary: 'Long-term support, technical maintenance, and optimization for businesses running active digital platforms.',
+    items: [
+      'Website Maintenance',
+      'Technical Support',
+      'Website Security Updates',
+      'Website Performance Optimization',
+      'Bug Fixing & Troubleshooting'
+    ]
+  },
+  {
+    title: 'Cloud & Infrastructure',
+    summary: 'Hosting, deployment, server setup, and monitoring support for dependable production systems.',
+    items: [
+      'Cloud Hosting Setup',
+      'Server Configuration',
+      'Deployment Support',
+      'System Monitoring'
+    ]
+  },
+  {
+    title: 'Business Digital Solutions',
+    summary: 'Practical digital solutions that help businesses strengthen local presence and automate repeatable processes.',
+    items: [
+      'Google Business Profile Setup',
+      'Google Business Optimization',
+      'Digital Presence Management',
+      'Business Process Automation'
+    ]
+  },
+  {
+    title: 'Technology Collaboration Services',
+    summary: 'Flexible development collaboration for startups, agencies, and teams needing technical execution support.',
+    items: [
+      'Development Outsourcing',
+      'Project Based Development Support',
+      'Startup Tech Support',
+      'Agency Development Partnerships'
+    ]
+  }
+];
+
+const marketingServices = [
+  'Website Development',
+  'Ecommerce Development',
+  'Web Applications',
+  'Mobile App Development',
+  'Software Development',
+  'SEO & Digital Marketing',
+  'Social Media Marketing',
+  'Graphic Design & Video Editing',
+  'Website Maintenance & Support',
+  'Google Business Optimization'
+];
+
 const serviceProfiles = [
   {
-    key: 'web-platform',
-    matches: ['web', 'website', 'platform', 'development', 'app'],
-    category: 'Platform Engineering',
-    kicker: 'Build digital infrastructure that sells and scales.',
+    key: 'web-development',
+    matches: ['website', 'web development', 'web application', 'web app', 'landing page', 'portfolio website', 'corporate website', 'pwa', 'progressive web'],
+    category: 'Web Development Services',
+    kicker: 'Build business-ready websites and web platforms that stay practical after launch.',
     deliverables: [
-      'Conversion-focused marketing website',
-      'Admin and manager dashboards',
-      'REST API and CMS foundations',
-      'Deployment architecture and observability'
+      'Business and corporate websites',
+      'Landing pages and portfolio websites',
+      'Custom web applications and PWAs',
+      'Responsive UI and CMS-ready delivery'
     ],
     outcomes: [
-      'Shorter content publishing cycles',
-      'Cleaner lead handoff between marketing and ops',
-      'A single platform instead of fragmented tools'
+      'Stronger digital presence for the business',
+      'Better usability across devices and teams',
+      'A scalable web foundation for future growth'
     ],
     process: [
-      'Discovery and conversion mapping',
-      'UI system and page architecture',
-      'Backend workflow implementation',
-      'Launch, analytics, and iteration'
+      'Requirement discovery and page mapping',
+      'UI structure and technical planning',
+      'Development, CMS setup, and QA',
+      'Launch support and ongoing optimization'
     ]
   },
   {
-    key: 'seo-content',
-    matches: ['seo', 'content', 'search', 'blog'],
-    category: 'SEO and Editorial Systems',
-    kicker: 'Turn content operations into a repeatable acquisition channel.',
+    key: 'ecommerce-solutions',
+    matches: ['ecommerce', 'seller', 'amazon', 'flipkart', 'marketplace', 'store', 'catalog', 'payment gateway'],
+    category: 'Ecommerce Solutions',
+    kicker: 'Launch and manage online sales systems with dependable storefront and marketplace support.',
     deliverables: [
-      'SEO page architecture and metadata',
-      'Editorial workflow and publishing cadence',
-      'Schema, sitemap, and search-console readiness',
-      'Content measurement loop with analytics'
+      'Online store development and setup',
+      'Marketplace and seller account integration',
+      'Product catalog and payment gateway support',
+      'Commerce flows designed for operational clarity'
     ],
     outcomes: [
-      'Faster article production and publishing',
-      'Structured organic traffic growth',
-      'Pages built with search intent from day one'
+      'Faster path from product listing to sale',
+      'Better visibility across owned store and marketplaces',
+      'Structured ecommerce operations teams can manage'
     ],
     process: [
-      'Topic map and content architecture',
-      'Template design and CMS setup',
-      'On-page SEO implementation',
-      'Measurement, refreshes, and scaling'
+      'Store planning and catalog structure',
+      'Platform setup and payment integration',
+      'Marketplace and seller workflow configuration',
+      'Testing, launch, and support'
     ]
   },
   {
-    key: 'automation-ops',
-    matches: ['automation', 'crm', 'dashboard', 'lead', 'system'],
-    category: 'Automation and Operations',
-    kicker: 'Replace manual handoffs with tracked workflows and ownership.',
+    key: 'software-development',
+    matches: ['software', 'crm', 'saas', 'api', 'internal business', 'business software', 'system'],
+    category: 'Software Development',
+    kicker: 'Turn operational requirements into usable business software and SaaS-ready platforms.',
     deliverables: [
-      'Lead status pipelines and assignment rules',
-      'Career application workflows',
-      'Operational dashboards and reporting',
-      'Notification and alert automation'
+      'Custom software and internal business systems',
+      'CRM and workflow-driven business tools',
+      'API integrations and data connections',
+      'SaaS platform architecture support'
     ],
     outcomes: [
-      'Clear ownership across leads and hiring',
-      'Lower operational drag from repetitive tasks',
-      'Visibility into work that used to stay in inboxes'
+      'More efficient internal operations',
+      'Less dependency on disconnected third-party tools',
+      'Systems shaped around real business processes'
     ],
     process: [
-      'Workflow mapping',
-      'RBAC and operational model design',
-      'Automation rules and alerts',
-      'Dashboard rollout and team training'
+      'Business workflow mapping',
+      'System architecture and module planning',
+      'Feature delivery and integration',
+      'Testing, rollout, and support'
+    ]
+  },
+  {
+    key: 'mobile-app-development',
+    matches: ['mobile', 'android', 'ios', 'cross platform'],
+    category: 'Mobile Application Development',
+    kicker: 'Deliver mobile experiences that support customer journeys and business operations.',
+    deliverables: [
+      'Android and iOS application planning',
+      'Cross-platform app development',
+      'Business mobile workflow support',
+      'API-connected mobile feature delivery'
+    ],
+    outcomes: [
+      'Stronger mobile reach for business services',
+      'Better accessibility for customers and teams',
+      'Applications designed for long-term iteration'
+    ],
+    process: [
+      'Mobile requirement analysis',
+      'User flow and feature definition',
+      'App development and API integration',
+      'Testing, deployment, and improvement'
+    ]
+  },
+  {
+    key: 'digital-marketing-services',
+    matches: ['seo', 'digital marketing', 'lead generation', 'technical seo', 'local seo', 'search engine optimization'],
+    category: 'Digital Marketing Services',
+    kicker: 'Strengthen visibility, search performance, and lead generation with structured digital marketing support.',
+    deliverables: [
+      'SEO audits and on-page optimization',
+      'Technical SEO and local SEO implementation',
+      'Lead-generation-focused marketing direction',
+      'Search-ready metadata and content structure'
+    ],
+    outcomes: [
+      'Improved discoverability across search channels',
+      'Better alignment between content and business goals',
+      'More qualified inbound opportunities over time'
+    ],
+    process: [
+      'Visibility assessment and keyword planning',
+      'Technical SEO and content structure updates',
+      'Local and lead-generation optimization',
+      'Measurement, reporting, and iteration'
+    ]
+  },
+  {
+    key: 'social-media-branding',
+    matches: ['social media', 'branding', 'brand development', 'brand'],
+    category: 'Social Media & Branding',
+    kicker: 'Build a clearer public identity across social channels and brand touchpoints.',
+    deliverables: [
+      'Social media positioning and campaign support',
+      'Brand development and messaging direction',
+      'Online branding strategy',
+      'Content-aligned social presentation'
+    ],
+    outcomes: [
+      'More consistent brand communication',
+      'Stronger trust across audience touchpoints',
+      'Better continuity between website and social presence'
+    ],
+    process: [
+      'Brand discovery and positioning',
+      'Channel strategy and content direction',
+      'Creative rollout and social management setup',
+      'Performance review and improvement'
+    ]
+  },
+  {
+    key: 'creative-content-services',
+    matches: ['graphic', 'ui/ux', 'video', 'content writing', 'marketing content', 'content'],
+    category: 'Creative & Content Services',
+    kicker: 'Support growth with stronger visuals, better interfaces, and clearer marketing content.',
+    deliverables: [
+      'Graphic design and UI/UX support',
+      'Video editing and content asset creation',
+      'Website and campaign content writing',
+      'Marketing content structured for clarity and performance'
+    ],
+    outcomes: [
+      'More polished digital presentation',
+      'Clearer messaging across pages and campaigns',
+      'Creative assets that support trust and engagement'
+    ],
+    process: [
+      'Creative brief and content alignment',
+      'Design exploration and asset production',
+      'Review, refinement, and delivery',
+      'Publishing support and rollout'
+    ]
+  },
+  {
+    key: 'website-support-maintenance',
+    matches: ['maintenance', 'support', 'security', 'performance', 'bug', 'troubleshooting'],
+    category: 'Website Support & Maintenance',
+    kicker: 'Keep digital platforms stable, secure, and effective after the initial build is complete.',
+    deliverables: [
+      'Technical support and issue resolution',
+      'Website maintenance and security updates',
+      'Performance optimization work',
+      'Bug fixing and troubleshooting'
+    ],
+    outcomes: [
+      'Lower risk of platform downtime or degradation',
+      'More dependable day-to-day operations',
+      'Ongoing improvement without rebuilding from scratch'
+    ],
+    process: [
+      'Platform review and issue identification',
+      'Maintenance and optimization planning',
+      'Implementation and validation',
+      'Monitoring and support continuity'
+    ]
+  },
+  {
+    key: 'cloud-infrastructure',
+    matches: ['cloud', 'hosting', 'server', 'deployment', 'monitoring', 'infrastructure'],
+    category: 'Cloud & Infrastructure',
+    kicker: 'Support production readiness with cleaner hosting, deployment, and server operations.',
+    deliverables: [
+      'Cloud hosting and environment setup',
+      'Server configuration and deployment support',
+      'System monitoring and technical oversight',
+      'Infrastructure aligned to platform needs'
+    ],
+    outcomes: [
+      'More stable production environments',
+      'Faster deployment and operational visibility',
+      'Infrastructure that supports future scale'
+    ],
+    process: [
+      'Environment assessment',
+      'Hosting and server configuration',
+      'Deployment setup and verification',
+      'Monitoring and support handoff'
+    ]
+  },
+  {
+    key: 'business-digital-solutions',
+    matches: ['google business', 'business process automation', 'digital presence', 'profile setup', 'optimization'],
+    category: 'Business Digital Solutions',
+    kicker: 'Improve local presence and simplify repeatable operations through targeted digital business support.',
+    deliverables: [
+      'Google Business Profile setup and optimization',
+      'Digital presence management support',
+      'Business process automation planning',
+      'Practical visibility improvements for service brands'
+    ],
+    outcomes: [
+      'Stronger local discoverability and trust signals',
+      'Cleaner operational handling of repeatable tasks',
+      'Better alignment between online presence and business activity'
+    ],
+    process: [
+      'Current presence and process review',
+      'Optimization and automation planning',
+      'Implementation across tools and listings',
+      'Review and ongoing improvement'
+    ]
+  },
+  {
+    key: 'technology-collaboration-services',
+    matches: ['outsourcing', 'startup tech', 'partnership', 'project based', 'agency', 'development support', 'collaboration'],
+    category: 'Technology Collaboration Services',
+    kicker: 'Extend delivery capacity with a reliable technical partner for projects, retainers, and startup growth.',
+    deliverables: [
+      'Project-based development support',
+      'Startup technology execution assistance',
+      'Agency delivery partnerships',
+      'Flexible outsourced development collaboration'
+    ],
+    outcomes: [
+      'More delivery capacity without unnecessary overhead',
+      'Dependable technical execution for partner teams',
+      'Collaboration models aligned to real project needs'
+    ],
+    process: [
+      'Scope alignment and collaboration model selection',
+      'Delivery planning and ownership mapping',
+      'Execution and communication rhythm',
+      'Review, support, and next-phase planning'
     ]
   }
 ];
 
 const defaultServiceProfile = {
-  category: 'Digital Delivery',
-  kicker: 'Execution built around speed, clarity, and measurable output.',
+  category: 'Technology Services',
+  kicker: 'Execution built around practical delivery, business clarity, and long-term reliability.',
   deliverables: [
-    'Strategy translated into implementation',
-    'Responsive user interface design',
-    'Content and metadata support',
-    'Launch-ready deployment handoff'
+    'Business-aligned planning and implementation',
+    'Responsive frontend and structured backend workflows',
+    'Content, metadata, and operational support',
+    'Launch-ready delivery with room to scale'
   ],
   outcomes: [
-    'Cleaner buyer journeys',
-    'More consistent delivery quality',
-    'Systems that stay manageable post-launch'
+    'Cleaner digital operations and customer journeys',
+    'More dependable delivery quality',
+    'Systems that remain manageable after launch'
   ],
   process: [
-    'Scope alignment',
-    'Design and structure',
+    'Discovery and scope alignment',
+    'Solution design and structure',
     'Implementation and QA',
-    'Launch and iteration'
+    'Launch, support, and iteration'
   ]
 };
+
+function normalizeProfileItems(value, fallback = []) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item).trim()).filter(Boolean);
+  }
+
+  if (typeof value === 'string') {
+    return value
+      .split(/[\r\n,]+/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  return fallback;
+}
 
 function resolveServiceProfile(service = {}) {
   const haystack = `${service.slug || ''} ${service.title || ''}`.toLowerCase();
   const matched = serviceProfiles.find((profile) =>
     profile.matches.some((token) => haystack.includes(token))
   );
+  const baseProfile = matched || defaultServiceProfile;
 
-  return matched || defaultServiceProfile;
+  return {
+    ...baseProfile,
+    category: service.category || baseProfile.category,
+    kicker: service.kicker || baseProfile.kicker,
+    deliverables: normalizeProfileItems(service.deliverables, baseProfile.deliverables),
+    outcomes: normalizeProfileItems(service.outcomes, baseProfile.outcomes),
+    process: normalizeProfileItems(service.process, baseProfile.process)
+  };
 }
 
 function getHomeContent({ services = [], products = [], projects = [], posts = [], jobs = [] }) {
@@ -210,16 +558,7 @@ function getHomeContent({ services = [], products = [], projects = [], posts = [
         answer: 'Yes. Ongoing improvements, maintenance, support, and optimization are part of the long-term delivery mindset.'
       }
     ],
-    capabilityBands: [
-      'Website Development',
-      'Custom Web Apps',
-      'Ecommerce Platforms',
-      'SEO and Marketing',
-      'Mobile Apps',
-      'Cloud Solutions',
-      'Integrations',
-      'Technical Support'
-    ],
+    capabilityBands: marketingServices,
     jobsSummary: jobs.length ? `${jobs.length} open roles are available for the growing delivery team.` : 'Career workflows are ready whenever new technology and growth roles are published.'
   };
 }
@@ -229,36 +568,38 @@ function getServicesPageContent(services = []) {
 
   return {
     categories,
+    marketingServices,
+    serviceCatalog,
     engagementModels: [
       {
-        title: 'Website and Platform Launch',
-        copy: 'Best for businesses that need a professional website, structured platform, and strong digital foundation.'
+        title: 'Digital Presence and Platform Launch',
+        copy: 'Best for businesses that need a professional website, stronger online presence, and structured digital foundations.'
       },
       {
-        title: 'Custom Software and Workflow Build',
-        copy: 'Ideal for organizations that need web applications, internal workflows, or operational systems tailored to the business.'
+        title: 'Commerce, Software, and App Build',
+        copy: 'Ideal for businesses launching ecommerce systems, custom software, business applications, or mobile products.'
       },
       {
-        title: 'Support and Growth Partnership',
-        copy: 'Ongoing maintenance, SEO support, platform improvements, and technical assistance for teams scaling digitally.'
+        title: 'Growth, Support, and Collaboration',
+        copy: 'Ongoing SEO, branding, maintenance, support, infrastructure, and technical collaboration for teams growing digitally.'
       }
     ],
     serviceDepth: [
       {
-        title: 'Business websites with structure',
-        copy: 'CodexWEBZ builds responsive websites that combine presentation, performance, conversion clarity, and long-term manageability.'
+        title: 'Digital platforms with business structure',
+        copy: 'From websites to software systems, CodexWEBZ builds platforms that are practical to operate, scalable to improve, and aligned with real business goals.'
       },
       {
-        title: 'Custom systems for day-to-day operations',
-        copy: 'Web applications, dashboards, and workflow tools are shaped around how the business actually functions.'
+        title: 'Commerce and operational systems',
+        copy: 'Ecommerce platforms, business software, internal tools, and integrations are shaped around day-to-day workflows and customer journeys.'
       },
       {
-        title: 'Visibility and growth support',
-        copy: 'SEO, content structure, analytics readiness, and digital marketing support help businesses strengthen online reach.'
+        title: 'Visibility, branding, and growth support',
+        copy: 'SEO, digital marketing, social media, creative assets, and content support help businesses present themselves more clearly and reach customers more effectively.'
       },
       {
         title: 'Reliable post-launch support',
-        copy: 'Maintenance, optimization, and technical support keep digital systems stable and useful after launch.'
+        copy: 'Maintenance, infrastructure, monitoring, and technical support keep digital systems stable, secure, and useful after launch.'
       }
     ],
     workflow: [
@@ -287,7 +628,8 @@ function getServicesPageContent(services = []) {
       'Startups launching digital products or modern service brands',
       'SMEs improving digital presence and internal processes',
       'Ecommerce businesses building structured online sales systems',
-      'Organizations replacing fragmented digital tools with dependable platforms'
+      'Organizations replacing fragmented digital tools with dependable platforms',
+      'Agencies and partner teams needing dependable development support'
     ],
     faqs: [
       {
@@ -297,6 +639,10 @@ function getServicesPageContent(services = []) {
       {
         question: 'Are the services standalone or connected?',
         answer: 'They can be delivered individually or combined into a broader digital system that supports websites, software, visibility, and operations together.'
+      },
+      {
+        question: 'Does CodexWEBZ only build websites?',
+        answer: 'No. The service scope also covers ecommerce, custom software, mobile apps, SEO, branding, maintenance, cloud support, and technical collaboration.'
       }
     ]
   };
@@ -484,17 +830,7 @@ function getAboutPageContent() {
       'Helping organizations adopt modern technology with clarity',
       'Delivering practical solutions aligned with business growth'
     ],
-    serviceGroups: [
-      'Website Development',
-      'Custom Web Application Development',
-      'Ecommerce Website Development',
-      'Ecommerce Seller Account Setup (Amazon and Flipkart)',
-      'Custom Software Development',
-      'SEO and Digital Marketing',
-      'Mobile App Development',
-      'Cloud-Based Solutions',
-      'Website Maintenance and Technical Support'
-    ],
+    serviceGroups: marketingServices,
     principles: [
       {
         title: 'Practical systems over unnecessary complexity',

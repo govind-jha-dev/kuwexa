@@ -5,6 +5,7 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 const mysql = require('mysql2/promise');
 const { ensureExtendedSchema } = require('../backend/services/schemaMaintenanceService');
+const { resolveServiceProfile } = require('../backend/services/siteContentService');
 
 const permissions = {
   super_admin: [
@@ -42,23 +43,59 @@ const permissions = {
 };
 
 async function upsertService(connection, payload) {
+  const [
+    title,
+    slug,
+    shortDescription,
+    description,
+    icon,
+    metaTitle,
+    metaDescription,
+    metaKeywords,
+    createdBy,
+    updatedBy
+  ] = payload;
+  const profile = resolveServiceProfile({ title, slug });
+
   await connection.query(
     `
       INSERT INTO services (
-        title, slug, short_description, description, icon, meta_title, meta_description, meta_keywords, created_by, updated_by
+        title, slug, short_description, description, icon, category, kicker,
+        deliverables, outcomes, process, meta_title, meta_description, meta_keywords, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         title = VALUES(title),
         short_description = VALUES(short_description),
         description = VALUES(description),
         icon = VALUES(icon),
+        category = VALUES(category),
+        kicker = VALUES(kicker),
+        deliverables = VALUES(deliverables),
+        outcomes = VALUES(outcomes),
+        process = VALUES(process),
         meta_title = VALUES(meta_title),
         meta_description = VALUES(meta_description),
         meta_keywords = VALUES(meta_keywords),
         updated_by = VALUES(updated_by)
     `,
-    payload
+    [
+      title,
+      slug,
+      shortDescription,
+      description,
+      icon,
+      profile.category,
+      profile.kicker,
+      JSON.stringify(profile.deliverables || []),
+      JSON.stringify(profile.outcomes || []),
+      JSON.stringify(profile.process || []),
+      metaTitle,
+      metaDescription,
+      metaKeywords,
+      createdBy,
+      updatedBy
+    ]
   );
 }
 
@@ -283,92 +320,273 @@ async function run() {
     [managerUserId]
   );
 
+  await connection.query(
+    `
+      DELETE FROM services
+      WHERE slug IN (
+        'web-platform-engineering',
+        'seo-editorial-systems',
+        'lead-workflow-automation',
+        'content-led-growth-pages'
+      )
+    `
+  );
+
   const services = [
     [
-      'Web Platform Engineering',
-      'web-platform-engineering',
-      'Custom company websites, CMS workflows, dashboards, and API architecture built as one system.',
+      'Website Development',
+      'website-development',
+      'Business websites, corporate sites, landing pages, portfolio sites, custom web applications, and progressive web apps built for real business use.',
       `
-        <h2>End-to-end platform delivery</h2>
-        <p>CodexWebz designs and implements public websites, operational dashboards, REST APIs, and CMS structures that work together instead of sitting in separate tools.</p>
-        <h3>Typical scope</h3>
+        <h2>Web development for practical business growth</h2>
+        <p>CodexWEBZ develops websites and web platforms that help businesses establish stronger digital presence, improve credibility, and support long-term growth.</p>
+        <h3>Included services</h3>
         <ul>
-          <li>Positioning-led website architecture</li>
-          <li>Admin and manager dashboards</li>
-          <li>Lead, blog, portfolio, and careers modules</li>
-          <li>Deployment setup with Nginx, PM2, and Docker</li>
+          <li>Website Development</li>
+          <li>Custom Website Design</li>
+          <li>Business Website Development</li>
+          <li>Corporate Website Development</li>
+          <li>Landing Page Development</li>
+          <li>Portfolio Website Development</li>
+          <li>Web Application Development</li>
+          <li>Custom Web Application Development</li>
+          <li>Progressive Web Apps (PWA)</li>
         </ul>
       `,
-      'Platform Build',
-      'Web Platform Engineering | CodexWebz',
-      'Build a conversion-focused company website and operations platform with CodexWebz.',
-      'website development, dashboard software, seo cms',
+      'Web Build',
+      'Website Development | CodexWEBZ',
+      'Website development and custom web application services for businesses building stronger digital presence.',
+      'website development, business website, web application development, pwa',
       adminUserId,
       adminUserId
     ],
     [
-      'SEO and Editorial Systems',
-      'seo-editorial-systems',
-      'Search-ready landing pages, metadata control, schema, blog CMS, and publishing workflow support.',
+      'Ecommerce Solutions',
+      'ecommerce-solutions',
+      'Ecommerce websites, store setup, product catalog management, seller account setup, and marketplace integration for businesses selling online.',
       `
-        <h2>SEO built into the system</h2>
-        <p>The platform treats search visibility as part of product design. Metadata, schema, URL control, and content workflows are managed from the same backend.</p>
-        <h3>What this includes</h3>
+        <h2>Ecommerce systems that support online selling</h2>
+        <p>CodexWEBZ helps businesses launch and manage ecommerce platforms that combine storefront quality, operational clarity, and marketplace readiness.</p>
+        <h3>Included services</h3>
         <ul>
-          <li>Structured SEO settings</li>
-          <li>Blog CMS with categories and tags</li>
-          <li>OpenGraph and canonical support</li>
-          <li>XML sitemap and robots automation</li>
+          <li>Ecommerce Website Development</li>
+          <li>Ecommerce Platform Setup</li>
+          <li>Online Store Development</li>
+          <li>Product Catalog Management</li>
+          <li>Payment Gateway Integration</li>
+          <li>Ecommerce Seller Account Setup</li>
+          <li>Amazon Seller Account Setup</li>
+          <li>Flipkart Seller Account Setup</li>
+          <li>Marketplace Integration</li>
         </ul>
       `,
-      'SEO System',
-      'SEO and Editorial Systems | CodexWebz',
-      'Operational SEO systems for teams that need publishing speed and search readiness.',
-      'seo cms, content workflow, metadata management',
+      'Ecommerce',
+      'Ecommerce Solutions | CodexWEBZ',
+      'Ecommerce website development, seller setup, catalog management, and marketplace integration services.',
+      'ecommerce development, amazon seller account setup, flipkart seller account setup, online store development',
       adminUserId,
       adminUserId
     ],
     [
-      'Lead and Workflow Automation',
-      'lead-workflow-automation',
-      'Lead routing, hiring pipeline tracking, dashboards, alerts, and clean internal workflow management.',
+      'Custom Software Development',
+      'custom-software-development',
+      'Business software, CRM systems, SaaS platforms, internal tools, and API integrations designed around operational requirements.',
       `
-        <h2>Operational clarity without extra tools</h2>
-        <p>Leads and applications should not disappear into inboxes or spreadsheets. CodexWebz builds tracked pipelines with clear statuses, ownership, and visibility.</p>
-        <h3>Workflow modules</h3>
+        <h2>Software built around business operations</h2>
+        <p>CodexWEBZ develops custom software solutions that help businesses streamline workflows, centralize information, and build scalable internal systems.</p>
+        <h3>Included services</h3>
         <ul>
-          <li>Lead intake and status progression</li>
-          <li>Career applications and resume handling</li>
-          <li>Email alert hooks</li>
-          <li>Traffic and activity reporting</li>
+          <li>Custom Software Development</li>
+          <li>Business Software Solutions</li>
+          <li>CRM Development</li>
+          <li>Internal Business Systems</li>
+          <li>API Integration</li>
+          <li>SaaS Platform Development</li>
         </ul>
       `,
-      'Ops Flow',
-      'Lead and Workflow Automation | CodexWebz',
-      'Replace manual marketing and hiring handoffs with a cleaner operational system.',
-      'lead management, workflow automation, dashboard reporting',
+      'Software',
+      'Custom Software Development | CodexWEBZ',
+      'Custom software, CRM, SaaS platform, and API integration services for growing businesses.',
+      'custom software development, crm development, saas platform development, api integration',
       adminUserId,
       adminUserId
     ],
     [
-      'Content-Led Growth Pages',
-      'content-led-growth-pages',
-      'Landing pages, service pages, case studies, and blog templates designed to support both trust and acquisition.',
+      'Mobile Application Development',
+      'mobile-application-development',
+      'Android apps, iOS apps, cross-platform mobile applications, and business mobile solutions for customer and internal use.',
       `
-        <h2>Pages with a job to do</h2>
-        <p>Each page is designed around buying questions, proof, and next-step movement. The result is a site that looks sharp and behaves like a sales asset.</p>
-        <h3>Content surfaces</h3>
+        <h2>Mobile applications for modern business needs</h2>
+        <p>CodexWEBZ delivers mobile applications that help businesses reach customers on smartphones and support internal workflows through mobile-first systems.</p>
+        <h3>Included services</h3>
         <ul>
-          <li>Service landing pages</li>
-          <li>Case-study and portfolio templates</li>
-          <li>Thought-leadership blog structures</li>
-          <li>High-intent contact journeys</li>
+          <li>Android App Development</li>
+          <li>iOS App Development</li>
+          <li>Cross Platform Mobile Apps</li>
+          <li>Business Mobile Applications</li>
         </ul>
       `,
-      'Growth Pages',
-      'Content-Led Growth Pages | CodexWebz',
-      'Professional landing pages designed for credibility, discovery, and conversion.',
-      'landing page design, service pages, case study pages',
+      'Mobile Apps',
+      'Mobile Application Development | CodexWEBZ',
+      'Android, iOS, and cross-platform mobile app development for business use cases.',
+      'mobile app development, android app development, ios app development, cross platform apps',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'SEO and Digital Marketing',
+      'seo-and-digital-marketing',
+      'SEO, technical SEO, local SEO, digital marketing strategy, and lead generation support to improve visibility and acquisition.',
+      `
+        <h2>Visibility and growth support for service businesses</h2>
+        <p>CodexWEBZ helps businesses improve discoverability, strengthen search performance, and support lead generation with structured digital marketing services.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Search Engine Optimization (SEO)</li>
+          <li>Technical SEO</li>
+          <li>Local SEO</li>
+          <li>Digital Marketing Strategy</li>
+          <li>Lead Generation Marketing</li>
+        </ul>
+      `,
+      'SEO Growth',
+      'SEO and Digital Marketing | CodexWEBZ',
+      'SEO, local SEO, technical SEO, and digital marketing strategy services for business growth.',
+      'seo services, technical seo, local seo, lead generation marketing',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Social Media and Branding',
+      'social-media-and-branding',
+      'Social media marketing, brand development, brand strategy, and social media management for stronger public presence.',
+      `
+        <h2>Brand and social visibility support</h2>
+        <p>CodexWEBZ helps businesses communicate more clearly through social media support, stronger brand direction, and consistent online positioning.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Social Media Marketing</li>
+          <li>Social Media Management</li>
+          <li>Brand Development</li>
+          <li>Online Branding Strategy</li>
+        </ul>
+      `,
+      'Branding',
+      'Social Media and Branding | CodexWEBZ',
+      'Social media marketing, branding, and online brand strategy services for businesses.',
+      'social media marketing, brand development, social media management, online branding strategy',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Creative and Content Services',
+      'creative-and-content-services',
+      'Graphic design, UI/UX design, video editing, content writing, and marketing content creation for websites and campaigns.',
+      `
+        <h2>Creative support that strengthens digital presentation</h2>
+        <p>CodexWEBZ supports businesses with design and content services that improve website quality, campaign clarity, and brand communication.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Graphic Designing</li>
+          <li>UI/UX Design</li>
+          <li>Video Editing</li>
+          <li>Content Writing</li>
+          <li>Marketing Content Creation</li>
+        </ul>
+      `,
+      'Creative',
+      'Creative and Content Services | CodexWEBZ',
+      'Graphic design, UI/UX, video editing, content writing, and marketing content services.',
+      'graphic design, ui ux design, video editing, content writing, marketing content creation',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Website Support and Maintenance',
+      'website-support-and-maintenance',
+      'Maintenance, technical support, security updates, performance optimization, and troubleshooting for active platforms.',
+      `
+        <h2>Reliable support after launch</h2>
+        <p>CodexWEBZ provides maintenance and support services that help businesses keep websites and digital systems stable, secure, and efficient over time.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Website Maintenance</li>
+          <li>Technical Support</li>
+          <li>Website Security Updates</li>
+          <li>Website Performance Optimization</li>
+          <li>Bug Fixing and Troubleshooting</li>
+        </ul>
+      `,
+      'Support',
+      'Website Support and Maintenance | CodexWEBZ',
+      'Website maintenance, support, security updates, optimization, and troubleshooting services.',
+      'website maintenance, technical support, website security updates, bug fixing',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Cloud and Infrastructure Solutions',
+      'cloud-and-infrastructure-solutions',
+      'Cloud hosting setup, server configuration, deployment support, and system monitoring for dependable infrastructure.',
+      `
+        <h2>Infrastructure support for dependable digital systems</h2>
+        <p>CodexWEBZ helps businesses prepare production environments with hosting, deployment, and server support suited to long-term reliability.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Cloud Hosting Setup</li>
+          <li>Server Configuration</li>
+          <li>Deployment Support</li>
+          <li>System Monitoring</li>
+        </ul>
+      `,
+      'Cloud',
+      'Cloud and Infrastructure Solutions | CodexWEBZ',
+      'Cloud hosting, deployment, server configuration, and monitoring services for modern platforms.',
+      'cloud hosting setup, server configuration, deployment support, system monitoring',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Business Digital Solutions',
+      'business-digital-solutions',
+      'Google Business Profile setup, digital presence management, business optimization, and process automation for service businesses.',
+      `
+        <h2>Digital tools for day-to-day business visibility</h2>
+        <p>CodexWEBZ supports businesses with practical digital solutions that improve local presence, discoverability, and repetitive operational handling.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Google Business Profile Setup</li>
+          <li>Google Business Optimization</li>
+          <li>Digital Presence Management</li>
+          <li>Business Process Automation</li>
+        </ul>
+      `,
+      'Business Ops',
+      'Business Digital Solutions | CodexWEBZ',
+      'Google Business optimization, digital presence management, and business process automation services.',
+      'google business profile setup, google business optimization, digital presence management, business process automation',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Technology Collaboration Services',
+      'technology-collaboration-services',
+      'Outsourced development support, startup tech support, agency partnerships, and project-based collaboration for delivery teams.',
+      `
+        <h2>Flexible technical collaboration for growing teams</h2>
+        <p>CodexWEBZ works with startups, agencies, and businesses that need dependable development capacity, project-based support, or long-term delivery partnership.</p>
+        <h3>Included services</h3>
+        <ul>
+          <li>Development Outsourcing</li>
+          <li>Project Based Development Support</li>
+          <li>Startup Tech Support</li>
+          <li>Agency Development Partnerships</li>
+        </ul>
+      `,
+      'Partnerships',
+      'Technology Collaboration Services | CodexWEBZ',
+      'Development outsourcing, startup tech support, and agency development partnership services.',
+      'development outsourcing, startup tech support, agency development partnerships, project based development support',
       adminUserId,
       adminUserId
     ]
