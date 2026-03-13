@@ -14,7 +14,7 @@
         </p>
         <div class="mt-10 flex flex-wrap gap-4">
           <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Request a Build Plan</a>
-          <a href="/projects" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">View Projects</a>
+          <a href="/portfolio" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">View Portfolio</a>
         </div>
         <div class="mt-10 flex flex-wrap gap-3">
           <% marketing.capabilityBands.forEach((band) => { %>
@@ -67,8 +67,8 @@
     copy: 'From websites to custom applications and long-term support, every service is structured around practical delivery, business usability, and dependable growth.'
   }) %>
   <div class="mt-12 grid gap-6 lg:grid-cols-2">
-    <% services.forEach((service) => { %>
-      <article class="reveal spotlight-card surface-panel rounded-[2rem] p-7" data-reveal>
+    <% services.forEach((service, index) => { %>
+      <article class="reveal spotlight-card surface-panel rounded-[2rem] p-7 <%= index >= 3 ? 'hidden md:block' : '' %>" data-reveal>
         <div class="flex flex-wrap items-center justify-between gap-3">
           <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= service.profile.category %></span>
           <span class="text-xs font-semibold uppercase tracking-[0.22em] text-primary/35"><%= service.icon || 'CodexWebz Service' %></span>
@@ -89,7 +89,7 @@
   </div>
 </section>
 
-<% if (Number(siteSettings?.show_products_menu) !== 0 && products.length) { %>
+<% if (showProductsMenu && products.length) { %>
   <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
     <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
       <div class="flex flex-wrap items-end justify-between gap-6">
@@ -150,11 +150,11 @@
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <div class="grid gap-6 xl:grid-cols-[1.12fr,0.88fr]">
     <div class="rounded-[2.25rem] bg-primary p-8 text-white lg:p-10">
-      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Our Projects</p>
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Portfolio</p>
       <h2 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight">Client outcomes built around real business needs.</h2>
       <div class="mt-8 space-y-4">
-        <% projects.forEach((project) => { %>
-          <a href="/projects/<%= project.slug %>" class="reveal block rounded-[1.7rem] border border-white/10 bg-white/6 p-5 transition hover:bg-white/10" data-reveal>
+        <% projects.forEach((project, index) => { %>
+          <a href="/portfolio/<%= project.slug %>" class="reveal block rounded-[1.7rem] border border-white/10 bg-white/6 p-5 transition hover:bg-white/10 <%= index >= 3 ? 'hidden md:block' : '' %>" data-reveal>
             <div class="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h3 class="font-display text-2xl font-bold"><%= project.title %></h3>

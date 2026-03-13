@@ -10,6 +10,7 @@ const managerRoutes = require('./routes/managerRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 const env = require('./config/env');
 const settingsModel = require('./models/settingsModel');
+const productModel = require('./models/productModel');
 const teamModel = require('./models/teamModel');
 const { hydrateUser } = require('./middleware/authMiddleware');
 const { issueCsrfToken, validateCsrf } = require('./middleware/csrfMiddleware');
@@ -65,9 +66,20 @@ app.use(async (req, res, next) => {
   res.locals.currentUser = req.user || null;
 
   try {
-    res.locals.siteSettings = await settingsModel.getSettings();
+    const [siteSettings, publishedProductCount] = await Promise.all([
+      settingsModel.getSettings(),
+      req.path.startsWith('/api') || req.path.startsWith('/admin') || req.path.startsWith('/manager')
+        ? Promise.resolve(0)
+        : productModel.countPublished().catch(() => 0)
+    ]);
+
+    res.locals.siteSettings = siteSettings;
+    res.locals.publishedProductCount = publishedProductCount;
+    res.locals.showProductsMenu = Number(siteSettings?.show_products_menu) !== 0 && publishedProductCount > 0;
   } catch (error) {
     res.locals.siteSettings = null;
+    res.locals.publishedProductCount = 0;
+    res.locals.showProductsMenu = false;
   }
 
   res.locals.currentPath = req.path;

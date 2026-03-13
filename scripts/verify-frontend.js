@@ -128,6 +128,7 @@ const shared = {
     secondary_color: '#dbab0d',
     show_products_menu: 1
   },
+  showProductsMenu: true,
   currentPath: '/',
   currentYear: 2026,
   appUrl: 'http://localhost:4000',

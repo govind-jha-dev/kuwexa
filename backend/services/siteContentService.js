@@ -664,8 +664,8 @@ function getProjectsPageContent(projects = []) {
     categories: ['All', ...new Set(projects.map((project) => project.category).filter(Boolean))],
     values: [
       'Each case study connects business objective, delivery approach, technology choices, and measurable outcome.',
-      'Projects are presented as practical business solutions rather than visual mockups alone.',
-      'All project records stay editable from the dashboard after launch.'
+      'Portfolio work is presented as a practical business solution rather than visual mockups alone.',
+      'All portfolio records stay editable from the dashboard after launch.'
     ]
   };
 }

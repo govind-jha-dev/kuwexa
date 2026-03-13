@@ -6,11 +6,11 @@
   const sectionTitle = typeof title !== 'undefined' ? title : 'The people behind the platform.';
   const sectionCopy = typeof copy !== 'undefined' ? copy : 'Leadership sets direction. The team turns that direction into delivery, content, and operational execution.';
   const leadershipTitle = typeof leadershipHeading !== 'undefined' ? leadershipHeading : 'Leadership';
-  const employeeTitle = typeof employeeHeading !== 'undefined' ? employeeHeading : 'Team';
-  const memberTypeLabel = {
-    leadership: 'Leadership',
-    employee: 'Employee'
-  };
+  const employeeLabel = typeof employeeEyebrow !== 'undefined' ? employeeEyebrow : 'Delivery Team';
+  const employeeTitle = typeof employeeHeading !== 'undefined' ? employeeHeading : 'Specialists and Delivery Team';
+  const employeeDescription = typeof employeeCopy !== 'undefined'
+    ? employeeCopy
+    : 'These profiles represent the specialists who support implementation, coordination, content operations, and day-to-day client delivery.';
 
   function initials(name) {
     return String(name || 'CW')
@@ -37,7 +37,7 @@
             <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Leadership</p>
             <h3 class="mt-3 font-display text-3xl font-bold text-primary"><%= leadershipTitle %></h3>
           </div>
-          <p class="max-w-2xl text-sm leading-7 text-slate-500">Leadership cards are designed to feel polished, editorial, and easy to scan without losing contact and profile access.</p>
+          <p class="max-w-2xl text-sm leading-7 text-slate-500">Leadership profiles highlight the people responsible for strategic direction, oversight, and business alignment across delivery.</p>
         </div>
         <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           <% leadership.forEach((member) => { %>
@@ -93,7 +93,7 @@
                     </a>
                   <% } %>
                   </div>
-                  <a href="/team/<%= member.slug %>" class="team-card__cta team-card__cta--light">Know More</a>
+                  <a href="/team/<%= member.slug %>" class="team-card__cta team-card__cta--light">View Profile</a>
                 </div>
               </div>
             </article>
@@ -106,15 +106,15 @@
         </div>
       </div>
 
+      <% if (employees.length) { %>
       <div class="mt-14">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Team</p>
+            <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38"><%= employeeLabel %></p>
             <h3 class="mt-3 font-display text-3xl font-bold text-primary"><%= employeeTitle %></h3>
           </div>
-          <p class="max-w-2xl text-sm leading-7 text-slate-500">The wider team is presented in a cleaner studio card style with clearer hierarchy and tighter contact actions.</p>
+          <p class="max-w-2xl text-sm leading-7 text-slate-500"><%= employeeDescription %></p>
         </div>
-        <% if (employees.length) { %>
           <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <% employees.forEach((member) => { %>
               <article class="team-card team-card--employee reveal" data-reveal>
@@ -123,7 +123,7 @@
                     <% if (member.department) { %>
                       <span class="team-card__badge team-card__badge--outline"><%= member.department %></span>
                     <% } else { %>
-                      <span class="team-card__badge team-card__badge--outline">Team</span>
+                      <span class="team-card__badge team-card__badge--outline">Delivery</span>
                     <% } %>
                   </div>
                   <div class="team-card__media-shell">
@@ -145,22 +145,9 @@
                   <div class="team-card__meta-list">
                     <div class="team-card__meta-item">
                       <span class="team-card__meta-label">Department</span>
-                      <span class="team-card__meta-value"><%= member.department || 'Core Team' %></span>
-                    </div>
-                    <div class="team-card__meta-item">
-                      <span class="team-card__meta-label">Member Type</span>
-                      <span class="team-card__meta-value"><%= memberTypeLabel[member.member_type] || 'Employee' %></span>
+                      <span class="team-card__meta-value"><%= member.department || 'Delivery Team' %></span>
                     </div>
                   </div>
-                  <% if (member.email) { %>
-                    <a href="mailto:<%= member.email %>" class="team-card__contact">
-                      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="team-card__contact-icon" aria-hidden="true">
-                        <path d="M3 5.5h14v9H3z"></path>
-                        <path d="m4 6 6 5 6-5"></path>
-                      </svg>
-                      <span><%= member.email %></span>
-                    </a>
-                  <% } %>
                   <div class="team-card__footer">
                     <div class="team-card__socials">
                     <% if (member.linkedin_url) { %>
@@ -186,19 +173,14 @@
                       </a>
                     <% } %>
                     </div>
-                    <a href="/team/<%= member.slug %>" class="team-card__cta">Know More</a>
+                    <a href="/team/<%= member.slug %>" class="team-card__cta">View Profile</a>
                   </div>
                 </div>
               </article>
             <% }) %>
           </div>
-        <% } else { %>
-          <div class="mt-6 rounded-[2rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center">
-            <p class="font-display text-2xl font-bold text-primary">Employee cards appear here.</p>
-            <p class="mt-3 text-sm leading-7 text-slate-500">Add employee profiles from the Team dashboard with image, email, social links, and detailed profile content to populate this row.</p>
-          </div>
-        <% } %>
       </div>
+      <% } %>
     </div>
   </section>
 <% } %>

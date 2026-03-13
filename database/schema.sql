@@ -329,8 +329,8 @@ VALUES
   ('team', 'Team | CodexWEBZ', 'Meet the leadership and team behind CodexWEBZ.', 'team', '/team'),
   ('services', 'Services | CodexWebz', 'Explore CodexWebz web development, SEO, and growth services.', 'services', '/services'),
   ('products', 'Our Products | CodexWebz', 'Explore SaaS products and business software developed by CodexWebz.', 'products', '/products'),
-  ('projects', 'Our Projects | CodexWebz', 'Selected CodexWebz case studies, software builds, and delivery outcomes.', 'projects', '/projects'),
-  ('portfolio', 'Portfolio | CodexWebz', 'Selected CodexWebz client projects and product delivery outcomes.', 'projects', '/projects'),
+  ('projects', 'Portfolio | CodexWebz', 'Selected CodexWebz case studies, software builds, and delivery outcomes.', 'projects', '/portfolio'),
+  ('portfolio', 'Portfolio | CodexWebz', 'Selected CodexWebz client projects and product delivery outcomes.', 'projects', '/portfolio'),
   ('blog', 'Blog | CodexWebz', 'Insights on engineering, SEO, automation, and digital growth.', 'blog', '/blog'),
   ('careers', 'Careers | CodexWebz', 'Join CodexWebz and build products that matter.', 'careers', '/careers'),
   ('contact', 'Contact | CodexWebz', 'Talk to CodexWebz about your next web platform.', 'contact', '/contact')

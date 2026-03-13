@@ -38,6 +38,10 @@ function buildSeo(defaults, overrides = {}) {
 }
 
 function isProductsEnabled(res) {
+  if (typeof res.locals.showProductsMenu === 'boolean') {
+    return res.locals.showProductsMenu;
+  }
+
   return Number(res.locals.siteSettings?.show_products_menu) !== 0;
 }
 
@@ -45,9 +49,9 @@ async function home(req, res) {
   const showProducts = isProductsEnabled(res);
   const [seoRecord, services, products, projects, posts, jobs] = await Promise.all([
     seoModel.findByPageKey('home'),
-    serviceModel.listFeatured(3),
+    serviceModel.listFeatured(4),
     showProducts ? productModel.listFeatured(3) : Promise.resolve([]),
-    projectModel.listFeatured(3),
+    projectModel.listFeatured(6),
     blogModel.latest(3),
     jobModel.listOpen()
   ]);
@@ -159,14 +163,16 @@ async function projects(req, res) {
   ]);
 
   return res.render('frontend/pages/projects', {
-    title: 'Our Projects',
+    title: 'Portfolio',
     projects: items.map((project) => ({
       ...project,
       summary: project.short_description || excerpt(project.description || project.results, 150)
     })),
     pageContent: getProjectsPageContent(items),
     seo: buildSeo(seoRecord, {
-      canonicalUrl: '/projects'
+      metaTitle: 'Portfolio | CodexWebz',
+      metaDescription: 'Selected CodexWebz client websites, digital builds, and portfolio case studies.',
+      canonicalUrl: '/portfolio'
     })
   });
 }
@@ -187,7 +193,7 @@ async function projectDetail(req, res, next) {
       metaTitle: project.meta_title || `${project.title} | CodexWebz`,
       metaDescription: project.meta_description || project.short_description || project.category,
       metaKeywords: project.meta_keywords,
-      canonicalUrl: `/projects/${project.slug}`
+      canonicalUrl: `/portfolio/${project.slug}`
     })
   });
 }

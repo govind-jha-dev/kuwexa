@@ -2,20 +2,35 @@ const { query, getOne, execute } = require('../config/database');
 const { buildUpdateClause } = require('../utils/sql');
 const { parseJsonFields, parseMany } = require('../utils/serializers');
 
+const PRIORITY_PROJECT_SLUGS = [
+  'codexwebz-company-platform',
+  'woollyes-ecommerce-website',
+  'woollyfelt-ecommerce-website',
+  'noble-infosystems-company-website',
+  'kriticraft-nepal-ecommerce-website'
+];
+
+const PROJECT_ORDER_SQL = PRIORITY_PROJECT_SLUGS.length
+  ? `CASE slug ${PRIORITY_PROJECT_SLUGS.map((_, index) => `WHEN ? THEN ${index}`).join(' ')} ELSE ${PRIORITY_PROJECT_SLUGS.length} END, updated_at DESC`
+  : 'updated_at DESC';
+
 async function listAll() {
-  const rows = await query('SELECT * FROM projects ORDER BY updated_at DESC');
+  const rows = await query(`SELECT * FROM projects ORDER BY ${PROJECT_ORDER_SQL}`, PRIORITY_PROJECT_SLUGS);
   return parseMany(rows, ['technologies', 'images']);
 }
 
 async function listPublished() {
-  const rows = await query("SELECT * FROM projects WHERE status = 'published' ORDER BY updated_at DESC");
+  const rows = await query(
+    `SELECT * FROM projects WHERE status = 'published' ORDER BY ${PROJECT_ORDER_SQL}`,
+    PRIORITY_PROJECT_SLUGS
+  );
   return parseMany(rows, ['technologies', 'images']);
 }
 
 async function listFeatured(limit = 3) {
   const rows = await query(
-    "SELECT * FROM projects WHERE status = 'published' ORDER BY updated_at DESC LIMIT ?",
-    [Number(limit)]
+    `SELECT * FROM projects WHERE status = 'published' ORDER BY ${PROJECT_ORDER_SQL} LIMIT ?`,
+    [...PRIORITY_PROJECT_SLUGS, Number(limit)]
   );
   return parseMany(rows, ['technologies', 'images']);
 }

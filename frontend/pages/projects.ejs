@@ -4,9 +4,9 @@
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
   <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
     <%- include('../components/section-heading', {
-      eyebrow: 'Our Projects',
-      title: 'Client projects, technology delivery, and practical digital outcomes.',
-      copy: 'Projects are presented as business-focused case studies that show how digital systems, websites, and software solutions are delivered in practice.'
+      eyebrow: 'Portfolio',
+      title: 'Selected portfolio work, technology delivery, and practical digital outcomes.',
+      copy: 'Portfolio entries are presented as business-focused case studies that show how websites, software systems, and digital delivery come together in practice.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Delivery Principles</p>
@@ -22,11 +22,11 @@
     <div class="mt-12 rounded-[2.2rem] bg-primary p-8 text-white lg:p-10">
       <div class="flex flex-wrap items-start justify-between gap-6">
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Featured Case Study</p>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Featured Portfolio Item</p>
           <h2 class="mt-4 font-display text-4xl font-bold"><%= projects[0].title %></h2>
           <p class="mt-4 max-w-2xl text-base leading-8 text-white/72"><%= projects[0].summary %></p>
         </div>
-        <a href="/projects/<%= projects[0].slug %>" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary">View Case Study</a>
+        <a href="/portfolio/<%= projects[0].slug %>" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary">View Portfolio Item</a>
       </div>
       <div class="mt-8 flex flex-wrap gap-3">
         <% (projects[0].technologies || []).forEach((tech) => { %>
@@ -41,7 +41,7 @@
       <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Browse Work</p>
-          <p class="mt-2 text-sm text-slate-600"><span data-filter-count><%= projects.length %></span> case studies shown</p>
+          <p class="mt-2 text-sm text-slate-600"><span data-filter-count><%= projects.length %></span> portfolio items shown</p>
         </div>
         <input type="search" placeholder="Search by title, client, category, or stack" class="w-full rounded-full border border-primary/10 bg-white px-5 py-3 text-sm focus:border-secondary focus:outline-none lg:max-w-md" data-filter-control data-filter-key="search">
       </div>
@@ -68,12 +68,12 @@
             </div>
             <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= project.title %></h2>
             <p class="mt-4 text-sm leading-8 text-slate-600"><%= project.summary %></p>
-            <a href="/projects/<%= project.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">View case study <span aria-hidden="true">→</span></a>
+            <a href="/portfolio/<%= project.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">View portfolio item <span aria-hidden="true">&rarr;</span></a>
           </article>
         <% }) %>
         <% if (!projects.length) { %>
           <article class="rounded-[1.9rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 lg:col-span-2">
-            No projects are published yet. Add them from the dashboard Projects module.
+            No portfolio items are published yet. Add them from the dashboard portfolio module.
           </article>
         <% } %>
       </div>
@@ -82,13 +82,13 @@
 </section>
 
 <%- include('../components/site-cta', {
-  eyebrow: 'Need a Project Like This?',
+  eyebrow: 'Need a Build Like This?',
   title: 'Need a digital platform, website, or business system built around real operational needs?',
-  copy: 'Each project showcased here is shaped around usability, scalability, and the practical needs of the business it supports.',
+  copy: 'Each portfolio item showcased here is shaped around usability, scalability, and the practical needs of the business it supports.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
-  secondaryLabel: 'Our Products',
-  secondaryHref: Number(siteSettings?.show_products_menu) !== 0 ? '/products' : '/services'
+  secondaryLabel: showProductsMenu ? 'Our Products' : 'Explore Services',
+  secondaryHref: showProductsMenu ? '/products' : '/services'
 }) %>
 
 <%- include('../layouts/footer') %>

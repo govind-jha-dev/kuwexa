@@ -12,6 +12,7 @@ uploads/resumes/*
 !uploads/resumes/sample-jordan.txt
 !uploads/resumes/sample-priya.txt
 logs/
+server.out.log
 coverage/
 dist/
 *.pid

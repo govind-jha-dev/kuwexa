@@ -32,6 +32,11 @@ async function countAll() {
   return row?.total || 0;
 }
 
+async function countPublished() {
+  const row = await getOne("SELECT COUNT(*) AS total FROM products WHERE status = 'published'");
+  return row?.total || 0;
+}
+
 async function createProduct(data) {
   const result = await execute(
     `
@@ -85,6 +90,7 @@ module.exports = {
   listFeatured,
   findBySlug,
   countAll,
+  countPublished,
   createProduct,
   updateProduct,
   deleteProduct

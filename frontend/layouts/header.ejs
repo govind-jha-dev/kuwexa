@@ -15,10 +15,10 @@
 
     <nav class="site-header__desktop-nav items-center gap-7 text-sm font-semibold text-primary/70">
       <a href="/services" class="transition <%= activePath.startsWith('/services') ? 'text-primary' : 'hover:text-primary' %>">Services</a>
-      <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
+      <% if (showProductsMenu) { %>
         <a href="/products" class="transition <%= activePath.startsWith('/products') ? 'text-primary' : 'hover:text-primary' %>">Our Products</a>
       <% } %>
-      <a href="/projects" class="transition <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Our Projects</a>
+      <a href="/portfolio" class="transition <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Portfolio</a>
       <a href="/about-us" class="transition <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'text-primary' : 'hover:text-primary' %>">About Us</a>
       <a href="/team" class="transition <%= activePath === '/team' || activePath.startsWith('/team/') ? 'text-primary' : 'hover:text-primary' %>">Team</a>
       <a href="/careers" class="transition <%= activePath.startsWith('/careers') ? 'text-primary' : 'hover:text-primary' %>">Careers</a>
@@ -53,10 +53,10 @@
       </div>
       <nav class="site-mobile-nav__links">
         <a href="/services" class="site-mobile-nav__link">Services</a>
-        <% if (Number(siteSettings?.show_products_menu) !== 0) { %>
+        <% if (showProductsMenu) { %>
           <a href="/products" class="site-mobile-nav__link">Our Products</a>
         <% } %>
-        <a href="/projects" class="site-mobile-nav__link">Our Projects</a>
+        <a href="/portfolio" class="site-mobile-nav__link">Portfolio</a>
         <a href="/about-us" class="site-mobile-nav__link">About Us</a>
         <a href="/team" class="site-mobile-nav__link">Team</a>
         <a href="/careers" class="site-mobile-nav__link">Careers</a>

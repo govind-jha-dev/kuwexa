@@ -645,103 +645,417 @@ async function run() {
     await upsertProduct(connection, product);
   }
 
+  function composeProjectRichText({ paragraphs = [], items = [] }) {
+    const blocks = [
+      ...paragraphs.map((paragraph) => `        <p>${paragraph}</p>`),
+      ...(items.length
+        ? ['        <ul>', ...items.map((item) => `          <li>${item}</li>`), '        </ul>']
+        : [])
+    ];
+
+    return `
+${blocks.join('\n')}
+      `;
+  }
+
+  function liveSiteLink(url) {
+    return `<a href="https://${url}" target="_blank" rel="noreferrer">${url}</a>`;
+  }
+
+  function createProjectSeed({
+    title,
+    slug,
+    shortDescription,
+    client,
+    clientIndustry,
+    technologies,
+    category,
+    descriptionParagraphs,
+    problemParagraphs,
+    solutionParagraphs,
+    resultParagraphs = [],
+    resultItems = [],
+    metaDescription,
+    metaKeywords
+  }) {
+    return [
+      title,
+      slug,
+      shortDescription,
+      composeProjectRichText({ paragraphs: descriptionParagraphs }),
+      client,
+      clientIndustry,
+      JSON.stringify(technologies),
+      category,
+      composeProjectRichText({ paragraphs: problemParagraphs }),
+      composeProjectRichText({ paragraphs: solutionParagraphs }),
+      composeProjectRichText({ paragraphs: resultParagraphs, items: resultItems }),
+      'published',
+      `${title} | Portfolio`,
+      metaDescription,
+      metaKeywords,
+      adminUserId,
+      adminUserId
+    ];
+  }
+
+  function buildClubProject({
+    title,
+    slug,
+    client,
+    category = 'Club Website',
+    clientIndustry = 'Gaming Club Platform',
+    shortDescription
+  }) {
+    return createProjectSeed({
+      title,
+      slug,
+      shortDescription:
+        shortDescription ||
+        `A mobile-first ${category.toLowerCase()} for ${title} focused on clear onboarding, support access, and fast visitor action.`,
+      client,
+      clientIndustry,
+      technologies: ['Responsive Landing Pages', 'Mobile-First UI', 'Action-Focused Sections', 'Content Updates'],
+      category,
+      descriptionParagraphs: [
+        `${title} at ${liveSiteLink(client)} was structured as a focused ${category.toLowerCase()} designed to move visitors quickly toward platform access, updates, or support guidance.`,
+        'The build emphasized bold presentation, clear section hierarchy, and fast scanning for users arriving primarily from mobile devices.'
+      ],
+      problemParagraphs: [
+        'The website needed to communicate the platform clearly without clutter, while keeping key calls to action and help content easy to find on smaller screens.'
+      ],
+      solutionParagraphs: [
+        'CodexWebz simplified the information flow with scannable content blocks, stronger hero messaging, and reusable sections for instructions, promotions, and contact touchpoints.',
+        'The final structure keeps the experience lightweight for visitors and practical for future content updates.'
+      ],
+      resultItems: [
+        'Cleaner first-screen communication for mobile traffic',
+        'Faster routes to sign-up, app access, or support information',
+        'Reusable landing-page sections for ongoing updates'
+      ],
+      metaDescription: `${title} case study by CodexWebz for a mobile-first ${category.toLowerCase()} at ${client}.`,
+      metaKeywords: `${slug.replace(/-/g, ' ')}, ${category.toLowerCase()}, codexwebz portfolio`
+    });
+  }
+
   const projects = [
-    [
-      'CodexWebz Company Platform',
-      'codexwebz-company-platform',
-      'A full company website and management system combining frontend polish with dashboard control.',
-      `
-        <p>A full company website and management platform for a service brand that needed public credibility and internal workflow control in one build.</p>
-        <p>The solution combined a polished frontend, modular CMS, role-based dashboards, lead flow, hiring workflow, and deployment-ready infrastructure.</p>
-      `,
-      'CodexWebz Internal',
-      'Technology Services',
-      JSON.stringify(['Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'JWT']),
-      'Web Platform',
-      `
-        <p>The client needed a public website that looked credible while also giving internal teams a dependable system for leads, content, hiring, and SEO control.</p>
-      `,
-      `
-        <p>CodexWebz delivered a connected frontend and dashboard architecture with RBAC, CMS modules, public pages, analytics, and deployment-ready infrastructure.</p>
-      `,
-      `
-        <ul>
-          <li>Unified public website and internal operations interface</li>
-          <li>Lead and candidate workflow visibility from a single dashboard</li>
-          <li>SEO configuration and analytics readiness built in</li>
-        </ul>
-      `,
-      'published',
-      'CodexWebz Company Platform | Projects',
-      'A full-stack company website and dashboard system for delivery, content, and operations.',
-      'company website case study, dashboard project, codexwebz project',
-      adminUserId,
-      adminUserId
-    ],
-    [
-      'Service Brand SEO Engine',
-      'service-brand-seo-engine',
-      'An SEO-focused website rebuild for a service brand needing structured editorial operations.',
-      `
-        <p>An SEO-focused web rebuild for a services company that needed better category pages, structured editorial workflow, and cleaner metadata control.</p>
-        <p>The project introduced search-ready templates, editorial operations, and a more persuasive service architecture.</p>
-      `,
-      'B2B Services Client',
-      'B2B Services',
-      JSON.stringify(['Tailwind CSS', 'Express', 'Schema Markup', 'Blog CMS']),
-      'SEO System',
-      `
-        <p>The previous site lacked scalable page structure, publishing workflow clarity, and practical control over metadata and search templates.</p>
-      `,
-      `
-        <p>The rebuilt platform introduced search-ready templates, blog workflow support, stronger service architecture, and dashboard-based SEO control.</p>
-      `,
-      `
-        <ul>
-          <li>Faster publishing operations for internal teams</li>
-          <li>Improved service-page structure and topical coverage</li>
-          <li>Metadata and sitemap control without developer intervention</li>
-        </ul>
-      `,
-      'published',
-      'Service Brand SEO Engine | Projects',
-      'SEO-led website architecture and publishing workflow system for a B2B services brand.',
-      'seo project, editorial system case study, service website rebuild',
-      adminUserId,
-      adminUserId
-    ],
-    [
-      'Operations Dashboard Modernization',
-      'operations-dashboard-modernization',
-      'A workflow modernization project for a distributed team managing leads, projects, and hiring.',
-      `
-        <p>A workflow modernization project for a remote team handling leads, projects, and hiring activity through disconnected manual processes.</p>
-        <p>CodexWebz replaced fragmented tracking with role-based views, clean status handling, and operational reporting.</p>
-      `,
-      'Remote Ops Team',
-      'Operations',
-      JSON.stringify(['Express', 'MySQL', 'RBAC', 'Dashboard UI']),
-      'Operations',
-      `
-        <p>Multiple workflows were being tracked manually across inboxes and spreadsheets, which made ownership and reporting unreliable.</p>
-      `,
-      `
-        <p>The solution created clear admin and manager views, status-driven workflows, and a single reporting layer for operational activity.</p>
-      `,
-      `
-        <ul>
-          <li>Reduced ambiguity in lead and hiring ownership</li>
-          <li>Centralized operational records across teams</li>
-          <li>Cleaner dashboard visibility for management workflows</li>
-        </ul>
-      `,
-      'published',
-      'Operations Dashboard Modernization | Projects',
-      'Role-based operations dashboard and workflow design for a distributed team.',
-      'operations dashboard project, workflow modernization, role based system',
-      adminUserId,
-      adminUserId
-    ]
+    createProjectSeed({
+      title: 'CodexWebz Company Website',
+      slug: 'codexwebz-company-platform',
+      shortDescription:
+        'A company website and operations-ready web platform for CodexWebz, built to present services clearly and manage content in-house.',
+      client: 'www.codexwebz.com',
+      clientIndustry: 'Technology Services',
+      technologies: ['Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'Dashboard CMS'],
+      category: 'Company Website',
+      descriptionParagraphs: [
+        `The CodexWebz website at ${liveSiteLink('www.codexwebz.com')} was built as the company's public-facing service platform, balancing positioning, lead capture, case studies, and internal manageability.`,
+        'The delivery combined branded frontend presentation with CMS-driven updates so the team can manage services, products, portfolio work, blog content, and hiring pages from one connected system.'
+      ],
+      problemParagraphs: [
+        'The business needed a website that looked credible to new prospects while also giving the internal team dependable control over content, inquiries, and growth pages.'
+      ],
+      solutionParagraphs: [
+        'CodexWebz delivered a modular Express and MySQL platform with reusable page sections, role-aware administration, SEO controls, and content modules for public and internal workflows.',
+        'The site structure was shaped around business clarity first, then backed by tools that make day-to-day updates practical.'
+      ],
+      resultItems: [
+        'Clearer service positioning for new prospects',
+        'Portfolio, blog, and hiring content managed from one system',
+        'Consistent public brand presentation backed by internal workflow control'
+      ],
+      metaDescription:
+        'CodexWebz company website case study covering brand presentation, content control, and operational website management.',
+      metaKeywords: 'codexwebz website project, company website case study, codexwebz portfolio'
+    }),
+    createProjectSeed({
+      title: 'Woollyes Ecommerce Website',
+      slug: 'woollyes-ecommerce-website',
+      shortDescription:
+        'An ecommerce storefront for Woollyes focused on product trust, cleaner shopping flow, and mobile-first merchandising.',
+      client: 'www.woollyes.com',
+      clientIndustry: 'Ecommerce / Consumer Goods',
+      technologies: ['Responsive Storefront', 'Product Pages', 'Merchandising Sections', 'SEO Content Structure'],
+      category: 'Ecommerce Website',
+      descriptionParagraphs: [
+        `Woollyes at ${liveSiteLink('www.woollyes.com')} is a product-led ecommerce website centered on wool dryer balls and a cleaner consumer shopping experience.`,
+        'The project emphasized stronger product storytelling, clearer benefit-led sections, and a storefront structure that stays easy to update as new collections or promotions are introduced.'
+      ],
+      problemParagraphs: [
+        'The website needed to communicate product benefits quickly, reduce friction between the landing experience and catalog browsing, and keep trust signals visible on mobile devices.'
+      ],
+      solutionParagraphs: [
+        'CodexWebz shaped the experience around simplified collection browsing, product-first calls to action, and reusable content blocks for benefits, reviews, and FAQs.',
+        'The visual structure keeps purchase intent moving while supporting merchandising changes without a redesign.'
+      ],
+      resultItems: [
+        'Sharper product messaging on key landing sections',
+        'Easier browsing across featured collections and purchase paths',
+        'A storefront structure ready for ongoing merchandising updates'
+      ],
+      metaDescription:
+        'Woollyes ecommerce website case study covering product storytelling, mobile shopping flow, and storefront structure.',
+      metaKeywords: 'woollyes website project, ecommerce storefront case study, codexwebz portfolio'
+    }),
+    createProjectSeed({
+      title: 'Woollyfelt Ecommerce Website',
+      slug: 'woollyfelt-ecommerce-website',
+      shortDescription:
+        'A handcrafted-product ecommerce website for Woollyfelt with cleaner catalog presentation and stronger mobile shopping flow.',
+      client: 'www.woollyfelt.com',
+      clientIndustry: 'Ecommerce / Handmade Goods',
+      technologies: ['Responsive Storefront', 'Product Catalog', 'Collection Pages', 'Content Merchandising'],
+      category: 'Ecommerce Website',
+      descriptionParagraphs: [
+        `Woollyfelt at ${liveSiteLink('www.woollyfelt.com')} showcases custom wool products through a warm, product-first ecommerce experience.`,
+        'The work focused on making collections easier to scan, strengthening product presentation, and giving the brand a storefront that feels curated rather than crowded.'
+      ],
+      problemParagraphs: [
+        'The storefront needed better visual hierarchy so shoppers could understand the range of handmade products quickly and move toward product detail pages with less hesitation.'
+      ],
+      solutionParagraphs: [
+        'CodexWebz reorganized the browsing flow around featured collections, cleaner product presentation, and landing sections that support seasonal or category-led merchandising.',
+        'The updated structure keeps the storefront flexible while preserving a more polished handcrafted brand feel.'
+      ],
+      resultItems: [
+        'Cleaner collection discovery for shoppers',
+        'Stronger product presentation on smaller screens',
+        'An ecommerce layout that supports future catalog growth'
+      ],
+      metaDescription:
+        'Woollyfelt ecommerce website case study covering collection structure, product presentation, and mobile shopping improvements.',
+      metaKeywords: 'woollyfelt website project, handmade ecommerce case study, codexwebz portfolio'
+    }),
+    createProjectSeed({
+      title: 'Noble Infosystems Company Website',
+      slug: 'noble-infosystems-company-website',
+      shortDescription:
+        'A corporate website for Noble Infosystems designed to present digital services with clearer structure, trust cues, and inquiry paths.',
+      client: 'www.nobleinfosystems.com',
+      clientIndustry: 'IT Services',
+      technologies: ['Responsive UI', 'Service Pages', 'Inquiry Flow', 'SEO-Ready Structure'],
+      category: 'Company Website',
+      descriptionParagraphs: [
+        `Noble Infosystems at ${liveSiteLink('www.nobleinfosystems.com')} presents technology and digital business services through a streamlined corporate website experience.`,
+        'The project was shaped around clearer service hierarchy, stronger credibility signals, and page structure that helps visitors understand the offer without digging through clutter.'
+      ],
+      problemParagraphs: [
+        'The business needed a more structured public website that could communicate its service scope clearly while making consultation or inquiry paths easier to find.'
+      ],
+      solutionParagraphs: [
+        'CodexWebz organized the website around direct service messaging, cleaner navigation, and supporting sections for proof, delivery approach, and lead capture.',
+        'The result is a company website that reads more clearly for prospective clients and remains easier to maintain internally.'
+      ],
+      resultItems: [
+        'Sharper communication of services and digital capabilities',
+        'Cleaner inquiry paths for prospective clients',
+        'A more credible corporate presentation across the site'
+      ],
+      metaDescription:
+        'Noble Infosystems company website case study covering service structure, credibility, and lead-focused presentation.',
+      metaKeywords: 'noble infosystems website project, corporate website case study, codexwebz portfolio'
+    }),
+    createProjectSeed({
+      title: 'Kriticraft Nepal Ecommerce Website',
+      slug: 'kriticraft-nepal-ecommerce-website',
+      shortDescription:
+        'A craft-focused ecommerce website for Kriticraft Nepal built around product discovery, brand warmth, and a cleaner shopping journey.',
+      client: 'www.kriticraftnepal.com',
+      clientIndustry: 'Ecommerce / Handmade Crafts',
+      technologies: ['Responsive Storefront', 'Product Discovery', 'Category Pages', 'Brand Storytelling'],
+      category: 'Ecommerce Website',
+      descriptionParagraphs: [
+        `Kriticraft Nepal at ${liveSiteLink('www.kriticraftnepal.com')} showcases handmade felt and craft products through a warm, brand-led storefront experience.`,
+        'The project focused on balancing product browsing with storytelling so the catalog feels approachable, crafted, and easy to navigate across desktop and mobile.'
+      ],
+      problemParagraphs: [
+        'The brand needed a website that could present handcrafted products attractively while still keeping shopping, category browsing, and content updates straightforward.'
+      ],
+      solutionParagraphs: [
+        'CodexWebz structured the site around cleaner category flow, stronger product sections, and a visual rhythm that supports both shopping intent and brand personality.',
+        'The resulting storefront stays practical for updates while giving the product range a more polished digital presentation.'
+      ],
+      resultItems: [
+        'Improved product discovery across the catalog',
+        'A warmer and more distinctive digital brand presentation',
+        'Cleaner category structure for ongoing storefront updates'
+      ],
+      metaDescription:
+        'Kriticraft Nepal ecommerce website case study covering handcrafted product discovery, brand storytelling, and storefront structure.',
+      metaKeywords: 'kriticraft nepal website project, craft ecommerce case study, codexwebz portfolio'
+    }),
+    buildClubProject({
+      title: 'Topup Game Vault Website',
+      slug: 'topup-game-vault-website',
+      client: 'topupgamevault.com',
+      category: 'Top-up Website',
+      clientIndustry: 'Gaming Credit Platform',
+      shortDescription:
+        'A top-up focused website for Topup Game Vault built around direct action, support visibility, and mobile-first navigation.'
+    }),
+    buildClubProject({
+      title: 'Juwa Slots Website',
+      slug: 'juwa-slots-website',
+      client: 'juwaslots.com',
+      category: 'Slots Website',
+      shortDescription:
+        'A mobile-first slots website for Juwa Slots focused on simple access, clear instructions, and faster visitor action.'
+    }),
+    buildClubProject({
+      title: 'Sirius Slots Website',
+      slug: 'sirius-slots-website',
+      client: 'sirius-slots.com',
+      category: 'Slots Website',
+      shortDescription:
+        'A streamlined slots website for Sirius Slots with stronger onboarding flow, clearer support sections, and mobile-ready presentation.'
+    }),
+    buildClubProject({
+      title: 'River Sweeps Club Website',
+      slug: 'river-sweeps-club-website',
+      client: 'riversweepsclub.com',
+      category: 'Sweepstakes Website',
+      clientIndustry: 'Sweepstakes Club Platform',
+      shortDescription:
+        'A sweepstakes club website for River Sweeps Club designed around mobile readability, support access, and direct navigation.'
+    }),
+    buildClubProject({
+      title: 'Mega Spin Club Website',
+      slug: 'mega-spin-club-website',
+      client: 'megaspinclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A bold club website for Mega Spin Club focused on clearer landing structure, fast scanning, and cleaner calls to action.'
+    }),
+    buildClubProject({
+      title: 'Ultra Panda Club Website',
+      slug: 'ultra-panda-club-website',
+      client: 'ultrapandaclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A mobile-first club website for Ultra Panda Club built to keep platform messaging simple, readable, and action-oriented.'
+    }),
+    buildClubProject({
+      title: 'Panda Master Club Website',
+      slug: 'panda-master-club-website',
+      client: 'pandamasterclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A focused club website for Panda Master Club with cleaner onboarding sections, stronger hero messaging, and easy update paths.'
+    }),
+    buildClubProject({
+      title: 'VBlink Club Website',
+      slug: 'vblink-club-website',
+      client: 'vblinkclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A compact club website for VBlink Club shaped around mobile-first visibility, scannable content, and direct support access.'
+    }),
+    buildClubProject({
+      title: 'Vegas Sweeps Club Website',
+      slug: 'vegas-sweeps-club-website',
+      client: 'vegassweepsclub.com',
+      category: 'Sweepstakes Website',
+      clientIndustry: 'Sweepstakes Club Platform',
+      shortDescription:
+        'A sweepstakes-style website for Vegas Sweeps Club built around fast access, simple navigation, and cleaner mobile presentation.'
+    }),
+    buildClubProject({
+      title: 'Orion Stars Club Website',
+      slug: 'orion-stars-club-website',
+      client: 'orionstarsclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A club website for Orion Stars Club designed to make updates, support information, and visitor actions easier to follow.'
+    }),
+    buildClubProject({
+      title: 'Game Vault Club Website',
+      slug: 'game-vault-club-website',
+      client: 'game-vaultclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A landing-focused club website for Game Vault Club with clearer platform communication and a stronger mobile-first flow.'
+    }),
+    buildClubProject({
+      title: 'Fire Kirin Club Website',
+      slug: 'fire-kirin-club-website',
+      client: 'firekirinclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A direct-response club website for Fire Kirin Club with bold presentation, clear support paths, and reusable landing sections.'
+    }),
+    buildClubProject({
+      title: 'Juwa Club Website',
+      slug: 'juwa-club-website',
+      client: 'juwaclub.com',
+      category: 'Club Website',
+      shortDescription:
+        'A mobile-first club website for Juwa Club focused on simplified visitor journeys and easy-to-update support content.'
+    }),
+    buildClubProject({
+      title: 'Milky Way Online App Website',
+      slug: 'milky-way-online-app-website',
+      client: 'milkywayonlineapp.com',
+      category: 'App Website',
+      clientIndustry: 'Online App Platform',
+      shortDescription:
+        'An app-focused landing website for Milky Way Online App built around quick onboarding, platform clarity, and mobile-first flow.'
+    }),
+    createProjectSeed({
+      title: 'Service Brand SEO Engine',
+      slug: 'service-brand-seo-engine',
+      shortDescription:
+        'An SEO-focused website rebuild for a service brand needing structured editorial operations.',
+      client: 'B2B Services Client',
+      clientIndustry: 'B2B Services',
+      technologies: ['Tailwind CSS', 'Express', 'Schema Markup', 'Blog CMS'],
+      category: 'SEO System',
+      descriptionParagraphs: [
+        'An SEO-focused web rebuild for a services company that needed better category pages, structured editorial workflow, and cleaner metadata control.',
+        'The project introduced search-ready templates, editorial operations, and a more persuasive service architecture.'
+      ],
+      problemParagraphs: [
+        'The previous site lacked scalable page structure, publishing workflow clarity, and practical control over metadata and search templates.'
+      ],
+      solutionParagraphs: [
+        'The rebuilt platform introduced search-ready templates, blog workflow support, stronger service architecture, and dashboard-based SEO control.'
+      ],
+      resultItems: [
+        'Faster publishing operations for internal teams',
+        'Improved service-page structure and topical coverage',
+        'Metadata and sitemap control without developer intervention'
+      ],
+      metaDescription:
+        'SEO-led website architecture and publishing workflow system for a B2B services brand.',
+      metaKeywords: 'seo project, editorial system case study, service website rebuild'
+    }),
+    createProjectSeed({
+      title: 'Operations Dashboard Modernization',
+      slug: 'operations-dashboard-modernization',
+      shortDescription:
+        'A workflow modernization project for a distributed team managing leads, projects, and hiring.',
+      client: 'Remote Ops Team',
+      clientIndustry: 'Operations',
+      technologies: ['Express', 'MySQL', 'RBAC', 'Dashboard UI'],
+      category: 'Operations',
+      descriptionParagraphs: [
+        'A workflow modernization project for a remote team handling leads, projects, and hiring activity through disconnected manual processes.',
+        'CodexWebz replaced fragmented tracking with role-based views, clean status handling, and operational reporting.'
+      ],
+      problemParagraphs: [
+        'Multiple workflows were being tracked manually across inboxes and spreadsheets, which made ownership and reporting unreliable.'
+      ],
+      solutionParagraphs: [
+        'The solution created clear admin and manager views, status-driven workflows, and a single reporting layer for operational activity.'
+      ],
+      resultItems: [
+        'Reduced ambiguity in lead and hiring ownership',
+        'Centralized operational records across teams',
+        'Cleaner dashboard visibility for management workflows'
+      ],
+      metaDescription:
+        'Role-based operations dashboard and workflow design for a distributed team.',
+      metaKeywords: 'operations dashboard project, workflow modernization, role based system'
+    })
   ];
 
   for (const project of projects) {

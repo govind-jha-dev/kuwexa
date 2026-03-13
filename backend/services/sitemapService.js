@@ -34,7 +34,7 @@ async function generateSitemapXml() {
   const staticUrls = [
     urlNode('/'),
     urlNode('/services'),
-    urlNode('/projects'),
+    urlNode('/portfolio'),
     urlNode('/blog'),
     urlNode('/careers'),
     urlNode('/team'),
@@ -49,7 +49,7 @@ async function generateSitemapXml() {
     ...pages.map((page) => urlNode(`/${page.slug}`, page.updated_at)),
     ...services.map((service) => urlNode(`/services/${service.slug}`, service.updated_at)),
     ...(showProducts ? products.map((product) => urlNode(`/products/${product.slug}`, product.updated_at)) : []),
-    ...projects.map((project) => urlNode(`/projects/${project.slug}`, project.updated_at)),
+    ...projects.map((project) => urlNode(`/portfolio/${project.slug}`, project.updated_at)),
     ...posts.map((post) => urlNode(`/blog/${post.slug}`, post.updated_at)),
     ...jobs.map((job) => urlNode(`/careers/${job.slug}`, job.updated_at)),
     ...teamMembers.map((member) => urlNode(`/team/${member.slug}`, member.updated_at))
