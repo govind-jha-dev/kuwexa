@@ -3,11 +3,41 @@ require('dotenv').config();
 
 const rootDir = path.join(__dirname, '..', '..');
 const privateLoginPath = String(process.env.PRIVATE_LOGIN_PATH || '/access/codexwebz-control-room-7f3b91d24c6e8a5').trim();
+const trustProxyValue = typeof process.env.TRUST_PROXY === 'string' ? process.env.TRUST_PROXY.trim() : '';
+
+function parseTrustProxy(value, isProduction) {
+  if (!value) {
+    return isProduction ? 1 : false;
+  }
+
+  const normalizedValue = value.toLowerCase();
+
+  if (normalizedValue === 'true') {
+    return true;
+  }
+
+  if (normalizedValue === 'false') {
+    return false;
+  }
+
+  if (/^\d+$/.test(value)) {
+    return Number(value);
+  }
+
+  if (value.includes(',')) {
+    return value.split(',').map((item) => item.trim()).filter(Boolean);
+  }
+
+  return value;
+}
+
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProduction = nodeEnv === 'production';
 
 module.exports = {
   rootDir,
-  nodeEnv: process.env.NODE_ENV || 'development',
-  isProduction: process.env.NODE_ENV === 'production',
+  nodeEnv,
+  isProduction,
   port: Number(process.env.PORT || 4000),
   appUrl: process.env.APP_URL || 'http://localhost:4000',
   jwtSecret: process.env.JWT_SECRET || 'change_this_jwt_secret',
@@ -15,6 +45,7 @@ module.exports = {
   cookieSecret: process.env.COOKIE_SECRET || 'change_this_cookie_secret',
   csrfSecret: process.env.CSRF_SECRET || 'change_this_csrf_secret',
   privateLoginPath: privateLoginPath.startsWith('/') ? privateLoginPath : `/${privateLoginPath}`,
+  trustProxy: parseTrustProxy(trustProxyValue, isProduction),
   uploadDir: path.join(rootDir, process.env.UPLOAD_DIR || 'uploads'),
   maxFileSizeBytes: Number(process.env.MAX_FILE_SIZE_MB || 10) * 1024 * 1024,
   db: {

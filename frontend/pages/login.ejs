@@ -3,15 +3,21 @@
 <section class="flex min-h-screen items-center justify-center px-6 py-16">
   <div class="grid w-full max-w-6xl overflow-hidden rounded-[2.4rem] bg-white shadow-float ring-1 ring-primary/8 lg:grid-cols-[1.05fr,0.95fr]">
     <div class="hero-grid bg-primary p-10 text-white lg:p-12">
-      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Secure Access</p>
-      <h1 class="mt-6 max-w-xl font-display text-5xl font-bold leading-tight">Management access for the CodexWebz platform.</h1>
-      <p class="mt-5 max-w-lg text-lg leading-8 text-white/72">Admins and managers get role-based access to website settings, content modules, leads, careers, SEO, and analytics.</p>
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Private Dashboard</p>
+      <h1 class="mt-6 max-w-xl font-display text-5xl font-bold leading-tight">Sign in to manage the CodexWebz website, content, and operations.</h1>
+      <p class="mt-5 max-w-lg text-lg leading-8 text-white/72">Authorized admins and managers can update site content, review leads, publish client projects, manage services and products, and keep SEO settings in sync from one secure workspace.</p>
+      <div class="mt-8 grid gap-3 text-sm text-white/78 sm:grid-cols-2">
+        <div class="rounded-[1.25rem] border border-white/12 bg-white/6 px-4 py-3">Content, pages, and client project publishing</div>
+        <div class="rounded-[1.25rem] border border-white/12 bg-white/6 px-4 py-3">Lead, career, and inquiry management</div>
+        <div class="rounded-[1.25rem] border border-white/12 bg-white/6 px-4 py-3">Products, services, and team updates</div>
+        <div class="rounded-[1.25rem] border border-white/12 bg-white/6 px-4 py-3">SEO settings, visibility, and dashboard control</div>
+      </div>
     </div>
 
     <div class="p-10 lg:p-12">
       <a href="/" class="text-sm font-bold text-primary underline decoration-secondary underline-offset-4">Back to website</a>
-      <h2 class="mt-6 font-display text-4xl font-bold text-primary">Sign in</h2>
-      <p class="mt-3 text-sm leading-7 text-slate-600">JWT authentication, rate limiting, CSRF protection, bcrypt password hashing, and RBAC are all active in this platform.</p>
+      <h2 class="mt-6 font-display text-4xl font-bold text-primary">Welcome back</h2>
+      <p class="mt-3 text-sm leading-7 text-slate-600">Use your approved admin or manager account to access the private CodexWebz control room. This area is reserved for authorized team members only.</p>
       <% if (error) { %>
         <div class="mt-6 rounded-[1.5rem] bg-rose-50 px-5 py-4 text-sm font-semibold text-rose-700"><%= error %></div>
       <% } %>
@@ -19,14 +25,15 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div>
           <label class="mb-2 block text-sm font-semibold text-slate-700" for="email">Email</label>
-          <input id="email" name="email" type="email" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
+          <input id="email" name="email" type="email" autocomplete="username" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
         </div>
         <div>
           <label class="mb-2 block text-sm font-semibold text-slate-700" for="password">Password</label>
-          <input id="password" name="password" type="password" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
+          <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
         </div>
-        <button type="submit" class="w-full rounded-[1.35rem] bg-primary px-5 py-3 text-sm font-bold text-white">Login</button>
+        <button type="submit" class="w-full rounded-[1.35rem] bg-primary px-5 py-3 text-sm font-bold text-white">Access Dashboard</button>
       </form>
+      <p class="mt-4 text-xs leading-6 text-slate-500">Need access or having trouble signing in? Contact the platform administrator for account support.</p>
     </div>
   </div>
 </section>
