@@ -36,6 +36,19 @@ CREATE TABLE IF NOT EXISTS website_settings (
   search_console_tag VARCHAR(255) NULL,
   default_meta_title VARCHAR(255) NULL,
   default_meta_description TEXT NULL,
+  default_meta_keywords VARCHAR(255) NULL,
+  default_meta_robots VARCHAR(255) NULL,
+  default_og_image VARCHAR(255) NULL,
+  default_og_image_alt VARCHAR(255) NULL,
+  default_twitter_card VARCHAR(60) NULL,
+  twitter_site VARCHAR(120) NULL,
+  twitter_creator VARCHAR(120) NULL,
+  bing_webmaster_tag VARCHAR(255) NULL,
+  yandex_verification_tag VARCHAR(255) NULL,
+  pinterest_verification_tag VARCHAR(255) NULL,
+  facebook_domain_verification VARCHAR(255) NULL,
+  global_schema_markup JSON NULL,
+  robots_txt LONGTEXT NULL,
   social_links JSON NULL,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -254,10 +267,19 @@ CREATE TABLE IF NOT EXISTS seo_settings (
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
   meta_keywords VARCHAR(255) NULL,
+  focus_keyword VARCHAR(180) NULL,
+  meta_robots VARCHAR(255) NULL,
   slug VARCHAR(180) NULL,
   schema_markup JSON NULL,
+  og_type VARCHAR(60) NULL,
   og_title VARCHAR(255) NULL,
   og_description TEXT NULL,
+  og_image VARCHAR(255) NULL,
+  og_image_alt VARCHAR(255) NULL,
+  twitter_card VARCHAR(60) NULL,
+  twitter_title VARCHAR(255) NULL,
+  twitter_description TEXT NULL,
+  twitter_image VARCHAR(255) NULL,
   canonical_url VARCHAR(255) NULL,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -295,7 +317,11 @@ INSERT INTO website_settings (
   primary_color,
   secondary_color,
   default_meta_title,
-  default_meta_description
+  default_meta_description,
+  default_meta_keywords,
+  default_meta_robots,
+  default_twitter_card,
+  robots_txt
 )
 VALUES (
   1,
@@ -305,7 +331,11 @@ VALUES (
   '#00240a',
   '#dbab0d',
   'CodexWebz | Web Platform & Digital Growth',
-  'CodexWebz builds company websites, SEO content systems, lead funnels, and internal dashboards.'
+  'CodexWebz builds company websites, SEO content systems, lead funnels, and internal dashboards.',
+  'codexwebz, web development, seo, dashboards, automation',
+  'index, follow, max-image-preview:large',
+  'summary_large_image',
+  'User-agent: *\nAllow: /'
 )
 ON DUPLICATE KEY UPDATE
   company_name = VALUES(company_name),
@@ -314,7 +344,11 @@ ON DUPLICATE KEY UPDATE
   primary_color = VALUES(primary_color),
   secondary_color = VALUES(secondary_color),
   default_meta_title = VALUES(default_meta_title),
-  default_meta_description = VALUES(default_meta_description);
+  default_meta_description = VALUES(default_meta_description),
+  default_meta_keywords = VALUES(default_meta_keywords),
+  default_meta_robots = VALUES(default_meta_robots),
+  default_twitter_card = VALUES(default_twitter_card),
+  robots_txt = VALUES(robots_txt);
 
 INSERT INTO seo_settings (
   page_key,

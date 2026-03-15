@@ -5,6 +5,7 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 const mysql = require('mysql2/promise');
 const { ensureExtendedSchema } = require('../backend/services/schemaMaintenanceService');
+const { splitSchemaSections } = require('../backend/services/databaseBootstrapService');
 const { resolveServiceProfile } = require('../backend/services/siteContentService');
 
 const permissions = {
@@ -260,8 +261,14 @@ async function run() {
 
   const schemaPath = path.join(__dirname, '..', 'database', 'schema.sql');
   const schema = fs.readFileSync(schemaPath, 'utf8');
-  await connection.query(schema);
+  const { structureSql, dataSql } = splitSchemaSections(schema);
+  if (structureSql.trim()) {
+    await connection.query(structureSql);
+  }
   await ensureExtendedSchema(connection, DB_NAME);
+  if (dataSql.trim()) {
+    await connection.query(dataSql);
+  }
 
   for (const [roleName, rolePermissions] of Object.entries(permissions)) {
     await connection.query(
@@ -313,6 +320,10 @@ async function run() {
         hero_subtitle = 'CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term business success.',
         default_meta_title = 'CodexWEBZ | Technology Solutions for Modern Businesses',
         default_meta_description = 'CodexWEBZ builds reliable digital systems, scalable technology platforms, business websites, custom applications, ecommerce solutions, and ongoing technical support for modern businesses.',
+        default_meta_keywords = 'codexwebz, technology solutions, web development, custom software, seo',
+        default_meta_robots = 'index, follow, max-image-preview:large',
+        default_twitter_card = 'summary_large_image',
+        robots_txt = 'User-agent: *\nAllow: /',
         chat_manager_user_id = ?,
         show_products_menu = 1
       WHERE id = 1

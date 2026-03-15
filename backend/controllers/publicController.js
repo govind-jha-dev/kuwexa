@@ -7,6 +7,7 @@ const leadModel = require('../models/leadModel');
 const jobModel = require('../models/jobModel');
 const applicationModel = require('../models/applicationModel');
 const seoModel = require('../models/seoModel');
+const settingsModel = require('../models/settingsModel');
 const teamModel = require('../models/teamModel');
 const { generateSitemapXml } = require('../services/sitemapService');
 const { sendLeadAlert, sendLeadConfirmation, sendApplicationAlert } = require('../services/emailService');
@@ -25,15 +26,52 @@ const {
   getTeamPageContent
 } = require('../services/siteContentService');
 
+function firstNonEmpty(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null && value !== '') {
+      return value;
+    }
+  }
+
+  return null;
+}
+
+function firstImage(...values) {
+  for (const value of values) {
+    if (Array.isArray(value)) {
+      const match = value.find(Boolean);
+      if (match) {
+        return match;
+      }
+
+      continue;
+    }
+
+    if (value) {
+      return value;
+    }
+  }
+
+  return null;
+}
+
 function buildSeo(defaults, overrides = {}) {
   return {
-    metaTitle: overrides.metaTitle || defaults?.meta_title || 'CodexWebz',
-    metaDescription: overrides.metaDescription || defaults?.meta_description || 'CodexWebz web platform',
-    metaKeywords: overrides.metaKeywords || defaults?.meta_keywords || null,
-    ogTitle: overrides.ogTitle || defaults?.og_title || overrides.metaTitle || defaults?.meta_title || 'CodexWebz',
-    ogDescription: overrides.ogDescription || defaults?.og_description || overrides.metaDescription || defaults?.meta_description || 'CodexWebz web platform',
-    canonicalUrl: overrides.canonicalUrl || defaults?.canonical_url || null,
-    schemaMarkup: overrides.schemaMarkup || defaults?.schema_markup || null
+    metaTitle: firstNonEmpty(overrides.metaTitle, defaults?.meta_title, 'CodexWebz'),
+    metaDescription: firstNonEmpty(overrides.metaDescription, defaults?.meta_description, 'CodexWebz web platform'),
+    metaKeywords: firstNonEmpty(overrides.metaKeywords, defaults?.meta_keywords),
+    metaRobots: firstNonEmpty(overrides.metaRobots, defaults?.meta_robots),
+    ogType: firstNonEmpty(overrides.ogType, defaults?.og_type, 'website'),
+    ogTitle: firstNonEmpty(overrides.ogTitle, defaults?.og_title, overrides.metaTitle, defaults?.meta_title, 'CodexWebz'),
+    ogDescription: firstNonEmpty(overrides.ogDescription, defaults?.og_description, overrides.metaDescription, defaults?.meta_description, 'CodexWebz web platform'),
+    ogImage: firstNonEmpty(overrides.ogImage, defaults?.og_image),
+    ogImageAlt: firstNonEmpty(overrides.ogImageAlt, defaults?.og_image_alt),
+    twitterCard: firstNonEmpty(overrides.twitterCard, defaults?.twitter_card),
+    twitterTitle: firstNonEmpty(overrides.twitterTitle, defaults?.twitter_title, overrides.ogTitle, defaults?.og_title, overrides.metaTitle, defaults?.meta_title),
+    twitterDescription: firstNonEmpty(overrides.twitterDescription, defaults?.twitter_description, overrides.ogDescription, defaults?.og_description, overrides.metaDescription, defaults?.meta_description),
+    twitterImage: firstNonEmpty(overrides.twitterImage, defaults?.twitter_image, overrides.ogImage, defaults?.og_image),
+    canonicalUrl: firstNonEmpty(overrides.canonicalUrl, defaults?.canonical_url),
+    schemaMarkup: firstNonEmpty(overrides.schemaMarkup, defaults?.schema_markup)
   };
 }
 
@@ -109,6 +147,8 @@ async function serviceDetail(req, res, next) {
       metaDescription: service.meta_description || service.short_description,
       metaKeywords: service.meta_keywords,
       schemaMarkup: service.schema_markup,
+      ogImage: service.image,
+      twitterImage: service.image,
       canonicalUrl: `/services/${service.slug}`
     })
   });
@@ -151,6 +191,9 @@ async function productDetail(req, res, next) {
       metaTitle: product.meta_title || `${product.name} | CodexWebz Product`,
       metaDescription: product.meta_description || product.short_description,
       metaKeywords: product.meta_keywords,
+      ogType: 'product',
+      ogImage: firstImage(product.logo, product.images),
+      twitterImage: firstImage(product.logo, product.images),
       canonicalUrl: `/products/${product.slug}`
     })
   });
@@ -163,15 +206,15 @@ async function projects(req, res) {
   ]);
 
   return res.render('frontend/pages/projects', {
-    title: 'Portfolio',
+    title: 'Client Projects',
     projects: items.map((project) => ({
       ...project,
       summary: project.short_description || excerpt(project.description || project.results, 150)
     })),
     pageContent: getProjectsPageContent(items),
     seo: buildSeo(seoRecord, {
-      metaTitle: 'Portfolio | CodexWebz',
-      metaDescription: 'Selected CodexWebz client websites, digital builds, and portfolio case studies.',
+      metaTitle: 'Client Projects | CodexWebz',
+      metaDescription: 'Selected CodexWebz client websites, digital builds, and client project case studies.',
       canonicalUrl: '/portfolio'
     })
   });
@@ -193,6 +236,8 @@ async function projectDetail(req, res, next) {
       metaTitle: project.meta_title || `${project.title} | CodexWebz`,
       metaDescription: project.meta_description || project.short_description || project.category,
       metaKeywords: project.meta_keywords,
+      ogImage: firstImage(project.featured_image, project.images),
+      twitterImage: firstImage(project.featured_image, project.images),
       canonicalUrl: `/portfolio/${project.slug}`
     })
   });
@@ -231,8 +276,12 @@ async function blogDetail(req, res, next) {
       metaTitle: post.meta_title || post.title,
       metaDescription: post.meta_description || post.excerpt,
       metaKeywords: post.meta_keywords,
+      ogType: 'article',
       ogTitle: post.og_title || post.title,
       ogDescription: post.og_description || post.excerpt,
+      ogImage: post.featured_image,
+      twitterCard: post.featured_image ? 'summary_large_image' : null,
+      twitterImage: post.featured_image,
       canonicalUrl: post.canonical_url || `/blog/${post.slug}`,
       schemaMarkup: post.schema_markup
     })
@@ -333,6 +382,9 @@ async function teamProfile(req, res, next) {
       metaTitle: member.meta_title || `${member.name} | ${member.designation} | CodexWEBZ`,
       metaDescription: member.meta_description || member.short_bio || `${member.name} serves as ${member.designation} at CodexWEBZ.`,
       metaKeywords: member.meta_keywords,
+      ogType: 'profile',
+      ogImage: member.image,
+      twitterImage: member.image,
       canonicalUrl: `/team/${member.slug}`
     })
   });
@@ -420,9 +472,24 @@ async function sitemap(req, res) {
   return res.send(xml);
 }
 
-function robots(req, res) {
+async function robots(req, res) {
+  const settings = res.locals.siteSettings || await settingsModel.getSettings().catch(() => null);
+  const hostUrl = `${req.protocol}://${req.get('host')}`;
+  const fallback = 'User-agent: *\nAllow: /';
+  let content = String(settings?.robots_txt || fallback).trim();
+
+  if (!content) {
+    content = fallback;
+  }
+
+  content = content.replace(/\{APP_URL\}/g, hostUrl);
+
+  if (!/sitemap:/i.test(content)) {
+    content = `${content}\nSitemap: ${hostUrl}/sitemap.xml`;
+  }
+
   res.type('text/plain');
-  return res.send(`User-agent: *\nAllow: /\nSitemap: ${req.protocol}://${req.get('host')}/sitemap.xml`);
+  return res.send(content);
 }
 
 module.exports = {

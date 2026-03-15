@@ -8,6 +8,7 @@ const chatController = require('../controllers/chatController');
 const blogController = require('../controllers/blogController');
 const leadController = require('../controllers/leadController');
 const careerController = require('../controllers/careerController');
+const seoController = require('../controllers/seoController');
 const analyticsController = require('../controllers/analyticsController');
 const { requireAuth } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/rbacMiddleware');
@@ -21,7 +22,9 @@ const {
   projectValidation,
   teamValidation,
   blogValidation,
-  jobValidation
+  jobValidation,
+  seoValidation,
+  sitewideSeoValidation
 } = require('../validators');
 
 const router = express.Router();
@@ -58,6 +61,10 @@ router.get('/blog', authorize(PERMISSIONS.BLOG_MANAGE), blogController.renderBlo
 router.post('/blog', authorize(PERMISSIONS.BLOG_MANAGE), imageUpload.single('featured_image'), validateCsrfToken, blogValidation, handleValidationErrors, blogController.createPost);
 router.post('/blog/:id/update', authorize(PERMISSIONS.BLOG_MANAGE), imageUpload.single('featured_image'), validateCsrfToken, blogValidation, handleValidationErrors, blogController.updatePost);
 router.post('/blog/:id/delete', authorize(PERMISSIONS.BLOG_MANAGE), blogController.deletePost);
+
+router.get('/seo', authorize(PERMISSIONS.SEO_MANAGE), seoController.renderSeoPage);
+router.post('/seo', authorize(PERMISSIONS.SEO_MANAGE), seoValidation, handleValidationErrors, seoController.upsertSeo);
+router.post('/seo/sitewide', authorize(PERMISSIONS.SEO_MANAGE), sitewideSeoValidation, handleValidationErrors, seoController.updateSitewideSeo);
 
 router.get('/leads', authorize(PERMISSIONS.LEADS_MANAGE), leadController.renderLeadsPage);
 router.post('/leads/:id/update', authorize(PERMISSIONS.LEADS_MANAGE), leadController.updateLead);

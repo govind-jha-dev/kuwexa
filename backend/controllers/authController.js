@@ -8,8 +8,17 @@ function getLoginSeo(seoRecord) {
   return {
     metaTitle: seoRecord?.meta_title || 'Login | CodexWebz',
     metaDescription: seoRecord?.meta_description || 'Sign in to the CodexWebz management platform.',
+    metaKeywords: seoRecord?.meta_keywords || null,
+    metaRobots: seoRecord?.meta_robots || 'noindex, nofollow',
+    ogType: seoRecord?.og_type || 'website',
     ogTitle: seoRecord?.og_title || seoRecord?.meta_title || 'Login | CodexWebz',
     ogDescription: seoRecord?.og_description || seoRecord?.meta_description || 'Sign in to the CodexWebz management platform.',
+    ogImage: seoRecord?.og_image || null,
+    ogImageAlt: seoRecord?.og_image_alt || null,
+    twitterCard: seoRecord?.twitter_card || null,
+    twitterTitle: seoRecord?.twitter_title || null,
+    twitterDescription: seoRecord?.twitter_description || null,
+    twitterImage: seoRecord?.twitter_image || null,
     canonicalUrl: seoRecord?.canonical_url || env.privateLoginPath,
     schemaMarkup: seoRecord?.schema_markup || null
   };

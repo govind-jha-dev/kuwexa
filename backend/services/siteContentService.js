@@ -468,7 +468,7 @@ function resolveServiceProfile(service = {}) {
 function getHomeContent({ services = [], products = [], projects = [], posts = [], jobs = [] }) {
   return {
     heroTitle: 'Technology solutions for modern businesses.',
-    heroSubtitle: 'CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term business success.',
+    heroSubtitle: 'CodexWEBZ helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term stability.',
     proofStats: [
       {
         value: `${Math.max(services.length, 4)}+`,
@@ -664,8 +664,8 @@ function getProjectsPageContent(projects = []) {
     categories: ['All', ...new Set(projects.map((project) => project.category).filter(Boolean))],
     values: [
       'Each case study connects business objective, delivery approach, technology choices, and measurable outcome.',
-      'Portfolio work is presented as a practical business solution rather than visual mockups alone.',
-      'All portfolio records stay editable from the dashboard after launch.'
+      'Client project work is presented as a practical business solution rather than visual mockups alone.',
+      'All client project records stay editable from the dashboard after launch.'
     ]
   };
 }

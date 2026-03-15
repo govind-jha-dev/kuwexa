@@ -47,10 +47,32 @@ async function ensureWebsiteSettingColumns(connection, databaseName) {
   await ensureColumn(connection, databaseName, 'website_settings', 'logo_path', 'VARCHAR(255) NULL AFTER secondary_color');
   await ensureColumn(connection, databaseName, 'website_settings', 'favicon_path', 'VARCHAR(255) NULL AFTER logo_path');
   await ensureColumn(connection, databaseName, 'website_settings', 'show_products_menu', 'TINYINT(1) NOT NULL DEFAULT 1 AFTER favicon_path');
+  await ensureColumn(connection, databaseName, 'website_settings', 'default_meta_keywords', 'VARCHAR(255) NULL AFTER default_meta_description');
+  await ensureColumn(connection, databaseName, 'website_settings', 'default_meta_robots', 'VARCHAR(255) NULL AFTER default_meta_keywords');
+  await ensureColumn(connection, databaseName, 'website_settings', 'default_og_image', 'VARCHAR(255) NULL AFTER default_meta_robots');
+  await ensureColumn(connection, databaseName, 'website_settings', 'default_og_image_alt', 'VARCHAR(255) NULL AFTER default_og_image');
+  await ensureColumn(connection, databaseName, 'website_settings', 'default_twitter_card', 'VARCHAR(60) NULL AFTER default_og_image_alt');
+  await ensureColumn(connection, databaseName, 'website_settings', 'twitter_site', 'VARCHAR(120) NULL AFTER default_twitter_card');
+  await ensureColumn(connection, databaseName, 'website_settings', 'twitter_creator', 'VARCHAR(120) NULL AFTER twitter_site');
+  await ensureColumn(connection, databaseName, 'website_settings', 'bing_webmaster_tag', 'VARCHAR(255) NULL AFTER search_console_tag');
+  await ensureColumn(connection, databaseName, 'website_settings', 'yandex_verification_tag', 'VARCHAR(255) NULL AFTER bing_webmaster_tag');
+  await ensureColumn(connection, databaseName, 'website_settings', 'pinterest_verification_tag', 'VARCHAR(255) NULL AFTER yandex_verification_tag');
+  await ensureColumn(connection, databaseName, 'website_settings', 'facebook_domain_verification', 'VARCHAR(255) NULL AFTER pinterest_verification_tag');
+  await ensureColumn(connection, databaseName, 'website_settings', 'global_schema_markup', 'JSON NULL AFTER facebook_domain_verification');
+  await ensureColumn(connection, databaseName, 'website_settings', 'robots_txt', 'LONGTEXT NULL AFTER global_schema_markup');
 }
 
 async function ensureSeoColumns(connection, databaseName) {
   await ensureColumn(connection, databaseName, 'seo_settings', 'meta_keywords', 'VARCHAR(255) NULL AFTER meta_description');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'focus_keyword', 'VARCHAR(180) NULL AFTER meta_keywords');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'meta_robots', 'VARCHAR(255) NULL AFTER focus_keyword');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'og_type', 'VARCHAR(60) NULL AFTER schema_markup');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'og_image', 'VARCHAR(255) NULL AFTER og_description');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'og_image_alt', 'VARCHAR(255) NULL AFTER og_image');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'twitter_card', 'VARCHAR(60) NULL AFTER og_image_alt');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'twitter_title', 'VARCHAR(255) NULL AFTER twitter_card');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'twitter_description', 'TEXT NULL AFTER twitter_title');
+  await ensureColumn(connection, databaseName, 'seo_settings', 'twitter_image', 'VARCHAR(255) NULL AFTER twitter_description');
 }
 
 async function ensurePageColumns(connection, databaseName) {

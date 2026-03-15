@@ -34,6 +34,7 @@ const {
   jobValidation,
   applicationValidation,
   seoValidation,
+  sitewideSeoValidation,
   settingsValidation
 } = require('../validators');
 
@@ -102,6 +103,7 @@ router.patch('/careers/applications/:id', requireAuth, authorize(PERMISSIONS.CAR
 
 router.get('/seo', requireAuth, authorize(PERMISSIONS.SEO_MANAGE), seoController.apiList);
 router.post('/seo', requireAuth, authorize(PERMISSIONS.SEO_MANAGE), seoValidation, handleValidationErrors, seoController.upsertSeo);
+router.put('/seo/sitewide', requireAuth, authorize(PERMISSIONS.SEO_MANAGE), sitewideSeoValidation, handleValidationErrors, seoController.updateSitewideSeo);
 
 router.get('/settings', requireAuth, authorize(PERMISSIONS.SETTINGS_MANAGE), settingsController.apiShow);
 router.put('/settings', requireAuth, authorize(PERMISSIONS.SETTINGS_MANAGE), settingsValidation, handleValidationErrors, settingsController.updateSettings);

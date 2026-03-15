@@ -1,6 +1,7 @@
 <% const noticeData = typeof notice !== 'undefined' ? notice : null; %>
 <% const statItems = typeof stats !== 'undefined' ? stats : []; %>
 <% const formConfig = typeof form !== 'undefined' ? form : null; %>
+<% const secondaryFormConfig = typeof secondaryForm !== 'undefined' ? secondaryForm : null; %>
 <% const infoPanelData = typeof infoPanel !== 'undefined' ? infoPanel : null; %>
 <% const tableConfig = typeof table !== 'undefined' ? table : null; %>
 <% const secondaryTableConfig = typeof secondaryTable !== 'undefined' ? secondaryTable : null; %>
@@ -30,7 +31,7 @@
       <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
         <div class="mb-6">
           <h2 class="font-display text-2xl font-bold text-slate-900"><%= formConfig.title %></h2>
-          <p class="mt-2 text-sm text-slate-500">Changes are applied immediately across the website and dashboards.</p>
+          <p class="mt-2 text-sm text-slate-500"><%= formConfig.description || 'Changes are applied immediately across the website and dashboards.' %></p>
         </div>
         <form method="post" action="<%= formConfig.action %>" class="grid gap-4 md:grid-cols-2"<%- formConfig.enctype ? ` enctype="${formConfig.enctype}"` : '' %>>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -72,6 +73,56 @@
             </div>
           <% }) %>
           <button type="submit" class="w-full rounded-2xl bg-primary px-5 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 md:col-span-2"><%= formConfig.submitLabel %></button>
+        </form>
+      </section>
+    <% } %>
+
+    <% if (secondaryFormConfig) { %>
+      <section class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div class="mb-6">
+          <h2 class="font-display text-2xl font-bold text-slate-900"><%= secondaryFormConfig.title %></h2>
+          <p class="mt-2 text-sm text-slate-500"><%= secondaryFormConfig.description || 'Changes are applied immediately across the website and dashboards.' %></p>
+        </div>
+        <form method="post" action="<%= secondaryFormConfig.action %>" class="grid gap-4 md:grid-cols-2"<%- secondaryFormConfig.enctype ? ` enctype="${secondaryFormConfig.enctype}"` : '' %>>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <% secondaryFormConfig.fields.forEach((field) => { %>
+            <% const isWideField = Boolean(field.fullWidth || wideFieldTypes.includes(field.type)); %>
+            <div class="<%= isWideField ? 'md:col-span-2' : '' %>">
+              <label class="mb-2 block text-sm font-semibold text-slate-700" for="<%= field.name %>"><%= field.label %><%= field.required ? ' *' : '' %></label>
+              <% if (field.type === 'textarea') { %>
+                <textarea id="<%= field.name %>" name="<%= field.name %>" rows="<%= field.rows || 4 %>" <%= field.required ? 'required' : '' %> <%= field.placeholder ? `placeholder="${field.placeholder}"` : '' %> class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"><%= field.value || '' %></textarea>
+              <% } else if (field.type === 'richtext') { %>
+                <textarea id="<%= field.name %>" name="<%= field.name %>" rows="<%= field.rows || 8 %>" <%= field.required ? 'required' : '' %> class="rich-editor w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"><%= field.value || '' %></textarea>
+              <% } else if (field.type === 'select') { %>
+                <select id="<%= field.name %>" name="<%= field.name %>" <%= field.required ? 'required' : '' %> class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20">
+                  <% field.options.forEach((option) => { %>
+                    <option value="<%= option.value %>" <%= String(field.value) === String(option.value) ? 'selected' : '' %>><%= option.label %></option>
+                  <% }) %>
+                </select>
+              <% } else if (field.type === 'file') { %>
+                <input id="<%= field.name %>" name="<%= field.name %>" type="file" <% if (field.accept) { %>accept="<%= field.accept %>"<% } %> <%= field.multiple ? 'multiple' : '' %> class="w-full rounded-2xl border border-dashed border-slate-300 px-4 py-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-secondary file:px-4 file:py-2 file:font-semibold file:text-primary">
+                <% if (field.previewUrl) { %>
+                  <div class="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                    <% if (field.previewUrl.startsWith('/uploads/images/')) { %>
+                      <% const previewMode = field.previewMode === 'contain' ? 'contain' : 'cover'; %>
+                      <div class="rounded-xl p-4" style="background-color:#f8fafc;background-image:linear-gradient(45deg,#e2e8f0 25%,transparent 25%),linear-gradient(-45deg,#e2e8f0 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e2e8f0 75%),linear-gradient(-45deg,transparent 75%,#e2e8f0 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0;">
+                        <img src="<%= field.previewUrl %>" alt="<%= field.label %>" class="h-40 w-full rounded-xl <%= previewMode === 'contain' ? 'object-contain' : 'object-cover' %>" loading="lazy" decoding="async">
+                      </div>
+                      <p class="mt-3 text-xs font-medium text-slate-500">Current file: <%= field.previewUrl.split('/').pop() %></p>
+                    <% } else { %>
+                      <a href="<%= field.previewUrl %>" class="text-sm font-semibold text-primary underline decoration-secondary underline-offset-4" target="_blank" rel="noreferrer">View current file</a>
+                    <% } %>
+                  </div>
+                <% } %>
+              <% } else { %>
+                <input id="<%= field.name %>" name="<%= field.name %>" type="<%= field.type || 'text' %>" value="<%= field.value || '' %>" <%= field.required ? 'required' : '' %> <%= typeof field.min !== 'undefined' ? `min="${field.min}"` : '' %> <%= typeof field.max !== 'undefined' ? `max="${field.max}"` : '' %> <%= typeof field.step !== 'undefined' ? `step="${field.step}"` : '' %> <%= field.placeholder ? `placeholder="${field.placeholder}"` : '' %> class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20">
+              <% } %>
+              <% if (field.description) { %>
+                <p class="mt-2 text-xs leading-6 text-slate-500"><%= field.description %></p>
+              <% } %>
+            </div>
+          <% }) %>
+          <button type="submit" class="w-full rounded-2xl bg-primary px-5 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 md:col-span-2"><%= secondaryFormConfig.submitLabel %></button>
         </form>
       </section>
     <% } %>

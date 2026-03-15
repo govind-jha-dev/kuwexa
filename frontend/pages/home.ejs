@@ -9,12 +9,12 @@
         <h1 class="mt-6 max-w-4xl font-display text-5xl font-bold leading-[1.02] md:text-6xl lg:text-7xl">
           <%= marketing.heroTitle %>
         </h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-white/72">
+        <p class="site-home__hero-copy mt-6 text-white/72">
           <%= marketing.heroSubtitle %>
         </p>
         <div class="mt-10 flex flex-wrap gap-4">
           <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Request a Build Plan</a>
-          <a href="/portfolio" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">View Portfolio</a>
+          <a href="/portfolio" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">View Client Projects</a>
         </div>
         <div class="mt-10 flex flex-wrap gap-3">
           <% marketing.capabilityBands.forEach((band) => { %>
@@ -150,7 +150,7 @@
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <div class="grid gap-6 xl:grid-cols-[1.12fr,0.88fr]">
     <div class="rounded-[2.25rem] bg-primary p-8 text-white lg:p-10">
-      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Portfolio</p>
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Client Projects</p>
       <h2 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight">Client outcomes built around real business needs.</h2>
       <div class="mt-8 space-y-4">
         <% projects.forEach((project, index) => { %>

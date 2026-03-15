@@ -1,4 +1,6 @@
 const { body, validationResult } = require('express-validator');
+const seoOgTypes = ['website', 'article', 'profile', 'product', 'business.business'];
+const twitterCardTypes = ['summary', 'summary_large_image', 'app', 'player'];
 
 function handleValidationErrors(req, res, next) {
   const errors = validationResult(req);
@@ -107,7 +109,13 @@ const applicationValidation = [
 ];
 
 const seoValidation = [
-  body('page_key').trim().notEmpty().withMessage('Page key is required.')
+  body('page_key').trim().notEmpty().withMessage('Page key is required.'),
+  body('og_type').optional({ values: 'falsy' }).isIn(seoOgTypes).withMessage('OpenGraph type must be valid.'),
+  body('twitter_card').optional({ values: 'falsy' }).isIn(twitterCardTypes).withMessage('Twitter card must be valid.')
+];
+
+const sitewideSeoValidation = [
+  body('default_twitter_card').optional({ values: 'falsy' }).isIn(twitterCardTypes).withMessage('Default Twitter card must be valid.')
 ];
 
 const settingsValidation = [
@@ -132,5 +140,6 @@ module.exports = {
   jobValidation,
   applicationValidation,
   seoValidation,
+  sitewideSeoValidation,
   settingsValidation
 };

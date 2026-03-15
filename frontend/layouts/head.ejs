@@ -1,27 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <%
+    const normalizedAppUrl = String(appUrl || '').replace(/\/$/, '');
+    const toAbsoluteUrl = (value) => {
+      if (!value) {
+        return null;
+      }
+
+      if (/^https?:\/\//i.test(value)) {
+        return value;
+      }
+
+      if (value.startsWith('//')) {
+        return `https:${value}`;
+      }
+
+      const normalizedPath = value.startsWith('/') ? value : `/${value}`;
+      return `${normalizedAppUrl}${normalizedPath}`;
+    };
+
+    const pageTitle = seo?.metaTitle || siteSettings?.default_meta_title || title || 'CodexWebz';
+    const pageDescription = seo?.metaDescription || siteSettings?.default_meta_description || 'CodexWebz web platform';
+    const pageKeywords = seo?.metaKeywords || siteSettings?.default_meta_keywords || null;
+    const pageRobots = seo?.metaRobots || siteSettings?.default_meta_robots || null;
+    const pageCanonicalUrl = toAbsoluteUrl(seo?.canonicalUrl || currentPath || '/') || normalizedAppUrl;
+    const pageOgType = seo?.ogType || 'website';
+    const pageOgTitle = seo?.ogTitle || pageTitle;
+    const pageOgDescription = seo?.ogDescription || pageDescription;
+    const pageOgImage = toAbsoluteUrl(seo?.ogImage || siteSettings?.default_og_image || siteSettings?.logo_path || null);
+    const pageOgImageAlt = seo?.ogImageAlt || siteSettings?.default_og_image_alt || null;
+    const pageTwitterCard = seo?.twitterCard || siteSettings?.default_twitter_card || (pageOgImage ? 'summary_large_image' : 'summary');
+    const pageTwitterTitle = seo?.twitterTitle || pageOgTitle;
+    const pageTwitterDescription = seo?.twitterDescription || pageOgDescription;
+    const pageTwitterImage = toAbsoluteUrl(seo?.twitterImage || pageOgImage);
+    const globalSchemaMarkup = siteSettings?.global_schema_markup || null;
+    const pageSchemaMarkup = seo?.schemaMarkup || null;
+  %>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= seo?.metaTitle || title || 'CodexWebz' %></title>
-  <meta name="description" content="<%= seo?.metaDescription || siteSettings?.default_meta_description || 'CodexWebz web platform' %>">
-  <% if (seo?.metaKeywords) { %>
-    <meta name="keywords" content="<%= seo.metaKeywords %>">
+  <title><%= pageTitle %></title>
+  <meta name="description" content="<%= pageDescription %>">
+  <% if (pageKeywords) { %>
+    <meta name="keywords" content="<%= pageKeywords %>">
+  <% } %>
+  <% if (pageRobots) { %>
+    <meta name="robots" content="<%= pageRobots %>">
   <% } %>
   <meta name="theme-color" content="<%= siteSettings?.primary_color || '#00240a' %>">
-  <meta property="og:title" content="<%= seo?.ogTitle || seo?.metaTitle || title || 'CodexWebz' %>">
-  <meta property="og:description" content="<%= seo?.ogDescription || seo?.metaDescription || siteSettings?.default_meta_description || '' %>">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="<%= appUrl %><%= seo?.canonicalUrl ? seo.canonicalUrl : currentPath %>">
+  <meta property="og:title" content="<%= pageOgTitle %>">
+  <meta property="og:description" content="<%= pageOgDescription %>">
+  <meta property="og:type" content="<%= pageOgType %>">
+  <meta property="og:url" content="<%= pageCanonicalUrl %>">
+  <meta property="og:site_name" content="<%= siteSettings?.company_name || 'CodexWebz' %>">
+  <% if (pageOgImage) { %>
+    <meta property="og:image" content="<%= pageOgImage %>">
+  <% } %>
+  <% if (pageOgImageAlt) { %>
+    <meta property="og:image:alt" content="<%= pageOgImageAlt %>">
+  <% } %>
+  <% if (pageTwitterCard) { %>
+    <meta name="twitter:card" content="<%= pageTwitterCard %>">
+  <% } %>
+  <meta name="twitter:title" content="<%= pageTwitterTitle %>">
+  <meta name="twitter:description" content="<%= pageTwitterDescription %>">
+  <% if (pageTwitterImage) { %>
+    <meta name="twitter:image" content="<%= pageTwitterImage %>">
+  <% } %>
+  <% if (pageOgImageAlt) { %>
+    <meta name="twitter:image:alt" content="<%= pageOgImageAlt %>">
+  <% } %>
+  <% if (siteSettings?.twitter_site) { %>
+    <meta name="twitter:site" content="<%= siteSettings.twitter_site %>">
+  <% } %>
+  <% if (siteSettings?.twitter_creator) { %>
+    <meta name="twitter:creator" content="<%= siteSettings.twitter_creator %>">
+  <% } %>
   <% if (siteSettings?.favicon_path) { %>
     <link rel="icon" href="<%= siteSettings.favicon_path %>">
     <link rel="shortcut icon" href="<%= siteSettings.favicon_path %>">
   <% } %>
-  <% if (seo?.canonicalUrl) { %>
-    <link rel="canonical" href="<%= appUrl %><%= seo.canonicalUrl %>">
-  <% } %>
+  <link rel="canonical" href="<%= pageCanonicalUrl %>">
   <% if (siteSettings?.search_console_tag) { %>
     <meta name="google-site-verification" content="<%= siteSettings.search_console_tag %>">
+  <% } %>
+  <% if (siteSettings?.bing_webmaster_tag) { %>
+    <meta name="msvalidate.01" content="<%= siteSettings.bing_webmaster_tag %>">
+  <% } %>
+  <% if (siteSettings?.yandex_verification_tag) { %>
+    <meta name="yandex-verification" content="<%= siteSettings.yandex_verification_tag %>">
+  <% } %>
+  <% if (siteSettings?.pinterest_verification_tag) { %>
+    <meta name="p:domain_verify" content="<%= siteSettings.pinterest_verification_tag %>">
+  <% } %>
+  <% if (siteSettings?.facebook_domain_verification) { %>
+    <meta name="facebook-domain-verification" content="<%= siteSettings.facebook_domain_verification %>">
   <% } %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +118,11 @@
       gtag('config', '<%= siteSettings.analytics_id %>');
     </script>
   <% } %>
-  <% if (seo?.schemaMarkup) { %>
-    <script type="application/ld+json"><%- typeof seo.schemaMarkup === 'string' ? seo.schemaMarkup : JSON.stringify(seo.schemaMarkup) %></script>
+  <% if (globalSchemaMarkup) { %>
+    <script type="application/ld+json"><%- typeof globalSchemaMarkup === 'string' ? globalSchemaMarkup : JSON.stringify(globalSchemaMarkup) %></script>
+  <% } %>
+  <% if (pageSchemaMarkup) { %>
+    <script type="application/ld+json"><%- typeof pageSchemaMarkup === 'string' ? pageSchemaMarkup : JSON.stringify(pageSchemaMarkup) %></script>
   <% } %>
 </head>
 <body class="site-shell font-sans text-slate-900 antialiased">

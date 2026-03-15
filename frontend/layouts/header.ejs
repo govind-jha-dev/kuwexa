@@ -13,16 +13,16 @@
       <% } %>
     </a>
 
-    <nav class="site-header__desktop-nav items-center gap-7 text-sm font-semibold text-primary/70">
-      <a href="/services" class="transition <%= activePath.startsWith('/services') ? 'text-primary' : 'hover:text-primary' %>">Services</a>
+    <nav class="site-header__desktop-nav items-center gap-2 text-sm font-semibold">
+      <a href="/services" class="site-header__nav-link <%= activePath.startsWith('/services') ? 'is-active' : '' %>">Services</a>
       <% if (showProductsMenu) { %>
-        <a href="/products" class="transition <%= activePath.startsWith('/products') ? 'text-primary' : 'hover:text-primary' %>">Our Products</a>
+        <a href="/products" class="site-header__nav-link <%= activePath.startsWith('/products') ? 'is-active' : '' %>">Our Products</a>
       <% } %>
-      <a href="/portfolio" class="transition <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'text-primary' : 'hover:text-primary' %>">Portfolio</a>
-      <a href="/about-us" class="transition <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'text-primary' : 'hover:text-primary' %>">About Us</a>
-      <a href="/team" class="transition <%= activePath === '/team' || activePath.startsWith('/team/') ? 'text-primary' : 'hover:text-primary' %>">Team</a>
-      <a href="/careers" class="transition <%= activePath.startsWith('/careers') ? 'text-primary' : 'hover:text-primary' %>">Careers</a>
-      <a href="/contact" class="transition <%= activePath === '/contact' ? 'text-primary' : 'hover:text-primary' %>">Contact</a>
+      <a href="/portfolio" class="site-header__nav-link <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'is-active' : '' %>">Client Projects</a>
+      <a href="/about-us" class="site-header__nav-link <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'is-active' : '' %>">About Us</a>
+      <a href="/team" class="site-header__nav-link <%= activePath === '/team' || activePath.startsWith('/team/') ? 'is-active' : '' %>">Team</a>
+      <a href="/careers" class="site-header__nav-link <%= activePath.startsWith('/careers') ? 'is-active' : '' %>">Careers</a>
+      <a href="/contact" class="site-header__nav-link <%= activePath === '/contact' ? 'is-active' : '' %>">Contact</a>
     </nav>
 
     <div class="site-header__actions items-center gap-3">
@@ -56,7 +56,7 @@
         <% if (showProductsMenu) { %>
           <a href="/products" class="site-mobile-nav__link">Our Products</a>
         <% } %>
-        <a href="/portfolio" class="site-mobile-nav__link">Portfolio</a>
+        <a href="/portfolio" class="site-mobile-nav__link">Client Projects</a>
         <a href="/about-us" class="site-mobile-nav__link">About Us</a>
         <a href="/team" class="site-mobile-nav__link">Team</a>
         <a href="/careers" class="site-mobile-nav__link">Careers</a>

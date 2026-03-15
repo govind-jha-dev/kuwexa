@@ -4,7 +4,7 @@ const { buildUpdateClause } = require('../utils/sql');
 
 async function getSettings() {
   const row = await getOne('SELECT * FROM website_settings WHERE id = 1');
-  return parseJsonFields(row, ['social_links']);
+  return parseJsonFields(row, ['social_links', 'global_schema_markup']);
 }
 
 async function updateSettings(data) {
