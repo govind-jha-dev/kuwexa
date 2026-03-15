@@ -1,5 +1,16 @@
 <%- include('../layouts/head', { title, seo }) %>
 <%- include('../layouts/header') %>
+<%
+  const dashboardManagedNotice = 'Full profile content is managed from the Team dashboard, including biography, social links, and media.';
+  const fallbackShortBio = member.short_bio && member.short_bio !== dashboardManagedNotice ? member.short_bio : '';
+  const baseProfileHtml = member.bio || (fallbackShortBio ? `<p>${fallbackShortBio}</p>` : '');
+  const escapedDashboardManagedNotice = dashboardManagedNotice.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const cleanedProfileHtml = String(baseProfileHtml || '')
+    .replace(new RegExp(`<p>\\s*${escapedDashboardManagedNotice}\\s*<\\/p>`, 'gi'), '')
+    .replace(new RegExp(escapedDashboardManagedNotice, 'gi'), '')
+    .trim();
+  const profileHtml = cleanedProfileHtml || (fallbackShortBio ? `<p>${fallbackShortBio}</p>` : '<p>Profile information will appear here soon.</p>');
+%>
 
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
   <a href="/about-us#team" class="text-sm font-bold text-primary underline decoration-secondary underline-offset-4">Back to About Us</a>
@@ -51,12 +62,11 @@
         <%- include('../components/section-heading', {
           eyebrow: 'Profile',
           title: `${member.name} at CodexWEBZ`,
-          copy: 'Full profile content is managed from the Team dashboard, including biography, social links, and media.'
         }) %>
       </div>
 
       <div class="prose-content mt-8">
-        <%- member.bio || `<p>${member.short_bio || 'Profile information will appear here once updated from the Team dashboard.'}</p>` %>
+        <%- profileHtml %>
       </div>
     </article>
   </div>
