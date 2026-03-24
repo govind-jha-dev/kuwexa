@@ -8,7 +8,7 @@
     <article class="surface-panel rounded-[2.25rem] p-8 lg:p-10">
       <div class="flex flex-wrap items-center gap-3">
         <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= project.category || 'Project' %></span>
-        <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= project.client || 'CodexWebz' %></span>
+        <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= project.client || 'Kuwexa Initiative' %></span>
         <% if (project.client_industry) { %>
           <span class="rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600"><%= project.client_industry %></span>
         <% } %>
@@ -20,7 +20,7 @@
 
     <aside class="space-y-6">
       <% if (project.featured_image) { %>
-        <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-80 w-full rounded-[2rem] object-cover shadow-float" decoding="async" fetchpriority="high">
+        <img src="<%= project.featured_image %>" alt="<%= resolveImageAlt(project.featured_image, `${project.title} featured image`) %>" class="h-80 w-full rounded-[2rem] object-cover shadow-float" decoding="async" fetchpriority="high">
       <% } %>
       <div class="rounded-[2rem] bg-primary p-8 text-white">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Project Angle</p>
@@ -86,7 +86,7 @@
       }) %>
       <div class="mt-8 grid gap-6 md:grid-cols-2">
         <% project.images.forEach((image) => { %>
-          <img src="<%= image %>" alt="<%= project.title %>" class="reveal h-72 w-full rounded-[1.85rem] object-cover shadow-sm" data-reveal loading="lazy" decoding="async">
+          <img src="<%= image %>" alt="<%= resolveImageAlt(image, `${project.title} gallery image`) %>" class="reveal h-72 w-full rounded-[1.85rem] object-cover shadow-sm" data-reveal loading="lazy" decoding="async">
         <% }) %>
       </div>
     </div>
@@ -96,7 +96,7 @@
 <%- include('../components/site-cta', {
   eyebrow: 'Your Next Build',
   title: 'Want a project like this with a public frontend and a usable backend for your team?',
-  copy: 'CodexWebz can scope the public site, product pages, dashboard workflows, and deployment architecture as one delivery.',
+  copy: 'Kuwexa can scope the public site, product pages, dashboard workflows, and deployment architecture as one coordinated delivery.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
   secondaryLabel: 'More Client Projects',

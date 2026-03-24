@@ -6,13 +6,13 @@ const env = require('../config/env');
 
 function getLoginSeo(seoRecord) {
   return {
-    metaTitle: seoRecord?.meta_title || 'Login | CodexWebz',
-    metaDescription: seoRecord?.meta_description || 'Sign in to the CodexWebz management platform.',
+    metaTitle: seoRecord?.meta_title || 'Login | Kuwexa',
+    metaDescription: seoRecord?.meta_description || 'Sign in to the Kuwexa management platform.',
     metaKeywords: seoRecord?.meta_keywords || null,
     metaRobots: seoRecord?.meta_robots || 'noindex, nofollow',
     ogType: seoRecord?.og_type || 'website',
-    ogTitle: seoRecord?.og_title || seoRecord?.meta_title || 'Login | CodexWebz',
-    ogDescription: seoRecord?.og_description || seoRecord?.meta_description || 'Sign in to the CodexWebz management platform.',
+    ogTitle: seoRecord?.og_title || seoRecord?.meta_title || 'Login | Kuwexa',
+    ogDescription: seoRecord?.og_description || seoRecord?.meta_description || 'Sign in to the Kuwexa management platform.',
     ogImage: seoRecord?.og_image || null,
     ogImageAlt: seoRecord?.og_image_alt || null,
     twitterCard: seoRecord?.twitter_card || null,

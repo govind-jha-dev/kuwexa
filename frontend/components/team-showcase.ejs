@@ -44,7 +44,7 @@
             <article class="team-card team-card--leadership reveal" data-reveal>
               <div class="team-card__media team-card__media--leadership">
                 <% if (member.image) { %>
-                  <img src="<%= member.image %>" alt="<%= member.name %>" class="team-card__image" loading="lazy" decoding="async">
+                  <img src="<%= member.image %>" alt="<%= resolveImageAlt(member.image, `${member.name} portrait`) %>" class="team-card__image" loading="lazy" decoding="async">
                 <% } else { %>
                   <div class="team-card__fallback team-card__fallback--leadership">
                     <div class="team-card__initials team-card__initials--leadership"><%= initials(member.name) %></div>
@@ -128,7 +128,7 @@
                   </div>
                   <div class="team-card__media-shell">
                     <% if (member.image) { %>
-                      <img src="<%= member.image %>" alt="<%= member.name %>" class="team-card__image" loading="lazy" decoding="async">
+                      <img src="<%= member.image %>" alt="<%= resolveImageAlt(member.image, `${member.name} portrait`) %>" class="team-card__image" loading="lazy" decoding="async">
                     <% } else { %>
                       <div class="team-card__fallback team-card__fallback--employee">
                         <div class="team-card__initials team-card__initials--employee"><%= initials(member.name) %></div>

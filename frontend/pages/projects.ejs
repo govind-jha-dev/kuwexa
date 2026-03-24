@@ -60,11 +60,11 @@
             data-category="<%= project.category || 'All' %>"
             data-search="<%= `${project.title} ${project.client || ''} ${project.category || ''} ${(project.technologies || []).join(' ')}` %>">
             <% if (project.featured_image) { %>
-              <img src="<%= project.featured_image %>" alt="<%= project.title %>" class="h-56 w-full rounded-[1.5rem] object-cover" loading="lazy" decoding="async">
+              <img src="<%= project.featured_image %>" alt="<%= resolveImageAlt(project.featured_image, `${project.title} featured image`) %>" class="h-56 w-full rounded-[1.5rem] object-cover" loading="lazy" decoding="async">
             <% } %>
             <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
               <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= project.category || 'Project' %></span>
-              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/35"><%= project.client || 'CodexWebz' %></span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/35"><%= project.client || 'Kuwexa Initiative' %></span>
             </div>
             <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= project.title %></h2>
             <p class="mt-4 text-sm leading-8 text-slate-600"><%= project.summary %></p>

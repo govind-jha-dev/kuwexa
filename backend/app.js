@@ -12,6 +12,7 @@ const env = require('./config/env');
 const settingsModel = require('./models/settingsModel');
 const productModel = require('./models/productModel');
 const teamModel = require('./models/teamModel');
+const mediaAssetModel = require('./models/mediaAssetModel');
 const { hydrateUser } = require('./middleware/authMiddleware');
 const { issueCsrfToken, validateCsrf } = require('./middleware/csrfMiddleware');
 const { generalLimiter } = require('./middleware/rateLimiters');
@@ -67,21 +68,34 @@ app.use(async (req, res, next) => {
   res.locals.currentUser = req.user || null;
 
   try {
-    const [siteSettings, publishedProductCount] = await Promise.all([
+    const [siteSettings, publishedProductCount, mediaAltMap] = await Promise.all([
       settingsModel.getSettings(),
       req.path.startsWith('/api') || req.path.startsWith('/admin') || req.path.startsWith('/manager')
         ? Promise.resolve(0)
-        : productModel.countPublished().catch(() => 0)
+        : productModel.countPublished().catch(() => 0),
+      req.path.startsWith('/api') || req.path.startsWith('/admin') || req.path.startsWith('/manager')
+        ? Promise.resolve({})
+        : mediaAssetModel.getAltMap().catch(() => ({}))
     ]);
 
     res.locals.siteSettings = siteSettings;
     res.locals.publishedProductCount = publishedProductCount;
     res.locals.showProductsMenu = Number(siteSettings?.show_products_menu) !== 0 && publishedProductCount > 0;
+    res.locals.mediaAltMap = mediaAltMap;
   } catch (error) {
     res.locals.siteSettings = null;
     res.locals.publishedProductCount = 0;
     res.locals.showProductsMenu = false;
+    res.locals.mediaAltMap = {};
   }
+
+  res.locals.resolveImageAlt = (filePath, fallbackText) => {
+    if (!filePath) {
+      return fallbackText || '';
+    }
+
+    return res.locals.mediaAltMap?.[filePath] || fallbackText || '';
+  };
 
   res.locals.currentPath = req.path;
   res.locals.currentYear = new Date().getFullYear();

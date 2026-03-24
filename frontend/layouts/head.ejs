@@ -3,6 +3,12 @@
 <head>
   <%
     const normalizedAppUrl = String(appUrl || '').replace(/\/$/, '');
+    const siteBrand = siteSettings?.company_name || 'Kuwexa Private Limited';
+    const siteDescription = siteSettings?.default_meta_description || 'Kuwexa Private Limited builds scalable systems for global commerce.';
+    const socialLinkValues = siteSettings?.social_links && typeof siteSettings.social_links === 'object'
+      ? Object.values(siteSettings.social_links).filter(Boolean)
+      : [];
+
     const toAbsoluteUrl = (value) => {
       if (!value) {
         return null;
@@ -20,8 +26,20 @@
       return `${normalizedAppUrl}${normalizedPath}`;
     };
 
-    const pageTitle = seo?.metaTitle || siteSettings?.default_meta_title || title || 'CodexWebz';
-    const pageDescription = seo?.metaDescription || siteSettings?.default_meta_description || 'CodexWebz web platform';
+    const toSchemaArray = (value) => {
+      if (!value) {
+        return [];
+      }
+
+      if (Array.isArray(value)) {
+        return value.flatMap((item) => toSchemaArray(item));
+      }
+
+      return [value];
+    };
+
+    const pageTitle = seo?.metaTitle || siteSettings?.default_meta_title || title || siteBrand;
+    const pageDescription = seo?.metaDescription || siteSettings?.default_meta_description || siteDescription;
     const pageKeywords = seo?.metaKeywords || siteSettings?.default_meta_keywords || null;
     const pageRobots = seo?.metaRobots || siteSettings?.default_meta_robots || null;
     const pageCanonicalUrl = toAbsoluteUrl(seo?.canonicalUrl || currentPath || '/') || normalizedAppUrl;
@@ -29,13 +47,102 @@
     const pageOgTitle = seo?.ogTitle || pageTitle;
     const pageOgDescription = seo?.ogDescription || pageDescription;
     const pageOgImage = toAbsoluteUrl(seo?.ogImage || siteSettings?.default_og_image || siteSettings?.logo_path || null);
-    const pageOgImageAlt = seo?.ogImageAlt || siteSettings?.default_og_image_alt || null;
+    const pageOgImageAlt = seo?.ogImageAlt || (seo?.ogImage ? resolveImageAlt?.(seo.ogImage, null) : null) || siteSettings?.default_og_image_alt || null;
     const pageTwitterCard = seo?.twitterCard || siteSettings?.default_twitter_card || (pageOgImage ? 'summary_large_image' : 'summary');
     const pageTwitterTitle = seo?.twitterTitle || pageOgTitle;
     const pageTwitterDescription = seo?.twitterDescription || pageOgDescription;
     const pageTwitterImage = toAbsoluteUrl(seo?.twitterImage || pageOgImage);
-    const globalSchemaMarkup = siteSettings?.global_schema_markup || null;
-    const pageSchemaMarkup = seo?.schemaMarkup || null;
+    const globalSchemaMarkup = toSchemaArray(siteSettings?.global_schema_markup || null);
+    const pageSchemaMarkup = toSchemaArray(seo?.schemaMarkup || null);
+    const breadcrumbItems = Array.isArray(seo?.breadcrumbs) ? seo.breadcrumbs.filter(Boolean) : [];
+    const faqItems = Array.isArray(seo?.faqItems) ? seo.faqItems.filter((item) => item?.question && item?.answer) : [];
+
+    const organizationSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': `${normalizedAppUrl}/#organization`,
+      name: siteBrand,
+      url: normalizedAppUrl,
+      description: siteDescription,
+      logo: toAbsoluteUrl(siteSettings?.logo_path || siteSettings?.default_og_image || null) || undefined,
+      email: siteSettings?.company_email || undefined,
+      telephone: siteSettings?.company_phone || undefined,
+      sameAs: socialLinkValues,
+      address: siteSettings?.address ? {
+        '@type': 'PostalAddress',
+        streetAddress: siteSettings.address
+      } : undefined
+    };
+
+    const websiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': `${normalizedAppUrl}/#website`,
+      url: normalizedAppUrl,
+      name: siteBrand,
+      description: siteDescription,
+      publisher: {
+        '@id': `${normalizedAppUrl}/#organization`
+      },
+      inLanguage: 'en'
+    };
+
+    const webPageSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${pageCanonicalUrl}#webpage`,
+      url: pageCanonicalUrl,
+      name: pageTitle,
+      description: pageDescription,
+      isPartOf: {
+        '@id': `${normalizedAppUrl}/#website`
+      },
+      about: {
+        '@id': `${normalizedAppUrl}/#organization`
+      },
+      primaryImageOfPage: pageOgImage ? {
+        '@type': 'ImageObject',
+        url: pageOgImage
+      } : undefined
+    };
+
+    const breadcrumbSchema = breadcrumbItems.length
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: breadcrumbItems.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name,
+            item: toAbsoluteUrl(item.path)
+          }))
+        }
+      : null;
+
+    const faqSchema = faqItems.length
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer
+            }
+          }))
+        }
+      : null;
+
+    const schemaBlocks = [
+      organizationSchema,
+      websiteSchema,
+      webPageSchema,
+      ...globalSchemaMarkup,
+      ...pageSchemaMarkup,
+      breadcrumbSchema,
+      faqSchema
+    ].filter(Boolean);
   %>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,14 +154,22 @@
   <% if (pageRobots) { %>
     <meta name="robots" content="<%= pageRobots %>">
   <% } %>
-  <meta name="theme-color" content="<%= siteSettings?.primary_color || '#00240a' %>">
+  <meta name="author" content="<%= seo?.authorName || siteBrand %>">
+  <meta name="publisher" content="<%= siteBrand %>">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="<%= siteSettings?.primary_color || '#0d2d24' %>">
+  <meta name="application-name" content="<%= siteBrand %>">
+  <meta name="apple-mobile-web-app-title" content="<%= siteBrand %>">
+  <meta property="og:locale" content="en_US">
   <meta property="og:title" content="<%= pageOgTitle %>">
   <meta property="og:description" content="<%= pageOgDescription %>">
   <meta property="og:type" content="<%= pageOgType %>">
   <meta property="og:url" content="<%= pageCanonicalUrl %>">
-  <meta property="og:site_name" content="<%= siteSettings?.company_name || 'CodexWebz' %>">
+  <meta property="og:site_name" content="<%= siteBrand %>">
   <% if (pageOgImage) { %>
     <meta property="og:image" content="<%= pageOgImage %>">
+    <meta property="og:image:secure_url" content="<%= pageOgImage %>">
   <% } %>
   <% if (pageOgImageAlt) { %>
     <meta property="og:image:alt" content="<%= pageOgImageAlt %>">
@@ -69,6 +184,15 @@
   <% } %>
   <% if (pageOgImageAlt) { %>
     <meta name="twitter:image:alt" content="<%= pageOgImageAlt %>">
+  <% } %>
+  <% if (seo?.publishedTime) { %>
+    <meta property="article:published_time" content="<%= new Date(seo.publishedTime).toISOString() %>">
+  <% } %>
+  <% if (seo?.modifiedTime) { %>
+    <meta property="article:modified_time" content="<%= new Date(seo.modifiedTime).toISOString() %>">
+  <% } %>
+  <% if (seo?.authorName) { %>
+    <meta property="article:author" content="<%= seo.authorName %>">
   <% } %>
   <% if (siteSettings?.twitter_site) { %>
     <meta name="twitter:site" content="<%= siteSettings.twitter_site %>">
@@ -98,12 +222,15 @@
   <% } %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: <%= siteSettings?.primary_color || '#00240a' %>;
-      --secondary: <%= siteSettings?.secondary_color || '#dbab0d' %>;
-      --surface: #f6f2e9;
+      --primary: <%= siteSettings?.primary_color || '#0d2d24' %>;
+      --secondary: <%= siteSettings?.secondary_color || '#f1b24a' %>;
+      --surface: #f5efe4;
+      --accent: #67c6a5;
+      --paper: #fffaf3;
+      --ink: #102019;
     }
   </style>
   <link rel="preload" href="/styles/tailwind.css" as="style">
@@ -118,11 +245,8 @@
       gtag('config', '<%= siteSettings.analytics_id %>');
     </script>
   <% } %>
-  <% if (globalSchemaMarkup) { %>
-    <script type="application/ld+json"><%- typeof globalSchemaMarkup === 'string' ? globalSchemaMarkup : JSON.stringify(globalSchemaMarkup) %></script>
-  <% } %>
-  <% if (pageSchemaMarkup) { %>
-    <script type="application/ld+json"><%- typeof pageSchemaMarkup === 'string' ? pageSchemaMarkup : JSON.stringify(pageSchemaMarkup) %></script>
-  <% } %>
+  <% schemaBlocks.forEach((block) => { %>
+    <script type="application/ld+json"><%- typeof block === 'string' ? block : JSON.stringify(block) %></script>
+  <% }) %>
 </head>
-<body class="site-shell font-sans text-slate-900 antialiased">
+<body class="site-shell font-sans text-slate-900 antialiased" data-page-path="<%= currentPath || '/' %>">

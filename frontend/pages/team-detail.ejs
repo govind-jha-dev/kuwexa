@@ -19,7 +19,7 @@
     <aside class="space-y-6">
       <div class="overflow-hidden rounded-[2.2rem] bg-primary text-white shadow-float">
         <% if (member.image) { %>
-          <img src="<%= member.image %>" alt="<%= member.name %>" class="h-[28rem] w-full object-cover" decoding="async" fetchpriority="high">
+          <img src="<%= member.image %>" alt="<%= resolveImageAlt(member.image, `${member.name} portrait`) %>" class="h-[28rem] w-full object-cover" decoding="async" fetchpriority="high">
         <% } else { %>
           <div class="flex h-[28rem] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(219,171,13,0.24),_transparent_40%),linear-gradient(180deg,_rgba(255,255,255,0.08),_rgba(255,255,255,0.02))]">
             <div class="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-secondary text-4xl font-bold text-primary">
@@ -61,7 +61,7 @@
       <div class="mt-8">
         <%- include('../components/section-heading', {
           eyebrow: 'Profile',
-          title: `${member.name} at CodexWEBZ`,
+          title: `${member.name} at Kuwexa`,
         }) %>
       </div>
 
@@ -75,8 +75,8 @@
 <%- include('../components/site-cta', {
   eyebrow: 'Need a Team Like This',
   title: 'Build a company website where team profiles, leadership visibility, and backend editing work together.',
-  copy: 'CodexWEBZ can design the public presentation and the management workflow as one dependable platform.',
-  primaryLabel: 'Talk to CodexWEBZ',
+  copy: 'Kuwexa can design the public presentation and the management workflow as one dependable platform.',
+  primaryLabel: 'Talk to Kuwexa',
   primaryHref: '/contact',
   secondaryLabel: 'About Us',
   secondaryHref: '/about-us'

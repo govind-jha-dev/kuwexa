@@ -2,6 +2,7 @@ const settingsModel = require('../models/settingsModel');
 const userModel = require('../models/userModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, parseJsonInput } = require('../utils/content');
+const { registerAsset } = require('../services/mediaAssetService');
 
 function uploadedImagePath(file) {
   return file ? `/uploads/images/${file.filename}` : null;
@@ -130,6 +131,19 @@ async function updateSettings(req, res) {
   }
 
   const settings = await settingsModel.updateSettings(payload);
+
+  await Promise.all([
+    registerAsset(settings?.logo_path, {
+      title: settings?.company_name,
+      altText: `${settings?.company_name || 'Kuwexa'} logo`,
+      sourceModule: 'Settings'
+    }),
+    registerAsset(settings?.favicon_path, {
+      title: settings?.company_name,
+      altText: `${settings?.company_name || 'Kuwexa'} favicon`,
+      sourceModule: 'Settings'
+    })
+  ]);
 
   return respond(req, res, { message: 'Settings updated successfully.', settings }, `${getDashboardBasePath(req)}/settings?success=Settings%20updated%20successfully.`);
 }

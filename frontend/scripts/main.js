@@ -1,5 +1,13 @@
 function initReveal() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('[data-reveal]').forEach((element) => {
+      element.classList.add('is-visible');
+    });
+    return;
+  }
+
+  if (prefersReducedMotion) {
     document.querySelectorAll('[data-reveal]').forEach((element) => {
       element.classList.add('is-visible');
     });
@@ -261,10 +269,49 @@ function initChatWidget() {
   });
 }
 
+function initAmbientMotion() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const parallaxNodes = Array.from(document.querySelectorAll('[data-drift]'));
+  if (!parallaxNodes.length) {
+    return;
+  }
+
+  let ticking = false;
+
+  const update = () => {
+    const viewportHeight = window.innerHeight || 1;
+
+    parallaxNodes.forEach((node) => {
+      const rect = node.getBoundingClientRect();
+      const speed = Number(node.dataset.drift || 0.08);
+      const distanceFromCenter = rect.top + rect.height / 2 - viewportHeight / 2;
+      const offset = Math.max(-28, Math.min(28, -distanceFromCenter * speed));
+      node.style.setProperty('--drift-y', `${offset.toFixed(2)}px`);
+    });
+
+    ticking = false;
+  };
+
+  const requestTick = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  };
+
+  requestTick();
+  window.addEventListener('scroll', requestTick, { passive: true });
+  window.addEventListener('resize', requestTick);
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initAccordions();
   initNav();
   initFilters();
   initChatWidget();
+  initAmbientMotion();
 });

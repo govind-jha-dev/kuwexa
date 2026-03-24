@@ -11,7 +11,7 @@ async function start() {
     await ensureDatabaseInitialized();
     await pool.query('SELECT 1');
     app.listen(env.port, () => {
-      console.log(`CodexWebz platform listening on port ${env.port}`);
+      console.log(`Kuwexa platform listening on port ${env.port}`);
     });
   } catch (error) {
     console.error('Failed to start server:', error.message);

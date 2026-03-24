@@ -1,88 +1,151 @@
 <%- include('../layouts/head', { title, seo }) %>
 <%- include('../layouts/header') %>
+<%
+  const marqueeBands = [...marketing.capabilityBands, ...marketing.capabilityBands];
+%>
 
-<section class="hero-grid overflow-hidden bg-primary text-white">
+<section class="kuwexa-hero text-white">
   <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-    <div class="grid gap-12 lg:grid-cols-[1.08fr,0.92fr] lg:items-end">
-      <div>
-        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Technology Solutions by CodexWEBZ</p>
-        <h1 class="mt-6 max-w-4xl font-display text-5xl font-bold leading-[1.02] md:text-6xl lg:text-7xl">
+    <div class="grid gap-12 lg:grid-cols-[1.02fr,0.98fr] lg:items-start">
+      <div class="relative z-[1]">
+        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Kuwexa Private Limited</p>
+        <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
           <%= marketing.heroTitle %>
         </h1>
-        <p class="site-home__hero-copy mt-6 text-white/72">
+        <p class="site-home__hero-copy mt-6 max-w-3xl text-white/76">
           <%= marketing.heroSubtitle %>
         </p>
         <div class="mt-10 flex flex-wrap gap-4">
-          <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Request a Build Plan</a>
-          <a href="/portfolio" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">View Client Projects</a>
+          <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Start a Conversation</a>
+          <a href="/services" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">Explore Capabilities</a>
         </div>
         <div class="mt-10 flex flex-wrap gap-3">
           <% marketing.capabilityBands.forEach((band) => { %>
-            <span class="rounded-full border border-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/68"><%= band %></span>
+            <span class="rounded-full border border-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/72"><%= band %></span>
           <% }) %>
         </div>
       </div>
 
-      <div class="space-y-5">
-        <div class="glass-card rounded-[2rem] p-6 text-slate-900 shadow-float ring-1 ring-white/10">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Company Focus</p>
-              <h2 class="mt-3 font-display text-3xl font-bold text-primary">Digital infrastructure built for business growth</h2>
-            </div>
-            <span class="rounded-full bg-secondary px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">Software Company</span>
-          </div>
-          <div class="mt-6 space-y-4">
-            <% marketing.highlights.forEach((item) => { %>
-              <article class="rounded-[1.5rem] border border-primary/8 bg-white/80 p-5">
-                <h3 class="font-display text-2xl font-bold text-primary"><%= item.title %></h3>
-                <p class="mt-2 text-sm leading-7 text-slate-600"><%= item.copy %></p>
+      <div class="hero-stage relative z-[1]">
+        <div class="hero-stage__frame orbital-pulse" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Operating Signals</p>
+          <h2 class="mt-4 max-w-lg font-display text-3xl font-bold">A hybrid model designed to connect trade, commerce, and digital systems.</h2>
+          <div class="hero-stage__grid mt-8">
+            <% marketing.proofStats.forEach((item) => { %>
+              <article class="hero-stat">
+                <p class="hero-stat__value"><%= item.value %></p>
+                <p class="hero-stat__label"><%= item.label %></p>
+                <p class="hero-stat__copy"><%= item.copy %></p>
               </article>
             <% }) %>
           </div>
         </div>
-        <div class="rounded-[2rem] border border-white/10 bg-white/6 p-6">
-          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Hiring and Growth</p>
-          <p class="mt-4 text-base leading-8 text-white/72"><%= marketing.jobsSummary %></p>
+
+        <div class="orbit-stack" data-reveal>
+          <div class="orbit-stack__ring"></div>
+          <div class="orbit-stack__ring orbit-stack__ring--inner"></div>
+          <% marketing.ecosystemPillars.forEach((item, index) => { %>
+            <article class="orbit-card orbit-card--<%= ['one', 'two', 'three'][index] || 'one' %>" data-drift="<%= 0.06 + (index * 0.02) %>">
+              <p class="orbit-card__label"><%= item.label %></p>
+              <h3 class="orbit-card__title"><%= item.title %></h3>
+              <p class="orbit-card__copy"><%= item.copy %></p>
+              <a href="<%= item.href %>" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-secondary">
+                Learn more
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </article>
+          <% }) %>
         </div>
       </div>
     </div>
 
-    <div class="mt-14 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      <% marketing.proofStats.forEach((item) => { %>
-        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/6 p-5" data-reveal>
-          <p class="font-display text-4xl font-bold text-secondary"><%= item.value %></p>
-          <h3 class="mt-3 text-base font-bold"><%= item.label %></h3>
-          <p class="mt-2 text-sm leading-7 text-white/68"><%= item.copy %></p>
-        </article>
-      <% }) %>
+    <div class="marquee-ribbon" data-reveal>
+      <div class="marquee-ribbon__track">
+        <% marqueeBands.forEach((band) => { %>
+          <span><%= band %></span>
+        <% }) %>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-  <%- include('../components/section-heading', {
-    eyebrow: 'Services',
-    title: 'Technology services built to help businesses launch, operate, and scale with confidence.',
-    copy: 'From websites to custom applications and long-term support, every service is structured around practical delivery, business usability, and dependable growth.'
-  }) %>
+  <div class="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">The Kuwexa Model</span>
+      <h2 class="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight text-primary md:text-5xl">
+        One parent organization, three connected operating pillars, and a delivery philosophy built around systems instead of shortcuts.
+      </h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        <% marketing.highlights.forEach((item) => { %>
+          <article class="rounded-[1.5rem] bg-white/80 p-5 ring-1 ring-primary/8">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Pillar</p>
+            <h3 class="mt-4 font-display text-2xl font-bold text-primary"><%= item.title %></h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600"><%= item.copy %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="grid gap-6">
+      <div class="narrative-card narrative-card--dark reveal" data-reveal>
+        <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Hybrid Advantage</span>
+        <div class="signal-list mt-6">
+          <% marketing.hybridAdvantage.forEach((item) => { %>
+            <article class="rounded-[1.55rem] border border-white/10 bg-white/6 p-5">
+              <h3 class="font-display text-2xl font-bold text-white"><%= item.title %></h3>
+              <p class="mt-3 text-sm leading-7 text-white/72"><%= item.copy %></p>
+            </article>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="narrative-card reveal" data-reveal>
+        <span class="section-kicker">Leadership Snapshot</span>
+        <div class="mt-6 grid gap-4">
+          <% marketing.leadershipSnapshot.forEach((item) => { %>
+            <article class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
+              <h3 class="font-display text-2xl font-bold text-primary"><%= item.name %></h3>
+              <p class="mt-2 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500"><%= item.role %></p>
+            </article>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-10 lg:grid-cols-[0.88fr,1.12fr] lg:items-end">
+    <%- include('../components/section-heading', {
+      eyebrow: 'Capabilities',
+      title: 'Execution layers that help Kuwexa present, operate, and scale with more clarity.',
+      copy: 'These public capabilities sit inside a broader operating ecosystem, so every engagement is shaped by real commercial context, structured delivery, and long-term maintainability.'
+    }) %>
+    <div class="narrative-card reveal" data-reveal>
+      <p class="text-sm leading-8 text-slate-600">
+        Many client-facing digital capabilities are delivered through <strong><%= marketing.divisionServicesLabel %></strong>, giving Kuwexa a dedicated execution layer for websites, systems, growth infrastructure, and operational tooling.
+      </p>
+    </div>
+  </div>
+
   <div class="mt-12 grid gap-6 lg:grid-cols-2">
     <% services.forEach((service, index) => { %>
-      <article class="reveal spotlight-card surface-panel rounded-[2rem] p-7 <%= index >= 3 ? 'hidden md:block' : '' %>" data-reveal>
+      <article class="reveal spotlight-card narrative-card <%= index >= 4 ? 'hidden xl:block' : '' %>" data-reveal>
         <div class="flex flex-wrap items-center justify-between gap-3">
           <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= service.profile.category %></span>
-          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-primary/35"><%= service.icon || 'CodexWebz Service' %></span>
+          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-primary/35"><%= service.icon || 'Kuwexa Capability' %></span>
         </div>
         <h3 class="mt-5 font-display text-3xl font-bold text-primary"><%= service.title %></h3>
         <p class="mt-4 text-sm leading-8 text-slate-600"><%= service.short_description || service.profile.kicker %></p>
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <% service.profile.deliverables.slice(0, 2).forEach((item) => { %>
-            <div class="rounded-[1.35rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700"><%= item %></div>
+          <% service.profile.deliverables.slice(0, 4).forEach((item) => { %>
+            <div class="rounded-[1.3rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700"><%= item %></div>
           <% }) %>
         </div>
         <a href="/services/<%= service.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
-          Explore service
-          <span aria-hidden="true">→</span>
+          Explore capability
+          <span aria-hidden="true">&rarr;</span>
         </a>
       </article>
     <% }) %>
@@ -91,28 +154,28 @@
 
 <% if (showProductsMenu && products.length) { %>
   <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-    <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
+    <div class="narrative-card reveal" data-reveal>
       <div class="flex flex-wrap items-end justify-between gap-6">
         <%- include('../components/section-heading', {
-          eyebrow: 'Our Products',
-          title: 'Software products and digital platforms presented with the same structured delivery approach.',
-          copy: 'Each product page is connected to the dashboard so teams can manage overviews, features, screenshots, technology details, and action links without breaking the public experience.'
+          eyebrow: 'Platforms',
+          title: 'Products and internal platforms designed to live inside the same Kuwexa story system.',
+          copy: 'Each platform can be showcased with screenshots, features, SEO metadata, reusable image alt text, and structured content editing from the dashboard.'
         }) %>
-        <a href="/products" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View All Products</a>
+        <a href="/products" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View All Platforms</a>
       </div>
       <div class="mt-10 grid gap-6 lg:grid-cols-3">
         <% products.forEach((product) => { %>
-          <article class="reveal rounded-[1.9rem] border border-primary/8 bg-slate-50 p-6" data-reveal>
+          <article class="rounded-[1.75rem] bg-slate-50 p-6 ring-1 ring-primary/6">
             <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white ring-1 ring-primary/10">
               <% if (product.logo) { %>
-                <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-12 w-12 object-contain" loading="lazy" decoding="async">
+                <img src="<%= product.logo %>" alt="<%= resolveImageAlt(product.logo, `${product.name} logo`) %>" class="h-12 w-12 object-contain" loading="lazy" decoding="async">
               <% } else { %>
                 <span class="font-display text-2xl font-bold text-primary"><%= String(product.name || 'P').charAt(0) %></span>
               <% } %>
             </div>
             <h3 class="mt-5 font-display text-3xl font-bold text-primary"><%= product.name %></h3>
-            <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'Software platform managed from the CodexWebz dashboard.' %></p>
-            <a href="/products/<%= product.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">View details <span aria-hidden="true">→</span></a>
+            <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'A Kuwexa platform presented through the same structured publishing system.' %></p>
+            <a href="/products/<%= product.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">View platform <span aria-hidden="true">&rarr;</span></a>
           </article>
         <% }) %>
       </div>
@@ -121,75 +184,45 @@
 <% } %>
 
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-  <div class="rounded-[2.25rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
-    <div class="editorial-grid gap-10">
-      <div>
-        <%- include('../components/section-heading', {
-          eyebrow: 'Workflow',
-          title: 'A structured approach from business understanding to ongoing improvement.',
-          copy: 'The visual experience stays strong because the platform, workflows, and support model are planned together from the start.'
-        }) %>
-      </div>
-      <div class="space-y-4">
+  <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">Delivery Rhythm</span>
+      <div class="story-grid mt-8">
         <% marketing.workflow.forEach((item) => { %>
-          <article class="reveal rounded-[1.6rem] border border-slate-200 bg-slate-50/80 p-5" data-reveal>
-            <div class="flex gap-4">
-              <span class="font-display text-3xl font-bold text-secondary"><%= item.step %></span>
-              <div>
-                <h3 class="font-display text-2xl font-bold text-primary"><%= item.title %></h3>
-                <p class="mt-2 text-sm leading-7 text-slate-600"><%= item.copy %></p>
-              </div>
-            </div>
+          <article class="story-step">
+            <span class="story-step__index"><%= item.step %></span>
+            <h3 class="story-step__title"><%= item.title %></h3>
+            <p class="story-step__copy"><%= item.copy %></p>
           </article>
         <% }) %>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-  <div class="grid gap-6 xl:grid-cols-[1.12fr,0.88fr]">
-    <div class="rounded-[2.25rem] bg-primary p-8 text-white lg:p-10">
-      <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Client Projects</p>
-      <h2 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight">Client outcomes built around real business needs.</h2>
-      <div class="mt-8 space-y-4">
-        <% projects.forEach((project, index) => { %>
-          <a href="/portfolio/<%= project.slug %>" class="reveal block rounded-[1.7rem] border border-white/10 bg-white/6 p-5 transition hover:bg-white/10 <%= index >= 3 ? 'hidden md:block' : '' %>" data-reveal>
-            <div class="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <h3 class="font-display text-2xl font-bold"><%= project.title %></h3>
-                <p class="mt-2 text-sm leading-7 text-white/68"><%= project.summary %></p>
+    <div class="grid gap-6">
+      <div class="narrative-card narrative-card--dark reveal" data-reveal>
+        <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Initiatives</span>
+        <div class="mt-6 space-y-4">
+          <% projects.slice(0, 3).forEach((project) => { %>
+            <a href="/portfolio/<%= project.slug %>" class="block rounded-[1.55rem] border border-white/10 bg-white/6 p-5 transition hover:bg-white/10">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="font-display text-2xl font-bold text-white"><%= project.title %></h3>
+                <span class="signal-chip !bg-white/10 !text-secondary"><%= project.category || 'Initiative' %></span>
               </div>
-              <span class="rounded-full bg-secondary px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary"><%= project.category || 'Project' %></span>
-            </div>
-          </a>
-        <% }) %>
-      </div>
-    </div>
-
-    <div class="space-y-6">
-      <div class="surface-panel rounded-[2.25rem] p-8">
-        <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Latest Writing</p>
-        <div class="mt-6 space-y-5">
-          <% posts.forEach((post) => { %>
-            <article class="reveal border-b border-slate-200 pb-5 last:border-b-0 last:pb-0" data-reveal>
-              <p class="text-xs font-bold uppercase tracking-[0.2em] text-secondary"><%= post.category || 'Article' %></p>
-              <h3 class="mt-3 font-display text-2xl font-bold text-primary"><%= post.title %></h3>
-              <p class="mt-3 text-sm leading-7 text-slate-600"><%= post.summary %></p>
-              <a href="/blog/<%= post.slug %>" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">Read article <span aria-hidden="true">→</span></a>
-            </article>
+              <p class="mt-3 text-sm leading-7 text-white/70"><%= project.summary %></p>
+            </a>
           <% }) %>
         </div>
       </div>
 
-      <div class="surface-panel rounded-[2.25rem] p-8">
-        <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">What clients notice</p>
+      <div class="narrative-card reveal" data-reveal>
+        <span class="section-kicker">Insights</span>
         <div class="mt-6 grid gap-4">
-          <% marketing.testimonials.forEach((item) => { %>
-            <article class="reveal rounded-[1.5rem] bg-slate-50 p-5" data-reveal>
-              <p class="text-sm leading-8 text-slate-600">“<%= item.quote %>”</p>
-              <p class="mt-4 font-display text-xl font-bold text-primary"><%= item.name %></p>
-              <p class="text-sm text-slate-500"><%= item.company %></p>
+          <% posts.forEach((post) => { %>
+            <article class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
+              <p class="text-xs font-bold uppercase tracking-[0.2em] text-secondary"><%= post.category || 'Insight' %></p>
+              <h3 class="mt-3 font-display text-2xl font-bold text-primary"><%= post.title %></h3>
+              <p class="mt-3 text-sm leading-7 text-slate-600"><%= post.summary %></p>
+              <a href="/blog/<%= post.slug %>" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">Read insight <span aria-hidden="true">&rarr;</span></a>
             </article>
           <% }) %>
         </div>
@@ -201,8 +234,8 @@
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <%- include('../components/section-heading', {
     eyebrow: 'FAQ',
-    title: 'Common questions before a technology engagement starts.',
-    copy: 'Most early conversations are about business goals, scalability, support, and how the platform will fit real operational needs.'
+    title: 'Questions teams ask before they start working with Kuwexa.',
+    copy: 'These early questions usually sit at the intersection of growth goals, system structure, and how the work will stay manageable after launch.'
   }) %>
   <div class="mt-10">
     <%- include('../components/faq-list', { items: marketing.faqs }) %>
@@ -210,12 +243,12 @@
 </section>
 
 <%- include('../components/site-cta', {
-  eyebrow: 'Ready to Build',
-  title: 'Need a dependable technology partner for your next website, platform, or software system?',
-  copy: 'CodexWEBZ helps businesses build digital solutions that stay practical, scalable, and reliable long after launch.',
-  primaryLabel: 'Start a Project',
+  eyebrow: 'Build With Kuwexa',
+  title: 'Need a partner that can connect commercial reality with digital execution?',
+  copy: 'Kuwexa helps businesses move with more structure across trade, ecommerce, platforms, and growth systems while keeping the frontend, CMS, and operational workflow aligned.',
+  primaryLabel: 'Start a Conversation',
   primaryHref: '/contact',
-  secondaryLabel: 'Explore Services',
+  secondaryLabel: 'See the Capability Stack',
   secondaryHref: '/services'
 }) %>
 

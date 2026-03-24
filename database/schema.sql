@@ -18,9 +18,19 @@ CREATE TABLE IF NOT EXISTS users (
   CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
+CREATE TABLE IF NOT EXISTS media_assets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  file_path VARCHAR(255) NOT NULL UNIQUE,
+  title VARCHAR(160) NULL,
+  alt_text VARCHAR(255) NULL,
+  source_module VARCHAR(80) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS website_settings (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  company_name VARCHAR(120) NOT NULL DEFAULT 'CodexWebz',
+  company_name VARCHAR(120) NOT NULL DEFAULT 'Kuwexa Private Limited',
   company_email VARCHAR(160) NULL,
   company_phone VARCHAR(50) NULL,
   chat_manager_user_id INT NULL,
@@ -325,14 +335,14 @@ INSERT INTO website_settings (
 )
 VALUES (
   1,
-  'CodexWebz',
-  'Build products that move revenue',
-  'CodexWebz ships websites, automation, and growth systems for teams that need execution, not slide decks.',
-  '#00240a',
-  '#dbab0d',
-  'CodexWebz | Web Platform & Digital Growth',
-  'CodexWebz builds company websites, SEO content systems, lead funnels, and internal dashboards.',
-  'codexwebz, web development, seo, dashboards, automation',
+  'Kuwexa Private Limited',
+  'Systems for Scalable Global Commerce',
+  'Kuwexa Private Limited connects global trade, digital commerce, and technology enablement so businesses can operate with clarity, structure, and long-term sustainability.',
+  '#0d2d24',
+  '#f1b24a',
+  'Kuwexa Private Limited | Systems for Scalable Global Commerce',
+  'Kuwexa Private Limited bridges global commerce, import-export capability, and digital innovation through Kuwexa.com and CodexWEBZ.',
+  'kuwexa, global commerce, import export, ecommerce, codexwebz, digital innovation',
   'index, follow, max-image-preview:large',
   'summary_large_image',
   'User-agent: *\nAllow: /'
@@ -358,16 +368,16 @@ INSERT INTO seo_settings (
   canonical_url
 )
 VALUES
-  ('home', 'CodexWebz | Web Platform & Digital Growth', 'CodexWebz builds modern company websites, dashboards, SEO systems, and lead workflows.', '', '/'),
-  ('about', 'About CodexWEBZ | Technology Services by Kuwexa Private Limited', 'Learn how CodexWEBZ helps businesses build reliable digital systems for growth, efficiency, and scalability.', 'about-us', '/about-us'),
-  ('team', 'Team | CodexWEBZ', 'Meet the leadership and team behind CodexWEBZ.', 'team', '/team'),
-  ('services', 'Services | CodexWebz', 'Explore CodexWebz web development, SEO, and growth services.', 'services', '/services'),
-  ('products', 'Our Products | CodexWebz', 'Explore SaaS products and business software developed by CodexWebz.', 'products', '/products'),
-  ('projects', 'Portfolio | CodexWebz', 'Selected CodexWebz case studies, software builds, and delivery outcomes.', 'projects', '/portfolio'),
-  ('portfolio', 'Portfolio | CodexWebz', 'Selected CodexWebz client projects and product delivery outcomes.', 'projects', '/portfolio'),
-  ('blog', 'Blog | CodexWebz', 'Insights on engineering, SEO, automation, and digital growth.', 'blog', '/blog'),
-  ('careers', 'Careers | CodexWebz', 'Join CodexWebz and build products that matter.', 'careers', '/careers'),
-  ('contact', 'Contact | CodexWebz', 'Talk to CodexWebz about your next web platform.', 'contact', '/contact')
+  ('home', 'Kuwexa Private Limited | Systems for Scalable Global Commerce', 'Kuwexa Private Limited combines global trade, consumer commerce, and digital innovation to help businesses scale with structure.', '', '/'),
+  ('about', 'About Kuwexa Private Limited | Hybrid Commerce and Digital Innovation', 'Learn how Kuwexa Private Limited connects global trade, ecommerce, and technology enablement through a hybrid operating model.', 'about-us', '/about-us'),
+  ('team', 'Leadership | Kuwexa Private Limited', 'Meet the leadership and delivery team guiding Kuwexa Private Limited and its operating ecosystem.', 'team', '/team'),
+  ('services', 'Capabilities | Kuwexa Private Limited', 'Explore Kuwexa capabilities across digital innovation, ecommerce enablement, and business technology delivery.', 'services', '/services'),
+  ('products', 'Platforms | Kuwexa Private Limited', 'Explore digital products, platforms, and managed solutions presented within the Kuwexa ecosystem.', 'products', '/products'),
+  ('projects', 'Initiatives | Kuwexa Private Limited', 'See Kuwexa initiatives, execution stories, and platform delivery work.', 'projects', '/portfolio'),
+  ('portfolio', 'Initiatives | Kuwexa Private Limited', 'See Kuwexa initiatives, execution stories, and platform delivery work.', 'projects', '/portfolio'),
+  ('blog', 'Insights | Kuwexa Private Limited', 'Insights on global commerce, digital systems, and operationally scalable growth.', 'blog', '/blog'),
+  ('careers', 'Careers | Kuwexa Private Limited', 'Join Kuwexa Private Limited and help build scalable commerce and digital systems.', 'careers', '/careers'),
+  ('contact', 'Contact Kuwexa Private Limited', 'Start a conversation with Kuwexa about trade enablement, digital platforms, or long-term growth systems.', 'contact', '/contact')
 ON DUPLICATE KEY UPDATE
   meta_title = VALUES(meta_title),
   meta_description = VALUES(meta_description),

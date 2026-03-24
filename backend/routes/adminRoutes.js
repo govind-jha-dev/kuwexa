@@ -12,6 +12,7 @@ const leadController = require('../controllers/leadController');
 const careerController = require('../controllers/careerController');
 const seoController = require('../controllers/seoController');
 const settingsController = require('../controllers/settingsController');
+const mediaController = require('../controllers/mediaController');
 const analyticsController = require('../controllers/analyticsController');
 const { requireAuth } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/rbacMiddleware');
@@ -91,6 +92,9 @@ router.post('/careers/applications/:id/status', authorize(PERMISSIONS.CAREERS_MA
 router.get('/seo', authorize(PERMISSIONS.SEO_MANAGE), seoController.renderSeoPage);
 router.post('/seo', authorize(PERMISSIONS.SEO_MANAGE), seoValidation, handleValidationErrors, seoController.upsertSeo);
 router.post('/seo/sitewide', authorize(PERMISSIONS.SEO_MANAGE), sitewideSeoValidation, handleValidationErrors, seoController.updateSitewideSeo);
+
+router.get('/media', authorize(PERMISSIONS.SETTINGS_MANAGE), mediaController.renderMediaPage);
+router.post('/media/:id/update', authorize(PERMISSIONS.SETTINGS_MANAGE), validateCsrfToken, mediaController.updateMediaAsset);
 
 router.get('/settings', authorize(PERMISSIONS.SETTINGS_MANAGE), settingsController.renderSettingsPage);
 router.post(

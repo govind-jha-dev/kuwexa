@@ -2,6 +2,7 @@ const serviceModel = require('../models/serviceModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, sanitizeRichText, makeSlug, toJson } = require('../utils/content');
 const { resolveServiceProfile } = require('../services/siteContentService');
+const { registerAsset } = require('../services/mediaAssetService');
 
 function normalizeLineItems(value) {
   if (value === undefined || value === null) {
@@ -163,6 +164,12 @@ async function createService(req, res) {
     updated_by: req.user.id
   });
 
+  await registerAsset(service?.image, {
+    title: service?.title,
+    altText: `${service?.title || 'Kuwexa'} service image`,
+    sourceModule: 'Services'
+  });
+
   return respond(req, res, { message: 'Service created successfully.', service }, `${getDashboardBasePath(req)}/services?success=Service%20created%20successfully.`);
 }
 
@@ -190,6 +197,11 @@ async function updateService(req, res) {
   }
 
   const service = await serviceModel.updateService(Number(req.params.id), updates);
+  await registerAsset(service?.image, {
+    title: service?.title,
+    altText: `${service?.title || 'Kuwexa'} service image`,
+    sourceModule: 'Services'
+  });
   return respond(req, res, { message: 'Service updated successfully.', service }, `${getDashboardBasePath(req)}/services?success=Service%20updated%20successfully.`);
 }
 

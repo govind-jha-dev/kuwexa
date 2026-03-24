@@ -7,7 +7,7 @@
     <div class="surface-panel rounded-[2.25rem] p-8 lg:p-10">
       <div class="flex flex-wrap items-center gap-3">
         <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= post.category || 'Article' %></span>
-        <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= post.author_name || 'CodexWebz' %></span>
+        <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= post.author_name || 'Kuwexa Editorial Team' %></span>
       </div>
       <h1 class="mt-6 font-display text-5xl font-bold leading-tight text-primary md:text-6xl"><%= post.title %></h1>
       <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600"><%= post.summary %></p>
@@ -18,7 +18,7 @@
         <% }) %>
       </div>
       <% if (post.featured_image) { %>
-        <img src="<%= post.featured_image %>" alt="<%= post.title %>" class="mt-8 h-80 w-full rounded-[2rem] object-cover" decoding="async" fetchpriority="high">
+        <img src="<%= post.featured_image %>" alt="<%= resolveImageAlt(post.featured_image, `${post.title} featured image`) %>" class="mt-8 h-80 w-full rounded-[2rem] object-cover" decoding="async" fetchpriority="high">
       <% } %>
       <div class="prose-content mt-10"><%- post.content || '<p>Article content is managed through the built-in blog CMS.</p>' %></div>
     </div>
@@ -51,8 +51,8 @@
 <%- include('../components/site-cta', {
   eyebrow: 'Build the CMS Too',
   title: 'Need articles, landing pages, and SEO controls that stay manageable after launch?',
-  copy: 'CodexWebz can build the editorial frontend and the backend publishing workflow as one system.',
-  primaryLabel: 'Talk to CodexWebz',
+  copy: 'Kuwexa can build the editorial frontend and the backend publishing workflow as one system.',
+  primaryLabel: 'Talk to Kuwexa',
   primaryHref: '/contact',
   secondaryLabel: 'More Articles',
   secondaryHref: '/blog'

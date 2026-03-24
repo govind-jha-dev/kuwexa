@@ -2,6 +2,7 @@ const productModel = require('../models/productModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, sanitizeRichText, makeSlug, toJson } = require('../utils/content');
 const { splitCsv } = require('../utils/serializers');
+const { registerAsset, registerMany, normalizeImageItems } = require('../services/mediaAssetService');
 
 function respond(req, res, payload, redirectUrl) {
   if (req.originalUrl.startsWith('/api/')) {
@@ -144,6 +145,22 @@ async function createProduct(req, res) {
     updated_by: req.user.id
   });
 
+  await Promise.all([
+    registerAsset(product?.logo, {
+      title: product?.name,
+      altText: `${product?.name || 'Kuwexa'} logo`,
+      sourceModule: 'Products'
+    }),
+    registerMany(
+      normalizeImageItems(product?.images).map((image, index) => ({
+        file_path: image.path,
+        title: product?.name,
+        alt_text: image.alt || `${product?.name || 'Kuwexa'} screenshot ${index + 1}`,
+        source_module: 'Products'
+      }))
+    )
+  ]);
+
   return respond(req, res, { message: 'Product created successfully.', product }, `${getDashboardBasePath(req)}/products?success=Product%20created%20successfully.`);
 }
 
@@ -176,6 +193,21 @@ async function updateProduct(req, res) {
   }
 
   const product = await productModel.updateProduct(Number(req.params.id), updates);
+  await Promise.all([
+    registerAsset(product?.logo, {
+      title: product?.name,
+      altText: `${product?.name || 'Kuwexa'} logo`,
+      sourceModule: 'Products'
+    }),
+    registerMany(
+      normalizeImageItems(product?.images).map((image, index) => ({
+        file_path: image.path,
+        title: product?.name,
+        alt_text: image.alt || `${product?.name || 'Kuwexa'} screenshot ${index + 1}`,
+        source_module: 'Products'
+      }))
+    )
+  ]);
   return respond(req, res, { message: 'Product updated successfully.', product }, `${getDashboardBasePath(req)}/products?success=Product%20updated%20successfully.`);
 }
 

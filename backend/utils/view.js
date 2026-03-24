@@ -46,6 +46,7 @@ function buildDashboardMenu(user, basePath) {
     { label: 'Careers', href: `${basePath}/careers`, permission: PERMISSIONS.CAREERS_MANAGE },
     { label: 'Users', href: `${basePath}/users`, permission: PERMISSIONS.USERS_MANAGE },
     { label: 'SEO', href: `${basePath}/seo`, permission: PERMISSIONS.SEO_MANAGE },
+    { label: 'Media', href: `${basePath}/media`, permission: PERMISSIONS.SETTINGS_MANAGE },
     { label: 'Settings', href: `${basePath}/settings`, permission: PERMISSIONS.SETTINGS_MANAGE },
     { label: 'Analytics', href: `${basePath}/analytics`, permission: PERMISSIONS.ANALYTICS_VIEW }
   ];

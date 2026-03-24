@@ -467,99 +467,133 @@ function resolveServiceProfile(service = {}) {
 
 function getHomeContent({ services = [], products = [], projects = [], posts = [], jobs = [] }) {
   return {
-    heroTitle: 'Technology solutions for modern businesses.',
-    heroSubtitle: 'CodexWEBZ helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term stability.',
+    heroTitle: 'Systems for scalable global commerce.',
+    heroSubtitle: 'Kuwexa Private Limited bridges physical supply chains and digital innovation through global trade, consumer commerce, and technology enablement.',
     proofStats: [
       {
-        value: `${Math.max(services.length, 4)}+`,
-        label: 'Core technology services',
-        copy: 'Website development, web applications, ecommerce systems, SEO support, and long-term technical delivery.'
+        value: '3',
+        label: 'Core operating pillars',
+        copy: 'Global trade, consumer lifestyle commerce, and CodexWEBZ digital innovation work together inside one hybrid parent.'
       },
       {
-        value: `${Math.max(projects.length, 8)}+`,
-        label: 'Scalable delivery modules',
-        copy: 'Reusable frontend, backend, CMS, analytics, and workflow blocks for growing digital platforms.'
+        value: '1',
+        label: 'Hybrid operating model',
+        copy: 'Kuwexa combines physical supply chains with digital systems so execution stays grounded in real operations.'
       },
       {
-        value: `${Math.max(products.length, 2)}+`,
-        label: 'Software showcase modules',
-        copy: 'Product pages, screenshots, feature libraries, demo links, and dashboard-driven publishing control.'
+        value: 'Ethics',
+        label: 'Delivery philosophy',
+        copy: 'The organization is built around operational discipline, documented outcomes, and predictable performance.'
       },
       {
-        value: 'Ongoing',
-        label: 'Support mindset',
-        copy: 'CodexWEBZ focuses on reliable systems, continued improvement, and practical long-term support.'
+        value: 'Global',
+        label: 'Growth direction',
+        copy: 'The mission is to help businesses expand their reach with dependable commerce and technology infrastructure.'
       }
     ],
     highlights: [
       {
-        title: 'Reliable digital systems',
-        copy: 'CodexWEBZ helps businesses move beyond basic web presence into structured platforms that support operations and growth.'
+        title: 'Kuwexa Global Trade',
+        copy: 'Physical supply chain understanding gives the organization stronger commercial context, sourcing awareness, and operational realism.'
       },
       {
-        title: 'Business-aligned technology delivery',
-        copy: 'Solutions are planned around real business goals so websites, applications, and support systems remain practical to use.'
+        title: 'Consumer lifestyle commerce',
+        copy: 'Through Kuwexa.com, the business is building a B2C ecosystem around lifestyle, fashion, home essentials, and modern customer access.'
       },
       {
-        title: 'Scalable and support-ready',
-        copy: 'The focus stays on performance, usability, maintainability, and the technical support needed after launch.'
+        title: 'CodexWEBZ digital innovation',
+        copy: 'The technology division builds websites, digital systems, and scalable platforms that improve efficiency and customer engagement.'
       }
     ],
     workflow: [
       {
         step: '01',
-        title: 'Understand business objectives',
-        copy: 'Start with the company goal, operational challenge, and growth target so the solution fits real business needs.'
+        title: 'Map the operating reality',
+        copy: 'Every engagement starts with the commercial, operational, or customer challenge that needs structure.'
       },
       {
         step: '02',
-        title: 'Design aligned technology',
-        copy: 'Shape websites, applications, integrations, and workflows around the business instead of forcing generic tools.'
+        title: 'Design the right system',
+        copy: 'Trade workflows, digital storefronts, and technology platforms are aligned to the real operating model instead of isolated tasks.'
       },
       {
         step: '03',
-        title: 'Build scalable platforms',
-        copy: 'Develop digital systems that are structured, reliable, and ready to support current operations as well as future scale.'
+        title: 'Document and deliver',
+        copy: 'Execution focuses on discipline, documented outcomes, and reusable systems that teams can run with confidence.'
       },
       {
         step: '04',
-        title: 'Support and improve',
-        copy: 'Continue with optimization, maintenance, and technical support so the platform keeps delivering value after launch.'
+        title: 'Scale with confidence',
+        copy: 'The result is a stronger ecosystem for trade, commerce, and technology-enabled growth over time.'
       }
     ],
-    testimonials: [
+    ecosystemPillars: [
       {
-        quote: 'CodexWEBZ translated the business requirement into a structured digital system that the team could use confidently every day.',
-        name: 'Operations Lead',
-        company: 'Growing Business'
+        label: 'Physical Supply Chain',
+        title: 'Kuwexa Global Trade',
+        copy: 'B2B import-export capability built around dependable sourcing, structured operations, and wider market access.',
+        href: '/about-us'
       },
       {
-        quote: 'The delivery stayed practical from start to finish. We got a stronger digital presence and a platform that supported the business properly.',
-        name: 'Founder',
-        company: 'Startup Team'
+        label: 'Digital Commerce',
+        title: 'Kuwexa.com',
+        copy: 'A growing consumer lifestyle platform connecting curated products with modern digital commerce experiences.',
+        href: '/services'
       },
       {
-        quote: 'What stood out was the balance of technical execution and business understanding. The system felt dependable from day one.',
-        name: 'Business Manager',
-        company: 'SME Client'
+        label: 'Digital Innovation',
+        title: 'CodexWEBZ',
+        copy: 'Websites, operational systems, and scalable platforms that strengthen efficiency, visibility, and customer engagement.',
+        href: '/services'
       }
     ],
+    hybridAdvantage: [
+      {
+        title: 'Operational discipline',
+        copy: 'The Kuwexa way replaces reactive firefighting with documented, repeatable execution.'
+      },
+      {
+        title: 'Systems over shortcuts',
+        copy: 'Technology and commerce are treated as operating systems, not disconnected tasks or vague promises.'
+      },
+      {
+        title: 'Predictable performance',
+        copy: 'Trade awareness plus digital capability creates clearer delivery expectations and stronger long-term sustainability.'
+      }
+    ],
+    leadershipSnapshot: [
+      { name: 'Govind Jha', role: 'CEO and Co-Founder' },
+      { name: 'Kundan Kumar', role: 'COO and Co-Founder' },
+      { name: 'Ravi Raj', role: 'CFO and Co-Founder' }
+    ],
+    divisionServicesLabel: 'Technology Enablement by CodexWEBZ',
     faqs: [
       {
-        question: 'What does CodexWEBZ help businesses build?',
-        answer: 'Professional websites, custom web applications, ecommerce systems, SEO-ready platforms, integrations, and dependable technical support.'
+        question: 'What is Kuwexa Private Limited?',
+        answer: 'Kuwexa Private Limited is a hybrid company working across global ecommerce, B2B import-export, and technology enablement.'
       },
       {
-        question: 'Who does CodexWEBZ usually work with?',
-        answer: 'Startups, enterprises, growing companies, agencies needing development support, and organizations building digital platforms.'
+        question: 'How does CodexWEBZ fit into Kuwexa?',
+        answer: 'CodexWEBZ is the digital innovation and technology division of Kuwexa, focused on websites, digital systems, and scalable platforms.'
       },
       {
-        question: 'Does CodexWEBZ support businesses after the initial build?',
-        answer: 'Yes. Ongoing improvements, maintenance, support, and optimization are part of the long-term delivery mindset.'
+        question: 'What does Kuwexa.com represent?',
+        answer: 'Kuwexa.com is the consumer lifestyle commerce arm, focused on curated B2C categories such as fashion, home essentials, and accessories.'
+      },
+      {
+        question: 'Why is the hybrid model important?',
+        answer: 'It lets Kuwexa connect physical supply-chain understanding with digital systems, so businesses get solutions shaped by real operating needs.'
       }
     ],
-    capabilityBands: marketingServices,
-    jobsSummary: jobs.length ? `${jobs.length} open roles are available for the growing delivery team.` : 'Career workflows are ready whenever new technology and growth roles are published.'
+    capabilityBands: [
+      'Global Trade',
+      'B2B Import Export',
+      'Consumer Lifestyle',
+      'Digital Commerce',
+      'CodexWEBZ',
+      'Scalable Platforms'
+    ],
+    jobsSummary: jobs.length ? `${jobs.length} open roles are currently live across the growing Kuwexa ecosystem.` : 'Career workflows are ready whenever new commerce or technology roles are published.'
   };
 }
 
@@ -572,77 +606,77 @@ function getServicesPageContent(services = []) {
     serviceCatalog,
     engagementModels: [
       {
-        title: 'Digital Presence and Platform Launch',
-        copy: 'Best for businesses that need a professional website, stronger online presence, and structured digital foundations.'
+        title: 'Hybrid commerce enablement',
+        copy: 'Best for businesses aligning sourcing, market access, storefront visibility, and operational systems together.'
       },
       {
-        title: 'Commerce, Software, and App Build',
-        copy: 'Ideal for businesses launching ecommerce systems, custom software, business applications, or mobile products.'
+        title: 'Digital commerce and platform build',
+        copy: 'Ideal for teams launching ecommerce systems, custom software, business applications, or scalable digital experiences.'
       },
       {
-        title: 'Growth, Support, and Collaboration',
-        copy: 'Ongoing SEO, branding, maintenance, support, infrastructure, and technical collaboration for teams growing digitally.'
+        title: 'Long-term support and collaboration',
+        copy: 'Ongoing SEO, maintenance, infrastructure, and technology partnership for businesses expanding with discipline.'
       }
     ],
     serviceDepth: [
       {
-        title: 'Digital platforms with business structure',
-        copy: 'From websites to software systems, CodexWEBZ builds platforms that are practical to operate, scalable to improve, and aligned with real business goals.'
+        title: 'Technology inside a broader operating model',
+        copy: 'These capabilities sit inside the wider Kuwexa ecosystem, which means the work is shaped by real trade and commerce realities, not generic templates.'
       },
       {
-        title: 'Commerce and operational systems',
-        copy: 'Ecommerce platforms, business software, internal tools, and integrations are shaped around day-to-day workflows and customer journeys.'
+        title: 'Commerce and customer journeys',
+        copy: 'Ecommerce platforms, business software, internal tools, and integrations are structured around practical workflows and measurable outcomes.'
       },
       {
-        title: 'Visibility, branding, and growth support',
-        copy: 'SEO, digital marketing, social media, creative assets, and content support help businesses present themselves more clearly and reach customers more effectively.'
+        title: 'Visibility, branding, and growth',
+        copy: 'SEO, digital marketing, social media, and content systems help businesses present themselves with more clarity and stronger reach.'
       },
       {
-        title: 'Reliable post-launch support',
-        copy: 'Maintenance, infrastructure, monitoring, and technical support keep digital systems stable, secure, and useful after launch.'
+        title: 'Reliable post-launch continuity',
+        copy: 'Maintenance, infrastructure, monitoring, and technical support keep the systems stable, manageable, and ready for future scale.'
       }
     ],
     workflow: [
       {
         step: '01',
-        title: 'Understand the requirement',
-        copy: 'The engagement starts with the business objective, the operational challenge, and the expected outcome.'
+        title: 'Understand the commercial goal',
+        copy: 'Every engagement starts with the business objective, operating challenge, and market reality involved.'
       },
       {
         step: '02',
-        title: 'Define the right delivery path',
-        copy: 'The service scope is aligned to business priorities, platform needs, and the most practical implementation route.'
+        title: 'Define the right capability mix',
+        copy: 'The scope is aligned to business priorities, platform needs, and the most practical implementation route.'
       },
       {
         step: '03',
-        title: 'Build the working solution',
-        copy: 'Frontend, backend, integrations, content structure, and workflow logic are delivered as one consistent system.'
+        title: 'Build the working system',
+        copy: 'Frontend, backend, integrations, content structure, and workflow logic are delivered as one consistent operating layer.'
       },
       {
         step: '04',
-        title: 'Support long-term growth',
+        title: 'Support steady growth',
         copy: 'After launch, the system can continue improving through support, optimization, and additional delivery phases.'
       }
     ],
     audiences: [
-      'Startups launching digital products or modern service brands',
-      'SMEs improving digital presence and internal processes',
-      'Ecommerce businesses building structured online sales systems',
-      'Organizations replacing fragmented digital tools with dependable platforms',
-      'Agencies and partner teams needing dependable development support'
+      'Businesses expanding into wider digital or global markets',
+      'Brands building consumer commerce experiences and structured online visibility',
+      'Organizations replacing fragmented tools with dependable digital systems',
+      'SMEs needing scalable websites, commerce flows, and operational clarity',
+      'Partner teams seeking dependable technology execution through CodexWEBZ'
     ],
     faqs: [
       {
-        question: 'Can service content be updated after launch?',
-        answer: 'Yes. Service pages, descriptions, media, and metadata remain editable from the role-based dashboard.'
+        question: 'Are these services offered directly by Kuwexa?',
+        answer: 'Yes. The public capability stack is presented under Kuwexa, with many digital services delivered through the CodexWEBZ division.'
       },
       {
-        question: 'Are the services standalone or connected?',
-        answer: 'They can be delivered individually or combined into a broader digital system that supports websites, software, visibility, and operations together.'
+        question: 'Can the services be combined?',
+        answer: 'Yes. They can be delivered individually or combined into a broader ecosystem that supports trade, commerce, visibility, and operations together.'
       },
       {
-        question: 'Does CodexWEBZ only build websites?',
-        answer: 'No. The service scope also covers ecommerce, custom software, mobile apps, SEO, branding, maintenance, cloud support, and technical collaboration.'
+        question: 'Is this only about websites?',
+        answer: 'No. The scope also covers ecommerce, software, mobile apps, SEO, branding, maintenance, infrastructure, and technology collaboration.'
       }
     ]
   };
@@ -652,9 +686,9 @@ function getProductsPageContent(products = []) {
   return {
     categories: ['All Products', ...new Set(products.map((product) => (product.status === 'published' ? 'Published' : 'Draft')))],
     values: [
-      'Each software product can be presented with overview, features, screenshots, technology stack, and demo links.',
-      'Admin and manager roles can update product content, images, and publishing state directly from the dashboard.',
-      'The products section can be shown or hidden from Website Settings when needed.'
+      'Each ecosystem platform can be presented with overview, features, screenshots, technology stack, and action links.',
+      'Admin and manager roles can update product content, images, alt text, and publishing state directly from the dashboard.',
+      'The platform module lets Kuwexa present internal tools, venture products, or managed software experiences with the same brand system.'
     ]
   };
 }
@@ -663,9 +697,9 @@ function getProjectsPageContent(projects = []) {
   return {
     categories: ['All', ...new Set(projects.map((project) => project.category).filter(Boolean))],
     values: [
-      'Each case study connects business objective, delivery approach, technology choices, and measurable outcome.',
-      'Client project work is presented as a practical business solution rather than visual mockups alone.',
-      'All client project records stay editable from the dashboard after launch.'
+      'Each initiative connects business objective, delivery approach, technology choices, and measurable outcome.',
+      'Execution stories are presented as practical operating systems rather than visual mockups alone.',
+      'All initiative records stay editable from the dashboard after launch.'
     ]
   };
 }
@@ -674,9 +708,9 @@ function getBlogPageContent(posts = []) {
   return {
     categories: ['All', ...new Set(posts.map((post) => post.category).filter(Boolean))],
     editorialPrinciples: [
-      'Write from implementation experience, not abstract trend-chasing.',
-      'Connect SEO with actual publishing workflow, not checklists alone.',
-      'Use CMS structure that managers can maintain without engineering help.'
+      'Write from implementation and operating experience, not abstract trend-chasing.',
+      'Connect digital growth with real systems and commercial clarity.',
+      'Keep the CMS practical enough for teams to maintain without engineering bottlenecks.'
     ]
   };
 }
@@ -687,16 +721,16 @@ function getCareersPageContent(jobs = []) {
     employmentTypes: ['All', ...new Set(jobs.map((job) => job.employment_type).filter(Boolean))],
     values: [
       {
-        title: 'Own the outcome',
-        copy: 'Work is measured by shipped systems and user impact, not performance theatre.'
+        title: 'Systems over shortcuts',
+        copy: 'Work is measured by dependable execution and documented outcomes, not performance theatre.'
       },
       {
-        title: 'Prefer clarity over noise',
-        copy: 'The team values direct communication, clean reasoning, and short feedback loops.'
+        title: 'Clarity over noise',
+        copy: 'The team values direct communication, operational discipline, and short feedback loops.'
       },
       {
-        title: 'Build what matters',
-        copy: 'Projects tie together product, marketing, operations, and engineering instead of living in silos.'
+        title: 'Hybrid thinking',
+        copy: 'Projects connect commerce, operations, customer experience, and engineering instead of living in silos.'
       }
     ],
     steps: [
@@ -708,11 +742,11 @@ function getCareersPageContent(jobs = []) {
     faqs: [
       {
         question: 'How are applications managed?',
-        answer: 'Resumes, statuses, and candidate workflow all sit inside the management dashboard with role-based access.'
+        answer: 'Resumes, statuses, and candidate workflow all sit inside the management dashboard with role-based access and image-alt-ready media handling.'
       },
       {
-        question: 'Can managers review resumes without admin access?',
-        answer: 'Yes. Careers and application handling are part of the manager permission set.'
+        question: 'What kind of team is Kuwexa building?',
+        answer: 'Roles support the broader hybrid ecosystem, including digital platforms, commerce operations, marketing visibility, and structured delivery.'
       }
     ]
   };
@@ -723,35 +757,35 @@ function getContactPageContent() {
     promises: [
       'Clear discovery and response process for every inquiry',
       'Lead record created inside the dashboard for structured follow-up',
-      'Business-focused scoping before implementation begins',
-      'Delivery support aligned to practical timelines and requirements'
+      'Commercial and operational context reviewed before implementation begins',
+      'Delivery support aligned to practical timelines and market realities'
     ],
     engagementModels: [
       {
-        title: 'Website and Digital Presence',
-        copy: 'Professional website builds, ecommerce setups, and visibility-focused digital foundations.'
+        title: 'Trade and ecosystem conversations',
+        copy: 'Best for businesses exploring supply-chain support, B2B trade alignment, or wider market access.'
       },
       {
-        title: 'Custom Software and Platforms',
-        copy: 'Business web applications, workflow tools, integrations, and scalable digital systems.'
+        title: 'Digital commerce and platforms',
+        copy: 'Ideal for website builds, ecommerce systems, customer journeys, and digital platform strategy.'
       },
       {
-        title: 'Support and Growth Services',
-        copy: 'SEO, optimization, maintenance, and technical support for businesses improving existing platforms.'
+        title: 'Technology enablement by CodexWEBZ',
+        copy: 'Useful for custom software, integrations, SEO systems, maintenance, and operational digital support.'
       }
     ],
     contactCards: [
       {
-        title: 'Plan a new digital build',
-        copy: 'Best for new websites, digital products, ecommerce setups, and software platforms.'
+        title: 'Plan a new ecosystem move',
+        copy: 'Best for new trade, digital commerce, platform, or technology initiatives.'
       },
       {
         title: 'Improve an existing system',
-        copy: 'Useful when the current website or software platform needs stronger structure, performance, or usability.'
+        copy: 'Useful when the current workflow, storefront, website, or software platform needs stronger structure and usability.'
       },
       {
-        title: 'Get ongoing technical support',
-        copy: 'Ideal for companies that need maintenance, issue resolution, support, and continuous platform improvement.'
+        title: 'Build long-term support',
+        copy: 'Ideal for companies that need maintenance, issue resolution, growth support, and continuous improvement.'
       }
     ],
     responseSteps: [
@@ -773,19 +807,19 @@ function getContactPageContent() {
     ],
     checklist: [
       'Your business objective or target outcome',
-      'The current problem, gap, or platform issue',
-      'Required integrations or systems involved',
+      'The current problem, gap, or market/operations issue',
+      'Required integrations, channels, or systems involved',
       'Expected timeline or urgency',
-      'Whether the need is a new build, upgrade, or support request'
+      'Whether the need is a new build, upgrade, trade support, or ongoing partnership'
     ],
     faqs: [
       {
         question: 'What should be included in the inquiry?',
-        answer: 'Share the business goal, current challenge, required platform or service, timeline, and any systems that need to be integrated or improved.'
+        answer: 'Share the business goal, current challenge, required channel or service, timeline, and any systems that need to be integrated or improved.'
       },
       {
-        question: 'Does CodexWEBZ handle both frontend and backend delivery?',
-        answer: 'Yes. Websites, software interfaces, backend workflows, integrations, CMS, and deployment support can all be handled within one delivery scope.'
+        question: 'Can Kuwexa handle both strategy and execution?',
+        answer: 'Yes. The organization can support planning, commerce workflows, websites, software interfaces, backend workflows, and long-term operational delivery.'
       }
     ]
   };
@@ -793,115 +827,122 @@ function getContactPageContent() {
 
 function getAboutPageContent() {
   return {
-    eyebrow: 'About CodexWEBZ',
-    title: 'Technology systems built to support business growth, efficiency, and long-term scalability.',
-    intro: 'CodexWEBZ is a technology services brand under Kuwexa Private Limited, focused on helping businesses build reliable digital systems and scalable technology platforms.',
-    overview: 'In today\'s competitive environment, businesses need more than online presence. They need structured digital platforms, efficient systems, and reliable technical support that strengthens operations and long-term growth.',
-    summary: 'In today’s competitive environment, businesses need more than online presence. They need structured digital platforms, efficient systems, and reliable technical support that strengthens operations and long-term growth.',
+    eyebrow: 'About Kuwexa',
+    title: 'A hybrid parent company where commerce and technology work together.',
+    intro: 'Kuwexa Private Limited is a hybrid company working across global ecommerce, B2B import-export, and technology enablement.',
+    overview: 'Through Kuwexa.com, the organization is building a consumer lifestyle commerce platform, while CodexWEBZ supports organizations by building websites, digital systems, and scalable platforms that improve efficiency and customer engagement.',
+    summary: 'By combining trade capabilities with technology support, Kuwexa focuses on helping businesses operate with clarity, structure, and long-term sustainability.',
     highlights: [
       {
-        title: 'Built for real operations',
-        copy: 'CodexWEBZ develops practical digital systems that businesses can operate, improve, and scale over time.'
+        title: 'Hybrid advantage',
+        copy: 'Kuwexa connects physical supply chains and digital innovation so execution is grounded in real business realities.'
       },
       {
-        title: 'Technology aligned with business needs',
-        copy: 'The work is shaped around real-world business objectives so technology remains useful beyond the build phase.'
+        title: 'Systems over shortcuts',
+        copy: 'The operating philosophy emphasizes discipline, documentation, and predictable performance over reactive firefighting.'
       },
       {
-        title: 'Reliable and scalable by design',
-        copy: 'Usability, performance, maintainability, and scalability stay at the center of every platform decision.'
+        title: 'Delivery with ethics',
+        copy: 'The organization is designed to turn ambition into repeatable business performance with dependable methods and clear outcomes.'
       }
     ],
     narrative: [
-      'CodexWEBZ collaborates with startups, enterprises, and growing companies to transform ideas into functional digital solutions that align with real business needs.',
-      'The approach focuses on practical and scalable technology services that help organizations improve operations, expand their reach, and strengthen their digital infrastructure.',
-      'Through structured delivery and dependable support, each platform is built to remain useful, efficient, and adaptable as the business grows.'
+      'Kuwexa is structured as a parent organization that supports growth through trade capability, digital commerce, and technology systems rather than treating them as isolated silos.',
+      'The model creates a stronger bridge between market access, sourcing, customer experience, and the digital infrastructure needed to scale steadily.',
+      'This hybrid structure helps businesses move from chaos to capability through documented processes, clearer decisions, and more dependable execution.'
     ],
-    vision: 'Our vision is to become a trusted technology partner for businesses by helping organizations grow through reliable digital infrastructure, practical innovation, and scalable technology platforms. CodexWEBZ aims to support companies as they adapt to a digital-first environment with systems that improve efficiency, strengthen online presence, and remain dependable over the long term. The goal is not only to build digital solutions, but to help businesses create a stronger operational foundation that supports sustainable growth, better customer reach, and long-term technology readiness.',
+    vision: 'To build a globally trusted ecosystem where commerce and technology work together to empower businesses and drive sustainable success across markets.',
     visionPoints: [
-      'Enable businesses to grow through reliable digital infrastructure and scalable technology systems.',
-      'Help organizations adapt to digital transformation with practical, efficient, and manageable solutions.',
-      'Build long-term technology readiness so businesses can operate with greater confidence, stability, and reach.'
+      'Create a globally trusted ecosystem where commerce and technology reinforce each other.',
+      'Empower businesses to grow with stronger market connectivity, clearer systems, and sustainable execution.',
+      'Build long-term capability instead of short-term patches.'
     ],
-    mission: 'To help businesses build, optimize, and scale their digital ecosystem through dependable technology services, structured systems, and development support aligned to real operational needs.',
+    mission: 'To support businesses with dependable trade solutions and digital systems that enhance operations, improve connectivity, and enable steady growth.',
     focusAreas: [
-      'Building reliable and scalable digital platforms',
-      'Supporting businesses with structured technical systems',
-      'Helping organizations adopt modern technology with clarity',
-      'Delivering practical solutions aligned with business growth'
+      'Global trade and market access',
+      'Consumer ecommerce ecosystem building',
+      'Digital innovation through CodexWEBZ',
+      'Operational systems that support long-term sustainability'
     ],
-    serviceGroups: marketingServices,
+    serviceGroups: [
+      'Kuwexa Global Trade',
+      'Kuwexa.com Consumer Lifestyle',
+      'CodexWEBZ Digital Innovation',
+      'B2B Import Export',
+      'Digital Commerce Infrastructure',
+      'Scalable Business Systems'
+    ],
     principles: [
       {
-        title: 'Practical systems over unnecessary complexity',
-        copy: 'The focus stays on solutions that are manageable, stable, and aligned with everyday business operations.'
+        title: 'Operational discipline',
+        copy: 'The Kuwexa way replaces reactive firefighting with systems that are documented, understandable, and manageable.'
       },
       {
-        title: 'Scalability without friction',
-        copy: 'Platforms are designed to support digital transformation, future growth, and new operational requirements.'
+        title: 'Documented outcomes',
+        copy: 'Success is measured through clarity, consistency, and the ability to repeat performance across markets and channels.'
       },
       {
-        title: 'Support that stays dependable',
-        copy: 'Maintenance, support, and ongoing optimization are treated as part of the service, not an afterthought.'
+        title: 'Predictable performance',
+        copy: 'The organization aims to make commerce and technology execution more dependable, transparent, and sustainable.'
       }
     ],
     audience: [
-      'Startups launching digital products and services',
-      'Small and medium businesses expanding online',
-      'Tech companies and agencies needing dependable development support',
-      'Organizations building or upgrading digital platforms'
+      'Businesses expanding into wider local or global markets',
+      'Brands building consumer commerce and digital presence together',
+      'Organizations needing websites, software, or scalable digital systems',
+      'Partners seeking structured trade and technology support'
     ],
     approach: [
       {
-        title: 'Understand business objectives',
+        title: 'Understand the market and operating need',
         copy: 'Every engagement starts with the company context, the operational challenge, and the intended growth outcome.'
       },
       {
-        title: 'Design the right technology structure',
-        copy: 'Websites, applications, integrations, and workflows are planned around usability, clarity, and long-term maintainability.'
+        title: 'Align commerce and systems',
+        copy: 'Trade workflows, ecommerce channels, and technology structure are planned around clarity, usability, and maintainability.'
       },
       {
-        title: 'Deliver scalable implementation',
-        copy: 'The build phase focuses on reliable execution, stable systems, and digital platforms that can grow with the organization.'
+        title: 'Deliver with documented execution',
+        copy: 'The build phase focuses on reliable execution, stable systems, and practical operating documentation.'
       },
       {
-        title: 'Support continuous improvement',
-        copy: 'After launch, the platform can keep improving through maintenance, optimization, and ongoing technical support.'
+        title: 'Support steady scale',
+        copy: 'After launch, the ecosystem can keep improving through maintenance, optimization, and ongoing commercial or technical support.'
       }
     ],
     advantages: [
-      'Scalable and structured technology solutions',
-      'Experienced development support across business platforms',
-      'Flexible collaboration for projects and long-term partnerships',
-      'Strong focus on practical systems and sustainable client success'
+      'Hybrid parent organization across trade and technology',
+      'Consumer, B2B, and digital capability inside one ecosystem',
+      'CodexWEBZ as a dedicated digital innovation division',
+      'Strong focus on ethics, documented outcomes, and sustainable growth'
     ],
-    closing: 'At its core, CodexWEBZ believes technology should empower businesses, simplify operations, and create opportunities for growth. Whether a company is launching a new platform or improving an existing system, CodexWEBZ aims to be a trusted technology partner.'
+    closing: 'At its core, Kuwexa believes businesses scale better when commerce and technology reinforce each other. Whether the need is market expansion, digital commerce, or scalable systems, the goal is to become a trusted long-term partner.'
   };
 }
 
 function getTeamPageContent(teamShowcase = { leadership: [], employees: [] }) {
   return {
-    eyebrow: 'Team',
-    title: 'Leadership, specialists, and delivery roles behind CodexWEBZ.',
-    intro: 'CodexWEBZ is built by a leadership team focused on reliable digital systems and a delivery team that turns business needs into practical web, software, and growth solutions.',
+    eyebrow: 'Leadership',
+    title: 'Leadership, specialists, and delivery roles behind Kuwexa.',
+    intro: 'Kuwexa is guided by leadership focused on hybrid commerce and supported by teams turning business needs into trade, digital, and technology execution.',
     values: [
       {
         title: 'Business-aligned thinking',
-        copy: 'The team approaches delivery with a clear understanding of both technical execution and practical business needs.'
+        copy: 'The team approaches delivery with a clear understanding of both practical commercial needs and technical execution.'
       },
       {
         title: 'Dependable execution',
-        copy: 'Every profile contributes to structured delivery, stable systems, and reliable support across projects.'
+        copy: 'Every profile contributes to structured delivery, stable systems, and reliable support across initiatives.'
       },
       {
-        title: 'Growth with usability',
-        copy: 'The goal is to build systems that remain scalable, manageable, and practical for businesses to operate long term.'
+        title: 'Growth with discipline',
+        copy: 'The goal is to build systems and workflows that remain scalable, manageable, and practical for businesses over time.'
       }
     ],
     metrics: [
       { label: 'Leadership Profiles', value: String(teamShowcase.leadership?.length || 0) },
       { label: 'Employee Profiles', value: String(teamShowcase.employees?.length || 0) },
-      { label: 'Focused Mission', value: '1' }
+      { label: 'Core Pillars', value: '3' }
     ]
   };
 }

@@ -4,23 +4,24 @@
   <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 lg:px-4">
     <a href="/" class="flex items-center gap-3">
       <% if (siteSettings?.logo_path) { %>
-        <img src="<%= siteSettings.logo_path %>" alt="<%= siteSettings?.company_name || 'CodexWebz' %> logo" class="site-logo h-12 w-auto max-w-[11rem] object-contain md:h-14" decoding="async" fetchpriority="high">
+        <img src="<%= siteSettings.logo_path %>" alt="<%= resolveImageAlt(siteSettings.logo_path, `${siteSettings?.company_name || 'Kuwexa'} logo`) %>" class="site-logo h-12 w-auto max-w-[11rem] object-contain md:h-14" decoding="async" fetchpriority="high">
       <% } else { %>
         <span>
-          <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'CodexWebz' %></span>
-          <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Technology Solutions</span>
+          <span class="block font-display text-lg font-bold text-primary"><%= siteSettings?.company_name || 'Kuwexa Private Limited' %></span>
+          <span class="block text-[11px] uppercase tracking-[0.35em] text-primary/45">Hybrid Commerce Systems</span>
         </span>
       <% } %>
     </a>
 
     <nav class="site-header__desktop-nav items-center gap-2 text-sm font-semibold">
-      <a href="/services" class="site-header__nav-link <%= activePath.startsWith('/services') ? 'is-active' : '' %>">Services</a>
+      <a href="/services" class="site-header__nav-link <%= activePath.startsWith('/services') ? 'is-active' : '' %>">Capabilities</a>
       <% if (showProductsMenu) { %>
-        <a href="/products" class="site-header__nav-link <%= activePath.startsWith('/products') ? 'is-active' : '' %>">Our Products</a>
+        <a href="/products" class="site-header__nav-link <%= activePath.startsWith('/products') ? 'is-active' : '' %>">Platforms</a>
       <% } %>
-      <a href="/portfolio" class="site-header__nav-link <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'is-active' : '' %>">Client Projects</a>
-      <a href="/about-us" class="site-header__nav-link <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'is-active' : '' %>">About Us</a>
-      <a href="/team" class="site-header__nav-link <%= activePath === '/team' || activePath.startsWith('/team/') ? 'is-active' : '' %>">Team</a>
+      <a href="/portfolio" class="site-header__nav-link <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'is-active' : '' %>">Initiatives</a>
+      <a href="/about-us" class="site-header__nav-link <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'is-active' : '' %>">About Kuwexa</a>
+      <a href="/team" class="site-header__nav-link <%= activePath === '/team' || activePath.startsWith('/team/') ? 'is-active' : '' %>">Leadership</a>
+      <a href="/blog" class="site-header__nav-link <%= activePath.startsWith('/blog') ? 'is-active' : '' %>">Insights</a>
       <a href="/careers" class="site-header__nav-link <%= activePath.startsWith('/careers') ? 'is-active' : '' %>">Careers</a>
       <a href="/contact" class="site-header__nav-link <%= activePath === '/contact' ? 'is-active' : '' %>">Contact</a>
     </nav>
@@ -29,7 +30,7 @@
       <% if (user) { %>
         <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="rounded-full border border-primary/12 px-4 py-2 text-sm font-semibold text-primary transition hover:border-secondary hover:bg-white">Dashboard</a>
       <% } %>
-      <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Start Project</a>
+      <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Start a Conversation</a>
     </div>
 
     <button type="button" class="site-header__toggle inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20" data-nav-toggle aria-label="Open navigation" aria-expanded="false" aria-controls="site-mobile-nav">
@@ -46,19 +47,20 @@
     <div class="site-mobile-nav__panel">
       <div class="flex items-center justify-between">
         <div>
-          <span class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">CodexWebz</span>
+          <span class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Kuwexa</span>
           <span class="mt-2 block font-display text-2xl font-bold text-white">Menu</span>
         </div>
         <button type="button" class="site-mobile-nav__close" data-nav-close aria-label="Close navigation">&times;</button>
       </div>
       <nav class="site-mobile-nav__links">
-        <a href="/services" class="site-mobile-nav__link">Services</a>
+        <a href="/services" class="site-mobile-nav__link">Capabilities</a>
         <% if (showProductsMenu) { %>
-          <a href="/products" class="site-mobile-nav__link">Our Products</a>
+          <a href="/products" class="site-mobile-nav__link">Platforms</a>
         <% } %>
-        <a href="/portfolio" class="site-mobile-nav__link">Client Projects</a>
-        <a href="/about-us" class="site-mobile-nav__link">About Us</a>
-        <a href="/team" class="site-mobile-nav__link">Team</a>
+        <a href="/portfolio" class="site-mobile-nav__link">Initiatives</a>
+        <a href="/about-us" class="site-mobile-nav__link">About Kuwexa</a>
+        <a href="/team" class="site-mobile-nav__link">Leadership</a>
+        <a href="/blog" class="site-mobile-nav__link">Insights</a>
         <a href="/careers" class="site-mobile-nav__link">Careers</a>
         <a href="/contact" class="site-mobile-nav__link">Contact</a>
       </nav>
@@ -66,7 +68,7 @@
         <% if (user) { %>
           <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="site-mobile-nav__ghost">Dashboard</a>
         <% } %>
-        <a href="/contact" class="site-mobile-nav__primary">Start Project</a>
+        <a href="/contact" class="site-mobile-nav__primary">Start a Conversation</a>
       </div>
     </div>
   </div>

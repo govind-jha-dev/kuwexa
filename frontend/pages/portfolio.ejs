@@ -61,7 +61,7 @@
             data-search="<%= `${project.title} ${project.client || ''} ${project.category || ''} ${(project.technologies || []).join(' ')}` %>">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= project.category || 'Project' %></span>
-              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/35"><%= project.client || 'CodexWebz' %></span>
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-primary/35"><%= project.client || 'Kuwexa Initiative' %></span>
             </div>
             <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= project.title %></h2>
             <p class="mt-4 text-sm leading-8 text-slate-600"><%= project.summary %></p>
@@ -87,7 +87,7 @@
 <%- include('../components/site-cta', {
   eyebrow: 'Build Your Next Case Study',
   title: 'Need the same balance of polish, clarity, and backend structure for your company website?',
-  copy: 'CodexWebz can build the public experience and the management system together so the frontend stays attractive after launch.',
+  copy: 'Kuwexa can build the public experience and the management system together so the frontend stays attractive after launch.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
   secondaryLabel: 'Explore Services',

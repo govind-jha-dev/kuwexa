@@ -61,8 +61,8 @@ module.exports = {
     secure: String(process.env.MAIL_SECURE || 'false') === 'true',
     user: process.env.MAIL_USER,
     password: process.env.MAIL_PASSWORD,
-    from: process.env.MAIL_FROM || (process.env.MAIL_USER ? `CodexWebz <${process.env.MAIL_USER}>` : 'CodexWebz <no-reply@codexwebz.com>'),
+    from: process.env.MAIL_FROM || (process.env.MAIL_USER ? `Kuwexa <${process.env.MAIL_USER}>` : 'Kuwexa <no-reply@kuwexa.com>'),
     replyTo: process.env.MAIL_REPLY_TO || process.env.MAIL_USER || null,
-    alertEmail: process.env.ALERT_EMAIL || process.env.MAIL_USER || 'info@codexwebz.com'
+    alertEmail: process.env.ALERT_EMAIL || process.env.MAIL_USER || 'hello@kuwexa.com'
   }
 };

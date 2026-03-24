@@ -2,6 +2,7 @@ const projectModel = require('../models/projectModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, sanitizeRichText, makeSlug, toJson } = require('../utils/content');
 const { splitCsv } = require('../utils/serializers');
+const { registerAsset, registerMany, normalizeImageItems } = require('../services/mediaAssetService');
 
 function respond(req, res, payload, redirectUrl) {
   if (req.originalUrl.startsWith('/api/')) {
@@ -110,6 +111,22 @@ async function createProject(req, res) {
     updated_by: req.user.id
   });
 
+  await Promise.all([
+    registerAsset(project?.featured_image, {
+      title: project?.title,
+      altText: `${project?.title || 'Kuwexa'} featured image`,
+      sourceModule: 'Projects'
+    }),
+    registerMany(
+      normalizeImageItems(project?.images).map((image, index) => ({
+        file_path: image.path,
+        title: project?.title,
+        alt_text: image.alt || `${project?.title || 'Kuwexa'} gallery image ${index + 1}`,
+        source_module: 'Projects'
+      }))
+    )
+  ]);
+
   return respond(req, res, { message: 'Project created successfully.', project }, `${getDashboardBasePath(req)}/portfolio?success=Project%20created%20successfully.`);
 }
 
@@ -141,6 +158,21 @@ async function updateProject(req, res) {
   }
 
   const project = await projectModel.updateProject(Number(req.params.id), updates);
+  await Promise.all([
+    registerAsset(project?.featured_image, {
+      title: project?.title,
+      altText: `${project?.title || 'Kuwexa'} featured image`,
+      sourceModule: 'Projects'
+    }),
+    registerMany(
+      normalizeImageItems(project?.images).map((image, index) => ({
+        file_path: image.path,
+        title: project?.title,
+        alt_text: image.alt || `${project?.title || 'Kuwexa'} gallery image ${index + 1}`,
+        source_module: 'Projects'
+      }))
+    )
+  ]);
   return respond(req, res, { message: 'Project updated successfully.', project }, `${getDashboardBasePath(req)}/portfolio?success=Project%20updated%20successfully.`);
 }
 

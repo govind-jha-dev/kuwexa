@@ -62,11 +62,11 @@ async function sendLeadConfirmation(lead) {
 
   return sendMail({
     to: lead.email,
-    subject: 'We received your inquiry | CodexWEBZ',
+    subject: 'We received your inquiry | Kuwexa',
     text: [
       `Hello ${lead.name || 'there'},`,
       '',
-      'Thank you for contacting CodexWEBZ.',
+      'Thank you for contacting Kuwexa.',
       'Your inquiry has been received and routed to our team for review.',
       '',
       `Inquiry type: ${lead.source || 'Website Contact Form'}`,
@@ -76,7 +76,7 @@ async function sendLeadConfirmation(lead) {
       'Our team will review your message and get back to you as soon as possible.',
       '',
       'Regards,',
-      'CodexWEBZ'
+      'Kuwexa'
     ].join('\n')
   });
 }
@@ -125,11 +125,11 @@ async function sendChatConfirmation(chat) {
 
   return sendMail({
     to: chat.email,
-    subject: 'We received your chat inquiry | CodexWEBZ',
+    subject: 'We received your chat inquiry | Kuwexa',
     text: [
       `Hello ${chat.name || 'there'},`,
       '',
-      'Thank you for reaching out to CodexWEBZ.',
+      'Thank you for reaching out to Kuwexa.',
       'Your chat inquiry has been delivered to the designated manager.',
       '',
       `Topic: ${chat.topic || 'General Inquiry'}`,
@@ -140,7 +140,7 @@ async function sendChatConfirmation(chat) {
       'We will follow up with you shortly.',
       '',
       'Regards,',
-      'CodexWEBZ'
+      'Kuwexa'
     ].join('\n')
   });
 }

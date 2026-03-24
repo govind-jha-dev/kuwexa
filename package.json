@@ -1,7 +1,7 @@
 {
-  "name": "codexwebz-platform",
+  "name": "kuwexa",
   "version": "1.0.0",
-  "description": "CodexWebz company website and management platform",
+  "description": "Kuwexa company website and management platform",
   "main": "backend/server.js",
   "scripts": {
     "build": "npm run build:styles",

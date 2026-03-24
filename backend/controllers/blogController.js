@@ -2,6 +2,7 @@ const blogModel = require('../models/blogModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, sanitizeRichText, makeSlug, toJson } = require('../utils/content');
 const { splitCsv } = require('../utils/serializers');
+const { registerAsset } = require('../services/mediaAssetService');
 
 function respond(req, res, payload, redirectUrl) {
   if (req.originalUrl.startsWith('/api/')) {
@@ -105,6 +106,12 @@ async function createPost(req, res) {
     published_at: status === 'published' ? new Date() : null
   });
 
+  await registerAsset(post?.featured_image, {
+    title: post?.title,
+    altText: `${post?.title || 'Kuwexa article'} featured image`,
+    sourceModule: 'Blog'
+  });
+
   return respond(req, res, { message: 'Post created successfully.', post }, `${getDashboardBasePath(req)}/blog?success=Post%20created%20successfully.`);
 }
 
@@ -136,6 +143,11 @@ async function updatePost(req, res) {
   }
 
   const post = await blogModel.updatePost(Number(req.params.id), updates);
+  await registerAsset(post?.featured_image, {
+    title: post?.title,
+    altText: `${post?.title || 'Kuwexa article'} featured image`,
+    sourceModule: 'Blog'
+  });
   return respond(req, res, { message: 'Post updated successfully.', post }, `${getDashboardBasePath(req)}/blog?success=Post%20updated%20successfully.`);
 }
 

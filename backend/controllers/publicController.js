@@ -9,6 +9,7 @@ const applicationModel = require('../models/applicationModel');
 const seoModel = require('../models/seoModel');
 const settingsModel = require('../models/settingsModel');
 const teamModel = require('../models/teamModel');
+const env = require('../config/env');
 const { generateSitemapXml } = require('../services/sitemapService');
 const { sendLeadAlert, sendLeadConfirmation, sendApplicationAlert } = require('../services/emailService');
 const { sanitizePlainText, sanitizeRichText } = require('../utils/content');
@@ -57,13 +58,13 @@ function firstImage(...values) {
 
 function buildSeo(defaults, overrides = {}) {
   return {
-    metaTitle: firstNonEmpty(overrides.metaTitle, defaults?.meta_title, 'CodexWebz'),
-    metaDescription: firstNonEmpty(overrides.metaDescription, defaults?.meta_description, 'CodexWebz web platform'),
+    metaTitle: firstNonEmpty(overrides.metaTitle, defaults?.meta_title, 'Kuwexa Private Limited'),
+    metaDescription: firstNonEmpty(overrides.metaDescription, defaults?.meta_description, 'Kuwexa Private Limited builds scalable systems for global commerce.'),
     metaKeywords: firstNonEmpty(overrides.metaKeywords, defaults?.meta_keywords),
     metaRobots: firstNonEmpty(overrides.metaRobots, defaults?.meta_robots),
     ogType: firstNonEmpty(overrides.ogType, defaults?.og_type, 'website'),
-    ogTitle: firstNonEmpty(overrides.ogTitle, defaults?.og_title, overrides.metaTitle, defaults?.meta_title, 'CodexWebz'),
-    ogDescription: firstNonEmpty(overrides.ogDescription, defaults?.og_description, overrides.metaDescription, defaults?.meta_description, 'CodexWebz web platform'),
+    ogTitle: firstNonEmpty(overrides.ogTitle, defaults?.og_title, overrides.metaTitle, defaults?.meta_title, 'Kuwexa Private Limited'),
+    ogDescription: firstNonEmpty(overrides.ogDescription, defaults?.og_description, overrides.metaDescription, defaults?.meta_description, 'Kuwexa Private Limited builds scalable systems for global commerce.'),
     ogImage: firstNonEmpty(overrides.ogImage, defaults?.og_image),
     ogImageAlt: firstNonEmpty(overrides.ogImageAlt, defaults?.og_image_alt),
     twitterCard: firstNonEmpty(overrides.twitterCard, defaults?.twitter_card),
@@ -71,7 +72,159 @@ function buildSeo(defaults, overrides = {}) {
     twitterDescription: firstNonEmpty(overrides.twitterDescription, defaults?.twitter_description, overrides.ogDescription, defaults?.og_description, overrides.metaDescription, defaults?.meta_description),
     twitterImage: firstNonEmpty(overrides.twitterImage, defaults?.twitter_image, overrides.ogImage, defaults?.og_image),
     canonicalUrl: firstNonEmpty(overrides.canonicalUrl, defaults?.canonical_url),
-    schemaMarkup: firstNonEmpty(overrides.schemaMarkup, defaults?.schema_markup)
+    schemaMarkup: firstNonEmpty(overrides.schemaMarkup, defaults?.schema_markup),
+    breadcrumbs: overrides.breadcrumbs || null,
+    faqItems: overrides.faqItems || null,
+    publishedTime: overrides.publishedTime || null,
+    modifiedTime: overrides.modifiedTime || null,
+    authorName: overrides.authorName || null
+  };
+}
+
+function absoluteUrl(pathname = '/') {
+  const base = String(env.appUrl || '').replace(/\/$/, '');
+  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  return `${base}${normalizedPath}`;
+}
+
+function buildBreadcrumbs(...items) {
+  return items
+    .flat()
+    .filter(Boolean)
+    .map((item) => ({
+      name: item.name,
+      path: item.path
+    }));
+}
+
+function normalizeSchemaMarkup(...values) {
+  const items = [];
+
+  values.forEach((value) => {
+    if (!value) {
+      return;
+    }
+
+    if (Array.isArray(value)) {
+      items.push(...normalizeSchemaMarkup(...value));
+      return;
+    }
+
+    items.push(value);
+  });
+
+  return items.length ? items : null;
+}
+
+function buildServiceSchema(service) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.meta_description || service.short_description || excerpt(service.description || '', 220),
+    provider: {
+      '@type': 'Organization',
+      name: 'Kuwexa Private Limited',
+      url: absoluteUrl('/')
+    },
+    serviceType: service.category || service.title,
+    url: absoluteUrl(`/services/${service.slug}`),
+    image: service.image ? absoluteUrl(service.image) : undefined
+  };
+}
+
+function buildProductSchema(product) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.meta_description || product.short_description || excerpt(product.description || '', 220),
+    image: firstImage(product.logo, product.images) ? absoluteUrl(firstImage(product.logo, product.images)) : undefined,
+    brand: {
+      '@type': 'Brand',
+      name: 'Kuwexa'
+    },
+    manufacturer: {
+      '@type': 'Organization',
+      name: 'Kuwexa Private Limited',
+      url: absoluteUrl('/')
+    },
+    url: absoluteUrl(`/products/${product.slug}`)
+  };
+}
+
+function buildProjectSchema(project) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    headline: project.title,
+    description: project.meta_description || project.short_description || project.summary,
+    image: firstImage(project.featured_image, project.images) ? absoluteUrl(firstImage(project.featured_image, project.images)) : undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'Kuwexa Private Limited'
+    },
+    url: absoluteUrl(`/portfolio/${project.slug}`)
+  };
+}
+
+function buildArticleSchema(post) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.meta_description || post.excerpt || post.summary,
+    image: post.featured_image ? absoluteUrl(post.featured_image) : undefined,
+    author: {
+      '@type': 'Person',
+      name: post.author_name || 'Kuwexa Editorial Team'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Kuwexa Private Limited',
+      url: absoluteUrl('/')
+    },
+    datePublished: post.published_at || post.created_at || undefined,
+    dateModified: post.updated_at || post.published_at || post.created_at || undefined,
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`)
+  };
+}
+
+function buildPersonSchema(member) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: member.name,
+    jobTitle: member.designation,
+    description: member.meta_description || member.short_bio || member.designation,
+    image: member.image ? absoluteUrl(member.image) : undefined,
+    email: member.email || undefined,
+    telephone: member.phone || undefined,
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Kuwexa Private Limited',
+      url: absoluteUrl('/')
+    },
+    sameAs: [member.linkedin_url, member.twitter_url, member.facebook_url].filter(Boolean),
+    url: absoluteUrl(`/team/${member.slug}`)
+  };
+}
+
+function buildJobSchema(job) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: job.title,
+    description: job.description,
+    datePosted: job.created_at || undefined,
+    employmentType: job.employment_type || undefined,
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: 'Kuwexa Private Limited',
+      url: absoluteUrl('/')
+    },
+    jobLocationType: job.location && /remote/i.test(job.location) ? 'TELECOMMUTE' : undefined,
+    applicantLocationRequirements: job.location || undefined
   };
 }
 
@@ -93,9 +246,10 @@ async function home(req, res) {
     blogModel.latest(3),
     jobModel.listOpen()
   ]);
+  const marketing = getHomeContent({ services, products, projects, posts, jobs });
 
   return res.render('frontend/pages/home', {
-    title: 'CodexWebz',
+    title: 'Kuwexa Private Limited',
     services: services.map((service) => ({
       ...service,
       profile: resolveServiceProfile(service)
@@ -110,8 +264,14 @@ async function home(req, res) {
       summary: post.excerpt || excerpt(post.content, 170)
     })),
     jobs: jobs.slice(0, 3),
-    marketing: getHomeContent({ services, products, projects, posts, jobs }),
-    seo: buildSeo(seoRecord)
+    marketing,
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'Kuwexa Private Limited | Systems for Scalable Global Commerce',
+      metaDescription: marketing.heroSubtitle,
+      canonicalUrl: '/',
+      breadcrumbs: buildBreadcrumbs({ name: 'Home', path: '/' }),
+      faqItems: marketing.faqs
+    })
   });
 }
 
@@ -120,6 +280,7 @@ async function services(req, res) {
     seoModel.findByPageKey('services'),
     serviceModel.listPublished()
   ]);
+  const pageContent = getServicesPageContent(items);
 
   return res.render('frontend/pages/services', {
     title: 'Services',
@@ -127,8 +288,17 @@ async function services(req, res) {
       ...service,
       profile: resolveServiceProfile(service)
     })),
-    pageContent: getServicesPageContent(items),
-    seo: buildSeo(seoRecord)
+    pageContent,
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'Capabilities | Kuwexa Private Limited',
+      metaDescription: 'Explore Kuwexa capabilities across digital innovation, ecommerce enablement, and business technology delivery.',
+      canonicalUrl: '/services',
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Capabilities', path: '/services' }
+      ),
+      faqItems: pageContent.faqs
+    })
   });
 }
 
@@ -143,13 +313,19 @@ async function serviceDetail(req, res, next) {
     service,
     profile: resolveServiceProfile(service),
     seo: buildSeo(null, {
-      metaTitle: service.meta_title || `${service.title} | CodexWebz`,
+      metaTitle: service.meta_title || `${service.title} | Kuwexa Capability`,
       metaDescription: service.meta_description || service.short_description,
       metaKeywords: service.meta_keywords,
-      schemaMarkup: service.schema_markup,
+      schemaMarkup: normalizeSchemaMarkup(service.schema_markup, buildServiceSchema(service)),
       ogImage: service.image,
+      ogImageAlt: service.title ? `${service.title} service image` : null,
       twitterImage: service.image,
-      canonicalUrl: `/services/${service.slug}`
+      canonicalUrl: `/services/${service.slug}`,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Capabilities', path: '/services' },
+        { name: service.title, path: `/services/${service.slug}` }
+      )
     })
   });
 }
@@ -163,13 +339,21 @@ async function products(req, res, next) {
     seoModel.findByPageKey('products'),
     productModel.listPublished()
   ]);
+  const pageContent = getProductsPageContent(items);
 
   return res.render('frontend/pages/products', {
-    title: 'Our Products',
+    title: 'Platforms',
     products: items,
-    pageContent: getProductsPageContent(items),
+    pageContent,
     seo: buildSeo(seoRecord, {
+      metaTitle: 'Platforms | Kuwexa Private Limited',
+      metaDescription: 'Explore software platforms, digital products, and managed ecosystem tools developed within Kuwexa.',
       canonicalUrl: '/products'
+      ,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Platforms', path: '/products' }
+      )
     })
   });
 }
@@ -188,13 +372,20 @@ async function productDetail(req, res, next) {
     title: product.name,
     product,
     seo: buildSeo(null, {
-      metaTitle: product.meta_title || `${product.name} | CodexWebz Product`,
+      metaTitle: product.meta_title || `${product.name} | Kuwexa Platform`,
       metaDescription: product.meta_description || product.short_description,
       metaKeywords: product.meta_keywords,
       ogType: 'product',
+      schemaMarkup: buildProductSchema(product),
       ogImage: firstImage(product.logo, product.images),
+      ogImageAlt: product.name ? `${product.name} product preview` : null,
       twitterImage: firstImage(product.logo, product.images),
-      canonicalUrl: `/products/${product.slug}`
+      canonicalUrl: `/products/${product.slug}`,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Platforms', path: '/products' },
+        { name: product.name, path: `/products/${product.slug}` }
+      )
     })
   });
 }
@@ -204,18 +395,23 @@ async function projects(req, res) {
     seoModel.findByPageKey('projects'),
     projectModel.listPublished()
   ]);
+  const pageContent = getProjectsPageContent(items);
 
   return res.render('frontend/pages/projects', {
-    title: 'Client Projects',
+    title: 'Initiatives',
     projects: items.map((project) => ({
       ...project,
       summary: project.short_description || excerpt(project.description || project.results, 150)
     })),
-    pageContent: getProjectsPageContent(items),
+    pageContent,
     seo: buildSeo(seoRecord, {
-      metaTitle: 'Client Projects | CodexWebz',
-      metaDescription: 'Selected CodexWebz client websites, digital builds, and client project case studies.',
-      canonicalUrl: '/portfolio'
+      metaTitle: 'Initiatives | Kuwexa Private Limited',
+      metaDescription: 'See Kuwexa initiatives, delivery stories, and platform execution work across commerce and digital systems.',
+      canonicalUrl: '/portfolio',
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Initiatives', path: '/portfolio' }
+      )
     })
   });
 }
@@ -233,12 +429,19 @@ async function projectDetail(req, res, next) {
       summary: project.short_description || excerpt(project.description || project.results, 180)
     },
     seo: buildSeo(null, {
-      metaTitle: project.meta_title || `${project.title} | CodexWebz`,
+      metaTitle: project.meta_title || `${project.title} | Kuwexa Initiative`,
       metaDescription: project.meta_description || project.short_description || project.category,
       metaKeywords: project.meta_keywords,
+      schemaMarkup: buildProjectSchema(project),
       ogImage: firstImage(project.featured_image, project.images),
+      ogImageAlt: project.title ? `${project.title} featured image` : null,
       twitterImage: firstImage(project.featured_image, project.images),
-      canonicalUrl: `/portfolio/${project.slug}`
+      canonicalUrl: `/portfolio/${project.slug}`,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Initiatives', path: '/portfolio' },
+        { name: project.title, path: `/portfolio/${project.slug}` }
+      )
     })
   });
 }
@@ -248,6 +451,7 @@ async function blog(req, res) {
     seoModel.findByPageKey('blog'),
     blogModel.listPublished()
   ]);
+  const pageContent = getBlogPageContent(posts);
 
   return res.render('frontend/pages/blog', {
     title: 'Blog',
@@ -255,8 +459,16 @@ async function blog(req, res) {
       ...post,
       summary: post.excerpt || excerpt(post.content, 170)
     })),
-    pageContent: getBlogPageContent(posts),
-    seo: buildSeo(seoRecord)
+    pageContent,
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'Insights | Kuwexa Private Limited',
+      metaDescription: 'Insights on hybrid commerce, digital systems, operations, and scalable growth.',
+      canonicalUrl: '/blog',
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Insights', path: '/blog' }
+      )
+    })
   });
 }
 
@@ -280,10 +492,19 @@ async function blogDetail(req, res, next) {
       ogTitle: post.og_title || post.title,
       ogDescription: post.og_description || post.excerpt,
       ogImage: post.featured_image,
+      ogImageAlt: post.title ? `${post.title} featured image` : null,
       twitterCard: post.featured_image ? 'summary_large_image' : null,
       twitterImage: post.featured_image,
       canonicalUrl: post.canonical_url || `/blog/${post.slug}`,
-      schemaMarkup: post.schema_markup
+      schemaMarkup: normalizeSchemaMarkup(post.schema_markup, buildArticleSchema(post)),
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Insights', path: '/blog' },
+        { name: post.title, path: `/blog/${post.slug}` }
+      ),
+      publishedTime: post.published_at || post.created_at,
+      modifiedTime: post.updated_at,
+      authorName: post.author_name || 'Kuwexa Editorial Team'
     })
   });
 }
@@ -293,12 +514,22 @@ async function careers(req, res) {
     seoModel.findByPageKey('careers'),
     jobModel.listOpen()
   ]);
+  const pageContent = getCareersPageContent(jobs);
 
   return res.render('frontend/pages/careers', {
     title: 'Careers',
     jobs,
-    pageContent: getCareersPageContent(jobs),
-    seo: buildSeo(seoRecord)
+    pageContent,
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'Careers | Kuwexa Private Limited',
+      metaDescription: 'Join Kuwexa Private Limited and help build scalable commerce, digital platforms, and operational systems.',
+      canonicalUrl: '/careers',
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Careers', path: '/careers' }
+      ),
+      faqItems: pageContent.faqs
+    })
   });
 }
 
@@ -313,10 +544,16 @@ async function jobDetail(req, res, next) {
     job,
     pageContent: getCareersPageContent([job]),
     seo: buildSeo(null, {
-      metaTitle: job.meta_title || `${job.title} | Careers at CodexWebz`,
+      metaTitle: job.meta_title || `${job.title} | Careers at Kuwexa`,
       metaDescription: job.meta_description || job.location,
       metaKeywords: job.meta_keywords,
-      canonicalUrl: `/careers/${job.slug}`
+      canonicalUrl: `/careers/${job.slug}`,
+      schemaMarkup: buildJobSchema(job),
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Careers', path: '/careers' },
+        { name: job.title, path: `/careers/${job.slug}` }
+      )
     }),
     applied: req.query.applied || null
   });
@@ -329,7 +566,16 @@ async function contact(req, res) {
     title: 'Contact',
     sent: req.query.sent || null,
     pageContent: getContactPageContent(),
-    seo: buildSeo(seoRecord)
+    seo: buildSeo(seoRecord, {
+      metaTitle: 'Contact Kuwexa Private Limited',
+      metaDescription: 'Start a conversation with Kuwexa about trade enablement, digital platforms, or growth systems.',
+      canonicalUrl: '/contact',
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Contact', path: '/contact' }
+      ),
+      faqItems: getContactPageContent().faqs
+    })
   });
 }
 
@@ -340,13 +586,18 @@ async function about(req, res) {
   ]);
 
   return res.render('frontend/pages/about', {
-    title: 'About CodexWEBZ',
+    title: 'About Kuwexa',
     pageContent: getAboutPageContent(),
     teamShowcase,
     seo: buildSeo(seoRecord, {
-      metaTitle: 'About CodexWEBZ | Technology Services by Kuwexa Private Limited',
-      metaDescription: 'Learn how CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems for growth, efficiency, and scalability.',
+      metaTitle: 'About Kuwexa Private Limited | Hybrid Commerce and Digital Innovation',
+      metaDescription: 'Learn how Kuwexa Private Limited connects global trade, consumer commerce, and digital innovation through a hybrid operating model.',
       canonicalUrl: '/about-us'
+      ,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'About Kuwexa', path: '/about-us' }
+      )
     })
   });
 }
@@ -358,13 +609,18 @@ async function team(req, res) {
   ]);
 
   return res.render('frontend/pages/team', {
-    title: 'Team',
+    title: 'Leadership',
     pageContent: getTeamPageContent(teamShowcase),
     teamShowcase,
     seo: buildSeo(seoRecord, {
-      metaTitle: 'Team | CodexWEBZ',
-      metaDescription: 'Meet the leadership and team behind CodexWEBZ and the delivery systems built for business growth.',
+      metaTitle: 'Leadership | Kuwexa Private Limited',
+      metaDescription: 'Meet the leadership and team guiding Kuwexa Private Limited and its operating ecosystem.',
       canonicalUrl: '/team'
+      ,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Leadership', path: '/team' }
+      )
     })
   });
 }
@@ -379,13 +635,20 @@ async function teamProfile(req, res, next) {
     title: member.name,
     member,
     seo: buildSeo(null, {
-      metaTitle: member.meta_title || `${member.name} | ${member.designation} | CodexWEBZ`,
-      metaDescription: member.meta_description || member.short_bio || `${member.name} serves as ${member.designation} at CodexWEBZ.`,
+      metaTitle: member.meta_title || `${member.name} | ${member.designation} | Kuwexa Private Limited`,
+      metaDescription: member.meta_description || member.short_bio || `${member.name} serves as ${member.designation} at Kuwexa Private Limited.`,
       metaKeywords: member.meta_keywords,
       ogType: 'profile',
+      schemaMarkup: buildPersonSchema(member),
       ogImage: member.image,
+      ogImageAlt: member.name ? `${member.name} portrait` : null,
       twitterImage: member.image,
-      canonicalUrl: `/team/${member.slug}`
+      canonicalUrl: `/team/${member.slug}`,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: 'Leadership', path: '/team' },
+        { name: member.name, path: `/team/${member.slug}` }
+      )
     })
   });
 }
@@ -406,7 +669,11 @@ async function pageDetail(req, res, next) {
       ogTitle: page.og_title || page.title,
       ogDescription: page.og_description || page.meta_description,
       canonicalUrl: page.canonical_url || `/${page.slug}`,
-      schemaMarkup: page.schema_markup
+      schemaMarkup: page.schema_markup,
+      breadcrumbs: buildBreadcrumbs(
+        { name: 'Home', path: '/' },
+        { name: page.title, path: page.canonical_url || `/${page.slug}` }
+      )
     })
   });
 }

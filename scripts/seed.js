@@ -286,9 +286,9 @@ async function run() {
 
   const defaultPassword = await bcrypt.hash('ChangeMe123!', 12);
   const users = [
-    ['Super Admin', 'admin@codexwebz.com', defaultPassword, roleMap.super_admin],
-    ['Manager', 'manager@codexwebz.com', defaultPassword, roleMap.manager],
-    ['Editor', 'editor@codexwebz.com', defaultPassword, roleMap.editor]
+    ['Super Admin', 'admin@kuwexa.com', defaultPassword, roleMap.super_admin],
+    ['Manager', 'manager@kuwexa.com', defaultPassword, roleMap.manager],
+    ['Editor', 'editor@kuwexa.com', defaultPassword, roleMap.editor]
   ];
 
   for (const [name, email, password, roleId] of users) {
@@ -308,19 +308,19 @@ async function run() {
 
   const [seedUsers] = await connection.query('SELECT id, email FROM users');
   const userMap = Object.fromEntries(seedUsers.map((user) => [user.email, user.id]));
-  const adminUserId = userMap['admin@codexwebz.com'];
-  const managerUserId = userMap['manager@codexwebz.com'];
+  const adminUserId = userMap['admin@kuwexa.com'];
+  const managerUserId = userMap['manager@kuwexa.com'];
 
   await connection.query(
     `
       UPDATE website_settings
       SET
-        company_name = 'CodexWEBZ',
-        hero_title = 'Technology Solutions for Modern Businesses',
-        hero_subtitle = 'CodexWEBZ, the technology services division of Kuwexa Private Limited, helps businesses build reliable digital systems and scalable technology platforms that support growth, efficiency, and long-term business success.',
-        default_meta_title = 'CodexWEBZ | Technology Solutions for Modern Businesses',
-        default_meta_description = 'CodexWEBZ builds reliable digital systems, scalable technology platforms, business websites, custom applications, ecommerce solutions, and ongoing technical support for modern businesses.',
-        default_meta_keywords = 'codexwebz, technology solutions, web development, custom software, seo',
+        company_name = 'Kuwexa Private Limited',
+        hero_title = 'Systems for Scalable Global Commerce',
+        hero_subtitle = 'Kuwexa Private Limited connects global trade, consumer commerce, and digital systems to help businesses grow with more structure, clarity, and long-term sustainability.',
+        default_meta_title = 'Kuwexa Private Limited | Systems for Scalable Global Commerce',
+        default_meta_description = 'Kuwexa Private Limited builds scalable systems for global commerce across trade enablement, digital platforms, ecommerce experiences, and operational technology.',
+        default_meta_keywords = 'kuwexa, global commerce, digital systems, ecommerce, trade enablement, technology platforms',
         default_meta_robots = 'index, follow, max-image-preview:large',
         default_twitter_card = 'summary_large_image',
         robots_txt = 'User-agent: *\nAllow: /',
@@ -350,7 +350,7 @@ async function run() {
       'Business websites, corporate sites, landing pages, portfolio sites, custom web applications, and progressive web apps built for real business use.',
       `
         <h2>Web development for practical business growth</h2>
-        <p>CodexWEBZ develops websites and web platforms that help businesses establish stronger digital presence, improve credibility, and support long-term growth.</p>
+        <p>Kuwexa develops websites and web platforms that help businesses establish stronger digital presence, improve credibility, and support long-term growth.</p>
         <h3>Included services</h3>
         <ul>
           <li>Website Development</li>
@@ -365,7 +365,7 @@ async function run() {
         </ul>
       `,
       'Web Build',
-      'Website Development | CodexWEBZ',
+      'Website Development | Kuwexa',
       'Website development and custom web application services for businesses building stronger digital presence.',
       'website development, business website, web application development, pwa',
       adminUserId,
@@ -377,7 +377,7 @@ async function run() {
       'Ecommerce websites, store setup, product catalog management, seller account setup, and marketplace integration for businesses selling online.',
       `
         <h2>Ecommerce systems that support online selling</h2>
-        <p>CodexWEBZ helps businesses launch and manage ecommerce platforms that combine storefront quality, operational clarity, and marketplace readiness.</p>
+        <p>Kuwexa helps businesses launch and manage ecommerce platforms that combine storefront quality, operational clarity, and marketplace readiness.</p>
         <h3>Included services</h3>
         <ul>
           <li>Ecommerce Website Development</li>
@@ -392,7 +392,7 @@ async function run() {
         </ul>
       `,
       'Ecommerce',
-      'Ecommerce Solutions | CodexWEBZ',
+      'Ecommerce Solutions | Kuwexa',
       'Ecommerce website development, seller setup, catalog management, and marketplace integration services.',
       'ecommerce development, amazon seller account setup, flipkart seller account setup, online store development',
       adminUserId,
@@ -404,7 +404,7 @@ async function run() {
       'Business software, CRM systems, SaaS platforms, internal tools, and API integrations designed around operational requirements.',
       `
         <h2>Software built around business operations</h2>
-        <p>CodexWEBZ develops custom software solutions that help businesses streamline workflows, centralize information, and build scalable internal systems.</p>
+        <p>Kuwexa develops custom software solutions that help businesses streamline workflows, centralize information, and build scalable internal systems.</p>
         <h3>Included services</h3>
         <ul>
           <li>Custom Software Development</li>
@@ -416,7 +416,7 @@ async function run() {
         </ul>
       `,
       'Software',
-      'Custom Software Development | CodexWEBZ',
+      'Custom Software Development | Kuwexa',
       'Custom software, CRM, SaaS platform, and API integration services for growing businesses.',
       'custom software development, crm development, saas platform development, api integration',
       adminUserId,
@@ -428,7 +428,7 @@ async function run() {
       'Android apps, iOS apps, cross-platform mobile applications, and business mobile solutions for customer and internal use.',
       `
         <h2>Mobile applications for modern business needs</h2>
-        <p>CodexWEBZ delivers mobile applications that help businesses reach customers on smartphones and support internal workflows through mobile-first systems.</p>
+        <p>Kuwexa delivers mobile applications that help businesses reach customers on smartphones and support internal workflows through mobile-first systems.</p>
         <h3>Included services</h3>
         <ul>
           <li>Android App Development</li>
@@ -438,7 +438,7 @@ async function run() {
         </ul>
       `,
       'Mobile Apps',
-      'Mobile Application Development | CodexWEBZ',
+      'Mobile Application Development | Kuwexa',
       'Android, iOS, and cross-platform mobile app development for business use cases.',
       'mobile app development, android app development, ios app development, cross platform apps',
       adminUserId,
@@ -450,7 +450,7 @@ async function run() {
       'SEO, technical SEO, local SEO, digital marketing strategy, and lead generation support to improve visibility and acquisition.',
       `
         <h2>Visibility and growth support for service businesses</h2>
-        <p>CodexWEBZ helps businesses improve discoverability, strengthen search performance, and support lead generation with structured digital marketing services.</p>
+        <p>Kuwexa helps businesses improve discoverability, strengthen search performance, and support lead generation with structured digital marketing services.</p>
         <h3>Included services</h3>
         <ul>
           <li>Search Engine Optimization (SEO)</li>
@@ -461,7 +461,7 @@ async function run() {
         </ul>
       `,
       'SEO Growth',
-      'SEO and Digital Marketing | CodexWEBZ',
+      'SEO and Digital Marketing | Kuwexa',
       'SEO, local SEO, technical SEO, and digital marketing strategy services for business growth.',
       'seo services, technical seo, local seo, lead generation marketing',
       adminUserId,
@@ -473,7 +473,7 @@ async function run() {
       'Social media marketing, brand development, brand strategy, and social media management for stronger public presence.',
       `
         <h2>Brand and social visibility support</h2>
-        <p>CodexWEBZ helps businesses communicate more clearly through social media support, stronger brand direction, and consistent online positioning.</p>
+        <p>Kuwexa helps businesses communicate more clearly through social media support, stronger brand direction, and consistent online positioning.</p>
         <h3>Included services</h3>
         <ul>
           <li>Social Media Marketing</li>
@@ -483,7 +483,7 @@ async function run() {
         </ul>
       `,
       'Branding',
-      'Social Media and Branding | CodexWEBZ',
+      'Social Media and Branding | Kuwexa',
       'Social media marketing, branding, and online brand strategy services for businesses.',
       'social media marketing, brand development, social media management, online branding strategy',
       adminUserId,
@@ -495,7 +495,7 @@ async function run() {
       'Graphic design, UI/UX design, video editing, content writing, and marketing content creation for websites and campaigns.',
       `
         <h2>Creative support that strengthens digital presentation</h2>
-        <p>CodexWEBZ supports businesses with design and content services that improve website quality, campaign clarity, and brand communication.</p>
+        <p>Kuwexa supports businesses with design and content services that improve website quality, campaign clarity, and brand communication.</p>
         <h3>Included services</h3>
         <ul>
           <li>Graphic Designing</li>
@@ -506,7 +506,7 @@ async function run() {
         </ul>
       `,
       'Creative',
-      'Creative and Content Services | CodexWEBZ',
+      'Creative and Content Services | Kuwexa',
       'Graphic design, UI/UX, video editing, content writing, and marketing content services.',
       'graphic design, ui ux design, video editing, content writing, marketing content creation',
       adminUserId,
@@ -518,7 +518,7 @@ async function run() {
       'Maintenance, technical support, security updates, performance optimization, and troubleshooting for active platforms.',
       `
         <h2>Reliable support after launch</h2>
-        <p>CodexWEBZ provides maintenance and support services that help businesses keep websites and digital systems stable, secure, and efficient over time.</p>
+        <p>Kuwexa provides maintenance and support services that help businesses keep websites and digital systems stable, secure, and efficient over time.</p>
         <h3>Included services</h3>
         <ul>
           <li>Website Maintenance</li>
@@ -529,7 +529,7 @@ async function run() {
         </ul>
       `,
       'Support',
-      'Website Support and Maintenance | CodexWEBZ',
+      'Website Support and Maintenance | Kuwexa',
       'Website maintenance, support, security updates, optimization, and troubleshooting services.',
       'website maintenance, technical support, website security updates, bug fixing',
       adminUserId,
@@ -541,7 +541,7 @@ async function run() {
       'Cloud hosting setup, server configuration, deployment support, and system monitoring for dependable infrastructure.',
       `
         <h2>Infrastructure support for dependable digital systems</h2>
-        <p>CodexWEBZ helps businesses prepare production environments with hosting, deployment, and server support suited to long-term reliability.</p>
+        <p>Kuwexa helps businesses prepare production environments with hosting, deployment, and server support suited to long-term reliability.</p>
         <h3>Included services</h3>
         <ul>
           <li>Cloud Hosting Setup</li>
@@ -551,7 +551,7 @@ async function run() {
         </ul>
       `,
       'Cloud',
-      'Cloud and Infrastructure Solutions | CodexWEBZ',
+      'Cloud and Infrastructure Solutions | Kuwexa',
       'Cloud hosting, deployment, server configuration, and monitoring services for modern platforms.',
       'cloud hosting setup, server configuration, deployment support, system monitoring',
       adminUserId,
@@ -563,7 +563,7 @@ async function run() {
       'Google Business Profile setup, digital presence management, business optimization, and process automation for service businesses.',
       `
         <h2>Digital tools for day-to-day business visibility</h2>
-        <p>CodexWEBZ supports businesses with practical digital solutions that improve local presence, discoverability, and repetitive operational handling.</p>
+        <p>Kuwexa supports businesses with practical digital solutions that improve local presence, discoverability, and repetitive operational handling.</p>
         <h3>Included services</h3>
         <ul>
           <li>Google Business Profile Setup</li>
@@ -573,7 +573,7 @@ async function run() {
         </ul>
       `,
       'Business Ops',
-      'Business Digital Solutions | CodexWEBZ',
+      'Business Digital Solutions | Kuwexa',
       'Google Business optimization, digital presence management, and business process automation services.',
       'google business profile setup, google business optimization, digital presence management, business process automation',
       adminUserId,
@@ -585,7 +585,7 @@ async function run() {
       'Outsourced development support, startup tech support, agency partnerships, and project-based collaboration for delivery teams.',
       `
         <h2>Flexible technical collaboration for growing teams</h2>
-        <p>CodexWEBZ works with startups, agencies, and businesses that need dependable development capacity, project-based support, or long-term delivery partnership.</p>
+        <p>Kuwexa works with startups, agencies, and businesses that need dependable development capacity, project-based support, or long-term delivery partnership.</p>
         <h3>Included services</h3>
         <ul>
           <li>Development Outsourcing</li>
@@ -595,7 +595,7 @@ async function run() {
         </ul>
       `,
       'Partnerships',
-      'Technology Collaboration Services | CodexWEBZ',
+      'Technology Collaboration Services | Kuwexa',
       'Development outsourcing, startup tech support, and agency development partnership services.',
       'development outsourcing, startup tech support, agency development partnerships, project based development support',
       adminUserId,
@@ -620,10 +620,10 @@ async function run() {
       JSON.stringify(['Node.js', 'Express', 'MySQL', 'Tailwind CSS']),
       null,
       JSON.stringify([]),
-      'https://demo.codexwebz.com/leadpilot',
-      'https://www.codexwebz.com',
+      'https://demo.kuwexa.com/leadpilot',
+      'https://www.kuwexa.com',
       'published',
-      'LeadPilot CRM | CodexWebz Product',
+      'LeadPilot CRM | Kuwexa Platform',
       'LeadPilot CRM is a lead capture and pipeline platform for growing service businesses.',
       'lead crm, sales pipeline software, service business crm',
       adminUserId,
@@ -641,10 +641,10 @@ async function run() {
       JSON.stringify(['Express', 'RBAC', 'EJS', 'MySQL']),
       null,
       JSON.stringify([]),
-      'https://demo.codexwebz.com/opsdesk',
-      'https://www.codexwebz.com',
+      'https://demo.kuwexa.com/opsdesk',
+      'https://www.kuwexa.com',
       'published',
-      'OpsDesk Flow | CodexWebz Product',
+      'OpsDesk Flow | Kuwexa Platform',
       'OpsDesk Flow helps teams manage projects, hiring, and operations from one dashboard.',
       'operations dashboard, workflow software, team management platform',
       adminUserId,
@@ -736,7 +736,7 @@ ${blocks.join('\n')}
         'The website needed to communicate the platform clearly without clutter, while keeping key calls to action and help content easy to find on smaller screens.'
       ],
       solutionParagraphs: [
-        'CodexWebz simplified the information flow with scannable content blocks, stronger hero messaging, and reusable sections for instructions, promotions, and contact touchpoints.',
+        'Kuwexa simplified the information flow with scannable content blocks, stronger hero messaging, and reusable sections for instructions, promotions, and contact touchpoints.',
         'The final structure keeps the experience lightweight for visitors and practical for future content updates.'
       ],
       resultItems: [
@@ -744,30 +744,30 @@ ${blocks.join('\n')}
         'Faster routes to sign-up, app access, or support information',
         'Reusable landing-page sections for ongoing updates'
       ],
-      metaDescription: `${title} case study by CodexWebz for a mobile-first ${category.toLowerCase()} at ${client}.`,
-      metaKeywords: `${slug.replace(/-/g, ' ')}, ${category.toLowerCase()}, codexwebz portfolio`
+      metaDescription: `${title} case study by Kuwexa for a mobile-first ${category.toLowerCase()} at ${client}.`,
+      metaKeywords: `${slug.replace(/-/g, ' ')}, ${category.toLowerCase()}, kuwexa initiative`
     });
   }
 
   const projects = [
     createProjectSeed({
-      title: 'CodexWebz Company Website',
-      slug: 'codexwebz-company-platform',
+      title: 'Kuwexa Company Website',
+      slug: 'kuwexa-company-platform',
       shortDescription:
-        'A company website and operations-ready web platform for CodexWebz, built to present services clearly and manage content in-house.',
-      client: 'www.codexwebz.com',
+        'A company website and operations-ready web platform for Kuwexa, built to present services clearly and manage content in-house.',
+      client: 'www.kuwexa.com',
       clientIndustry: 'Technology Services',
       technologies: ['Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'Dashboard CMS'],
       category: 'Company Website',
       descriptionParagraphs: [
-        `The CodexWebz website at ${liveSiteLink('www.codexwebz.com')} was built as the company's public-facing service platform, balancing positioning, lead capture, case studies, and internal manageability.`,
+        `The Kuwexa website at ${liveSiteLink('www.kuwexa.com')} was built as the company's public-facing service platform, balancing positioning, lead capture, initiatives, and internal manageability.`,
         'The delivery combined branded frontend presentation with CMS-driven updates so the team can manage services, products, portfolio work, blog content, and hiring pages from one connected system.'
       ],
       problemParagraphs: [
         'The business needed a website that looked credible to new prospects while also giving the internal team dependable control over content, inquiries, and growth pages.'
       ],
       solutionParagraphs: [
-        'CodexWebz delivered a modular Express and MySQL platform with reusable page sections, role-aware administration, SEO controls, and content modules for public and internal workflows.',
+        'Kuwexa delivered a modular Express and MySQL platform with reusable page sections, role-aware administration, SEO controls, and content modules for public and internal workflows.',
         'The site structure was shaped around business clarity first, then backed by tools that make day-to-day updates practical.'
       ],
       resultItems: [
@@ -776,8 +776,8 @@ ${blocks.join('\n')}
         'Consistent public brand presentation backed by internal workflow control'
       ],
       metaDescription:
-        'CodexWebz company website case study covering brand presentation, content control, and operational website management.',
-      metaKeywords: 'codexwebz website project, company website case study, codexwebz portfolio'
+        'Kuwexa company website case study covering brand presentation, content control, and operational website management.',
+      metaKeywords: 'kuwexa website project, company website case study, kuwexa initiative'
     }),
     createProjectSeed({
       title: 'Woollyes Ecommerce Website',
@@ -796,7 +796,7 @@ ${blocks.join('\n')}
         'The website needed to communicate product benefits quickly, reduce friction between the landing experience and catalog browsing, and keep trust signals visible on mobile devices.'
       ],
       solutionParagraphs: [
-        'CodexWebz shaped the experience around simplified collection browsing, product-first calls to action, and reusable content blocks for benefits, reviews, and FAQs.',
+        'Kuwexa shaped the experience around simplified collection browsing, product-first calls to action, and reusable content blocks for benefits, reviews, and FAQs.',
         'The visual structure keeps purchase intent moving while supporting merchandising changes without a redesign.'
       ],
       resultItems: [
@@ -806,7 +806,7 @@ ${blocks.join('\n')}
       ],
       metaDescription:
         'Woollyes ecommerce website case study covering product storytelling, mobile shopping flow, and storefront structure.',
-      metaKeywords: 'woollyes website project, ecommerce storefront case study, codexwebz portfolio'
+      metaKeywords: 'woollyes website project, ecommerce storefront case study, kuwexa initiative'
     }),
     createProjectSeed({
       title: 'Woollyfelt Ecommerce Website',
@@ -825,7 +825,7 @@ ${blocks.join('\n')}
         'The storefront needed better visual hierarchy so shoppers could understand the range of handmade products quickly and move toward product detail pages with less hesitation.'
       ],
       solutionParagraphs: [
-        'CodexWebz reorganized the browsing flow around featured collections, cleaner product presentation, and landing sections that support seasonal or category-led merchandising.',
+        'Kuwexa reorganized the browsing flow around featured collections, cleaner product presentation, and landing sections that support seasonal or category-led merchandising.',
         'The updated structure keeps the storefront flexible while preserving a more polished handcrafted brand feel.'
       ],
       resultItems: [
@@ -835,7 +835,7 @@ ${blocks.join('\n')}
       ],
       metaDescription:
         'Woollyfelt ecommerce website case study covering collection structure, product presentation, and mobile shopping improvements.',
-      metaKeywords: 'woollyfelt website project, handmade ecommerce case study, codexwebz portfolio'
+      metaKeywords: 'woollyfelt website project, handmade ecommerce case study, kuwexa initiative'
     }),
     createProjectSeed({
       title: 'Noble Infosystems Company Website',
@@ -854,7 +854,7 @@ ${blocks.join('\n')}
         'The business needed a more structured public website that could communicate its service scope clearly while making consultation or inquiry paths easier to find.'
       ],
       solutionParagraphs: [
-        'CodexWebz organized the website around direct service messaging, cleaner navigation, and supporting sections for proof, delivery approach, and lead capture.',
+        'Kuwexa organized the website around direct service messaging, cleaner navigation, and supporting sections for proof, delivery approach, and lead capture.',
         'The result is a company website that reads more clearly for prospective clients and remains easier to maintain internally.'
       ],
       resultItems: [
@@ -864,7 +864,7 @@ ${blocks.join('\n')}
       ],
       metaDescription:
         'Noble Infosystems company website case study covering service structure, credibility, and lead-focused presentation.',
-      metaKeywords: 'noble infosystems website project, corporate website case study, codexwebz portfolio'
+      metaKeywords: 'noble infosystems website project, corporate website case study, kuwexa initiative'
     }),
     createProjectSeed({
       title: 'Kriticraft Nepal Ecommerce Website',
@@ -883,7 +883,7 @@ ${blocks.join('\n')}
         'The brand needed a website that could present handcrafted products attractively while still keeping shopping, category browsing, and content updates straightforward.'
       ],
       solutionParagraphs: [
-        'CodexWebz structured the site around cleaner category flow, stronger product sections, and a visual rhythm that supports both shopping intent and brand personality.',
+        'Kuwexa structured the site around cleaner category flow, stronger product sections, and a visual rhythm that supports both shopping intent and brand personality.',
         'The resulting storefront stays practical for updates while giving the product range a more polished digital presentation.'
       ],
       resultItems: [
@@ -893,7 +893,7 @@ ${blocks.join('\n')}
       ],
       metaDescription:
         'Kriticraft Nepal ecommerce website case study covering handcrafted product discovery, brand storytelling, and storefront structure.',
-      metaKeywords: 'kriticraft nepal website project, craft ecommerce case study, codexwebz portfolio'
+      metaKeywords: 'kriticraft nepal website project, craft ecommerce case study, kuwexa initiative'
     }),
     buildClubProject({
       title: 'Topup Game Vault Website',
@@ -1050,7 +1050,7 @@ ${blocks.join('\n')}
       category: 'Operations',
       descriptionParagraphs: [
         'A workflow modernization project for a remote team handling leads, projects, and hiring activity through disconnected manual processes.',
-        'CodexWebz replaced fragmented tracking with role-based views, clean status handling, and operational reporting.'
+        'Kuwexa replaced fragmented tracking with role-based views, clean status handling, and operational reporting.'
       ],
       problemParagraphs: [
         'Multiple workflows were being tracked manually across inboxes and spreadsheets, which made ownership and reporting unreliable.'
@@ -1092,7 +1092,7 @@ ${blocks.join('\n')}
       adminUserId,
       'Website Strategy',
       JSON.stringify(['conversion', 'positioning', 'service websites']),
-      'What High-Intent Service Websites Get Right | CodexWebz',
+      'What High-Intent Service Websites Get Right | Kuwexa',
       'How to structure service websites for clarity, trust, and conversion.',
       'service websites, conversion pages, positioning',
       'published',
@@ -1110,7 +1110,7 @@ ${blocks.join('\n')}
       adminUserId,
       'SEO Operations',
       JSON.stringify(['seo', 'cms', 'content operations']),
-      'Why SEO CMS Design Is an Operations Problem | CodexWebz',
+      'Why SEO CMS Design Is an Operations Problem | Kuwexa',
       'SEO performance depends on publishing workflow design more than most teams realize.',
       'seo cms, content operations, publishing workflow',
       'published',
@@ -1128,7 +1128,7 @@ ${blocks.join('\n')}
       adminUserId,
       'Operations',
       JSON.stringify(['rbac', 'dashboard', 'small team systems']),
-      'Role-Based Dashboards for Small Teams | CodexWebz',
+      'Role-Based Dashboards for Small Teams | Kuwexa',
       'Why smaller delivery teams benefit from role-based access and cleaner operational views.',
       'rbac dashboard, small team systems, admin manager roles',
       'published',
@@ -1150,7 +1150,8 @@ ${blocks.join('\n')}
         'jordan-hale',
         'govind-jha',
         'kundan-kumar',
-        'ravi-kumar'
+        'ravi-kumar',
+        'ravi-raj'
       )
     `
   );
@@ -1162,20 +1163,20 @@ ${blocks.join('\n')}
       'leadership',
       'Chief Executive Officer',
       'Executive Office',
-      'Leads the vision, delivery direction, and long-term business growth strategy for CodexWEBZ.',
+      'Leads the vision, delivery direction, and long-term business growth strategy for Kuwexa Private Limited.',
       `
-        <p>Govind Jha leads CodexWEBZ as Chief Executive Officer, guiding the company’s technology vision, strategic growth, and service direction.</p>
+        <p>Govind Jha leads Kuwexa Private Limited as Chief Executive Officer and Co-Founder, guiding the company’s commerce, technology, and growth direction.</p>
         <p>His focus is on building dependable digital systems that help businesses operate more efficiently and scale with confidence.</p>
       `,
-      'info@codexwebz.com',
+      'hello@kuwexa.com',
       '+91 90000 00001',
       null,
       'https://www.linkedin.com/in/govind-jha',
       'https://x.com/govindjha',
       'https://www.facebook.com/govindjha',
-      'Govind Jha | CEO | CodexWEBZ',
-      'Govind Jha is the Chief Executive Officer of CodexWEBZ.',
-      'Govind Jha, CodexWEBZ CEO, leadership profile',
+      'Govind Jha | CEO and Co-Founder | Kuwexa',
+      'Govind Jha is the Chief Executive Officer and Co-Founder of Kuwexa Private Limited.',
+      'Govind Jha, Kuwexa CEO, leadership profile',
       'active',
       1
     ],
@@ -1183,45 +1184,45 @@ ${blocks.join('\n')}
       'Kundan Kumar',
       'kundan-kumar',
       'leadership',
-      'Chief Operating Officer',
+      'Chief Operating Officer and Co-Founder',
       'Operations',
       'Oversees execution, internal coordination, and operational discipline across projects and support services.',
       `
         <p>Kundan Kumar serves as Chief Operating Officer, ensuring projects, team workflows, and delivery systems remain aligned with client needs.</p>
         <p>He helps turn strategy into practical execution, with a strong emphasis on stability, clarity, and process reliability.</p>
       `,
-      'info@codexwebz.com',
+      'hello@kuwexa.com',
       '+91 90000 00002',
       null,
       'https://www.linkedin.com/in/kundan-kumar',
       null,
       'https://www.facebook.com/kundankumar',
-      'Kundan Kumar | COO | CodexWEBZ',
-      'Kundan Kumar is the Chief Operating Officer of CodexWEBZ.',
-      'Kundan Kumar, CodexWEBZ COO, operations leadership',
+      'Kundan Kumar | COO and Co-Founder | Kuwexa',
+      'Kundan Kumar is the Chief Operating Officer and Co-Founder of Kuwexa Private Limited.',
+      'Kundan Kumar, Kuwexa COO, operations leadership',
       'active',
       2
     ],
     [
-      'Ravi Kumar',
-      'ravi-kumar',
+      'Ravi Raj',
+      'ravi-raj',
       'leadership',
-      'Chief Financial Officer',
+      'Chief Financial Officer and Co-Founder',
       'Finance',
       'Provides financial oversight and supports scalable decision-making for sustainable business growth.',
       `
-        <p>Ravi Kumar serves as Chief Financial Officer, helping CodexWEBZ maintain financial discipline while supporting long-term expansion.</p>
+        <p>Ravi Raj serves as Chief Financial Officer and Co-Founder, helping Kuwexa maintain financial discipline while supporting long-term expansion.</p>
         <p>His leadership ensures the company’s growth plans remain grounded in dependable operational and commercial planning.</p>
       `,
-      'info@codexwebz.com',
+      'hello@kuwexa.com',
       '+91 90000 00003',
       null,
-      'https://www.linkedin.com/in/ravi-kumar',
+      'https://www.linkedin.com/in/ravi-raj',
       null,
       'https://www.facebook.com/ravikumar',
-      'Ravi Kumar | CFO | CodexWEBZ',
-      'Ravi Kumar is the Chief Financial Officer of CodexWEBZ.',
-      'Ravi Kumar, CodexWEBZ CFO, finance leadership',
+      'Ravi Raj | CFO and Co-Founder | Kuwexa',
+      'Ravi Raj is the Chief Financial Officer and Co-Founder of Kuwexa Private Limited.',
+      'Ravi Raj, Kuwexa CFO, finance leadership',
       'active',
       3
     ]
@@ -1248,16 +1249,16 @@ ${blocks.join('\n')}
       'Remote',
       'Full-time',
       'open',
-      'Frontend Engineer | Careers at CodexWebz',
-      'Join CodexWebz to build high-quality interfaces for websites and operational products.',
-      'frontend engineer, codexwebz jobs, ui engineer role'
+      'Frontend Engineer | Careers at Kuwexa',
+      'Join Kuwexa to build high-quality interfaces for websites, platforms, and operational products.',
+      'frontend engineer, kuwexa jobs, ui engineer role'
     ],
     [
       'Content and SEO Manager',
       'content-and-seo-manager',
       `
         <h2>Role overview</h2>
-        <p>Own editorial operations, search-ready page planning, and the content engine behind the CodexWebz platform.</p>
+        <p>Own editorial operations, search-ready page planning, and the content engine behind the Kuwexa platform.</p>
         <h3>What you will do</h3>
         <ul>
           <li>Manage publishing workflow inside the CMS</li>
@@ -1268,9 +1269,9 @@ ${blocks.join('\n')}
       'Hybrid',
       'Full-time',
       'open',
-      'Content and SEO Manager | Careers at CodexWebz',
-      'Lead editorial workflow and search-focused content strategy at CodexWebz.',
-      'seo manager, content manager job, codexwebz careers'
+      'Content and SEO Manager | Careers at Kuwexa',
+      'Lead editorial workflow and search-focused content strategy at Kuwexa.',
+      'seo manager, content manager job, kuwexa careers'
     ]
   ];
 
@@ -1293,15 +1294,15 @@ ${blocks.join('\n')}
         updated_by = VALUES(updated_by)
     `,
     [
-      'About CodexWebz',
-      'about-codexwebz',
+      'About Kuwexa',
+      'about-kuwexa',
       `
-        <h2>CodexWebz builds digital systems with a bias toward execution.</h2>
-        <p>The company focuses on websites, dashboards, SEO systems, and operational tooling that help small and mid-sized teams move faster with less friction.</p>
-        <p>The goal is simple: replace scattered tools and vague marketing pages with a platform that is both credible externally and useful internally.</p>
+        <h2>Kuwexa builds scalable systems for global commerce.</h2>
+        <p>The company connects trade enablement, digital commerce, and operational technology to help businesses grow with more structure and less friction.</p>
+        <p>The goal is simple: replace scattered workflows and generic digital presence with a platform that is both credible externally and useful internally.</p>
       `,
-      'About CodexWebz | CodexWebz',
-      'Learn how CodexWebz approaches websites, workflows, and growth systems.',
+      'About Kuwexa | Kuwexa Private Limited',
+      'Learn how Kuwexa approaches commerce, websites, workflows, and growth systems.',
       adminUserId,
       adminUserId
     ]
@@ -1331,14 +1332,14 @@ ${blocks.join('\n')}
     [jobIdMap['frontend-engineer'], jobIdMap['content-and-seo-manager']]
   );
 
-  await connection.query("DELETE FROM chat_inquiries WHERE email IN ('chatdemo@codexwebz.com')");
+  await connection.query("DELETE FROM chat_inquiries WHERE email IN ('chatdemo@kuwexa.com')");
   await connection.query(
     `
       INSERT INTO chat_inquiries (
         name, email, phone, topic, message, page_path, status, manager_notes, manager_user_id, notified_at
       )
       VALUES
-        ('Chat Demo User', 'chatdemo@codexwebz.com', '+91 90000 10000', 'Website Development', 'Need a company website, dashboard, and SEO setup. Looking for a manager callback.', '/', 'new', 'Seeded sample chat inquiry.', ?, NOW())
+        ('Chat Demo User', 'chatdemo@kuwexa.com', '+91 90000 10000', 'Digital Platform Build', 'Need a company website, dashboard, and SEO setup. Looking for a manager callback.', '/', 'new', 'Seeded sample chat inquiry.', ?, NOW())
     `,
     [managerUserId]
   );
@@ -1362,9 +1363,9 @@ ${blocks.join('\n')}
 
   console.log('Database seeded successfully.');
   console.log('Default accounts:');
-  console.log('  admin@codexwebz.com / ChangeMe123!');
-  console.log('  manager@codexwebz.com / ChangeMe123!');
-  console.log('  editor@codexwebz.com / ChangeMe123!');
+  console.log('  admin@kuwexa.com / ChangeMe123!');
+  console.log('  manager@kuwexa.com / ChangeMe123!');
+  console.log('  editor@kuwexa.com / ChangeMe123!');
   console.log('Sample public content, leads, applications, and chat inquiries were also seeded.');
 
   await connection.end();

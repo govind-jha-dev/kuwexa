@@ -160,9 +160,28 @@ async function ensureBlockedVisitorsTable(connection, databaseName) {
   `);
 }
 
+async function ensureMediaAssetsTable(connection, databaseName) {
+  if (await hasTable(connection, databaseName, 'media_assets')) {
+    return;
+  }
+
+  await connection.query(`
+    CREATE TABLE media_assets (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      file_path VARCHAR(255) NOT NULL UNIQUE,
+      title VARCHAR(160) NULL,
+      alt_text VARCHAR(255) NULL,
+      source_module VARCHAR(80) NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  `);
+}
+
 async function ensureExtendedSchema(connection, databaseName) {
   await ensureProductsTable(connection, databaseName);
   await ensureBlockedVisitorsTable(connection, databaseName);
+  await ensureMediaAssetsTable(connection, databaseName);
   await ensureTeamMemberColumns(connection, databaseName);
   await ensureWebsiteSettingColumns(connection, databaseName);
   await ensureSeoColumns(connection, databaseName);
@@ -179,5 +198,6 @@ module.exports = {
   hasTable,
   ensureTeamMemberColumns,
   ensureWebsiteSettingColumns,
+  ensureMediaAssetsTable,
   ensureExtendedSchema
 };

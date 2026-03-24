@@ -1,6 +1,7 @@
 const teamModel = require('../models/teamModel');
 const { renderModule, getDashboardBasePath } = require('./dashboardController');
 const { sanitizePlainText, sanitizeRichText, makeSlug } = require('../utils/content');
+const { registerAsset } = require('../services/mediaAssetService');
 
 function respond(req, res, payload, redirectUrl) {
   if (req.originalUrl.startsWith('/api/')) {
@@ -158,6 +159,12 @@ async function createTeamMember(req, res) {
     sort_order: normalizeSortOrder(req.body.sort_order)
   });
 
+  await registerAsset(member?.image, {
+    title: member?.name,
+    altText: `${member?.name || 'Kuwexa team member'} portrait`,
+    sourceModule: 'Team'
+  });
+
   return respond(req, res, { message: 'Team member created successfully.', member }, `${getDashboardBasePath(req)}/team?success=Team%20member%20created%20successfully.`);
 }
 
@@ -188,6 +195,11 @@ async function updateTeamMember(req, res) {
   }
 
   const member = await teamModel.updateTeamMember(Number(req.params.id), updates);
+  await registerAsset(member?.image, {
+    title: member?.name,
+    altText: `${member?.name || 'Kuwexa team member'} portrait`,
+    sourceModule: 'Team'
+  });
   return respond(req, res, { message: 'Team member updated successfully.', member }, `${getDashboardBasePath(req)}/team?success=Team%20member%20updated%20successfully.`);
 }
 

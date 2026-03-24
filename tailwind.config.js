@@ -12,8 +12,8 @@ module.exports = {
         surface: 'var(--surface)'
       },
       fontFamily: {
-        sans: ['Manrope', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif']
+        sans: ['Sora', 'sans-serif'],
+        display: ['Syne', 'sans-serif']
       },
       boxShadow: {
         float: '0 24px 60px rgba(0, 36, 10, 0.12)'

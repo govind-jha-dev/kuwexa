@@ -4,9 +4,9 @@
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
   <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
     <%- include('../components/section-heading', {
-      eyebrow: 'Our Products',
-      title: 'Software products and business platforms developed by CodexWEBZ.',
-      copy: 'This page showcases digital products in a structured format while keeping the content fully manageable from the dashboard.'
+      eyebrow: 'Platforms',
+      title: 'Software products and managed platforms presented inside the Kuwexa ecosystem.',
+      copy: 'This page showcases digital products in a structured format while keeping the content editable through the same dashboard-driven publishing system.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">What This Module Supports</p>
@@ -22,7 +22,7 @@
     <div class="flex flex-wrap items-center justify-between gap-4">
       <div>
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Catalog Overview</p>
-        <h2 class="mt-4 font-display text-4xl font-bold"><%= products.length %> software products currently available</h2>
+        <h2 class="mt-4 font-display text-4xl font-bold"><%= products.length %> platforms currently available</h2>
       </div>
       <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary">Request a Demo</a>
     </div>
@@ -33,36 +33,36 @@
       <article class="reveal rounded-[1.95rem] bg-white p-7 shadow-sm ring-1 ring-primary/8" data-reveal>
         <div class="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.35rem] bg-slate-50 ring-1 ring-primary/8">
           <% if (product.logo) { %>
-            <img src="<%= product.logo %>" alt="<%= product.name %>" class="h-14 w-14 object-contain" loading="lazy" decoding="async">
+            <img src="<%= product.logo %>" alt="<%= resolveImageAlt(product.logo, `${product.name} logo`) %>" class="h-14 w-14 object-contain" loading="lazy" decoding="async">
           <% } else { %>
             <span class="font-display text-3xl font-bold text-primary"><%= String(product.name || 'P').charAt(0) %></span>
           <% } %>
         </div>
         <h2 class="mt-6 font-display text-3xl font-bold text-primary"><%= product.name %></h2>
-        <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'Product details are managed from the CodexWebz dashboard.' %></p>
+        <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'Product details are managed from the Kuwexa dashboard.' %></p>
         <div class="mt-6 flex flex-wrap gap-2">
           <% (product.tech_stack || []).slice(0, 3).forEach((item) => { %>
             <span class="rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600"><%= item %></span>
           <% }) %>
         </div>
-        <a href="/products/<%= product.slug %>" class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Details <span aria-hidden="true">→</span></a>
+        <a href="/products/<%= product.slug %>" class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Details <span aria-hidden="true">&rarr;</span></a>
       </article>
     <% }) %>
     <% if (!products.length) { %>
       <article class="rounded-[2rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 lg:col-span-3">
-        No products are published yet. Add them from the dashboard Products module.
+        No platforms are published yet. Add them from the dashboard Products module.
       </article>
     <% } %>
   </div>
 </section>
 
 <%- include('../components/site-cta', {
-  eyebrow: 'Need a Product Build?',
-  title: 'Need a software product showcase or a business platform presentation that feels structured and credible?',
-  copy: 'CodexWEBZ can present your products with the same focus on clarity, scalability, and business-ready delivery used across the rest of the platform.',
+  eyebrow: 'Need a Platform Build?',
+  title: 'Need a software product showcase or business platform presentation that feels structured and credible?',
+  copy: 'Kuwexa can present your products with the same focus on clarity, scalability, and business-ready delivery used across the wider ecosystem.',
   primaryLabel: 'Request a Demo',
   primaryHref: '/contact',
-  secondaryLabel: 'Client Projects',
+  secondaryLabel: 'Initiatives',
   secondaryHref: '/portfolio'
 }) %>
 
