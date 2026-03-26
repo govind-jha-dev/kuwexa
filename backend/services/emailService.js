@@ -41,17 +41,23 @@ async function sendMail(options) {
 }
 
 async function sendLeadAlert(lead) {
+  const selectedProducts = Array.isArray(lead?.selected_products) && lead.selected_products.length
+    ? `Selected Products: ${lead.selected_products.join(', ')}`
+    : null;
+
   return sendMail({
     to: env.mail.alertEmail,
     subject: `New lead from ${lead.name}`,
     text: [
       `Name: ${lead.name}`,
+      `Company: ${lead.company_name || 'N/A'}`,
       `Email: ${lead.email}`,
       `Phone: ${lead.phone || 'N/A'}`,
       `Source: ${lead.source || 'Website'}`,
+      selectedProducts,
       '',
       lead.message
-    ].join('\n')
+    ].filter(Boolean).join('\n')
   });
 }
 
@@ -70,14 +76,18 @@ async function sendLeadConfirmation(lead) {
       'Your inquiry has been received and routed to our team for review.',
       '',
       `Inquiry type: ${lead.source || 'Website Contact Form'}`,
+      `Company: ${lead.company_name || 'Not provided'}`,
       `Submitted email: ${lead.email}`,
       `Phone: ${lead.phone || 'Not provided'}`,
+      Array.isArray(lead?.selected_products) && lead.selected_products.length
+        ? `Selected products: ${lead.selected_products.join(', ')}`
+        : null,
       '',
       'Our team will review your message and get back to you as soon as possible.',
       '',
       'Regards,',
       'Kuwexa'
-    ].join('\n')
+    ].filter(Boolean).join('\n')
   });
 }
 

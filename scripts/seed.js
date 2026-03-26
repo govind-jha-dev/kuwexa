@@ -104,12 +104,14 @@ async function upsertProduct(connection, payload) {
   await connection.query(
     `
       INSERT INTO products (
-        name, slug, short_description, description, features, tech_stack, logo, images,
-        demo_link, website_link, status, meta_title, meta_description, meta_keywords, created_by, updated_by
+        name, slug, category_id, short_description, description, features, tech_stack, logo, images,
+        demo_link, website_link, catalog_link, min_order_quantity, unit_label, sort_order,
+        status, meta_title, meta_description, meta_keywords, created_by, updated_by
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE
         name = VALUES(name),
+        category_id = VALUES(category_id),
         short_description = VALUES(short_description),
         description = VALUES(description),
         features = VALUES(features),
@@ -118,6 +120,10 @@ async function upsertProduct(connection, payload) {
         images = VALUES(images),
         demo_link = VALUES(demo_link),
         website_link = VALUES(website_link),
+        catalog_link = VALUES(catalog_link),
+        min_order_quantity = VALUES(min_order_quantity),
+        unit_label = VALUES(unit_label),
+        sort_order = VALUES(sort_order),
         status = VALUES(status),
         meta_title = VALUES(meta_title),
         meta_description = VALUES(meta_description),
@@ -316,11 +322,13 @@ async function run() {
       UPDATE website_settings
       SET
         company_name = 'Kuwexa Private Limited',
-        hero_title = 'Systems for Scalable Global Commerce',
-        hero_subtitle = 'Kuwexa Private Limited connects global trade, consumer commerce, and digital systems to help businesses grow with more structure, clarity, and long-term sustainability.',
-        default_meta_title = 'Kuwexa Private Limited | Systems for Scalable Global Commerce',
-        default_meta_description = 'Kuwexa Private Limited builds scalable systems for global commerce across trade enablement, digital platforms, ecommerce experiences, and operational technology.',
-        default_meta_keywords = 'kuwexa, global commerce, digital systems, ecommerce, trade enablement, technology platforms',
+        hero_title = 'One Parent Company. Three Focused Divisions.',
+        hero_subtitle = 'Kuwexa Private Limited introduces the parent company, presents CodexWEBZ and Kuwexa Lifestyle as focused divisions, and runs a dashboard-managed B2B product catalog for wholesale enquiries.',
+        primary_color = '#00240a',
+        secondary_color = '#dbab0d',
+        default_meta_title = 'Kuwexa Private Limited | Parent Company for CodexWEBZ, Kuwexa Lifestyle, and Kuwexa B2B',
+        default_meta_description = 'Kuwexa Private Limited is the parent company website for CodexWEBZ, Kuwexa Lifestyle, and a B2B catalog with category-led product enquiries.',
+        default_meta_keywords = 'kuwexa, codexwebz, kuwexa lifestyle, b2b catalog, dry fruits, spices, woollen products, cereals grains',
         default_meta_robots = 'index, follow, max-image-preview:large',
         default_twitter_card = 'summary_large_image',
         robots_txt = 'User-agent: *\nAllow: /',
@@ -607,46 +615,189 @@ async function run() {
     await upsertService(connection, service);
   }
 
+  await connection.query(
+    `
+      INSERT INTO product_categories (name, slug, description, sort_order, status)
+      VALUES
+        ('Dry Fruits', 'dry-fruits', 'Bulk-ready dry fruits and nut selections curated for distributors, retailers, and institutional buyers.', 1, 'published'),
+        ('Spices', 'spices', 'Whole spices, powdered staples, and premium aromatic lines prepared for structured wholesale enquiries.', 2, 'published'),
+        ('Woollen Products', 'woollen-products', 'Woollen throws, scarves, blankets, and seasonal textile lines for lifestyle and gifting channels.', 3, 'published'),
+        ('Cereals / Grains', 'cereals-grains', 'Rice, grains, and pantry staples for trade buyers seeking consistent supply and category depth.', 4, 'published')
+      ON DUPLICATE KEY UPDATE
+        name = VALUES(name),
+        description = VALUES(description),
+        sort_order = VALUES(sort_order),
+        status = VALUES(status)
+    `
+  );
+
+  const [seedCategories] = await connection.query('SELECT id, slug FROM product_categories');
+  const categoryMap = Object.fromEntries(seedCategories.map((category) => [category.slug, category.id]));
+
+  await connection.query(
+    `
+      DELETE FROM products
+      WHERE slug IN (
+        'leadpilot-crm',
+        'opsdesk-flow'
+      )
+    `
+  );
+
   const products = [
     [
-      'LeadPilot CRM',
-      'leadpilot-crm',
-      'A sales-ready lead capture and pipeline platform for growing service businesses.',
+      'Premium Medjool Dates',
+      'premium-medjool-dates',
+      categoryMap['dry-fruits'],
+      'Large-grade dates suited for gifting packs, premium grocery shelves, and bulk export enquiries.',
       `
-        <p>LeadPilot CRM helps businesses capture website inquiries, qualify leads, assign ownership, and track every conversation from first contact to close.</p>
-        <p>It combines a clean manager-facing pipeline with conversion-focused public forms and dashboard reporting.</p>
+        <p>Premium Medjool Dates are presented as a high-value dry fruit line for buyers who need strong shelf appeal, dependable sizing, and structured bulk enquiry support.</p>
+        <p>The product detail page can carry gallery images, packaging notes, and wholesale highlights so the sales conversation starts with better context.</p>
       `,
-      JSON.stringify(['Lead intake pipeline', 'Manager assignment', 'Activity timeline', 'Performance reporting']),
-      JSON.stringify(['Node.js', 'Express', 'MySQL', 'Tailwind CSS']),
+      JSON.stringify(['Large premium grade fruit', 'Suitable for gifting and retail packs', 'Bulk enquiry workflow with MOQ visibility', 'Gallery-ready product presentation']),
+      JSON.stringify(['Premium dry fruit', 'Retail packing', 'Export supply', 'Festive gifting']),
       null,
       JSON.stringify([]),
-      'https://demo.kuwexa.com/leadpilot',
+      null,
       'https://www.kuwexa.com',
+      'https://www.kuwexa.com/b2b#enquiry-form',
+      '250',
+      'KG',
+      1,
       'published',
-      'LeadPilot CRM | Kuwexa Platform',
-      'LeadPilot CRM is a lead capture and pipeline platform for growing service businesses.',
-      'lead crm, sales pipeline software, service business crm',
+      'Premium Medjool Dates | Kuwexa B2B',
+      'Bulk Medjool dates for distributors, retailers, and wholesale buyers browsing the Kuwexa B2B catalog.',
+      'medjool dates, dry fruits wholesale, bulk dates supplier',
       adminUserId,
       adminUserId
     ],
     [
-      'OpsDesk Flow',
-      'opsdesk-flow',
-      'A workflow control panel for projects, hiring, and internal operational visibility.',
+      'Whole Cashew Kernels',
+      'whole-cashew-kernels',
+      categoryMap['dry-fruits'],
+      'Uniform cashew kernels prepared for grocery brands, institutional kitchens, and distribution partners.',
       `
-        <p>OpsDesk Flow centralizes projects, internal tasks, candidate workflows, and delivery reporting in one admin interface.</p>
-        <p>It is built for teams that have outgrown spreadsheets and disconnected tools.</p>
+        <p>Whole Cashew Kernels are positioned for buyers who want clean grading, repeat ordering confidence, and a stronger product presentation before enquiry.</p>
+        <p>Admins can attach multiple product visuals and descriptive highlights to help buyers compare options without leaving the B2B catalog.</p>
       `,
-      JSON.stringify(['Project visibility', 'Hiring workflow', 'Role-based access', 'Analytics dashboard']),
-      JSON.stringify(['Express', 'RBAC', 'EJS', 'MySQL']),
+      JSON.stringify(['Whole premium kernels', 'Suitable for repacking or retail sale', 'Consistent supply planning support', 'Multi-image product detail layout']),
+      JSON.stringify(['Dry fruits', 'Grocery distribution', 'Institutional buyers', 'Wholesale supply']),
       null,
       JSON.stringify([]),
-      'https://demo.kuwexa.com/opsdesk',
+      null,
       'https://www.kuwexa.com',
+      'https://www.kuwexa.com/b2b#enquiry-form',
+      '100',
+      'KG',
+      2,
       'published',
-      'OpsDesk Flow | Kuwexa Platform',
-      'OpsDesk Flow helps teams manage projects, hiring, and operations from one dashboard.',
-      'operations dashboard, workflow software, team management platform',
+      'Whole Cashew Kernels | Kuwexa B2B',
+      'Bulk whole cashew kernels listed in the Kuwexa B2B dry fruits category for wholesale enquiries.',
+      'cashew wholesale, dry fruits supplier, whole cashew kernels',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Turmeric Fingers',
+      'turmeric-fingers',
+      categoryMap['spices'],
+      'Whole turmeric supply for spice traders, processors, and export-focused wholesale programs.',
+      `
+        <p>Turmeric Fingers are shown as a category-led spice product with room for sourcing notes, grade positioning, and buyer-facing highlights.</p>
+        <p>The public product page is designed to support trade discussions around origin, volume, and packaging expectations.</p>
+      `,
+      JSON.stringify(['Whole spice format', 'Suitable for grinding or resale', 'Clear MOQ communication', 'Category-led product discovery']),
+      JSON.stringify(['Spices', 'Bulk sourcing', 'Processing supply', 'Export trade']),
+      null,
+      JSON.stringify([]),
+      null,
+      'https://www.kuwexa.com',
+      'https://www.kuwexa.com/b2b#enquiry-form',
+      '500',
+      'KG',
+      3,
+      'published',
+      'Turmeric Fingers | Kuwexa B2B',
+      'Bulk turmeric fingers for traders and processors using the Kuwexa B2B spice category.',
+      'turmeric fingers, wholesale spices, bulk turmeric supplier',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Green Cardamom',
+      'green-cardamom',
+      categoryMap['spices'],
+      'Premium green cardamom intended for retail spice brands, gifting programs, and export buyers.',
+      `
+        <p>Green Cardamom sits inside the spice category to show how premium SKUs can be presented with stronger storytelling and buyer guidance.</p>
+        <p>It supports brochure links, product tags, MOQ information, and multi-product enquiry from a single form.</p>
+      `,
+      JSON.stringify(['Aromatic premium spice line', 'Suitable for retail packs and gifting', 'Supports brochure and enquiry flow', 'Positioned for premium buyers']),
+      JSON.stringify(['Cardamom', 'Premium spice', 'Retail pack', 'Bulk enquiry']),
+      null,
+      JSON.stringify([]),
+      null,
+      'https://www.kuwexa.com',
+      'https://www.kuwexa.com/b2b#enquiry-form',
+      '50',
+      'KG',
+      4,
+      'published',
+      'Green Cardamom | Kuwexa B2B',
+      'Premium green cardamom for wholesale buyers browsing the Kuwexa B2B spice category.',
+      'green cardamom, premium spices, cardamom wholesale',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Merino Wool Throw',
+      'merino-wool-throw',
+      categoryMap['woollen-products'],
+      'Soft-finish woollen throw suited for lifestyle retail, boutique gifting, and seasonal distribution.',
+      `
+        <p>The Merino Wool Throw demonstrates how the B2B catalog can support textile and lifestyle categories, not only food products.</p>
+        <p>Its page structure leaves room for craftsmanship notes, fabric highlights, and multiple supporting images from the admin dashboard.</p>
+      `,
+      JSON.stringify(['Lifestyle-focused woollen line', 'Suitable for seasonal retail', 'Supports detail-rich product storytelling', 'Multi-image gallery from admin']),
+      JSON.stringify(['Woollen products', 'Home lifestyle', 'Boutique retail', 'Seasonal catalog']),
+      null,
+      JSON.stringify([]),
+      null,
+      'https://www.kuwexa.com',
+      'https://www.kuwexa.com/b2b#enquiry-form',
+      '75',
+      'Pieces',
+      5,
+      'published',
+      'Merino Wool Throw | Kuwexa B2B',
+      'Merino wool throws for wholesale gifting, boutique retail, and lifestyle distribution buyers.',
+      'woollen products, merino throw, wholesale lifestyle products',
+      adminUserId,
+      adminUserId
+    ],
+    [
+      'Organic Basmati Rice',
+      'organic-basmati-rice',
+      categoryMap['cereals-grains'],
+      'Long-grain basmati rice for food distributors, private-label buyers, and export-led cereal programs.',
+      `
+        <p>Organic Basmati Rice shows how the cereals and grains category can present staple products with enough detail for serious trade conversations.</p>
+        <p>Admins can maintain category sorting, product highlights, MOQ values, and enquiry-ready metadata without changing code.</p>
+      `,
+      JSON.stringify(['Long-grain aromatic profile', 'Suitable for distributors and private label', 'Dashboard-managed product metadata', 'Built for multi-product enquiry']),
+      JSON.stringify(['Cereals / Grains', 'Rice supply', 'Private label', 'Bulk export']),
+      null,
+      JSON.stringify([]),
+      null,
+      'https://www.kuwexa.com',
+      'https://www.kuwexa.com/b2b#enquiry-form',
+      '1000',
+      'KG',
+      6,
+      'published',
+      'Organic Basmati Rice | Kuwexa B2B',
+      'Organic basmati rice listed in the Kuwexa cereals and grains category for wholesale buyers.',
+      'basmati rice wholesale, cereals grains supplier, organic rice bulk',
       adminUserId,
       adminUserId
     ]

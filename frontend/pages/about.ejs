@@ -3,38 +3,35 @@
 
 <section class="kuwexa-hero text-white">
   <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-    <div class="grid gap-12 lg:grid-cols-[1.02fr,0.98fr] lg:items-start">
+    <div class="grid gap-12 xl:grid-cols-[1.05fr,0.95fr] xl:items-start">
       <div class="relative z-[1]">
         <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary"><%= pageContent.eyebrow %></p>
         <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl"><%= pageContent.title %></h1>
-        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/76"><%= pageContent.intro %></p>
-        <p class="mt-5 max-w-3xl text-base leading-8 text-white/66"><%= pageContent.overview || pageContent.summary %></p>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/75"><%= pageContent.intro %></p>
+        <p class="mt-5 max-w-3xl text-base leading-8 text-white/65"><%= pageContent.overview || pageContent.summary %></p>
         <div class="mt-10 flex flex-wrap gap-4">
-          <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Talk to Kuwexa</a>
+          <a href="/divisions" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Explore Divisions</a>
           <a href="#team" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">Meet the Leadership</a>
         </div>
       </div>
 
-      <div class="hero-stage relative z-[1]">
+      <div class="grid gap-6">
         <div class="hero-stage__frame orbital-pulse" data-reveal>
           <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Who Kuwexa Supports</p>
           <div class="mt-6 grid gap-4">
             <% pageContent.audience.forEach((item) => { %>
               <article class="rounded-[1.45rem] border border-white/10 bg-white/10 p-5">
-                <p class="text-sm font-semibold leading-7 text-white/82"><%= item %></p>
+                <p class="text-sm font-semibold leading-7 text-white/80"><%= item %></p>
               </article>
             <% }) %>
           </div>
         </div>
 
-        <div class="narrative-card narrative-card--dark reveal" data-reveal>
-          <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">What Makes It Different</span>
-          <div class="mt-6 grid gap-4">
-            <% pageContent.highlights.forEach((item) => { %>
-              <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
-                <h2 class="font-display text-2xl font-bold text-white"><%= item.title %></h2>
-                <p class="mt-3 text-sm leading-7 text-white/72"><%= item.copy %></p>
-              </article>
+        <div class="rounded-[2rem] border border-slate-200 bg-[var(--paper)] p-7 shadow-float" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-slate-500">About The Company</p>
+          <div class="mt-5 space-y-4">
+            <% pageContent.narrative.forEach((item) => { %>
+              <p class="text-sm leading-8 text-slate-700"><%= item %></p>
             <% }) %>
           </div>
         </div>
@@ -44,28 +41,87 @@
 </section>
 
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-  <div class="grid gap-6 xl:grid-cols-[1fr,1fr]">
-    <div class="narrative-card reveal" data-reveal>
+  <div class="grid gap-6 md:grid-cols-3">
+    <% (pageContent.identityCards || []).forEach((item) => { %>
+      <article class="narrative-card reveal" data-reveal>
+        <span class="section-kicker">Business Layer</span>
+        <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= item.title %></h2>
+        <p class="mt-4 text-sm leading-8 text-slate-600"><%= item.copy %></p>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-3">
+    <article class="narrative-card reveal" data-reveal>
       <span class="section-kicker">Vision</span>
-      <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-primary">A globally trusted ecosystem where commerce and technology reinforce one another.</h2>
+      <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-primary">A trusted organization where commerce and technology reinforce one another.</h2>
       <p class="mt-5 text-base leading-8 text-slate-600"><%= pageContent.vision %></p>
-      <div class="mt-8 grid gap-4">
+      <div class="mt-8 grid gap-3">
         <% (pageContent.visionPoints || []).forEach((item) => { %>
-          <article class="rounded-[1.45rem] bg-slate-50 p-4 ring-1 ring-primary/6">
-            <p class="text-sm leading-7 text-slate-700"><%= item %></p>
-          </article>
+          <div class="rounded-[1.2rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700 ring-1 ring-slate-200"><%= item %></div>
         <% }) %>
       </div>
-    </div>
+    </article>
 
-    <div class="narrative-card narrative-card--dark reveal" data-reveal>
-      <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Mission</span>
-      <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-white">Dependable trade and digital systems that help businesses scale with more confidence.</h2>
-      <p class="mt-5 text-base leading-8 text-white/72"><%= pageContent.mission %></p>
-      <div class="mt-8 grid gap-4">
+    <article class="narrative-card narrative-card--dark reveal" data-reveal>
+      <span class="section-kicker !text-white/60 before:!bg-secondary">Mission</span>
+      <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-white">Dependable trade thinking and digital execution that support steady growth.</h2>
+      <p class="mt-5 text-base leading-8 text-white/75"><%= pageContent.mission %></p>
+      <div class="mt-8 grid gap-3">
         <% pageContent.focusAreas.forEach((item) => { %>
-          <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-4 text-sm leading-7 text-white/72"><%= item %></article>
+          <div class="rounded-[1.2rem] border border-white/10 bg-white/10 px-4 py-4 text-sm font-semibold text-white/80"><%= item %></div>
         <% }) %>
+      </div>
+    </article>
+
+    <article class="reveal rounded-[2rem] border border-white/10 bg-primary p-7 text-white shadow-sm" data-reveal>
+      <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary"><%= pageContent.ethos.title %></p>
+      <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-white"><%= pageContent.ethos.quote %></h2>
+      <p class="mt-5 text-base leading-8 text-white/75"><%= pageContent.ethos.copy %></p>
+      <div class="mt-8 grid gap-3">
+        <% pageContent.ethos.points.forEach((item) => { %>
+          <div class="rounded-[1.2rem] border border-white/10 bg-white/10 px-4 py-4 text-sm font-semibold text-white/80"><%= item %></div>
+        <% }) %>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="narrative-card reveal" data-reveal>
+    <div class="grid gap-8 xl:grid-cols-[0.9fr,1.1fr]">
+      <div>
+        <span class="section-kicker">Hybrid Advantage</span>
+        <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-primary">From chaos to capability.</h2>
+        <p class="mt-5 text-base leading-8 text-slate-600">
+          Kuwexa positions itself against unstable technology, opaque supply chains, and vague promises by choosing clearer direction and more disciplined delivery.
+        </p>
+        <div class="mt-8 rounded-[1.7rem] bg-primary px-6 py-6 text-white">
+          <p class="text-xs font-bold uppercase tracking-[0.24em] text-secondary">Kuwexa Position</p>
+          <p class="mt-4 font-display text-3xl font-bold leading-tight"><%= pageContent.hybridContrast.closingQuote %></p>
+        </div>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <article class="rounded-[1.9rem] border border-slate-200 bg-white p-6 ring-1 ring-slate-200">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Industry Norm</p>
+          <div class="mt-5 grid gap-3">
+            <% pageContent.hybridContrast.industryNorm.forEach((item) => { %>
+              <div class="rounded-[1.2rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700"><%= item %></div>
+            <% }) %>
+          </div>
+        </article>
+
+        <article class="rounded-[1.9rem] border border-white/10 bg-primary p-6 text-white">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">The Kuwexa Way</p>
+          <div class="mt-5 grid gap-3">
+            <% pageContent.hybridContrast.kuwexaWay.forEach((item) => { %>
+              <div class="rounded-[1.2rem] border border-white/10 bg-white/10 px-4 py-4 text-sm font-semibold text-white/80"><%= item %></div>
+            <% }) %>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -74,41 +130,22 @@
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <div class="grid gap-6 xl:grid-cols-[1.02fr,0.98fr]">
     <div class="narrative-card reveal" data-reveal>
-      <span class="section-kicker">Narrative</span>
-      <div class="mt-6 space-y-5">
-        <% pageContent.narrative.forEach((item) => { %>
-          <p class="text-base leading-8 text-slate-600"><%= item %></p>
-        <% }) %>
-      </div>
-    </div>
-
-    <div class="narrative-card reveal" data-reveal>
       <span class="section-kicker">Core Principles</span>
       <div class="mt-6 grid gap-4">
         <% pageContent.principles.forEach((item) => { %>
-          <article class="rounded-[1.5rem] bg-slate-50 p-5 ring-1 ring-primary/6">
+          <article class="rounded-[1.5rem] bg-slate-50 p-5 ring-1 ring-slate-200">
             <h2 class="font-display text-2xl font-bold text-primary"><%= item.title %></h2>
             <p class="mt-3 text-sm leading-7 text-slate-600"><%= item.copy %></p>
           </article>
         <% }) %>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-  <div class="narrative-card reveal" data-reveal>
-    <div class="grid gap-10 xl:grid-cols-[0.9fr,1.1fr]">
-      <div>
-        <span class="section-kicker">How Kuwexa Works</span>
-        <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-primary">A documented operating approach from discovery to steady scale.</h2>
-        <p class="mt-5 text-base leading-8 text-slate-600">
-          Kuwexa is designed to reduce chaos by making the relationship between commercial goals, technology systems, and day-to-day execution more visible and more manageable.
-        </p>
-      </div>
-      <div class="story-grid">
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">How Kuwexa Works</span>
+      <div class="story-grid mt-8">
         <% pageContent.approach.forEach((item, index) => { %>
-          <article class="story-step">
+          <article class="story-step story-step--card">
             <span class="story-step__index"><%= `0${index + 1}` %></span>
             <h3 class="story-step__title"><%= item.title %></h3>
             <p class="story-step__copy"><%= item.copy %></p>
@@ -122,10 +159,14 @@
 <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
   <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
     <div class="narrative-card narrative-card--dark reveal" data-reveal>
-      <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Ecosystem Coverage</span>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <% pageContent.serviceGroups.forEach((item) => { %>
-          <span class="signal-chip !bg-white/10 !text-secondary"><%= item %></span>
+      <span class="section-kicker !text-white/60 before:!bg-secondary">Organization Coverage</span>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <% pageContent.ecosystemMap.forEach((item) => { %>
+          <article class="rounded-[1.45rem] border border-white/10 bg-white/10 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary"><%= item.label %></p>
+            <h3 class="mt-4 font-display text-2xl font-bold text-white"><%= item.title %></h3>
+            <p class="mt-3 text-sm leading-7 text-white/75"><%= item.copy %></p>
+          </article>
         <% }) %>
       </div>
     </div>
@@ -134,7 +175,7 @@
       <span class="section-kicker">Why Businesses Choose Kuwexa</span>
       <div class="mt-6 grid gap-4">
         <% pageContent.advantages.forEach((item) => { %>
-          <article class="rounded-[1.45rem] bg-slate-50 p-4 text-sm leading-7 text-slate-700 ring-1 ring-primary/6"><%= item %></article>
+          <article class="rounded-[1.45rem] bg-slate-50 p-4 text-sm leading-7 text-slate-700 ring-1 ring-slate-200"><%= item %></article>
         <% }) %>
       </div>
       <p class="mt-6 text-base leading-8 text-slate-600"><%= pageContent.closing %></p>
@@ -145,19 +186,19 @@
 <div id="team">
   <%- include('../components/team-showcase', {
     eyebrow: 'Leadership and Team',
-    title: 'The people shaping the Kuwexa ecosystem.',
-    copy: 'Leadership sets the operating direction. The wider team carries that direction into delivery, visibility, technology systems, and long-term support.'
+    title: 'The people shaping the Kuwexa organization.',
+    copy: 'Leadership sets the operating direction. The wider team carries that direction into delivery, visibility, and long-term support.'
   }) %>
 </div>
 
 <%- include('../components/site-cta', {
   eyebrow: 'Build With Kuwexa',
   title: 'Need a partner that can align market reality, digital execution, and long-term operating structure?',
-  copy: 'Kuwexa supports businesses through trade capability, digital commerce, websites, platforms, and structured growth systems with a model built for sustainable scale.',
+  copy: 'Kuwexa supports businesses through trade capability, digital commerce, websites, and growth-focused execution with a model built for sustainable scale.',
   primaryLabel: 'Start a Conversation',
   primaryHref: '/contact',
-  secondaryLabel: 'Explore Capabilities',
-  secondaryHref: '/services'
+  secondaryLabel: 'Explore Divisions',
+  secondaryHref: '/divisions'
 }) %>
 
 <%- include('../layouts/footer') %>

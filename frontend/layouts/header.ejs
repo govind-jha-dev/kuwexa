@@ -14,15 +14,10 @@
     </a>
 
     <nav class="site-header__desktop-nav items-center gap-2 text-sm font-semibold">
-      <a href="/services" class="site-header__nav-link <%= activePath.startsWith('/services') ? 'is-active' : '' %>">Capabilities</a>
-      <% if (showProductsMenu) { %>
-        <a href="/products" class="site-header__nav-link <%= activePath.startsWith('/products') ? 'is-active' : '' %>">Platforms</a>
-      <% } %>
-      <a href="/portfolio" class="site-header__nav-link <%= activePath.startsWith('/projects') || activePath.startsWith('/portfolio') ? 'is-active' : '' %>">Initiatives</a>
+      <a href="/divisions" class="site-header__nav-link <%= activePath.startsWith('/divisions') ? 'is-active' : '' %>">Divisions</a>
+      <a href="/b2b" class="site-header__nav-link <%= activePath.startsWith('/b2b') || activePath.startsWith('/products') ? 'is-active' : '' %>">B2B</a>
       <a href="/about-us" class="site-header__nav-link <%= activePath === '/about' || activePath === '/about-us' || activePath === '/about-codexwebz' ? 'is-active' : '' %>">About Kuwexa</a>
       <a href="/team" class="site-header__nav-link <%= activePath === '/team' || activePath.startsWith('/team/') ? 'is-active' : '' %>">Leadership</a>
-      <a href="/blog" class="site-header__nav-link <%= activePath.startsWith('/blog') ? 'is-active' : '' %>">Insights</a>
-      <a href="/careers" class="site-header__nav-link <%= activePath.startsWith('/careers') ? 'is-active' : '' %>">Careers</a>
       <a href="/contact" class="site-header__nav-link <%= activePath === '/contact' ? 'is-active' : '' %>">Contact</a>
     </nav>
 
@@ -30,7 +25,7 @@
       <% if (user) { %>
         <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="rounded-full border border-primary/12 px-4 py-2 text-sm font-semibold text-primary transition hover:border-secondary hover:bg-white">Dashboard</a>
       <% } %>
-      <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Start a Conversation</a>
+      <a href="/contact" class="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:bg-primary/95">Contact Kuwexa</a>
     </div>
 
     <button type="button" class="site-header__toggle inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20" data-nav-toggle aria-label="Open navigation" aria-expanded="false" aria-controls="site-mobile-nav">
@@ -53,22 +48,17 @@
         <button type="button" class="site-mobile-nav__close" data-nav-close aria-label="Close navigation">&times;</button>
       </div>
       <nav class="site-mobile-nav__links">
-        <a href="/services" class="site-mobile-nav__link">Capabilities</a>
-        <% if (showProductsMenu) { %>
-          <a href="/products" class="site-mobile-nav__link">Platforms</a>
-        <% } %>
-        <a href="/portfolio" class="site-mobile-nav__link">Initiatives</a>
+        <a href="/divisions" class="site-mobile-nav__link">Divisions</a>
+        <a href="/b2b" class="site-mobile-nav__link">B2B</a>
         <a href="/about-us" class="site-mobile-nav__link">About Kuwexa</a>
         <a href="/team" class="site-mobile-nav__link">Leadership</a>
-        <a href="/blog" class="site-mobile-nav__link">Insights</a>
-        <a href="/careers" class="site-mobile-nav__link">Careers</a>
         <a href="/contact" class="site-mobile-nav__link">Contact</a>
       </nav>
       <div class="site-mobile-nav__actions">
         <% if (user) { %>
           <a href="<%= user.role_name === 'super_admin' ? '/admin/dashboard' : '/manager/dashboard' %>" class="site-mobile-nav__ghost">Dashboard</a>
         <% } %>
-        <a href="/contact" class="site-mobile-nav__primary">Start a Conversation</a>
+        <a href="/contact" class="site-mobile-nav__primary">Contact Kuwexa</a>
       </div>
     </div>
   </div>

@@ -26,10 +26,12 @@ const {
   pageValidation,
   serviceValidation,
   productValidation,
+  productCategoryValidation,
   projectValidation,
   teamValidation,
   blogValidation,
   leadValidation,
+  b2bEnquiryValidation,
   chatValidation,
   jobValidation,
   applicationValidation,
@@ -51,6 +53,7 @@ router.get('/public/team', teamController.publicApiList);
 router.get('/public/blog', blogController.apiList);
 router.get('/public/careers', careerController.apiList);
 router.post('/leads', leadValidation, handleValidationErrors, publicController.submitLead);
+router.post('/b2b-enquiries', b2bEnquiryValidation, handleValidationErrors, publicController.submitB2BEnquiry);
 router.post('/chat', chatValidation, handleValidationErrors, chatController.submitChat);
 router.post('/applications', resumeUpload.single('resume'), applicationValidation, handleValidationErrors, publicController.submitApplication);
 
@@ -73,6 +76,9 @@ router.get('/products', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), pro
 router.post('/products', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), productValidation, handleValidationErrors, productController.createProduct);
 router.put('/products/:id', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), productValidation, handleValidationErrors, productController.updateProduct);
 router.delete('/products/:id', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteProduct);
+router.post('/products/categories', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), productCategoryValidation, handleValidationErrors, productController.createCategory);
+router.put('/products/categories/:id', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), productCategoryValidation, handleValidationErrors, productController.updateCategory);
+router.delete('/products/categories/:id', requireAuth, authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteCategory);
 
 router.get('/projects', requireAuth, authorize(PERMISSIONS.PORTFOLIO_MANAGE), projectController.apiList);
 router.post('/projects', requireAuth, authorize(PERMISSIONS.PORTFOLIO_MANAGE), imageUpload.array('images', 10), projectValidation, handleValidationErrors, projectController.createProject);

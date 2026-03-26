@@ -158,7 +158,7 @@
   <meta name="publisher" content="<%= siteBrand %>">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" content="<%= siteSettings?.primary_color || '#0d2d24' %>">
+  <meta name="theme-color" content="#00240a">
   <meta name="application-name" content="<%= siteBrand %>">
   <meta name="apple-mobile-web-app-title" content="<%= siteBrand %>">
   <meta property="og:locale" content="en_US">
@@ -222,15 +222,19 @@
   <% } %>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: <%= siteSettings?.primary_color || '#0d2d24' %>;
-      --secondary: <%= siteSettings?.secondary_color || '#f1b24a' %>;
-      --surface: #f5efe4;
-      --accent: #67c6a5;
-      --paper: #fffaf3;
+      --primary: #00240a;
+      --secondary: #dbab0d;
+      --surface: #f4efe7;
+      --paper: #fcfaf5;
       --ink: #102019;
+      --muted: #546358;
+      --olive-soft: #dde4d8;
+      --gold-soft: #f0dd9a;
+      --font-sans: "Manrope", sans-serif;
+      --font-display: "Cormorant Garamond", serif;
     }
   </style>
   <link rel="preload" href="/styles/tailwind.css" as="style">

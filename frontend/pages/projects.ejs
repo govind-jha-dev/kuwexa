@@ -5,8 +5,8 @@
   <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
     <%- include('../components/section-heading', {
       eyebrow: 'Client Projects',
-      title: 'Selected client projects, technology delivery, and practical digital outcomes.',
-      copy: 'These client projects are presented as business-focused case studies that show how websites, software systems, and digital delivery come together in practice.'
+      title: 'Selected client projects, business challenges, and practical outcomes.',
+      copy: 'These client projects are presented as business-focused case studies that show how design, technology, and commercial clarity come together in practice.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Delivery Principles</p>
@@ -73,7 +73,7 @@
         <% }) %>
         <% if (!projects.length) { %>
           <article class="rounded-[1.9rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 lg:col-span-2">
-            No client projects are published yet. Add them from the dashboard portfolio module.
+            Client projects will appear here as new case studies are published.
           </article>
         <% } %>
       </div>
@@ -83,8 +83,8 @@
 
 <%- include('../components/site-cta', {
   eyebrow: 'Need a Build Like This?',
-  title: 'Need a digital platform, website, or business system built around real operational needs?',
-  copy: 'Each client project showcased here is shaped around usability, scalability, and the practical needs of the business it supports.',
+  title: 'Need a website, digital product, or business initiative shaped around real commercial needs?',
+  copy: 'Each client project showcased here is shaped around clarity, usability, and the practical needs of the business it supports.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
   secondaryLabel: showProductsMenu ? 'Our Products' : 'Explore Services',

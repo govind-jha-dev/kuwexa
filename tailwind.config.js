@@ -13,7 +13,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Sora', 'sans-serif'],
-        display: ['Syne', 'sans-serif']
+        display: ['Fraunces', 'serif']
       },
       boxShadow: {
         float: '0 24px 60px rgba(0, 36, 10, 0.12)'

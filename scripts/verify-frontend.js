@@ -33,16 +33,33 @@ const sampleProject = {
 };
 
 const sampleProduct = {
-  name: 'LeadPilot CRM',
-  slug: 'leadpilot-crm',
-  short_description: 'A sales-ready lead capture and pipeline platform.',
-  description: '<p>Sample product overview.</p>',
-  features: ['Lead intake pipeline', 'Manager assignment'],
-  tech_stack: ['Node.js', 'Express', 'MySQL'],
+  id: 1,
+  name: 'Premium Cotton T-Shirts',
+  slug: 'premium-cotton-t-shirts',
+  category_id: 1,
+  category_name: 'Apparel',
+  category_slug: 'apparel',
+  short_description: 'Sample B2B product with category assignment, MOQ details, and dashboard-managed highlights.',
+  description: '<p>Sample B2B product overview.</p>',
+  features: ['Soft-touch cotton fabric', 'Bulk customization support'],
+  tech_stack: ['Export Ready', 'Bulk Orders', 'Custom Branding'],
   logo: null,
   images: [],
-  demo_link: 'https://demo.codexwebz.com/leadpilot',
-  website_link: 'https://www.codexwebz.com'
+  demo_link: 'https://www.kuwexa.com',
+  website_link: 'https://www.kuwexa.com',
+  catalog_link: 'https://www.kuwexa.com/catalog',
+  min_order_quantity: '100',
+  unit_label: 'Pieces'
+};
+
+const sampleCategory = {
+  id: 1,
+  name: 'Apparel',
+  slug: 'apparel',
+  description: 'Sample apparel category for the B2B catalog.',
+  sort_order: 0,
+  status: 'published',
+  updated_at: new Date()
 };
 
 const samplePost = {
@@ -119,8 +136,8 @@ const shared = {
   title: 'Test',
   seo: { metaTitle: 'Test', metaDescription: 'Test description', canonicalUrl: '/' },
   siteSettings: {
-    company_name: 'CodexWebz',
-    company_email: 'hello@codexwebz.com',
+    company_name: 'Kuwexa Private Limited',
+    company_email: 'hello@kuwexa.com',
     company_phone: '+91 00000 00000',
     address: 'Remote-first',
     hero_subtitle: 'Sample subtitle',
@@ -183,8 +200,24 @@ const dashboardShared = {
 };
 
 const pages = [
-  ['frontend/pages/home.ejs', { ...shared, services: [sampleService], products: [sampleProduct], projects: [sampleProject], posts: [samplePost], jobs: [sampleJob], marketing: content.getHomeContent({ services: [sampleService], products: [sampleProduct], projects: [sampleProject], posts: [samplePost], jobs: [sampleJob] }) }],
-  ['frontend/pages/about.ejs', { ...shared, currentPath: '/about-us', title: 'About CodexWEBZ', pageContent: content.getAboutPageContent() }],
+  ['frontend/pages/home.ejs', { ...shared, featuredProducts: [sampleProduct], jobs: [sampleJob], marketing: content.getHomeContent({ products: [sampleProduct], jobs: [sampleJob] }) }],
+  ['frontend/pages/divisions.ejs', { ...shared, currentPath: '/divisions', title: 'Divisions', divisions: content.getDivisionDirectory() }],
+  ['frontend/pages/division-detail.ejs', { ...shared, currentPath: '/divisions/codexwebz', title: 'CodexWEBZ', division: content.getDivisionBySlug('codexwebz') }],
+  ['frontend/pages/b2b.ejs', {
+    ...shared,
+    currentPath: '/b2b',
+    title: 'Kuwexa B2B',
+    categories: [sampleCategory],
+    products: [sampleProduct],
+    groupedProducts: {
+      groups: [{ ...sampleCategory, products: [sampleProduct] }],
+      uncategorized: []
+    },
+    pageContent: content.getB2BPageContent({ categories: [sampleCategory], products: [sampleProduct] }),
+    sent: null
+  }],
+  ['frontend/pages/b2b-product-detail.ejs', { ...shared, currentPath: '/b2b/products/premium-cotton-t-shirts', title: sampleProduct.name, product: sampleProduct }],
+  ['frontend/pages/about.ejs', { ...shared, currentPath: '/about-us', title: 'About Kuwexa', pageContent: content.getAboutPageContent() }],
   ['frontend/pages/team.ejs', { ...shared, currentPath: '/team', title: 'Team', pageContent: content.getTeamPageContent(sampleTeamShowcase) }],
   ['frontend/pages/team-detail.ejs', { ...shared, currentPath: '/team/govind-jha', title: 'Govind Jha', member: sampleTeamShowcase.leadership[0] }],
   ['frontend/pages/services.ejs', { ...shared, currentPath: '/services', services: [sampleService], pageContent: content.getServicesPageContent([sampleService]) }],
@@ -203,8 +236,8 @@ const pages = [
   ['frontend/pages/error.ejs', { ...shared, title: 'Error', message: 'Sample error message.' }],
   ['dashboard/components/module-page.ejs', {
     ...dashboardShared,
-    activeMenu: 'Products',
-    pageTitle: 'Products Management',
+    activeMenu: 'B2B Catalog',
+    pageTitle: 'B2B Catalog Management',
     form: {
       title: 'Create Product',
       action: '/admin/products',
@@ -212,22 +245,45 @@ const pages = [
       enctype: 'multipart/form-data',
       fields: [
         { name: 'name', label: 'Product Name', type: 'text', value: '' },
+        { name: 'category_id', label: 'Category', type: 'select', value: '', options: [{ label: 'Apparel', value: 1 }] },
         { name: 'description', label: 'Product Overview', type: 'richtext', value: '<p>Overview.</p>' },
         { name: 'features', label: 'Features', type: 'textarea', value: 'Feature one, Feature two' },
         { name: 'logo', label: 'Product Logo', type: 'file' },
         { name: 'meta_keywords', label: 'Meta Keywords', type: 'text', value: 'saas, crm' }
       ]
     },
+    secondaryForm: {
+      title: 'Create Product Category',
+      action: '/admin/products/categories',
+      submitLabel: 'Create Category',
+      fields: [
+        { name: 'name', label: 'Category Name', type: 'text', value: '' },
+        { name: 'description', label: 'Description', type: 'textarea', value: 'Category summary.' }
+      ]
+    },
     table: {
-      title: 'Products',
+      title: 'B2B Products',
       description: 'Public products',
+      columns: [
+        { label: 'Name', key: 'name' },
+        { label: 'Category', key: 'category_name' },
+        { label: 'Status', key: 'status' }
+      ],
+      rows: [
+        { name: sampleProduct.name, category_name: sampleProduct.category_name, status: 'published' }
+      ],
+      rowActions(row) {
+        return `<span>${row.name}</span>`;
+      }
+    },
+    secondaryTable: {
+      title: 'Categories',
+      description: 'B2B categories',
       columns: [
         { label: 'Name', key: 'name' },
         { label: 'Status', key: 'status' }
       ],
-      rows: [
-        { name: 'LeadPilot CRM', status: 'published' }
-      ],
+      rows: [sampleCategory],
       rowActions(row) {
         return `<span>${row.name}</span>`;
       }

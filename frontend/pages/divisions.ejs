@@ -1,0 +1,109 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+
+<section class="kuwexa-hero text-white">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
+    <div class="grid gap-10 xl:grid-cols-[1.02fr,0.98fr] xl:items-start">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Divisions</p>
+        <h1 class="mt-6 max-w-4xl font-display text-5xl font-bold leading-[1.02] md:text-6xl">A clearer company structure built around three focused business directions.</h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/75">
+          The Kuwexa website now acts as the parent-company layer. From here, visitors can understand the role of each division, then move into the right destination for technology, consumer commerce, or wholesale discovery.
+        </p>
+      </div>
+
+      <div class="hero-stage__frame">
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Use This Directory To</p>
+        <div class="mt-6 grid gap-3">
+          <div class="rounded-[1.35rem] border border-white/10 bg-white/10 px-4 py-4 text-sm font-semibold text-white/82">Understand what each division is responsible for.</div>
+          <div class="rounded-[1.35rem] border border-white/10 bg-white/10 px-4 py-4 text-sm font-semibold text-white/82">Move into the correct public destination for CodexWEBZ or Kuwexa Lifestyle.</div>
+          <div class="rounded-[1.35rem] border border-white/10 bg-white/10 px-4 py-4 text-sm font-semibold text-white/82">Open the B2B catalog for category-led product browsing and product-linked enquiries.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-3">
+      <article class="rounded-[1.75rem] border border-white/10 bg-white/10 p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Parent Company</p>
+        <p class="mt-4 text-sm leading-8 text-white/72">Kuwexa explains the wider business model, the hybrid commerce-and-technology position, and how the divisions connect.</p>
+      </article>
+      <article class="rounded-[1.75rem] border border-white/10 bg-white/10 p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Division Destinations</p>
+        <p class="mt-4 text-sm leading-8 text-white/72">CodexWEBZ and Kuwexa Lifestyle can grow through dedicated destinations while still staying connected to the parent-company story.</p>
+      </article>
+      <article class="rounded-[1.75rem] border border-white/10 bg-white/10 p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Structured B2B</p>
+        <p class="mt-4 text-sm leading-8 text-white/72">The B2B division stays on the main domain so categories, products, and buyer enquiries remain part of the company story.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="space-y-8">
+    <% divisions.forEach((division, index) => { %>
+      <article class="division-showcase reveal <%= index % 2 === 1 ? 'division-showcase--reverse' : '' %>" data-reveal>
+        <div class="division-showcase__intro">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary"><%= division.label %></p>
+          <h2 class="mt-4 font-display text-4xl font-bold text-primary md:text-5xl"><%= division.name %></h2>
+          <p class="mt-5 text-base leading-8 text-slate-600"><%= division.summary %></p>
+          <p class="mt-4 text-sm leading-8 text-slate-700"><%= division.ecosystemRole %></p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="<%= division.detailPath %>" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Division</a>
+            <% if (division.destinationUrl.startsWith('http')) { %>
+              <a href="<%= division.destinationUrl %>" target="_blank" rel="noreferrer" class="rounded-full border border-primary/12 px-5 py-3 text-sm font-semibold text-primary"><%= division.destinationHost %></a>
+            <% } else { %>
+              <a href="<%= division.destinationUrl %>" class="rounded-full border border-primary/12 px-5 py-3 text-sm font-semibold text-primary">Open Catalog</a>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="division-showcase__body lg:grid-cols-2">
+          <div class="division-showcase__panel">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary/40">Signature Areas</p>
+            <div class="mt-4 grid gap-3">
+              <% division.signatureAreas.slice(0, 3).forEach((item) => { %>
+                <div class="rounded-[1.2rem] bg-white px-4 py-4 text-sm font-semibold text-slate-700 ring-1 ring-primary/8"><%= item %></div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div class="division-showcase__panel division-showcase__panel--accent">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary/40">Market Focus</p>
+            <div class="mt-4 grid gap-3">
+              <% (division.marketFocus || []).forEach((item) => { %>
+                <div class="rounded-[1.2rem] border border-primary/10 bg-[var(--paper)] px-4 py-4 text-sm font-semibold text-primary"><%= item %></div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div class="division-showcase__panel lg:col-span-2">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary/40">Operating Rhythm</p>
+            <div class="mt-4 grid gap-3 md:grid-cols-3">
+              <% division.journeySteps.forEach((item) => { %>
+                <div class="rounded-[1.2rem] bg-white px-4 py-4 ring-1 ring-primary/8">
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-secondary"><%= item.step %></p>
+                  <p class="mt-2 text-sm font-semibold text-primary"><%= item.title %></p>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../components/site-cta', {
+  eyebrow: 'Need Direction?',
+  title: 'Not sure which Kuwexa division fits your requirement?',
+  copy: 'Use the company contact page and the team can route your inquiry to the right business line.',
+  primaryLabel: 'Contact Kuwexa',
+  primaryHref: '/contact',
+  secondaryLabel: 'Open B2B Catalog',
+  secondaryHref: '/b2b'
+}) %>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

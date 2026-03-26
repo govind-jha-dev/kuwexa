@@ -1,0 +1,287 @@
+<%- include('../layouts/head', { title, seo }) %>
+<%- include('../layouts/header') %>
+<%
+  const feedbackClass = sent && sent.toLowerCase().includes('please select')
+    ? 'bg-rose-50 text-rose-700'
+    : 'bg-emerald-50 text-emerald-700';
+%>
+
+<section class="kuwexa-hero text-white">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+    <div class="grid gap-12 lg:grid-cols-[1.02fr,0.98fr] lg:items-start">
+      <div class="relative z-[1]">
+        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Kuwexa B2B</p>
+        <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
+          Product categories, richer details, and one enquiry form for multiple products.
+        </h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/75">
+          The B2B section is part of the main Kuwexa company website, giving wholesale buyers a clearer and more credible way to review categories and products.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <% pageContent.supplyPrinciples.forEach((item) => { %>
+            <span class="rounded-full border border-white/12 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75"><%= item %></span>
+          <% }) %>
+        </div>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="#catalog-sections" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Browse Catalog</a>
+          <a href="#enquiry-form" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">Send Product Enquiry</a>
+        </div>
+      </div>
+
+      <div class="hero-stage relative z-[1]">
+        <div class="hero-stage__frame orbital-pulse" data-reveal>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Catalog Overview</p>
+          <h2 class="mt-4 max-w-lg font-display text-3xl font-bold"><%= pageContent.productCountLabel %></h2>
+          <div class="mt-6 grid gap-3">
+            <% pageContent.introCards.forEach((item) => { %>
+              <article class="rounded-[1.35rem] border border-white/10 bg-white/10 p-4">
+                <h3 class="font-display text-2xl font-bold text-white"><%= item.title %></h3>
+                <p class="mt-3 text-sm leading-7 text-white/74"><%= item.copy %></p>
+              </article>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">Why Kuwexa B2B Exists</span>
+      <div class="mt-5 space-y-4">
+        <% pageContent.tradeNarrative.forEach((item) => { %>
+          <p class="text-base leading-8 text-slate-600"><%= item %></p>
+        <% }) %>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <% pageContent.categoryExamples.forEach((item) => { %>
+          <span class="rounded-full bg-[var(--olive-soft)] px-4 py-2 text-sm font-semibold text-primary"><%= item %></span>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="grid gap-4">
+      <% pageContent.buyerCommitments.forEach((item) => { %>
+        <article class="narrative-card reveal" data-reveal>
+          <span class="section-kicker">Buyer Advantage</span>
+          <h3 class="mt-5 font-display text-3xl font-bold text-primary"><%= item.title %></h3>
+          <p class="mt-4 text-sm leading-8 text-slate-600"><%= item.copy %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">Category Menu</span>
+      <p class="mt-4 text-sm leading-8 text-slate-600">Typical category structures can include dry fruits, spices, woollen products, cereals or grains, and other wholesale lines presented under the Kuwexa company catalog.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <% groupedProducts.groups.forEach((group) => { %>
+          <a href="#category-<%= group.slug %>" class="pill-filter"><%= group.name %></a>
+        <% }) %>
+        <% if (groupedProducts.uncategorized.length) { %>
+          <a href="#category-uncategorized" class="pill-filter">Other Products</a>
+        <% } %>
+      </div>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        <% pageContent.categoryExamples.forEach((item) => { %>
+          <div class="rounded-[1.2rem] border border-primary/8 bg-white px-4 py-4 text-sm font-semibold text-slate-700"><%= item %></div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">Buyer Flow</span>
+      <div class="story-grid mt-8">
+        <% pageContent.buyerSteps.forEach((item) => { %>
+          <article class="story-step">
+            <span class="story-step__index"><%= item.step %></span>
+            <h3 class="story-step__title"><%= item.title %></h3>
+            <p class="story-step__copy"><%= item.copy %></p>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="catalog-sections" class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <% groupedProducts.groups.forEach((group) => { %>
+    <section id="category-<%= group.slug %>" class="mb-14">
+      <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.32em] text-secondary">Category</p>
+          <h2 class="mt-3 font-display text-4xl font-bold text-primary"><%= group.name %></h2>
+          <% if (group.description) { %>
+            <p class="mt-3 max-w-3xl text-sm leading-8 text-slate-600"><%= group.description %></p>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        <% group.products.forEach((product) => { %>
+          <article class="reveal rounded-[1.95rem] bg-white p-7 shadow-sm ring-1 ring-primary/8" data-reveal>
+            <div class="flex items-center justify-between gap-3">
+              <span class="signal-chip"><%= group.name %></span>
+              <% if (product.min_order_quantity) { %>
+                <span class="text-xs font-bold uppercase tracking-[0.18em] text-primary/60">MOQ <%= product.min_order_quantity %><%= product.unit_label ? ` ${product.unit_label}` : '' %></span>
+              <% } %>
+            </div>
+            <h3 class="mt-5 font-display text-3xl font-bold text-primary"><%= product.name %></h3>
+            <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'This product is presented as part of the Kuwexa wholesale catalog.' %></p>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <% (product.tech_stack || []).slice(0, 4).forEach((item) => { %>
+                <span class="rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600"><%= item %></span>
+              <% }) %>
+            </div>
+            <a href="/b2b/products/<%= product.slug %>" class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Details <span aria-hidden="true">&rarr;</span></a>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  <% }) %>
+
+  <% if (groupedProducts.uncategorized.length) { %>
+    <section id="category-uncategorized" class="mb-14">
+      <div class="mb-8">
+        <p class="text-xs font-bold uppercase tracking-[0.32em] text-secondary">Other Products</p>
+        <h2 class="mt-3 font-display text-4xl font-bold text-primary">Additional Catalog Items</h2>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        <% groupedProducts.uncategorized.forEach((product) => { %>
+          <article class="reveal rounded-[1.95rem] bg-white p-7 shadow-sm ring-1 ring-primary/8" data-reveal>
+            <h3 class="font-display text-3xl font-bold text-primary"><%= product.name %></h3>
+            <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'This product is presented as part of the Kuwexa wholesale catalog.' %></p>
+            <a href="/b2b/products/<%= product.slug %>" class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Details <span aria-hidden="true">&rarr;</span></a>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  <% } %>
+
+  <% if (!products.length) { %>
+    <article class="rounded-[2rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500">
+      No B2B products are published yet. The wholesale catalog will appear here once product lines are ready.
+    </article>
+  <% } %>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-[0.9fr,1.1fr]">
+    <div class="narrative-card narrative-card--dark reveal" data-reveal>
+      <span class="section-kicker !text-white/60 before:!bg-secondary">Before You Enquire</span>
+      <div class="mt-6 grid gap-3">
+        <% pageContent.checklist.forEach((item) => { %>
+          <div class="rounded-[1.25rem] border border-white/10 bg-white/6 px-4 py-4 text-sm font-semibold text-white/78"><%= item %></div>
+        <% }) %>
+      </div>
+      <div class="mt-8 border-t border-white/10 pt-8">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Catalog Notes</p>
+        <div class="mt-4 grid gap-3">
+          <% pageContent.adminNotes.forEach((item) => { %>
+            <div class="rounded-[1.2rem] border border-white/10 bg-white/6 px-4 py-4 text-sm font-semibold text-white/78"><%= item %></div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <div id="enquiry-form" class="narrative-card reveal" data-reveal>
+      <% if (sent) { %>
+        <div class="mb-6 rounded-[1.5rem] px-5 py-4 text-sm font-semibold <%= feedbackClass %>"><%= sent %></div>
+      <% } %>
+      <span class="section-kicker">B2B Enquiry Form</span>
+      <h2 class="mt-5 font-display text-4xl font-bold text-primary">Choose one or more products and send a product-linked enquiry.</h2>
+      <p class="mt-4 text-base leading-8 text-slate-600">
+        This form is specifically for B2B product enquiries. Your selected products are shared together so the team can immediately see what you are asking about.
+      </p>
+
+      <form method="post" action="/b2b/enquiry" class="mt-8 space-y-4">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="grid gap-4 md:grid-cols-2">
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-slate-700" for="name">Name</label>
+            <input id="name" name="name" type="text" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-slate-700" for="company_name">Company Name</label>
+            <input id="company_name" name="company_name" type="text" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
+          </div>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-slate-700" for="email">Email</label>
+            <input id="email" name="email" type="email" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
+          </div>
+          <div>
+            <label class="mb-2 block text-sm font-semibold text-slate-700" for="phone">Phone</label>
+            <input id="phone" name="phone" type="text" class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
+          </div>
+        </div>
+
+        <div class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
+          <label class="mb-3 block text-sm font-semibold text-slate-700">Select Products</label>
+          <div class="grid gap-4 md:grid-cols-2">
+            <% groupedProducts.groups.forEach((group) => { %>
+              <div class="rounded-[1.3rem] bg-white p-4 ring-1 ring-primary/6">
+                <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary"><%= group.name %></p>
+                <div class="mt-4 space-y-3">
+                  <% group.products.forEach((product) => { %>
+                    <label class="flex items-start gap-3 rounded-[1rem] border border-primary/8 px-3 py-3 text-sm text-slate-700">
+                      <input type="checkbox" name="selected_products" value="<%= product.id %>" class="mt-1 h-4 w-4 rounded border-primary/20 text-primary focus:ring-secondary">
+                      <span>
+                        <span class="block font-semibold text-slate-900"><%= product.name %></span>
+                        <% if (product.short_description) { %>
+                          <span class="mt-1 block text-xs leading-6 text-slate-500"><%= product.short_description %></span>
+                        <% } %>
+                      </span>
+                    </label>
+                  <% }) %>
+                </div>
+              </div>
+            <% }) %>
+
+            <% if (groupedProducts.uncategorized.length) { %>
+              <div class="rounded-[1.3rem] bg-white p-4 ring-1 ring-primary/6">
+                <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Other Products</p>
+                <div class="mt-4 space-y-3">
+                  <% groupedProducts.uncategorized.forEach((product) => { %>
+                    <label class="flex items-start gap-3 rounded-[1rem] border border-primary/8 px-3 py-3 text-sm text-slate-700">
+                      <input type="checkbox" name="selected_products" value="<%= product.id %>" class="mt-1 h-4 w-4 rounded border-primary/20 text-primary focus:ring-secondary">
+                      <span class="font-semibold text-slate-900"><%= product.name %></span>
+                    </label>
+                  <% }) %>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <div>
+          <label class="mb-2 block text-sm font-semibold text-slate-700" for="message">Requirement Details</label>
+          <textarea id="message" name="message" rows="7" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none" placeholder="Share quantity requirements, target market, packaging needs, delivery details, or any pricing and brochure questions."></textarea>
+        </div>
+
+        <button type="submit" class="w-full rounded-[1.35rem] bg-primary px-5 py-3 text-sm font-bold text-white">Send B2B Enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <%- include('../components/section-heading', {
+    eyebrow: 'FAQ',
+    title: 'Questions buyers ask before submitting a B2B enquiry.',
+    copy: 'The new flow is designed to keep product discovery and lead management aligned from the first message.'
+  }) %>
+  <div class="mt-10">
+    <%- include('../components/faq-list', { items: pageContent.faqs }) %>
+  </div>
+</section>
+
+<%- include('../layouts/footer') %>
+<%- include('../layouts/scripts') %>

@@ -69,13 +69,13 @@ async function renderSettingsPage(req, res) {
         },
         {
           name: 'show_products_menu',
-          label: 'Our Products Menu',
+          label: 'B2B Catalog Visibility',
           type: 'select',
           value: Number(settings?.show_products_menu) === 0 ? '0' : '1',
-          description: 'Show or hide the public Our Products navigation item and homepage product section.',
+          description: 'Control whether the public B2B catalog is included in supporting areas such as sitemap generation.',
           options: [
-            { label: 'Show Our Products', value: '1' },
-            { label: 'Hide Our Products', value: '0' }
+            { label: 'Show B2B Catalog', value: '1' },
+            { label: 'Hide B2B Catalog', value: '0' }
           ]
         },
         { name: 'address', label: 'Address', type: 'textarea', value: settings?.address || '' },

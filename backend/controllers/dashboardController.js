@@ -91,7 +91,7 @@ async function renderHome(req, res) {
     ? [
         { label: 'Website Visitors', value: overview.visitors },
         { label: 'Total Leads', value: overview.leads },
-        { label: 'Products', value: overview.products },
+        { label: 'B2B Products', value: overview.products },
         { label: 'Blog Posts', value: overview.blogPosts },
         { label: 'Projects', value: overview.projects },
         { label: 'Job Applications', value: overview.applications },
@@ -100,7 +100,7 @@ async function renderHome(req, res) {
     : [
         { label: 'New Leads', value: operationalCounts.newLeads },
         { label: 'Active Projects', value: operationalCounts.activeProjects },
-        { label: 'Published Products', value: operationalCounts.publishedProducts },
+        { label: 'Published B2B Products', value: operationalCounts.publishedProducts },
         { label: 'Published Posts', value: operationalCounts.publishedPosts },
         { label: 'Pending Applications', value: operationalCounts.pendingApplications },
         { label: 'Traffic Events', value: overview.visitors }

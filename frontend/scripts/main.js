@@ -1,317 +1,447 @@
-function initReveal() {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function initReveal () {
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches
   if (!('IntersectionObserver' in window)) {
-    document.querySelectorAll('[data-reveal]').forEach((element) => {
-      element.classList.add('is-visible');
-    });
-    return;
+    document.querySelectorAll('[data-reveal]').forEach(element => {
+      element.classList.add('is-visible')
+    })
+    return
   }
 
   if (prefersReducedMotion) {
-    document.querySelectorAll('[data-reveal]').forEach((element) => {
-      element.classList.add('is-visible');
-    });
-    return;
+    document.querySelectorAll('[data-reveal]').forEach(element => {
+      element.classList.add('is-visible')
+    })
+    return
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  // Assign stagger indices
+  let staggerIndex = 0
+  document.querySelectorAll('[data-reveal]').forEach(element => {
+    if (!element.dataset.stagger) {
+      staggerIndex++
+      element.dataset.stagger = Math.min(4, staggerIndex).toString()
+    }
+  })
 
-  document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    }
+  )
+
+  document
+    .querySelectorAll('[data-reveal]')
+    .forEach(element => observer.observe(element))
 }
 
-function initAccordions() {
-  document.querySelectorAll('[data-accordion-trigger]').forEach((trigger) => {
+function initAccordions () {
+  document.querySelectorAll('[data-accordion-trigger]').forEach(trigger => {
     trigger.addEventListener('click', () => {
-      const article = trigger.closest('article');
-      const body = article.querySelector('[data-accordion-body]');
-      const icon = article.querySelector('[data-accordion-icon]');
-      const isHidden = body.classList.contains('hidden');
+      const article = trigger.closest('article')
+      const body = article.querySelector('[data-accordion-body]')
+      const icon = article.querySelector('[data-accordion-icon]')
+      const isHidden = body.classList.contains('hidden')
 
-      body.classList.toggle('hidden', !isHidden);
+      body.classList.toggle('hidden', !isHidden)
       if (icon) {
-        icon.textContent = isHidden ? '-' : '+';
+        icon.textContent = isHidden ? '-' : '+'
       }
-    });
-  });
+    })
+  })
 }
 
-function initNav() {
-  const toggle = document.querySelector('[data-nav-toggle]');
-  const panel = document.querySelector('[data-nav-panel]');
+function initNav () {
+  const toggle = document.querySelector('[data-nav-toggle]')
+  const panel = document.querySelector('[data-nav-panel]')
 
   if (!toggle || !panel) {
-    return;
+    return
   }
 
-  const setOpen = (open) => {
-    panel.classList.toggle('is-open', open);
-    document.body.classList.toggle('overflow-hidden', open);
-    document.body.classList.toggle('nav-open', open);
-    panel.setAttribute('aria-hidden', open ? 'false' : 'true');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  };
+  const setOpen = open => {
+    panel.classList.toggle('is-open', open)
+    document.body.classList.toggle('overflow-hidden', open)
+    document.body.classList.toggle('nav-open', open)
+    panel.setAttribute('aria-hidden', open ? 'false' : 'true')
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
+  }
 
-  toggle.addEventListener('click', () => setOpen(!panel.classList.contains('is-open')));
-  panel.querySelectorAll('[data-nav-close]').forEach((button) => {
-    button.addEventListener('click', () => setOpen(false));
-  });
+  toggle.addEventListener('click', () =>
+    setOpen(!panel.classList.contains('is-open'))
+  )
+  panel.querySelectorAll('[data-nav-close]').forEach(button => {
+    button.addEventListener('click', () => setOpen(false))
+  })
 
-  panel.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => setOpen(false));
-  });
+  panel.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setOpen(false))
+  })
 
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
-      setOpen(false);
+      setOpen(false)
     }
-  });
+  })
 
-  const desktopMedia = window.matchMedia('(min-width: 1024px)');
-  const handleDesktopMode = (event) => {
+  const desktopMedia = window.matchMedia('(min-width: 1024px)')
+  const handleDesktopMode = event => {
     if (event.matches) {
-      setOpen(false);
+      setOpen(false)
     }
-  };
+  }
 
   if (typeof desktopMedia.addEventListener === 'function') {
-    desktopMedia.addEventListener('change', handleDesktopMode);
+    desktopMedia.addEventListener('change', handleDesktopMode)
   } else if (typeof desktopMedia.addListener === 'function') {
-    desktopMedia.addListener(handleDesktopMode);
+    desktopMedia.addListener(handleDesktopMode)
   }
 
   if (desktopMedia.matches) {
-    setOpen(false);
+    setOpen(false)
   }
 }
 
-function initFilters() {
-  document.querySelectorAll('[data-filter-group]').forEach((group) => {
-    const state = {};
-    const items = Array.from(group.querySelectorAll('[data-filter-item]'));
-    const count = group.querySelector('[data-filter-count]');
+function initFilters () {
+  document.querySelectorAll('[data-filter-group]').forEach(group => {
+    const state = {}
+    const items = Array.from(group.querySelectorAll('[data-filter-item]'))
+    const count = group.querySelector('[data-filter-count]')
 
     const applyFilters = () => {
-      let visibleCount = 0;
-      items.forEach((item) => {
-        const searchTerm = (state.search || '').trim().toLowerCase();
-        const searchSource = (item.dataset.search || '').toLowerCase();
-        const matchesSearch = !searchTerm || searchSource.includes(searchTerm);
+      let visibleCount = 0
+      items.forEach(item => {
+        const searchTerm = (state.search || '').trim().toLowerCase()
+        const searchSource = (item.dataset.search || '').toLowerCase()
+        const matchesSearch = !searchTerm || searchSource.includes(searchTerm)
 
-        const activeKeys = Object.keys(state).filter((key) => key !== 'search' && state[key] && state[key] !== 'All');
-        const matchesKeys = activeKeys.every((key) => (item.dataset[key] || '') === state[key]);
+        const activeKeys = Object.keys(state).filter(
+          key => key !== 'search' && state[key] && state[key] !== 'All'
+        )
+        const matchesKeys = activeKeys.every(
+          key => (item.dataset[key] || '') === state[key]
+        )
 
-        const visible = matchesSearch && matchesKeys;
-        item.classList.toggle('hidden', !visible);
+        const visible = matchesSearch && matchesKeys
+        item.classList.toggle('hidden', !visible)
         if (visible) {
-          visibleCount += 1;
+          visibleCount += 1
         }
-      });
+      })
 
       if (count) {
-        count.textContent = String(visibleCount);
+        count.textContent = String(visibleCount)
       }
-    };
+    }
 
-    group.querySelectorAll('[data-filter-chip]').forEach((chip) => {
+    group.querySelectorAll('[data-filter-chip]').forEach(chip => {
       chip.addEventListener('click', () => {
-        const key = chip.dataset.filterKey;
-        const value = chip.dataset.filterValue;
-        state[key] = value;
+        const key = chip.dataset.filterKey
+        const value = chip.dataset.filterValue
+        state[key] = value
 
-        group.querySelectorAll(`[data-filter-chip][data-filter-key="${key}"]`).forEach((peer) => {
-          peer.classList.toggle('is-active', peer === chip);
-        });
+        group
+          .querySelectorAll(`[data-filter-chip][data-filter-key="${key}"]`)
+          .forEach(peer => {
+            peer.classList.toggle('is-active', peer === chip)
+          })
 
-        applyFilters();
-      });
-    });
+        applyFilters()
+      })
+    })
 
-    group.querySelectorAll('[data-filter-control]').forEach((control) => {
+    group.querySelectorAll('[data-filter-control]').forEach(control => {
       control.addEventListener('input', () => {
-        const key = control.dataset.filterKey;
-        state[key] = control.value;
-        applyFilters();
-      });
+        const key = control.dataset.filterKey
+        state[key] = control.value
+        applyFilters()
+      })
       control.addEventListener('change', () => {
-        const key = control.dataset.filterKey;
-        state[key] = control.value;
-        applyFilters();
-      });
-    });
+        const key = control.dataset.filterKey
+        state[key] = control.value
+        applyFilters()
+      })
+    })
 
-    applyFilters();
-  });
+    applyFilters()
+  })
 }
 
-function initChatWidget() {
-  const widget = document.querySelector('[data-chat-widget]');
+function initChatWidget () {
+  const widget = document.querySelector('[data-chat-widget]')
   if (!widget) {
-    return;
+    return
   }
 
-  const openButton = widget.querySelector('[data-chat-open]');
-  const closeButton = widget.querySelector('[data-chat-close]');
-  const panel = widget.querySelector('[data-chat-panel]');
-  const form = widget.querySelector('[data-chat-form]');
-  const thread = widget.querySelector('[data-chat-thread]');
-  const feedback = widget.querySelector('[data-chat-feedback]');
-  const topicInput = form?.querySelector('input[name="topic"]');
-  const messageInput = form?.querySelector('textarea[name="message"]');
-  const firstInput = form?.querySelector('input[name="name"]');
-  const submitButton = widget.querySelector('[data-chat-submit]');
+  const openButton = widget.querySelector('[data-chat-open]')
+  const closeButton = widget.querySelector('[data-chat-close]')
+  const panel = widget.querySelector('[data-chat-panel]')
+  const form = widget.querySelector('[data-chat-form]')
+  const thread = widget.querySelector('[data-chat-thread]')
+  const feedback = widget.querySelector('[data-chat-feedback]')
+  const topicInput = form?.querySelector('input[name="topic"]')
+  const messageInput = form?.querySelector('textarea[name="message"]')
+  const firstInput = form?.querySelector('input[name="name"]')
+  const submitButton = widget.querySelector('[data-chat-submit]')
 
-  if (!openButton || !panel || !form || !thread || !feedback || !topicInput || !messageInput || !submitButton || !firstInput) {
-    return;
+  if (
+    !openButton ||
+    !panel ||
+    !form ||
+    !thread ||
+    !feedback ||
+    !topicInput ||
+    !messageInput ||
+    !submitButton ||
+    !firstInput
+  ) {
+    return
   }
 
-  const setOpen = (open) => {
-    panel.classList.toggle('hidden', !open);
-    widget.classList.toggle('is-open', open);
-    openButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const setOpen = open => {
+    panel.classList.toggle('hidden', !open)
+    widget.classList.toggle('is-open', open)
+    openButton.setAttribute('aria-expanded', open ? 'true' : 'false')
     if (open) {
-      window.setTimeout(() => firstInput.focus(), 80);
+      window.setTimeout(() => firstInput.focus(), 80)
     }
-  };
+  }
 
   const appendBubble = (content, kind = 'bot') => {
-    const bubble = document.createElement('div');
-    bubble.className = kind === 'user'
-      ? 'chat-dock__bubble chat-dock__bubble--user'
-      : 'chat-dock__bubble chat-dock__bubble--bot';
-    bubble.textContent = content;
-    thread.appendChild(bubble);
-    thread.scrollTop = thread.scrollHeight;
-  };
-
-  openButton.addEventListener('click', () => setOpen(!widget.classList.contains('is-open')));
-  if (closeButton) {
-    closeButton.addEventListener('click', () => setOpen(false));
+    const bubble = document.createElement('div')
+    bubble.className =
+      kind === 'user'
+        ? 'chat-dock__bubble chat-dock__bubble--user'
+        : 'chat-dock__bubble chat-dock__bubble--bot'
+    bubble.textContent = content
+    thread.appendChild(bubble)
+    thread.scrollTop = thread.scrollHeight
   }
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      setOpen(false);
-    }
-  });
+  openButton.addEventListener('click', () =>
+    setOpen(!widget.classList.contains('is-open'))
+  )
+  if (closeButton) {
+    closeButton.addEventListener('click', () => setOpen(false))
+  }
 
-  document.addEventListener('click', (event) => {
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      setOpen(false)
+    }
+  })
+
+  document.addEventListener('click', event => {
     if (!widget.classList.contains('is-open')) {
-      return;
+      return
     }
 
     if (!widget.contains(event.target)) {
-      setOpen(false);
+      setOpen(false)
     }
-  });
+  })
 
-  widget.querySelectorAll('[data-chat-intent]').forEach((button) => {
+  widget.querySelectorAll('[data-chat-intent]').forEach(button => {
     button.addEventListener('click', () => {
-      const topic = button.getAttribute('data-chat-intent') || '';
-      topicInput.value = topic;
-      messageInput.value = topic ? `I need help with ${topic}.` : '';
-      appendBubble(topic, 'user');
-      appendBubble(`Noted. We will route this as "${topic}" to the designated manager once you send your details.`, 'bot');
-      messageInput.focus();
-    });
-  });
+      const topic = button.getAttribute('data-chat-intent') || ''
+      topicInput.value = topic
+      messageInput.value = topic ? `I need help with ${topic}.` : ''
+      appendBubble(topic, 'user')
+      appendBubble(
+        `Noted. We will route this as "${topic}" to the designated manager once you send your details.`,
+        'bot'
+      )
+      messageInput.focus()
+    })
+  })
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    feedback.classList.add('hidden');
-    feedback.textContent = '';
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
+  form.addEventListener('submit', async event => {
+    event.preventDefault()
+    feedback.classList.add('hidden')
+    feedback.textContent = ''
+    submitButton.disabled = true
+    submitButton.textContent = 'Sending...'
 
-    const formData = new FormData(form);
-    const message = String(formData.get('message') || '').trim();
+    const formData = new FormData(form)
+    const message = String(formData.get('message') || '').trim()
 
     if (message) {
-      appendBubble(message, 'user');
+      appendBubble(message, 'user')
     }
 
     try {
       const response = await fetch(form.action, {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
           'X-Requested-With': 'XMLHttpRequest'
         },
         body: new URLSearchParams(Array.from(formData.entries()))
-      });
+      })
 
-      const payload = await response.json();
+      const payload = await response.json()
 
       if (!response.ok) {
-        throw new Error(payload.message || 'Unable to send the chat right now.');
+        throw new Error(payload.message || 'Unable to send the chat right now.')
       }
 
-      appendBubble('Your message has been sent. The designated manager has been notified and will follow up soon.', 'bot');
-      feedback.textContent = payload.message || 'Chat sent successfully.';
-      feedback.className = 'chat-dock__feedback chat-dock__feedback--success';
-      form.reset();
-      topicInput.value = '';
+      appendBubble(
+        'Your message has been sent. The designated manager has been notified and will follow up soon.',
+        'bot'
+      )
+      feedback.textContent = payload.message || 'Chat sent successfully.'
+      feedback.className = 'chat-dock__feedback chat-dock__feedback--success'
+      form.reset()
+      topicInput.value = ''
     } catch (error) {
-      appendBubble('We could not send your message right now. Please try again or use the contact page.', 'bot');
-      feedback.textContent = error.message;
-      feedback.className = 'chat-dock__feedback chat-dock__feedback--error';
+      appendBubble(
+        'We could not send your message right now. Please try again or use the contact page.',
+        'bot'
+      )
+      feedback.textContent = error.message
+      feedback.className = 'chat-dock__feedback chat-dock__feedback--error'
     } finally {
-      feedback.classList.remove('hidden');
-      submitButton.disabled = false;
-      submitButton.textContent = 'Send Message';
+      feedback.classList.remove('hidden')
+      submitButton.disabled = false
+      submitButton.textContent = 'Send Message'
     }
-  });
+  })
 }
 
-function initAmbientMotion() {
+function initCounters () {
+  const counterElements = document.querySelectorAll('[data-counter]')
+  if (
+    !counterElements.length ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target
+          const targetValue = parseInt(target.dataset.counter)
+          const increment = targetValue / 60
+          let current = 0
+
+          const updateCounter = () => {
+            current += increment
+            if (current < targetValue) {
+              target.style.setProperty(
+                '--counter-value',
+                Math.floor(current).toString()
+              )
+              requestAnimationFrame(updateCounter)
+            } else {
+              target.style.setProperty(
+                '--counter-value',
+                targetValue.toString()
+              )
+            }
+          }
+          updateCounter()
+          observer.unobserve(target)
+        }
+      })
+    },
+    { threshold: 0.7 }
+  )
+
+  counterElements.forEach(el => observer.observe(el))
+}
+
+function initInteractivePanels () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    return;
+    return
   }
 
-  const parallaxNodes = Array.from(document.querySelectorAll('[data-drift]'));
+  const panels = document.querySelectorAll('[data-spotlight-panel]')
+  if (!panels.length) {
+    return
+  }
+
+  panels.forEach(panel => {
+    const resetSpotlight = () => {
+      panel.style.setProperty('--spotlight-x', '50%')
+      panel.style.setProperty('--spotlight-y', '50%')
+    }
+
+    const updateSpotlight = event => {
+      const rect = panel.getBoundingClientRect()
+      if (!rect.width || !rect.height) {
+        return
+      }
+
+      const x = ((event.clientX - rect.left) / rect.width) * 100
+      const y = ((event.clientY - rect.top) / rect.height) * 100
+
+      panel.style.setProperty('--spotlight-x', `${x.toFixed(2)}%`)
+      panel.style.setProperty('--spotlight-y', `${y.toFixed(2)}%`)
+    }
+
+    resetSpotlight()
+    panel.addEventListener('pointermove', updateSpotlight)
+    panel.addEventListener('pointerleave', resetSpotlight)
+  })
+}
+
+function initAmbientMotion () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return
+  }
+
+  const parallaxNodes = Array.from(document.querySelectorAll('[data-drift]'))
   if (!parallaxNodes.length) {
-    return;
+    return
   }
 
-  let ticking = false;
+  let ticking = false
 
   const update = () => {
-    const viewportHeight = window.innerHeight || 1;
+    const viewportHeight = window.innerHeight || 1
 
-    parallaxNodes.forEach((node) => {
-      const rect = node.getBoundingClientRect();
-      const speed = Number(node.dataset.drift || 0.08);
-      const distanceFromCenter = rect.top + rect.height / 2 - viewportHeight / 2;
-      const offset = Math.max(-28, Math.min(28, -distanceFromCenter * speed));
-      node.style.setProperty('--drift-y', `${offset.toFixed(2)}px`);
-    });
+    parallaxNodes.forEach(node => {
+      const rect = node.getBoundingClientRect()
+      const speed = Number(node.dataset.drift || 0.08)
+      const distanceFromCenter = rect.top + rect.height / 2 - viewportHeight / 2
+      const offset = Math.max(-32, Math.min(32, -distanceFromCenter * speed))
+      node.style.setProperty('--drift-y', `${offset.toFixed(2)}px`)
+    })
 
-    ticking = false;
-  };
+    ticking = false
+  }
 
   const requestTick = () => {
     if (!ticking) {
-      window.requestAnimationFrame(update);
-      ticking = true;
+      window.requestAnimationFrame(update)
+      ticking = true
     }
-  };
+  }
 
-  requestTick();
-  window.addEventListener('scroll', requestTick, { passive: true });
-  window.addEventListener('resize', requestTick);
+  requestTick()
+  window.addEventListener('scroll', requestTick, { passive: true })
+  window.addEventListener('resize', requestTick)
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  initReveal();
-  initAccordions();
-  initNav();
-  initFilters();
-  initChatWidget();
-  initAmbientMotion();
-});
+  initReveal()
+  initCounters()
+  initAccordions()
+  initNav()
+  initFilters()
+  initChatWidget()
+  initInteractivePanels()
+  initAmbientMotion()
+})

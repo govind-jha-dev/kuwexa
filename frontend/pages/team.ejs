@@ -28,7 +28,7 @@
         </div>
 
         <div class="narrative-card narrative-card--dark reveal" data-reveal>
-          <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">How the Team Shows Up</span>
+          <span class="section-kicker !text-white/60 before:!bg-secondary">How the Team Shows Up</span>
           <div class="mt-6 grid gap-4">
             <% pageContent.values.forEach((item) => { %>
               <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
@@ -55,16 +55,37 @@
   </div>
 </section>
 
+<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
+  <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
+    <div class="narrative-card reveal" data-reveal>
+      <span class="section-kicker">Operating Beliefs</span>
+      <div class="mt-6 grid gap-3">
+        <% pageContent.operatingBeliefs.forEach((item) => { %>
+          <div class="rounded-[1.2rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700 ring-1 ring-primary/6"><%= item %></div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="narrative-card narrative-card--dark reveal" data-reveal>
+      <span class="section-kicker !text-white/60 before:!bg-secondary">Team Ethos</span>
+      <h2 class="mt-5 font-display text-4xl font-bold leading-tight text-white"><%= pageContent.ethosQuote %></h2>
+      <p class="mt-5 text-base leading-8 text-white/72">
+        The leadership layer is responsible for keeping the company story, delivery standards, and division direction aligned so the public experience and company direction support one another.
+      </p>
+    </div>
+  </div>
+</section>
+
 <%- include('../components/team-showcase', {
   eyebrow: 'Leadership and Team',
-  title: 'Meet the people guiding and delivering across the Kuwexa ecosystem.',
-  copy: 'Each public profile is connected to the dashboard, so images, designations, social links, alt text, and full bios stay editable without losing the visual presentation.'
+  title: 'Meet the people guiding and delivering across the Kuwexa organization.',
+  copy: 'These profiles help visitors understand the leadership, expertise, and day-to-day execution behind Kuwexa.'
 }) %>
 
 <%- include('../components/site-cta', {
   eyebrow: 'Work With Kuwexa',
   title: 'Need a team that can carry strategy into dependable execution?',
-  copy: 'Kuwexa supports businesses with leadership visibility, hands-on delivery, and the operational systems needed to keep digital growth sustainable over time.',
+  copy: 'Kuwexa supports businesses with leadership visibility, hands-on delivery, and the discipline needed to keep digital growth sustainable over time.',
   primaryLabel: 'Contact the Team',
   primaryHref: '/contact',
   secondaryLabel: 'About Kuwexa',

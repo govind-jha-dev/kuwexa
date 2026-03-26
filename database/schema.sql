@@ -111,10 +111,22 @@ CREATE TABLE IF NOT EXISTS services (
   CONSTRAINT fk_services_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS product_categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(160) NOT NULL,
+  slug VARCHAR(180) NOT NULL UNIQUE,
+  description TEXT NULL,
+  sort_order INT NOT NULL DEFAULT 0,
+  status ENUM('draft', 'published') NOT NULL DEFAULT 'published',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(160) NOT NULL,
   slug VARCHAR(180) NOT NULL UNIQUE,
+  category_id INT NULL,
   short_description VARCHAR(255) NULL,
   description LONGTEXT NULL,
   features JSON NULL,
@@ -123,6 +135,10 @@ CREATE TABLE IF NOT EXISTS products (
   images JSON NULL,
   demo_link VARCHAR(255) NULL,
   website_link VARCHAR(255) NULL,
+  catalog_link VARCHAR(255) NULL,
+  min_order_quantity VARCHAR(80) NULL,
+  unit_label VARCHAR(80) NULL,
+  sort_order INT NOT NULL DEFAULT 0,
   status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
   meta_title VARCHAR(255) NULL,
   meta_description TEXT NULL,
@@ -131,6 +147,7 @@ CREATE TABLE IF NOT EXISTS products (
   updated_by INT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES product_categories(id) ON DELETE SET NULL,
   CONSTRAINT fk_products_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
   CONSTRAINT fk_products_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
@@ -189,9 +206,11 @@ CREATE TABLE IF NOT EXISTS blog_posts (
 CREATE TABLE IF NOT EXISTS leads (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(120) NOT NULL,
+  company_name VARCHAR(160) NULL,
   email VARCHAR(160) NOT NULL,
   phone VARCHAR(50) NULL,
   message TEXT NOT NULL,
+  selected_products JSON NULL,
   status ENUM('new', 'contacted', 'qualified', 'closed') NOT NULL DEFAULT 'new',
   source VARCHAR(120) NULL,
   notes TEXT NULL,
@@ -336,13 +355,13 @@ INSERT INTO website_settings (
 VALUES (
   1,
   'Kuwexa Private Limited',
-  'Systems for Scalable Global Commerce',
-  'Kuwexa Private Limited connects global trade, digital commerce, and technology enablement so businesses can operate with clarity, structure, and long-term sustainability.',
-  '#0d2d24',
-  '#f1b24a',
-  'Kuwexa Private Limited | Systems for Scalable Global Commerce',
-  'Kuwexa Private Limited bridges global commerce, import-export capability, and digital innovation through Kuwexa.com and CodexWEBZ.',
-  'kuwexa, global commerce, import export, ecommerce, codexwebz, digital innovation',
+  'One Parent Company. Three Focused Divisions.',
+  'Kuwexa Private Limited introduces the parent company, presents CodexWEBZ and Kuwexa Lifestyle as focused divisions, and runs a dashboard-managed B2B product catalog for wholesale enquiries.',
+  '#00240a',
+  '#dbab0d',
+  'Kuwexa Private Limited | Parent Company for CodexWEBZ, Kuwexa Lifestyle, and Kuwexa B2B',
+  'Kuwexa Private Limited is the parent company website for CodexWEBZ, Kuwexa Lifestyle, and a B2B catalog with category-led product enquiries.',
+  'kuwexa, codexwebz, kuwexa lifestyle, b2b catalog, dry fruits, spices, woollen products, cereals grains',
   'index, follow, max-image-preview:large',
   'summary_large_image',
   'User-agent: *\nAllow: /'
@@ -371,6 +390,8 @@ VALUES
   ('home', 'Kuwexa Private Limited | Systems for Scalable Global Commerce', 'Kuwexa Private Limited combines global trade, consumer commerce, and digital innovation to help businesses scale with structure.', '', '/'),
   ('about', 'About Kuwexa Private Limited | Hybrid Commerce and Digital Innovation', 'Learn how Kuwexa Private Limited connects global trade, ecommerce, and technology enablement through a hybrid operating model.', 'about-us', '/about-us'),
   ('team', 'Leadership | Kuwexa Private Limited', 'Meet the leadership and delivery team guiding Kuwexa Private Limited and its operating ecosystem.', 'team', '/team'),
+  ('divisions', 'Company Divisions | Kuwexa Private Limited', 'Explore Kuwexa divisions including CodexWEBZ, Kuwexa Lifestyle, and the Kuwexa B2B product catalog.', 'divisions', '/divisions'),
+  ('b2b', 'Kuwexa B2B | Product Categories and Enquiries', 'Browse the Kuwexa B2B product catalog by category and submit a multi-product enquiry directly from the website.', 'b2b', '/b2b'),
   ('services', 'Capabilities | Kuwexa Private Limited', 'Explore Kuwexa capabilities across digital innovation, ecommerce enablement, and business technology delivery.', 'services', '/services'),
   ('products', 'Platforms | Kuwexa Private Limited', 'Explore digital products, platforms, and managed solutions presented within the Kuwexa ecosystem.', 'products', '/products'),
   ('projects', 'Initiatives | Kuwexa Private Limited', 'See Kuwexa initiatives, execution stories, and platform delivery work.', 'projects', '/portfolio'),

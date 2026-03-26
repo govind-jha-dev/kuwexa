@@ -36,9 +36,7 @@ function buildDashboardMenu(user, basePath) {
   const items = [
     { label: 'Dashboard', href: `${basePath}/dashboard`, permission: PERMISSIONS.DASHBOARD_VIEW },
     { label: 'Pages', href: `${basePath}/pages`, permission: PERMISSIONS.PAGES_MANAGE },
-    { label: 'Services', href: `${basePath}/services`, permission: PERMISSIONS.SERVICES_MANAGE },
-    { label: 'Products', href: `${basePath}/products`, permission: PERMISSIONS.PRODUCTS_MANAGE },
-    { label: 'Projects', href: `${basePath}/portfolio`, permission: PERMISSIONS.PORTFOLIO_MANAGE },
+    { label: 'B2B Catalog', href: `${basePath}/products`, permission: PERMISSIONS.PRODUCTS_MANAGE },
     { label: 'Team', href: `${basePath}/team`, permission: PERMISSIONS.TEAM_MANAGE },
     { label: 'Chats', href: `${basePath}/chats`, permission: PERMISSIONS.CHATS_MANAGE },
     { label: 'Blog', href: `${basePath}/blog`, permission: PERMISSIONS.BLOG_MANAGE },

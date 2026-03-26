@@ -19,6 +19,7 @@ const {
   handleValidationErrors,
   serviceValidation,
   productValidation,
+  productCategoryValidation,
   projectValidation,
   teamValidation,
   blogValidation,
@@ -43,6 +44,9 @@ router.get('/products', authorize(PERMISSIONS.PRODUCTS_MANAGE), productControlle
 router.post('/products', authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), validateCsrfToken, productValidation, handleValidationErrors, productController.createProduct);
 router.post('/products/:id/update', authorize(PERMISSIONS.PRODUCTS_MANAGE), imageUpload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images', maxCount: 10 }]), validateCsrfToken, productValidation, handleValidationErrors, productController.updateProduct);
 router.post('/products/:id/delete', authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteProduct);
+router.post('/products/categories', authorize(PERMISSIONS.PRODUCTS_MANAGE), validateCsrfToken, productCategoryValidation, handleValidationErrors, productController.createCategory);
+router.post('/products/categories/:id/update', authorize(PERMISSIONS.PRODUCTS_MANAGE), validateCsrfToken, productCategoryValidation, handleValidationErrors, productController.updateCategory);
+router.post('/products/categories/:id/delete', authorize(PERMISSIONS.PRODUCTS_MANAGE), productController.deleteCategory);
 
 router.get('/portfolio', authorize(PERMISSIONS.PORTFOLIO_MANAGE), projectController.renderProjectsPage);
 router.post('/portfolio', authorize(PERMISSIONS.PORTFOLIO_MANAGE), imageUpload.array('images', 10), validateCsrfToken, projectValidation, handleValidationErrors, projectController.createProject);

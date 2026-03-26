@@ -15,7 +15,7 @@
       </div>
       <h1 class="mt-6 font-display text-5xl font-bold leading-tight text-primary md:text-6xl"><%= project.title %></h1>
       <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600"><%= project.summary %></p>
-      <div class="prose-content mt-10"><%- project.description || '<p>This client project shows how frontend quality and backend structure were delivered together.</p>' %></div>
+      <div class="prose-content mt-10"><%- project.description || '<p>This client project shows how clarity, presentation, and execution were delivered together.</p>' %></div>
     </article>
 
     <aside class="space-y-6">
@@ -57,8 +57,8 @@
         <section class="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-primary/8">
           <%- include('../components/section-heading', {
             eyebrow: 'Solution',
-            title: 'How the system was designed and delivered.',
-            copy: 'Solution details are editable from the dashboard and published here automatically.'
+            title: 'How the solution was shaped and delivered.',
+            copy: 'Solution details are presented here as part of the full case study story.'
           }) %>
           <div class="prose-content mt-8"><%- project.solution %></div>
         </section>
@@ -70,7 +70,7 @@
     <div class="mt-12 rounded-[2.2rem] bg-white p-8 shadow-sm ring-1 ring-primary/8 lg:p-10">
       <%- include('../components/section-heading', {
         eyebrow: 'Results',
-        title: 'What the system improved.',
+        title: 'What the work improved.',
         copy: 'Client project work should show impact, not just interface screenshots.'
       }) %>
       <div class="prose-content mt-8"><%- project.results %></div>
@@ -82,7 +82,7 @@
       <%- include('../components/section-heading', {
         eyebrow: 'Gallery',
         title: 'Additional client project views.',
-        copy: 'Uploaded screenshots and gallery assets remain reusable across marketing and proposal workflows.'
+        copy: 'Additional visuals help complete the project story with more context.'
       }) %>
       <div class="mt-8 grid gap-6 md:grid-cols-2">
         <% project.images.forEach((image) => { %>
@@ -95,8 +95,8 @@
 
 <%- include('../components/site-cta', {
   eyebrow: 'Your Next Build',
-  title: 'Want a project like this with a public frontend and a usable backend for your team?',
-  copy: 'Kuwexa can scope the public site, product pages, dashboard workflows, and deployment architecture as one coordinated delivery.',
+  title: 'Want a project like this for your business?',
+  copy: 'Kuwexa can scope the website, product presentation, and supporting delivery plan as one coordinated engagement.',
   primaryLabel: 'Start a Project',
   primaryHref: '/contact',
   secondaryLabel: 'More Client Projects',

@@ -17,8 +17,8 @@
           </span>
           <div>
             <p class="chat-dock__eyebrow">Kuwexa Signal Desk</p>
-            <h2 class="chat-dock__title">Project Brief</h2>
-            <p class="chat-dock__copy">Message us. The right team gets it directly.</p>
+            <h2 class="chat-dock__title">Division Inquiry</h2>
+            <p class="chat-dock__copy">Message us and we will route it to the right division.</p>
           </div>
         </div>
         <button type="button" class="chat-dock__close" data-chat-close aria-label="Close chat">&times;</button>
@@ -27,12 +27,12 @@
       <div class="chat-dock__body">
         <div class="chat-dock__thread" data-chat-thread>
           <div class="chat-dock__bubble chat-dock__bubble--bot">
-            Tell us what you need. We will route it to the right Kuwexa team.
+            Tell us which division or company topic you need help with. We will route it to the right Kuwexa team.
           </div>
         </div>
 
         <div class="chat-dock__intents" data-chat-intents>
-          <% ['Trade', 'Ecommerce', 'Platforms', 'SEO', 'Support'].forEach((intent) => { %>
+          <% ['CodexWEBZ', 'Lifestyle', 'B2B', 'Partnership', 'Support'].forEach((intent) => { %>
             <button type="button" class="chat-dock__intent" data-chat-intent="<%= intent %>"><%= intent %></button>
           <% }) %>
         </div>
@@ -60,7 +60,7 @@
 
           <div>
             <label class="chat-dock__label" for="chat_message">Message</label>
-            <textarea id="chat_message" name="message" rows="4" required class="chat-dock__textarea" placeholder="Tell us what you need built or fixed."></textarea>
+            <textarea id="chat_message" name="message" rows="4" required class="chat-dock__textarea" placeholder="Tell us which division this is about and what you need."></textarea>
           </div>
 
           <div class="hidden chat-dock__feedback" data-chat-feedback></div>

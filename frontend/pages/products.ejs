@@ -4,12 +4,12 @@
 <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
   <div class="grid gap-10 lg:grid-cols-[1fr,0.88fr] lg:items-end">
     <%- include('../components/section-heading', {
-      eyebrow: 'Platforms',
-      title: 'Software products and managed platforms presented inside the Kuwexa ecosystem.',
-      copy: 'This page showcases digital products in a structured format while keeping the content editable through the same dashboard-driven publishing system.'
+      eyebrow: 'Products',
+      title: 'Software products and digital offerings presented through the Kuwexa organization.',
+      copy: 'This page showcases Kuwexa products in a structured format that fits the wider company identity.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
-      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">What This Module Supports</p>
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">What This Page Supports</p>
       <div class="mt-5 grid gap-4">
         <% pageContent.values.forEach((item) => { %>
           <article class="rounded-[1.45rem] bg-white/85 p-5 text-sm leading-7 text-slate-600"><%= item %></article>
@@ -22,7 +22,7 @@
     <div class="flex flex-wrap items-center justify-between gap-4">
       <div>
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Catalog Overview</p>
-        <h2 class="mt-4 font-display text-4xl font-bold"><%= products.length %> platforms currently available</h2>
+        <h2 class="mt-4 font-display text-4xl font-bold"><%= products.length %> digital products currently available</h2>
       </div>
       <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary">Request a Demo</a>
     </div>
@@ -39,7 +39,7 @@
           <% } %>
         </div>
         <h2 class="mt-6 font-display text-3xl font-bold text-primary"><%= product.name %></h2>
-        <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'Product details are managed from the Kuwexa dashboard.' %></p>
+        <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'Detailed product information will appear here.' %></p>
         <div class="mt-6 flex flex-wrap gap-2">
           <% (product.tech_stack || []).slice(0, 3).forEach((item) => { %>
             <span class="rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600"><%= item %></span>
@@ -50,16 +50,16 @@
     <% }) %>
     <% if (!products.length) { %>
       <article class="rounded-[2rem] border border-dashed border-primary/20 bg-slate-50 p-8 text-center text-slate-500 lg:col-span-3">
-        No platforms are published yet. Add them from the dashboard Products module.
+        No digital products are published yet. New offerings will appear here as the portfolio grows.
       </article>
     <% } %>
   </div>
 </section>
 
 <%- include('../components/site-cta', {
-  eyebrow: 'Need a Platform Build?',
-  title: 'Need a software product showcase or business platform presentation that feels structured and credible?',
-  copy: 'Kuwexa can present your products with the same focus on clarity, scalability, and business-ready delivery used across the wider ecosystem.',
+  eyebrow: 'Need a Similar Build?',
+  title: 'Need a software product presentation that feels structured and credible?',
+  copy: 'Kuwexa can present digital products with the same focus on clarity, trust, and business readiness used across the wider organization.',
   primaryLabel: 'Request a Demo',
   primaryHref: '/contact',
   secondaryLabel: 'Initiatives',

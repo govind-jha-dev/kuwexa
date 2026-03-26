@@ -47,7 +47,7 @@ const serviceCatalog = [
   },
   {
     title: 'Software Development',
-    summary: 'Business software systems, SaaS platforms, and internal tools designed around real operational requirements.',
+    summary: 'Business software, tailored digital tools, and custom applications designed around real commercial requirements.',
     items: [
       'Custom Software Development',
       'Business Software Solutions',
@@ -101,7 +101,7 @@ const serviceCatalog = [
   },
   {
     title: 'Website Support & Maintenance',
-    summary: 'Long-term support, technical maintenance, and optimization for businesses running active digital platforms.',
+    summary: 'Long-term support, technical maintenance, and optimization for businesses running active digital properties.',
     items: [
       'Website Maintenance',
       'Technical Support',
@@ -112,7 +112,7 @@ const serviceCatalog = [
   },
   {
     title: 'Cloud & Infrastructure',
-    summary: 'Hosting, deployment, server setup, and monitoring support for dependable production systems.',
+    summary: 'Hosting, deployment, server setup, and monitoring support for dependable production environments.',
     items: [
       'Cloud Hosting Setup',
       'Server Configuration',
@@ -160,12 +160,12 @@ const serviceProfiles = [
     key: 'web-development',
     matches: ['website', 'web development', 'web application', 'web app', 'landing page', 'portfolio website', 'corporate website', 'pwa', 'progressive web'],
     category: 'Web Development Services',
-    kicker: 'Build business-ready websites and web platforms that stay practical after launch.',
+    kicker: 'Build business-ready websites and web experiences that stay practical after launch.',
     deliverables: [
       'Business and corporate websites',
       'Landing pages and portfolio websites',
       'Custom web applications and PWAs',
-      'Responsive UI and CMS-ready delivery'
+      'Responsive design and content-ready delivery'
     ],
     outcomes: [
       'Stronger digital presence for the business',
@@ -175,7 +175,7 @@ const serviceProfiles = [
     process: [
       'Requirement discovery and page mapping',
       'UI structure and technical planning',
-      'Development, CMS setup, and QA',
+      'Development, content setup, and QA',
       'Launch support and ongoing optimization'
     ]
   },
@@ -183,7 +183,7 @@ const serviceProfiles = [
     key: 'ecommerce-solutions',
     matches: ['ecommerce', 'seller', 'amazon', 'flipkart', 'marketplace', 'store', 'catalog', 'payment gateway'],
     category: 'Ecommerce Solutions',
-    kicker: 'Launch and manage online sales systems with dependable storefront and marketplace support.',
+    kicker: 'Launch and manage online sales experiences with dependable storefront and marketplace support.',
     deliverables: [
       'Online store development and setup',
       'Marketplace and seller account integration',
@@ -198,7 +198,7 @@ const serviceProfiles = [
     process: [
       'Store planning and catalog structure',
       'Platform setup and payment integration',
-      'Marketplace and seller workflow configuration',
+      'Marketplace and seller coordination',
       'Testing, launch, and support'
     ]
   },
@@ -206,21 +206,21 @@ const serviceProfiles = [
     key: 'software-development',
     matches: ['software', 'crm', 'saas', 'api', 'internal business', 'business software', 'system'],
     category: 'Software Development',
-    kicker: 'Turn operational requirements into usable business software and SaaS-ready platforms.',
+    kicker: 'Turn business requirements into tailored software and digital tools that support real operations.',
     deliverables: [
-      'Custom software and internal business systems',
-      'CRM and workflow-driven business tools',
+      'Custom software and internal business tools',
+      'CRM and operations support tools',
       'API integrations and data connections',
-      'SaaS platform architecture support'
+      'Application architecture support'
     ],
     outcomes: [
       'More efficient internal operations',
       'Less dependency on disconnected third-party tools',
-      'Systems shaped around real business processes'
+      'Digital tools shaped around real business processes'
     ],
     process: [
-      'Business workflow mapping',
-      'System architecture and module planning',
+      'Business requirement mapping',
+      'Architecture and feature planning',
       'Feature delivery and integration',
       'Testing, rollout, and support'
     ]
@@ -233,7 +233,7 @@ const serviceProfiles = [
     deliverables: [
       'Android and iOS application planning',
       'Cross-platform app development',
-      'Business mobile workflow support',
+      'Business mobile support experiences',
       'API-connected mobile feature delivery'
     ],
     outcomes: [
@@ -321,7 +321,7 @@ const serviceProfiles = [
     key: 'website-support-maintenance',
     matches: ['maintenance', 'support', 'security', 'performance', 'bug', 'troubleshooting'],
     category: 'Website Support & Maintenance',
-    kicker: 'Keep digital platforms stable, secure, and effective after the initial build is complete.',
+    kicker: 'Keep digital experiences stable, secure, and effective after the initial build is complete.',
     deliverables: [
       'Technical support and issue resolution',
       'Website maintenance and security updates',
@@ -329,12 +329,12 @@ const serviceProfiles = [
       'Bug fixing and troubleshooting'
     ],
     outcomes: [
-      'Lower risk of platform downtime or degradation',
+      'Lower risk of downtime or service degradation',
       'More dependable day-to-day operations',
       'Ongoing improvement without rebuilding from scratch'
     ],
     process: [
-      'Platform review and issue identification',
+      'Website review and issue identification',
       'Maintenance and optimization planning',
       'Implementation and validation',
       'Monitoring and support continuity'
@@ -348,8 +348,8 @@ const serviceProfiles = [
     deliverables: [
       'Cloud hosting and environment setup',
       'Server configuration and deployment support',
-      'System monitoring and technical oversight',
-      'Infrastructure aligned to platform needs'
+      'Technical monitoring and oversight',
+      'Infrastructure aligned to business growth needs'
     ],
     outcomes: [
       'More stable production environments',
@@ -416,14 +416,14 @@ const defaultServiceProfile = {
   kicker: 'Execution built around practical delivery, business clarity, and long-term reliability.',
   deliverables: [
     'Business-aligned planning and implementation',
-    'Responsive frontend and structured backend workflows',
-    'Content, metadata, and operational support',
+    'Responsive user experience and structured delivery',
+    'Content, metadata, and ongoing support',
     'Launch-ready delivery with room to scale'
   ],
   outcomes: [
     'Cleaner digital operations and customer journeys',
     'More dependable delivery quality',
-    'Systems that remain manageable after launch'
+    'Digital work that remains dependable after launch'
   ],
   process: [
     'Discovery and scope alignment',
@@ -432,6 +432,240 @@ const defaultServiceProfile = {
     'Launch, support, and iteration'
   ]
 };
+
+const divisionDirectory = [
+  {
+    slug: 'codexwebz',
+    name: 'CodexWEBZ',
+    label: 'Digital Innovation Division',
+    shortDescription: 'The technology and digital execution arm of Kuwexa, focused on websites, business software, automation, and growth-ready digital infrastructure.',
+    summary: 'CodexWEBZ helps brands and businesses launch polished digital experiences backed by clear planning and dependable delivery.',
+    detailNarrative: 'CodexWEBZ combines premium web presentation with commercial clarity. It is built for businesses that need a stronger digital presence, cleaner customer journeys, and delivery that still feels practical after launch.',
+    detailPath: '/divisions/codexwebz',
+    destinationUrl: 'https://www.codexwebz.com',
+    destinationLabel: 'Visit CodexWEBZ',
+    destinationHost: 'www.codexwebz.com',
+    ecosystemRole: 'CodexWEBZ is the technology enablement division inside the Kuwexa organization, turning business requirements into websites, software, and digital experiences that remain useful after launch.',
+    marketFocus: [
+      'Business websites and brand presentation',
+      'Digital enablement and tailored business tools',
+      'Customer-facing experiences and software support',
+      'Automation, integrations, and practical delivery'
+    ],
+    primaryPoints: [
+      'Business websites and landing pages',
+      'Business tools and tailored software',
+      'Custom integrations and automation',
+      'Digital growth infrastructure and SEO-ready builds'
+    ],
+    operatingModel: [
+      'Discovery and business context mapping',
+      'Design-led website and experience planning',
+      'Delivery, QA, launch, and optimization support'
+    ],
+    signatureAreas: [
+      'Premium company websites that look credible on desktop and mobile',
+      'Tailored internal tools and business software support',
+      'Automation, integrations, and custom digital solutions',
+      'Search-ready page architecture and content direction'
+    ],
+    experiencePillars: [
+      {
+        title: 'Brand-first execution',
+        copy: 'Every build is designed to strengthen trust, clarity, and perceived quality before the first sales conversation even begins.'
+      },
+      {
+        title: 'Operational usefulness',
+        copy: 'Public experience, content structure, and business needs are shaped together so the work remains useful after launch.'
+      },
+      {
+        title: 'Scalable delivery',
+        copy: 'CodexWEBZ is structured for businesses that want a polished digital presence today and room to expand their capabilities later.'
+      }
+    ],
+    journeySteps: [
+      {
+        step: '01',
+        title: 'Clarify the business story',
+        copy: 'Map what the brand needs to communicate and where the current digital experience is weak.'
+      },
+      {
+        step: '02',
+        title: 'Shape the right experience',
+        copy: 'Translate that story into a more persuasive website, a clearer user journey, and stronger digital support.'
+      },
+      {
+        step: '03',
+        title: 'Launch with confidence',
+        copy: 'Ship the site or digital experience with careful handoff quality for long-term use.'
+      }
+    ],
+    highlightStats: [
+      { value: 'Web', label: 'Company websites' },
+      { value: 'Build', label: 'Software support' },
+      { value: 'SEO', label: 'Search-ready structure' }
+    ],
+    audiences: [
+      'Service brands building stronger digital credibility',
+      'Businesses replacing manual internal processes',
+      'Founders needing a technical execution partner'
+    ]
+  },
+  {
+    slug: 'kuwexa-lifestyle',
+    name: 'Kuwexa Lifestyle',
+    label: 'Lifestyle Commerce Division',
+    shortDescription: 'The consumer-facing division of Kuwexa, focused on lifestyle categories, curated product experiences, and a modern D2C brand journey.',
+    summary: 'Kuwexa Lifestyle is where the parent company presents its consumer product vision through design, curation, and accessible digital commerce.',
+    detailNarrative: 'Kuwexa Lifestyle is about turning product curation into a refined customer experience. The division focuses on presentation, category storytelling, and a modern shopping rhythm that feels elevated without becoming noisy.',
+    detailPath: '/divisions/kuwexa-lifestyle',
+    destinationUrl: 'https://www.kuwexa.com',
+    destinationLabel: 'Visit Kuwexa Lifestyle',
+    destinationHost: 'www.kuwexa.com',
+    ecosystemRole: 'Through Kuwexa.com, this division builds the consumer-facing side of the company with curated B2C categories, stronger brand presentation, and a more reliable digital commerce experience.',
+    marketFocus: [
+      'Lifestyle goods',
+      'Fashion-led product presentation',
+      'Home essentials and everyday utility lines',
+      'Consumer accessories supported by curated merchandising'
+    ],
+    primaryPoints: [
+      'Lifestyle and consumer product storytelling',
+      'Curated category-led shopping experiences',
+      'Brand building through modern ecommerce presentation',
+      'Long-term D2C expansion under the Kuwexa umbrella'
+    ],
+    operatingModel: [
+      'Category and customer journey planning',
+      'Brand presentation and merchandising alignment',
+      'Commerce growth through curated launches and updates'
+    ],
+    signatureAreas: [
+      'Lifestyle category merchandising with a curated digital shelf',
+      'Brand storytelling shaped around mood, utility, and presentation',
+      'Mobile-first browsing experience for modern shoppers',
+      'Editorial product presentation that feels cleaner and more premium'
+    ],
+    experiencePillars: [
+      {
+        title: 'Curated discovery',
+        copy: 'Products are grouped and presented in ways that feel intentional, browseable, and visually confident.'
+      },
+      {
+        title: 'Brand atmosphere',
+        copy: 'The division is built to communicate a lifestyle mood, not just a list of items, so the experience feels more memorable.'
+      },
+      {
+        title: 'Commerce readiness',
+        copy: 'Behind the brand story is a practical ecommerce direction designed for future category growth and smoother customer journeys.'
+      }
+    ],
+    journeySteps: [
+      {
+        step: '01',
+        title: 'Curate the category mix',
+        copy: 'Define which lifestyle categories should lead and how they should feel when a shopper first lands.'
+      },
+      {
+        step: '02',
+        title: 'Shape the brand presentation',
+        copy: 'Build product stories, category pages, and merchandising moments that feel premium and cohesive.'
+      },
+      {
+        step: '03',
+        title: 'Grow the customer experience',
+        copy: 'Expand the product journey with cleaner storytelling, better navigation, and stronger visual consistency.'
+      }
+    ],
+    highlightStats: [
+      { value: 'D2C', label: 'Consumer experience' },
+      { value: 'Curated', label: 'Category storytelling' },
+      { value: 'Mobile', label: 'Browsing rhythm' }
+    ],
+    audiences: [
+      'Lifestyle shoppers discovering the Kuwexa brand',
+      'Customers looking for a curated digital shopping experience',
+      'Future consumer categories launched by the parent company'
+    ]
+  },
+  {
+    slug: 'b2b',
+    name: 'Kuwexa B2B',
+    label: 'Business Supply Division',
+    shortDescription: 'The wholesale and B2B product division where buyers can browse categorized products and send a single enquiry for multiple items.',
+    summary: 'Kuwexa B2B gives the company a structured wholesale catalog with category navigation, product detail, and a clearer buyer enquiry path.',
+    detailNarrative: 'Kuwexa B2B is built around practical wholesale discovery. Categories, product detail, images, and enquiries are arranged so buyers can move with more confidence while the company presents its wholesale capability with clarity.',
+    detailPath: '/b2b',
+    destinationUrl: '/b2b',
+    destinationLabel: 'Open B2B Catalog',
+    destinationHost: 'kuwexa.com/b2b',
+    ecosystemRole: 'Kuwexa B2B brings supply-side conversations into a cleaner digital format so wholesale buyers can browse categories, compare products, and send enquiries with stronger context.',
+    marketFocus: [
+      'Dry fruits',
+      'Spices',
+      'Woollen products',
+      'Cereals / grains and other wholesale lines'
+    ],
+    primaryPoints: [
+      'Category-led product discovery for wholesale buyers',
+      'Detailed product pages with images and highlights',
+      'Single enquiry path for multiple products',
+      'Wholesale presentation that stays connected to the parent company'
+    ],
+    operatingModel: [
+      'Products grouped into clear wholesale categories',
+      'Public catalog pages kept current across the company site',
+      'Buyer enquiries gathered with relevant product context'
+    ],
+    signatureAreas: [
+      'Product categories such as dry fruits, spices, woollen products, and cereals or grains',
+      'Image-rich product pages with highlights, MOQ, and brochure links',
+      'Multi-product enquiries gathered in one clear conversation',
+      'Product presentation designed for continuity across the Kuwexa website'
+    ],
+    experiencePillars: [
+      {
+        title: 'Category-led discovery',
+        copy: 'The catalog is designed so buyers can jump straight into the product family they need instead of scrolling through one long list.'
+      },
+      {
+        title: 'Better buyer context',
+        copy: 'Each product page can show images, highlights, quantity details, and supporting links before the enquiry is even submitted.'
+      },
+      {
+        title: 'Commercial continuity',
+        copy: 'The catalog stays aligned with the parent-company story so wholesale discovery feels credible, connected, and easy to follow.'
+      }
+    ],
+    journeySteps: [
+      {
+        step: '01',
+        title: 'Shape the category structure',
+        copy: 'Organize products into clear wholesale groups such as dry fruits, spices, woollen products, or cereals and grains.'
+      },
+      {
+        step: '02',
+        title: 'Present the product details',
+        copy: 'Add descriptions, highlights, order details, and multiple images for every product record.'
+      },
+      {
+        step: '03',
+        title: 'Capture product-linked enquiries',
+        copy: 'Let buyers choose one or more products in a single enquiry so the sales follow-up starts with proper context.'
+      }
+    ],
+    highlightStats: [
+      { value: 'Bulk', label: 'Wholesale discovery' },
+      { value: 'Multi', label: 'Product enquiries' },
+      { value: 'One', label: 'Company website' }
+    ],
+    audiences: [
+      'Wholesale buyers exploring multiple product lines',
+      'Procurement teams requesting quotes for multiple products',
+      'Partners needing a clear product discovery and enquiry flow'
+    ]
+  }
+];
 
 function normalizeProfileItems(value, fallback = []) {
   if (Array.isArray(value)) {
@@ -466,134 +700,226 @@ function resolveServiceProfile(service = {}) {
 }
 
 function getHomeContent({ services = [], products = [], projects = [], posts = [], jobs = [] }) {
+  const divisions = getDivisionDirectory();
+
   return {
-    heroTitle: 'Systems for scalable global commerce.',
-    heroSubtitle: 'Kuwexa Private Limited bridges physical supply chains and digital innovation through global trade, consumer commerce, and technology enablement.',
+    heroTitle: 'Kuwexa brings trade, technology, and growth into one clear operating company.',
+    heroSubtitle: 'Kuwexa Private Limited brings digital innovation, consumer commerce, and B2B supply capability into one structured organization with clearer accountability and direction.',
+    heroChips: [
+      'Kuwexa parent company',
+      'Trade + digital execution',
+      'Three operating divisions'
+    ],
+    companyDossier: [
+      { label: 'Company Model', value: 'A parent-company presence built to guide people with more clarity and confidence.' },
+      { label: 'Operating Style', value: 'Structured execution, cleaner ownership, and public communication that feels accountable.' },
+      { label: 'Commercial Lens', value: 'Trade-aware thinking shaped around practical growth conversations instead of vague branding.' },
+      { label: 'Brand Direction', value: 'A long-term Kuwexa identity designed to scale without losing consistency or trust.' }
+    ],
+    introParagraphs: [
+      'Kuwexa Private Limited operates as an organization, not a generic brand shell. It brings together global ecommerce perspective, B2B import-export thinking, and technology enablement so every public touchpoint supports a real operating model.',
+      'From division discovery to wholesale enquiries and digital execution conversations, the company website is designed to guide people toward the right part of the business with clarity and confidence.'
+    ],
+    identityCards: [
+      {
+        title: 'Global ecommerce perspective',
+        copy: 'Kuwexa is designed for businesses that need broader market reach, stronger digital presentation, and clearer operating structure.'
+      },
+      {
+        title: 'B2B import-export mindset',
+        copy: 'The company story is grounded in real supply-side thinking, not only marketing language, which gives the B2B experience more practical depth.'
+      },
+      {
+        title: 'Technology enablement',
+        copy: 'CodexWEBZ supports organizations with websites, tailored digital experiences, and practical technology delivery that improves visibility and execution.'
+      }
+    ],
+    visionCard: {
+      title: 'Vision',
+      copy: 'To build a globally trusted organization where commerce and technology work together to create sustainable progress across markets.'
+    },
+    missionCard: {
+      title: 'Mission',
+      copy: 'To support businesses with dependable trade solutions, stronger digital presence, and practical execution that enables steady growth.'
+    },
+    ethosCard: {
+      title: 'Delivery with ethics',
+      copy: 'Kuwexa aims to be the trusted global partner for ecommerce and technology by turning ambition into repeatable business performance.'
+    },
     proofStats: [
       {
         value: '3',
-        label: 'Core operating pillars',
-        copy: 'Global trade, consumer lifestyle commerce, and CodexWEBZ digital innovation work together inside one hybrid parent.'
+        label: 'Focused divisions',
+        copy: 'CodexWEBZ, Kuwexa Lifestyle, and Kuwexa B2B each serve a distinct role inside the parent company.'
       },
       {
         value: '1',
-        label: 'Hybrid operating model',
-        copy: 'Kuwexa combines physical supply chains with digital systems so execution stays grounded in real operations.'
+        label: 'Parent identity',
+        copy: 'The main Kuwexa website now acts as the company layer that introduces the divisions and connects visitors to the right destination.'
       },
       {
-        value: 'Ethics',
-        label: 'Delivery philosophy',
-        copy: 'The organization is built around operational discipline, documented outcomes, and predictable performance.'
+        value: 'B2B',
+        label: 'Wholesale presence',
+        copy: 'The wholesale catalog, product detail, and buyer enquiries live naturally inside the main Kuwexa company experience.'
       },
       {
-        value: 'Global',
-        label: 'Growth direction',
-        copy: 'The mission is to help businesses expand their reach with dependable commerce and technology infrastructure.'
+        value: 'Live',
+        label: 'Separate destinations',
+        copy: 'Division detail pages can route visitors to dedicated properties like CodexWEBZ and Kuwexa Lifestyle while keeping B2B on the company domain.'
       }
     ],
+    divisions,
     highlights: [
       {
-        title: 'Kuwexa Global Trade',
-        copy: 'Physical supply chain understanding gives the organization stronger commercial context, sourcing awareness, and operational realism.'
+        title: 'Defined organizational structure',
+        copy: 'Kuwexa introduces the parent company, the business units, and the right path for partners, buyers, and clients without mixing the messages.'
       },
       {
-        title: 'Consumer lifestyle commerce',
-        copy: 'Through Kuwexa.com, the business is building a B2C ecosystem around lifestyle, fashion, home essentials, and modern customer access.'
+        title: 'Commercial and digital capability',
+        copy: 'The organization combines supply-side understanding, lifestyle commerce, and digital execution so each division contributes to a stronger shared company presence.'
       },
       {
-        title: 'CodexWEBZ digital innovation',
-        copy: 'The technology division builds websites, digital systems, and scalable platforms that improve efficiency and customer engagement.'
+        title: 'Credibility through clarity',
+        copy: 'Leadership visibility, disciplined presentation, and cleaner routing make the organization feel accountable instead of promotional.'
       }
     ],
     workflow: [
       {
         step: '01',
-        title: 'Map the operating reality',
-        copy: 'Every engagement starts with the commercial, operational, or customer challenge that needs structure.'
+        title: 'Start with the organization',
+        copy: 'Present Kuwexa as the parent company so visitors first understand the business model, leadership direction, and company structure.'
       },
       {
         step: '02',
-        title: 'Design the right system',
-        copy: 'Trade workflows, digital storefronts, and technology platforms are aligned to the real operating model instead of isolated tasks.'
+        title: 'Guide each audience clearly',
+        copy: 'Move partners, buyers, and digital clients toward the correct division based on their commercial or operational need.'
       },
       {
         step: '03',
-        title: 'Document and deliver',
-        copy: 'Execution focuses on discipline, documented outcomes, and reusable systems that teams can run with confidence.'
+        title: 'Support deeper conversations',
+        copy: 'Use richer division pages, product detail, and leadership visibility to give every next step more context and trust.'
       },
       {
         step: '04',
-        title: 'Scale with confidence',
-        copy: 'The result is a stronger ecosystem for trade, commerce, and technology-enabled growth over time.'
+        title: 'Keep the company current',
+        copy: 'Products, team visibility, and division information stay current so the public experience remains credible as the business grows.'
       }
     ],
     ecosystemPillars: [
       {
-        label: 'Physical Supply Chain',
-        title: 'Kuwexa Global Trade',
-        copy: 'B2B import-export capability built around dependable sourcing, structured operations, and wider market access.',
-        href: '/about-us'
-      },
-      {
-        label: 'Digital Commerce',
-        title: 'Kuwexa.com',
-        copy: 'A growing consumer lifestyle platform connecting curated products with modern digital commerce experiences.',
-        href: '/services'
-      },
-      {
         label: 'Digital Innovation',
         title: 'CodexWEBZ',
-        copy: 'Websites, operational systems, and scalable platforms that strengthen efficiency, visibility, and customer engagement.',
-        href: '/services'
+        copy: 'Websites, software, automation, and digital execution under the Kuwexa umbrella.',
+        href: '/divisions/codexwebz'
+      },
+      {
+        label: 'Lifestyle Commerce',
+        title: 'Kuwexa Lifestyle',
+        copy: 'The consumer division focused on curated lifestyle categories and modern ecommerce presentation.',
+        href: '/divisions/kuwexa-lifestyle'
+      },
+      {
+        label: 'Business Supply',
+        title: 'Kuwexa B2B',
+        copy: 'Category-led wholesale discovery with product detail and a clearer buyer enquiry path.',
+        href: '/b2b'
       }
     ],
     hybridAdvantage: [
       {
         title: 'Operational discipline',
-        copy: 'The Kuwexa way replaces reactive firefighting with documented, repeatable execution.'
+        copy: 'Kuwexa is built around documented, more predictable execution instead of reactive firefighting.'
       },
       {
-        title: 'Systems over shortcuts',
-        copy: 'Technology and commerce are treated as operating systems, not disconnected tasks or vague promises.'
+        title: 'Substance over shortcuts',
+        copy: 'The company treats trade, digital presentation, and follow-through as one connected standard rather than separate tasks.'
       },
       {
         title: 'Predictable performance',
-        copy: 'Trade awareness plus digital capability creates clearer delivery expectations and stronger long-term sustainability.'
+        copy: 'The goal is to reduce chaos, make outcomes clearer, and help businesses scale with steadier control.'
       }
+    ],
+    hybridContrast: {
+      industryNorm: [
+        'Reactive firefighting',
+        'Unstable technology',
+        'Opaque supply chains',
+        'Vague promises'
+      ],
+      kuwexaWay: [
+        'Operational discipline',
+        'Substance over shortcuts',
+        'Documented outcomes',
+        'Predictable performance'
+      ],
+      closingQuote: 'Trade awareness, digital clarity, and disciplined execution move together at Kuwexa.'
+    },
+    ecosystemMap: [
+      {
+        label: 'Parent Company',
+        title: 'Kuwexa Private Limited',
+        copy: 'The main company layer that introduces the business, defines the structure, and connects visitors to the correct division.'
+      },
+      {
+        label: 'Physical Supply Chain',
+        title: 'Kuwexa B2B',
+        copy: 'Wholesale discovery, product categories, and product-linked enquiries shaped for real supply-side conversations.'
+      },
+      {
+        label: 'Consumer Lifestyle',
+        title: 'Kuwexa Lifestyle',
+        copy: 'The B2C side of the organization with curated categories such as lifestyle goods, fashion, home essentials, and accessories.'
+      },
+      {
+        label: 'Digital Innovation',
+        title: 'CodexWEBZ',
+        copy: 'The technology division delivering websites, digital experiences, and dependable execution support.'
+      }
+    ],
+    consumerCategories: [
+      'Lifestyle goods',
+      'Fashion',
+      'Home essentials',
+      'Consumer accessories'
     ],
     leadershipSnapshot: [
       { name: 'Govind Jha', role: 'CEO and Co-Founder' },
       { name: 'Kundan Kumar', role: 'COO and Co-Founder' },
       { name: 'Ravi Raj', role: 'CFO and Co-Founder' }
     ],
-    divisionServicesLabel: 'Technology Enablement by CodexWEBZ',
+    divisionServicesLabel: 'Division Directory',
+    b2bHighlights: [
+      'Wholesale categories are presented with the same Kuwexa identity used across the wider organization.',
+      'Each product page gives buyers clearer detail, images, MOQ guidance, and a more credible first impression.',
+      'One enquiry form allows buyers to express interest in multiple products within a single conversation.'
+    ],
     faqs: [
       {
         question: 'What is Kuwexa Private Limited?',
-        answer: 'Kuwexa Private Limited is a hybrid company working across global ecommerce, B2B import-export, and technology enablement.'
+        answer: 'Kuwexa Private Limited is the parent company website that introduces the business and its three operating divisions.'
       },
       {
         question: 'How does CodexWEBZ fit into Kuwexa?',
-        answer: 'CodexWEBZ is the digital innovation and technology division of Kuwexa, focused on websites, digital systems, and scalable platforms.'
+        answer: 'CodexWEBZ is the digital innovation division of Kuwexa, focused on websites, software, automation, and digital execution.'
       },
       {
-        question: 'What does Kuwexa.com represent?',
-        answer: 'Kuwexa.com is the consumer lifestyle commerce arm, focused on curated B2C categories such as fashion, home essentials, and accessories.'
+        question: 'What is Kuwexa Lifestyle?',
+        answer: 'Kuwexa Lifestyle is the consumer-facing division focused on lifestyle commerce and curated product experiences.'
       },
       {
-        question: 'Why is the hybrid model important?',
-        answer: 'It lets Kuwexa connect physical supply-chain understanding with digital systems, so businesses get solutions shaped by real operating needs.'
+        question: 'What can visitors do on the B2B section?',
+        answer: 'Visitors can browse products by category, open product details, and submit one enquiry for multiple selected products.'
       }
     ],
     capabilityBands: [
-      'Global Trade',
-      'B2B Import Export',
-      'Consumer Lifestyle',
-      'Digital Commerce',
+      'Parent Company',
       'CodexWEBZ',
-      'Scalable Platforms'
+      'Kuwexa Lifestyle',
+      'Kuwexa B2B',
+      'Wholesale Categories',
+      'Buyer Enquiries'
     ],
-    jobsSummary: jobs.length ? `${jobs.length} open roles are currently live across the growing Kuwexa ecosystem.` : 'Career workflows are ready whenever new commerce or technology roles are published.'
+    jobsSummary: jobs.length ? `${jobs.length} open roles are currently live across the Kuwexa organization.` : 'This website is now centered on the company story and its divisions.'
   };
 }
 
@@ -607,11 +933,11 @@ function getServicesPageContent(services = []) {
     engagementModels: [
       {
         title: 'Hybrid commerce enablement',
-        copy: 'Best for businesses aligning sourcing, market access, storefront visibility, and operational systems together.'
+        copy: 'Best for businesses aligning sourcing, market access, customer presentation, and company growth together.'
       },
       {
-        title: 'Digital commerce and platform build',
-        copy: 'Ideal for teams launching ecommerce systems, custom software, business applications, or scalable digital experiences.'
+        title: 'Digital commerce and capability build',
+        copy: 'Ideal for teams launching ecommerce experiences, custom software, business applications, or stronger digital presence.'
       },
       {
         title: 'Long-term support and collaboration',
@@ -621,19 +947,19 @@ function getServicesPageContent(services = []) {
     serviceDepth: [
       {
         title: 'Technology inside a broader operating model',
-        copy: 'These capabilities sit inside the wider Kuwexa ecosystem, which means the work is shaped by real trade and commerce realities, not generic templates.'
+        copy: 'These capabilities sit inside the wider Kuwexa organization, which means the work is shaped by real trade and commerce realities, not generic templates.'
       },
       {
         title: 'Commerce and customer journeys',
-        copy: 'Ecommerce platforms, business software, internal tools, and integrations are structured around practical workflows and measurable outcomes.'
+        copy: 'Ecommerce experiences, business tools, customer journeys, and integrations are shaped around practical commercial needs and measurable outcomes.'
       },
       {
         title: 'Visibility, branding, and growth',
-        copy: 'SEO, digital marketing, social media, and content systems help businesses present themselves with more clarity and stronger reach.'
+        copy: 'SEO, digital marketing, social media, and content direction help businesses present themselves with more clarity and stronger reach.'
       },
       {
         title: 'Reliable post-launch continuity',
-        copy: 'Maintenance, infrastructure, monitoring, and technical support keep the systems stable, manageable, and ready for future scale.'
+        copy: 'Maintenance, infrastructure, monitoring, and technical support keep the work stable, manageable, and ready for future growth.'
       }
     ],
     workflow: [
@@ -645,23 +971,23 @@ function getServicesPageContent(services = []) {
       {
         step: '02',
         title: 'Define the right capability mix',
-        copy: 'The scope is aligned to business priorities, platform needs, and the most practical implementation route.'
+        copy: 'The scope is aligned to business priorities, audience needs, and the most practical delivery route.'
       },
       {
         step: '03',
-        title: 'Build the working system',
-        copy: 'Frontend, backend, integrations, content structure, and workflow logic are delivered as one consistent operating layer.'
+        title: 'Build the working solution',
+        copy: 'Design, development, integrations, content structure, and quality checks are delivered as one coordinated effort.'
       },
       {
         step: '04',
         title: 'Support steady growth',
-        copy: 'After launch, the system can continue improving through support, optimization, and additional delivery phases.'
+        copy: 'After launch, the work can continue improving through support, refinement, and additional delivery phases.'
       }
     ],
     audiences: [
       'Businesses expanding into wider digital or global markets',
       'Brands building consumer commerce experiences and structured online visibility',
-      'Organizations replacing fragmented tools with dependable digital systems',
+      'Organizations replacing fragmented digital work with clearer direction and dependable execution',
       'SMEs needing scalable websites, commerce flows, and operational clarity',
       'Partner teams seeking dependable technology execution through CodexWEBZ'
     ],
@@ -672,7 +998,7 @@ function getServicesPageContent(services = []) {
       },
       {
         question: 'Can the services be combined?',
-        answer: 'Yes. They can be delivered individually or combined into a broader ecosystem that supports trade, commerce, visibility, and operations together.'
+        answer: 'Yes. They can be delivered individually or combined into a broader company offering that supports trade, commerce, visibility, and operations together.'
       },
       {
         question: 'Is this only about websites?',
@@ -686,9 +1012,9 @@ function getProductsPageContent(products = []) {
   return {
     categories: ['All Products', ...new Set(products.map((product) => (product.status === 'published' ? 'Published' : 'Draft')))],
     values: [
-      'Each ecosystem platform can be presented with overview, features, screenshots, technology stack, and action links.',
-      'Admin and manager roles can update product content, images, alt text, and publishing state directly from the dashboard.',
-      'The platform module lets Kuwexa present internal tools, venture products, or managed software experiences with the same brand system.'
+      'Each software offering can be presented with overview, features, screenshots, technology stack, and action links.',
+      'Product information, visuals, and publishing status can stay current as the Kuwexa portfolio grows.',
+      'This page helps Kuwexa present internal tools, venture products, or digital offerings with one consistent identity.'
     ]
   };
 }
@@ -698,8 +1024,8 @@ function getProjectsPageContent(projects = []) {
     categories: ['All', ...new Set(projects.map((project) => project.category).filter(Boolean))],
     values: [
       'Each initiative connects business objective, delivery approach, technology choices, and measurable outcome.',
-      'Execution stories are presented as practical operating systems rather than visual mockups alone.',
-      'All initiative records stay editable from the dashboard after launch.'
+      'Execution stories are presented as real business case studies rather than surface-level mockups alone.',
+      'Each initiative can stay current as the Kuwexa portfolio evolves.'
     ]
   };
 }
@@ -709,8 +1035,8 @@ function getBlogPageContent(posts = []) {
     categories: ['All', ...new Set(posts.map((post) => post.category).filter(Boolean))],
     editorialPrinciples: [
       'Write from implementation and operating experience, not abstract trend-chasing.',
-      'Connect digital growth with real systems and commercial clarity.',
-      'Keep the CMS practical enough for teams to maintain without engineering bottlenecks.'
+      'Connect digital growth with real business context and commercial clarity.',
+      'Keep the editorial process clear enough to maintain with consistency and focus.'
     ]
   };
 }
@@ -742,11 +1068,11 @@ function getCareersPageContent(jobs = []) {
     faqs: [
       {
         question: 'How are applications managed?',
-        answer: 'Resumes, statuses, and candidate workflow all sit inside the management dashboard with role-based access and image-alt-ready media handling.'
+        answer: 'Applications are reviewed through an organized internal hiring process with clear status tracking and coordinated follow-up.'
       },
       {
         question: 'What kind of team is Kuwexa building?',
-        answer: 'Roles support the broader hybrid ecosystem, including digital platforms, commerce operations, marketing visibility, and structured delivery.'
+        answer: 'Roles support the broader Kuwexa organization across commerce, visibility, technology, and disciplined delivery.'
       }
     ]
   };
@@ -756,70 +1082,89 @@ function getContactPageContent() {
   return {
     promises: [
       'Clear discovery and response process for every inquiry',
-      'Lead record created inside the dashboard for structured follow-up',
-      'Commercial and operational context reviewed before implementation begins',
-      'Delivery support aligned to practical timelines and market realities'
+      'Every inquiry is recorded for organized follow-up',
+      'Division-specific context captured before the team responds',
+      'Follow-up routed to the right business line from the start'
     ],
     engagementModels: [
       {
-        title: 'Trade and ecosystem conversations',
-        copy: 'Best for businesses exploring supply-chain support, B2B trade alignment, or wider market access.'
+        title: 'Parent company and partnership conversations',
+        copy: 'Best for introductions, partnerships, company-level opportunities, or questions about the Kuwexa organization.'
       },
       {
-        title: 'Digital commerce and platforms',
-        copy: 'Ideal for website builds, ecommerce systems, customer journeys, and digital platform strategy.'
+        title: 'Division discovery and redirection',
+        copy: 'Useful when you know the brand but need help reaching the correct division such as CodexWEBZ, Kuwexa Lifestyle, or Kuwexa B2B.'
       },
       {
-        title: 'Technology enablement by CodexWEBZ',
-        copy: 'Useful for custom software, integrations, SEO systems, maintenance, and operational digital support.'
+        title: 'B2B product enquiries',
+        copy: 'Use the dedicated B2B page for product-specific requests, especially when selecting multiple products in one enquiry.'
       }
     ],
     contactCards: [
       {
-        title: 'Plan a new ecosystem move',
-        copy: 'Best for new trade, digital commerce, platform, or technology initiatives.'
+        title: 'Reach the right division',
+        copy: 'Start here if you need help choosing between CodexWEBZ, Kuwexa Lifestyle, or the B2B catalog.'
       },
       {
-        title: 'Improve an existing system',
-        copy: 'Useful when the current workflow, storefront, website, or software platform needs stronger structure and usability.'
+        title: 'Discuss the company',
+        copy: 'Useful for parent company conversations, partnerships, introductions, and high-level business opportunities.'
       },
       {
-        title: 'Build long-term support',
-        copy: 'Ideal for companies that need maintenance, issue resolution, growth support, and continuous improvement.'
+        title: 'Share a detailed requirement',
+        copy: 'Every message is captured with context so the team can respond with continuity.'
       }
+    ],
+    conversationAreas: [
+      {
+        title: 'Parent company direction',
+        copy: 'Use this route when the conversation is about Kuwexa as an organization, long-term collaboration, or business-level introductions.'
+      },
+      {
+        title: 'Trade and B2B product discovery',
+        copy: 'This is the right path for wholesale requirements, category-level questions, sourcing conversations, or product-linked enquiries.'
+      },
+      {
+        title: 'Digital growth and CodexWEBZ',
+        copy: 'Use this path for company websites, digital experiences, automation, and broader technology support.'
+      }
+    ],
+    supportPrinciples: [
+      'Operational discipline from the first inquiry',
+      'Documented follow-up and clear routing',
+      'Predictable communication across the right division'
     ],
     responseSteps: [
       {
         step: '01',
         title: 'Inquiry review',
-        copy: 'The request is reviewed and added to the lead management workflow for structured follow-up.'
+        copy: 'The request is reviewed so the conversation starts with context and clarity.'
       },
       {
         step: '02',
-        title: 'Requirement clarification',
-        copy: 'The team aligns on business goals, current gaps, and the most practical direction for delivery.'
+        title: 'Division alignment',
+        copy: 'The team identifies whether the request belongs to the parent company, CodexWEBZ, Kuwexa Lifestyle, or the B2B flow.'
       },
       {
         step: '03',
         title: 'Recommended next step',
-        copy: 'A suitable engagement path is outlined for discussion, scoping, implementation, or support.'
+        copy: 'A clear response path is shared so the conversation moves to the right team or division.'
       }
     ],
     checklist: [
-      'Your business objective or target outcome',
-      'The current problem, gap, or market/operations issue',
-      'Required integrations, channels, or systems involved',
-      'Expected timeline or urgency',
-      'Whether the need is a new build, upgrade, trade support, or ongoing partnership'
+      'Which division or topic your message is about',
+      'Your company name and role',
+      'What outcome or discussion you are looking for',
+      'Any timeline, quantity, or urgency details',
+      'Whether this is a general inquiry or a product-specific B2B request'
     ],
     faqs: [
       {
         question: 'What should be included in the inquiry?',
-        answer: 'Share the business goal, current challenge, required channel or service, timeline, and any systems that need to be integrated or improved.'
+        answer: 'Share the division you are interested in, the business context, what outcome you want, and any timeline or quantity details that matter.'
       },
       {
-        question: 'Can Kuwexa handle both strategy and execution?',
-        answer: 'Yes. The organization can support planning, commerce workflows, websites, software interfaces, backend workflows, and long-term operational delivery.'
+        question: 'Where should product-specific wholesale enquiries go?',
+        answer: 'Use the B2B page so you can choose one or more products directly from the catalog and send a product-linked enquiry.'
       }
     ]
   };
@@ -828,95 +1173,157 @@ function getContactPageContent() {
 function getAboutPageContent() {
   return {
     eyebrow: 'About Kuwexa',
-    title: 'A hybrid parent company where commerce and technology work together.',
-    intro: 'Kuwexa Private Limited is a hybrid company working across global ecommerce, B2B import-export, and technology enablement.',
-    overview: 'Through Kuwexa.com, the organization is building a consumer lifestyle commerce platform, while CodexWEBZ supports organizations by building websites, digital systems, and scalable platforms that improve efficiency and customer engagement.',
-    summary: 'By combining trade capabilities with technology support, Kuwexa focuses on helping businesses operate with clarity, structure, and long-term sustainability.',
+    title: 'A parent company where commerce, trade, and technology move with purpose.',
+    intro: 'Kuwexa Private Limited works across global ecommerce, B2B import-export, and technology enablement with a model built to reduce chaos and improve long-term business performance.',
+    overview: 'Through Kuwexa.com, the company builds consumer lifestyle commerce. Through CodexWEBZ, it supports organizations with websites and digital capability. Through Kuwexa B2B, it presents wholesale products through a structured company catalog.',
+    summary: 'That combination makes Kuwexa more than a marketing brand. It is an operating organization connecting trade capability, consumer commerce, and digital execution.',
     highlights: [
       {
-        title: 'Hybrid advantage',
-        copy: 'Kuwexa connects physical supply chains and digital innovation so execution is grounded in real business realities.'
+        title: 'Hybrid operating model',
+        copy: 'Kuwexa combines physical supply-chain understanding with digital capability, which gives the company a more practical business foundation.'
       },
       {
-        title: 'Systems over shortcuts',
-        copy: 'The operating philosophy emphasizes discipline, documentation, and predictable performance over reactive firefighting.'
+        title: 'Clear division structure',
+        copy: 'The parent website explains the organization clearly while allowing each division to grow through a more focused public destination.'
       },
       {
-        title: 'Delivery with ethics',
-        copy: 'The organization is designed to turn ambition into repeatable business performance with dependable methods and clear outcomes.'
+        title: 'Ethics and execution together',
+        copy: 'The business is shaped around disciplined delivery, documented outcomes, and more predictable performance rather than vague promises.'
+      }
+    ],
+    identityCards: [
+      {
+        title: 'Global ecommerce',
+        copy: 'Kuwexa helps businesses access wider markets and expand their reach across digital and global trade environments.'
+      },
+      {
+        title: 'B2B import-export',
+        copy: 'The company understands supply-side conversations, product-led buying behavior, and the need for clearer trade communication.'
+      },
+      {
+        title: 'Technology enablement',
+        copy: 'CodexWEBZ supports organizations with websites, digital capability, automation, and dependable delivery.'
       }
     ],
     narrative: [
-      'Kuwexa is structured as a parent organization that supports growth through trade capability, digital commerce, and technology systems rather than treating them as isolated silos.',
-      'The model creates a stronger bridge between market access, sourcing, customer experience, and the digital infrastructure needed to scale steadily.',
-      'This hybrid structure helps businesses move from chaos to capability through documented processes, clearer decisions, and more dependable execution.'
+      'Kuwexa Private Limited is a hybrid company working across global ecommerce, B2B import-export, and technology enablement.',
+      'By combining trade capability with digital execution, the company helps businesses operate with more clarity, stronger connectivity, and better long-term sustainability.',
+      'The website now reflects that structure more clearly by presenting Kuwexa as the parent company, then guiding visitors into the right division experience.'
     ],
-    vision: 'To build a globally trusted ecosystem where commerce and technology work together to empower businesses and drive sustainable success across markets.',
+    vision: 'To build a globally trusted organization where commerce and technology work together to empower businesses and support sustainable success across markets.',
     visionPoints: [
-      'Create a globally trusted ecosystem where commerce and technology reinforce each other.',
-      'Empower businesses to grow with stronger market connectivity, clearer systems, and sustainable execution.',
-      'Build long-term capability instead of short-term patches.'
+      'Build trust across both trade and digital relationships.',
+      'Create a business model where physical and digital execution reinforce one another.',
+      'Support sustainable performance through repeatable discipline and long-term clarity.'
     ],
-    mission: 'To support businesses with dependable trade solutions and digital systems that enhance operations, improve connectivity, and enable steady growth.',
+    mission: 'To support businesses with dependable trade solutions, stronger digital presence, and practical execution that enables steady growth.',
     focusAreas: [
-      'Global trade and market access',
-      'Consumer ecommerce ecosystem building',
-      'Digital innovation through CodexWEBZ',
-      'Operational systems that support long-term sustainability'
+      'Global ecommerce reach and market access',
+      'Consumer lifestyle commerce through Kuwexa.com',
+      'Technology enablement through CodexWEBZ',
+      'Wholesale product discovery and enquiry through Kuwexa B2B'
     ],
     serviceGroups: [
-      'Kuwexa Global Trade',
-      'Kuwexa.com Consumer Lifestyle',
-      'CodexWEBZ Digital Innovation',
-      'B2B Import Export',
-      'Digital Commerce Infrastructure',
-      'Scalable Business Systems'
+      'Global Ecommerce',
+      'B2B Import-Export',
+      'CodexWEBZ',
+      'Kuwexa Lifestyle',
+      'Kuwexa B2B',
+      'Delivery With Ethics',
+      'Digital Capability'
     ],
     principles: [
       {
-        title: 'Operational discipline',
-        copy: 'The Kuwexa way replaces reactive firefighting with systems that are documented, understandable, and manageable.'
+        title: 'Delivery with ethics',
+        copy: 'Kuwexa aims to be a trusted partner by connecting ambition with repeatable performance rather than short-term optics.'
       },
       {
-        title: 'Documented outcomes',
-        copy: 'Success is measured through clarity, consistency, and the ability to repeat performance across markets and channels.'
+        title: 'Substance over shortcuts',
+        copy: 'Technology, supply-side coordination, and public communication are treated with long-term seriousness, not quick fixes.'
       },
       {
         title: 'Predictable performance',
-        copy: 'The organization aims to make commerce and technology execution more dependable, transparent, and sustainable.'
+        copy: 'The company values documented outcomes, steady follow-through, and operational discipline across the organization.'
       }
     ],
     audience: [
-      'Businesses expanding into wider local or global markets',
-      'Brands building consumer commerce and digital presence together',
-      'Organizations needing websites, software, or scalable digital systems',
-      'Partners seeking structured trade and technology support'
+      'Visitors learning what Kuwexa is as a company',
+      'Partners trying to reach the right division',
+      'Businesses exploring trade, consumer, or technology collaboration',
+      'Customers evaluating Kuwexa Lifestyle, B2B supply, or CodexWEBZ'
     ],
     approach: [
       {
-        title: 'Understand the market and operating need',
-        copy: 'Every engagement starts with the company context, the operational challenge, and the intended growth outcome.'
+        title: 'Understand the operating reality',
+        copy: 'Start from the actual business model, market need, supply challenge, or digital requirement involved.'
       },
       {
-        title: 'Align commerce and systems',
-        copy: 'Trade workflows, ecommerce channels, and technology structure are planned around clarity, usability, and maintainability.'
+        title: 'Build the right business route',
+        copy: 'Direct people toward the right mix of trade support, consumer presentation, or digital capability instead of forcing everything into one generic message.'
       },
       {
-        title: 'Deliver with documented execution',
-        copy: 'The build phase focuses on reliable execution, stable systems, and practical operating documentation.'
+        title: 'Document and deliver',
+        copy: 'Give every public and internal touchpoint more structure so the result is dependable, not just visually polished.'
       },
       {
-        title: 'Support steady scale',
-        copy: 'After launch, the ecosystem can keep improving through maintenance, optimization, and ongoing commercial or technical support.'
+        title: 'Scale with discipline',
+        copy: 'Keep the business flexible enough to grow while preserving clearer ownership, communication, and operational continuity.'
+      }
+    ],
+    hybridContrast: {
+      industryNorm: [
+        'Reactive firefighting',
+        'Unstable technology',
+        'Opaque supply chains',
+        'Vague promises'
+      ],
+      kuwexaWay: [
+        'Operational discipline',
+        'Substance over shortcuts',
+        'Documented outcomes',
+        'Predictable performance'
+      ],
+      closingQuote: 'Trade awareness, digital clarity, and disciplined execution move together at Kuwexa.'
+    },
+    ethos: {
+      title: 'Our ethos',
+      quote: 'Delivery with ethics',
+      copy: 'The Kuwexa position is simple: credibility should come from steady business performance, clearer communication, and dependable delivery rather than noise.',
+      points: [
+        'Trusted partnership built on clarity and continuity',
+        'Business ambition turned into more repeatable performance',
+        'Technology and commerce aligned to real operational use'
+      ]
+    },
+    ecosystemMap: [
+      {
+        label: 'Parent Company',
+        title: 'Kuwexa Private Limited',
+        copy: 'The company layer that explains the structure, holds the narrative together, and directs visitors to the right business line.'
+      },
+      {
+        label: 'Consumer Lifestyle (B2C)',
+        title: 'Kuwexa Lifestyle',
+        copy: 'Curated lifestyle goods, fashion, home essentials, and consumer accessories shaped for modern digital commerce.'
+      },
+      {
+        label: 'Business Supply (B2B)',
+        title: 'Kuwexa B2B',
+        copy: 'Structured product discovery and trade-friendly enquiries for wholesale categories like dry fruits, spices, woollens, and grains.'
+      },
+      {
+        label: 'Digital Innovation',
+        title: 'CodexWEBZ',
+        copy: 'Websites, digital experiences, and dependable delivery that improve visibility and customer confidence.'
       }
     ],
     advantages: [
-      'Hybrid parent organization across trade and technology',
-      'Consumer, B2B, and digital capability inside one ecosystem',
-      'CodexWEBZ as a dedicated digital innovation division',
-      'Strong focus on ethics, documented outcomes, and sustainable growth'
+      'A business story grounded in both trade and digital execution',
+      'Three clearer divisions with more useful public roles',
+      'Dedicated destinations where needed for CodexWEBZ and Kuwexa Lifestyle',
+      'A wholesale catalog that stays naturally connected to the main company website'
     ],
-    closing: 'At its core, Kuwexa believes businesses scale better when commerce and technology reinforce each other. Whether the need is market expansion, digital commerce, or scalable systems, the goal is to become a trusted long-term partner.'
+    closing: "Kuwexa's strength is not only that it builds websites or presents products. It is that the company understands both the physical and digital sides of growth and uses that to create a clearer, more dependable organization."
   };
 }
 
@@ -924,25 +1331,159 @@ function getTeamPageContent(teamShowcase = { leadership: [], employees: [] }) {
   return {
     eyebrow: 'Leadership',
     title: 'Leadership, specialists, and delivery roles behind Kuwexa.',
-    intro: 'Kuwexa is guided by leadership focused on hybrid commerce and supported by teams turning business needs into trade, digital, and technology execution.',
+    intro: 'Kuwexa is guided by leadership responsible for the parent company and the divisions operating beneath it.',
     values: [
       {
-        title: 'Business-aligned thinking',
-        copy: 'The team approaches delivery with a clear understanding of both practical commercial needs and technical execution.'
+        title: 'Delivery with ethics',
+        copy: 'The team is expected to turn strategy into dependable outcomes without hiding behind vague promises.'
       },
       {
-        title: 'Dependable execution',
-        copy: 'Every profile contributes to structured delivery, stable systems, and reliable support across initiatives.'
+        title: 'Documented outcomes',
+        copy: 'Leadership and delivery roles work toward clearer ownership, stronger continuity, and more visible execution quality.'
       },
       {
-        title: 'Growth with discipline',
-        copy: 'The goal is to build systems and workflows that remain scalable, manageable, and practical for businesses over time.'
+        title: 'Predictable performance',
+        copy: 'The aim is to make growth more stable by combining discipline, communication, and better coordination across the business.'
       }
     ],
+    operatingBeliefs: [
+      'Operational discipline',
+      'Substance over shortcuts',
+      'Clarity across divisions',
+      'Repeatable business performance'
+    ],
+    ethosQuote: 'Turning ambition into repeatable business performance.',
     metrics: [
       { label: 'Leadership Profiles', value: String(teamShowcase.leadership?.length || 0) },
       { label: 'Employee Profiles', value: String(teamShowcase.employees?.length || 0) },
       { label: 'Core Pillars', value: '3' }
+    ]
+  };
+}
+
+function getDivisionDirectory() {
+  return divisionDirectory.map((division) => ({
+    ...division,
+    marketFocus: [...(division.marketFocus || [])],
+    primaryPoints: [...division.primaryPoints],
+    operatingModel: [...division.operatingModel],
+    signatureAreas: [...(division.signatureAreas || [])],
+    journeySteps: (division.journeySteps || []).map((item) => ({ ...item })),
+    experiencePillars: (division.experiencePillars || []).map((item) => ({ ...item })),
+    highlightStats: (division.highlightStats || []).map((item) => ({ ...item })),
+    audiences: [...division.audiences]
+  }));
+}
+
+function getDivisionBySlug(slug) {
+  const match = divisionDirectory.find((division) => division.slug === slug);
+  if (!match) {
+    return null;
+  }
+
+  return {
+    ...match,
+    marketFocus: [...(match.marketFocus || [])],
+    primaryPoints: [...match.primaryPoints],
+    operatingModel: [...match.operatingModel],
+    signatureAreas: [...(match.signatureAreas || [])],
+    journeySteps: (match.journeySteps || []).map((item) => ({ ...item })),
+    experiencePillars: (match.experiencePillars || []).map((item) => ({ ...item })),
+    highlightStats: (match.highlightStats || []).map((item) => ({ ...item })),
+    audiences: [...match.audiences]
+  };
+}
+
+function getB2BPageContent({ categories = [], products = [] } = {}) {
+  return {
+    categories,
+    productCountLabel: `${products.length} product${products.length === 1 ? '' : 's'} currently listed`,
+    tradeNarrative: [
+      'Kuwexa B2B sits inside a hybrid parent company that understands both supply-side reality and digital presentation.',
+      'The result is a public catalog built for clearer wholesale discovery, better product context, and a more confident first conversation.'
+    ],
+    categoryExamples: [
+      'Dry Fruits',
+      'Spices',
+      'Woollen Products',
+      'Cereals / Grains'
+    ],
+    introCards: [
+      {
+        title: 'Category menu',
+        copy: 'Each category shown on the public page is presented clearly so buyers can move quickly into the right product family.'
+      },
+      {
+        title: 'Product-first discovery',
+        copy: 'Every product can carry highlights, images, minimum order details, brochure links, and its own detail page inside the B2B catalog.'
+      },
+      {
+        title: 'Multi-product enquiries',
+        copy: 'Buyers can choose multiple products in one form submission, making the enquiry flow more practical for wholesale discussions.'
+      }
+    ],
+    buyerCommitments: [
+      {
+        title: 'Trade-friendly discovery',
+        copy: 'Categories help buyers move directly into the relevant product family instead of navigating a generic catalog.'
+      },
+      {
+        title: 'More usable product detail',
+        copy: 'Product pages can include highlights, multiple images, MOQ guidance, brochure links, and clearer tags before contact is made.'
+      },
+      {
+        title: 'Cleaner sales context',
+        copy: 'The enquiry form keeps selected products together so the conversation starts with the right business context.'
+      }
+    ],
+    buyerSteps: [
+      {
+        step: '01',
+        title: 'Browse by category',
+        copy: 'Use the category menu to move directly to the relevant product group.'
+      },
+      {
+        step: '02',
+        title: 'Open product details',
+        copy: 'Review product highlights, images, and minimum order information before making contact.'
+      },
+      {
+        step: '03',
+        title: 'Select multiple products',
+        copy: 'Choose one or more products in the enquiry form instead of sending separate requests.'
+      }
+    ],
+    checklist: [
+      'Company name and buyer contact details',
+      'One or more selected products',
+      'Required quantity, MOQ, or packaging notes',
+      'Target market, country, or delivery preference',
+      'Any brochure, pricing, or product detail questions'
+    ],
+    adminNotes: [
+      'Categories can represent dry fruits, spices, woollen products, cereals, grains, and other wholesale lines.',
+      'Each product can carry rich description, highlights, MOQ details, tags, and multiple supporting images.',
+      'Published categories and products appear across the B2B catalog and product detail pages.'
+    ],
+    supplyPrinciples: [
+      'Supply-side clarity with digital presentation',
+      'Multiple product selection in one enquiry',
+      'Wholesale categories kept clear and current',
+      'Detailed product pages for serious buyer review'
+    ],
+    faqs: [
+      {
+        question: 'Can one enquiry include multiple products?',
+        answer: 'Yes. The B2B enquiry form is built specifically so buyers can choose multiple products in one submission.'
+      },
+      {
+        question: 'Who controls the product categories and listings?',
+        answer: 'The Kuwexa team maintains the product categories and listings so the catalog stays accurate, organized, and ready for wholesale buyers.'
+      },
+      {
+        question: 'Can the B2B page show separate product details?',
+        answer: 'Yes. Every published product can have its own detail page with images, highlights, and supporting links.'
+      }
     ]
   };
 }
@@ -952,6 +1493,9 @@ module.exports = {
   stripHtml,
   resolveServiceProfile,
   getHomeContent,
+  getDivisionDirectory,
+  getDivisionBySlug,
+  getB2BPageContent,
   getServicesPageContent,
   getProductsPageContent,
   getProjectsPageContent,

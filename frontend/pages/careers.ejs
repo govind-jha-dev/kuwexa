@@ -6,7 +6,7 @@
     <%- include('../components/section-heading', {
       eyebrow: 'Careers',
       title: 'Join a team that builds with clarity, speed, and operational discipline.',
-      copy: 'The careers frontend is part of the same platform that stores resumes, manages application status, and gives managers a clean review workflow.'
+      copy: 'Careers at Kuwexa reflect the same standards of clarity, accountability, and long-term execution seen across the organization.'
     }) %>
     <div class="pattern-panel rounded-[2rem] p-8 shadow-sm ring-1 ring-primary/8">
       <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">How we work</p>
@@ -70,7 +70,7 @@
                   <span class="rounded-full bg-primary/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/58"><%= job.employment_type || 'Full-time' %></span>
                 </div>
                 <h2 class="mt-5 font-display text-3xl font-bold text-primary"><%= job.title %></h2>
-                <p class="mt-4 text-sm leading-8 text-slate-600">Applications move directly into the careers workflow so review, status updates, and resume handling stay structured.</p>
+                <p class="mt-4 text-sm leading-8 text-slate-600">Applications move into a structured hiring review so updates, resume handling, and follow-up stay organized.</p>
               </div>
               <a href="/careers/<%= job.slug %>" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View Role</a>
             </div>
@@ -85,7 +85,7 @@
   <%- include('../components/section-heading', {
     eyebrow: 'FAQ',
     title: 'Questions about the hiring flow.',
-    copy: 'The careers frontend is polished, but the important part is that the workflow behind it stays manageable for the team.'
+    copy: 'The hiring process is designed to stay clear and manageable for both the team and the applicant.'
   }) %>
   <div class="mt-10">
     <%- include('../components/faq-list', { items: pageContent.faqs }) %>
@@ -95,7 +95,7 @@
 <%- include('../components/team-showcase', {
   eyebrow: 'Meet the Team',
   title: 'Leadership and employees you would work with inside Kuwexa.',
-  copy: 'The careers system now connects directly to the real leadership and team section, so applicants can see who is running strategy and who is building day to day.'
+  copy: 'Applicants can see the real leadership and team behind the organization, not just the open role.'
 }) %>
 
 <%- include('../layouts/footer') %>

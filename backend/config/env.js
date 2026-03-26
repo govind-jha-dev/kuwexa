@@ -48,6 +48,8 @@ module.exports = {
   trustProxy: parseTrustProxy(trustProxyValue, isProduction),
   uploadDir: path.join(rootDir, process.env.UPLOAD_DIR || 'uploads'),
   maxFileSizeBytes: Number(process.env.MAX_FILE_SIZE_MB || 10) * 1024 * 1024,
+  dbConnectTimeoutMs: Number(process.env.DB_CONNECT_TIMEOUT_MS || 5000),
+  dbBootstrapLockTimeoutSeconds: Number(process.env.DB_BOOTSTRAP_LOCK_TIMEOUT_SECONDS || 20),
   db: {
     host: process.env.DB_HOST || '127.0.0.1',
     port: Number(process.env.DB_PORT || 3306),

@@ -1,7 +1,7 @@
 <%- include('../layouts/head', { title, seo }) %>
 <%- include('../layouts/header') %>
 <%
-  const dashboardManagedNotice = 'Full profile content is managed from the Team dashboard, including biography, social links, and media.';
+  const dashboardManagedNotice = 'Profile details are maintained by the Kuwexa team, including biography, social links, and media.';
   const fallbackShortBio = member.short_bio && member.short_bio !== dashboardManagedNotice ? member.short_bio : '';
   const baseProfileHtml = member.bio || (fallbackShortBio ? `<p>${fallbackShortBio}</p>` : '');
   const escapedDashboardManagedNotice = dashboardManagedNotice.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -21,7 +21,7 @@
         <% if (member.image) { %>
           <img src="<%= member.image %>" alt="<%= resolveImageAlt(member.image, `${member.name} portrait`) %>" class="h-[28rem] w-full object-cover" decoding="async" fetchpriority="high">
         <% } else { %>
-          <div class="flex h-[28rem] items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(219,171,13,0.24),_transparent_40%),linear-gradient(180deg,_rgba(255,255,255,0.08),_rgba(255,255,255,0.02))]">
+          <div class="flex h-[28rem] items-center justify-center bg-[var(--olive-soft)]">
             <div class="flex h-28 w-28 items-center justify-center rounded-[2rem] bg-secondary text-4xl font-bold text-primary">
               <%= String(member.name || 'CW').split(/\s+/).filter(Boolean).map((part) => part.charAt(0)).join('').slice(0, 2).toUpperCase() %>
             </div>
@@ -33,8 +33,8 @@
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary"><%= member.department || (member.member_type === 'leadership' ? 'Leadership' : 'Team') %></p>
         <h1 class="mt-4 font-display text-4xl font-bold"><%= member.name %></h1>
         <p class="mt-3 text-sm font-semibold uppercase tracking-[0.22em] text-white/72"><%= member.designation %></p>
-        <% if (member.short_bio) { %>
-          <p class="mt-5 text-sm leading-8 text-white/72"><%= member.short_bio %></p>
+        <% if (fallbackShortBio) { %>
+          <p class="mt-5 text-sm leading-8 text-white/72"><%= fallbackShortBio %></p>
         <% } %>
       </div>
     </aside>
@@ -74,8 +74,8 @@
 
 <%- include('../components/site-cta', {
   eyebrow: 'Need a Team Like This',
-  title: 'Build a company website where team profiles, leadership visibility, and backend editing work together.',
-  copy: 'Kuwexa can design the public presentation and the management workflow as one dependable platform.',
+  title: 'Build a company website where team profiles and leadership visibility feel polished and credible.',
+  copy: 'Kuwexa can shape a people-focused company presence that presents leadership and team stories with clarity.',
   primaryLabel: 'Talk to Kuwexa',
   primaryHref: '/contact',
   secondaryLabel: 'About Us',

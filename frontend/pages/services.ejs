@@ -7,10 +7,10 @@
       <div class="relative z-[1]">
         <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Capabilities</p>
         <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
-          Kuwexa capabilities for commerce, visibility, platforms, and digital execution.
+          Kuwexa capabilities for commerce, visibility, websites, and digital growth.
         </h1>
         <p class="mt-6 max-w-3xl text-lg leading-8 text-white/76">
-          These capabilities are designed to support businesses building stronger market presence, better operating systems, and more dependable digital infrastructure.
+          These capabilities are designed to support businesses building stronger market presence, clearer customer journeys, and more dependable execution.
         </p>
         <div class="mt-10 flex flex-wrap gap-3">
           <% pageContent.marketingServices.slice(0, 6).forEach((item) => { %>
@@ -95,7 +95,7 @@
     <%- include('../components/section-heading', {
       eyebrow: 'Full Capability Map',
       title: 'A category-by-category view of the work Kuwexa can present and deliver.',
-      copy: 'The capability mix covers the visible frontend, the operating backend, and the growth systems that keep everything connected after launch.'
+      copy: 'The capability mix covers company presentation, commercial growth, and the digital support that keeps everything connected.'
     }) %>
     <div class="mt-10 grid gap-5 xl:grid-cols-2">
       <% pageContent.serviceCatalog.forEach((group) => { %>
@@ -130,7 +130,7 @@
     </div>
 
     <div class="narrative-card narrative-card--dark reveal" data-reveal>
-      <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Who This Helps</span>
+      <span class="section-kicker !text-white/60 before:!bg-secondary">Who This Helps</span>
       <div class="mt-6 grid gap-4">
         <% pageContent.audiences.forEach((item) => { %>
           <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5 text-sm font-semibold leading-7 text-white/78"><%= item %></article>
@@ -144,7 +144,7 @@
   <%- include('../components/section-heading', {
     eyebrow: 'Questions',
     title: 'What teams usually ask before the work begins.',
-    copy: 'Most early decisions are about operating scope, execution ownership, and how to keep the system usable long after the first launch.'
+    copy: 'Most early decisions are about operating scope, execution ownership, and how to keep the work valuable long after the first launch.'
   }) %>
   <div class="mt-10">
     <%- include('../components/faq-list', { items: pageContent.faqs }) %>
@@ -153,8 +153,8 @@
 
 <%- include('../components/site-cta', {
   eyebrow: 'Need a Custom Scope',
-  title: 'Start with the capability your business needs most, then expand into a stronger ecosystem over time.',
-  copy: 'Kuwexa supports websites, commerce flows, software platforms, SEO systems, integrations, and long-term digital delivery without losing clarity between strategy and execution.',
+  title: 'Start with the capability your business needs most, then expand into a stronger company presence over time.',
+  copy: 'Kuwexa supports websites, commerce flows, software, SEO, integrations, and long-term digital delivery without losing clarity between strategy and execution.',
   primaryLabel: 'Talk to Kuwexa',
   primaryHref: '/contact',
   secondaryLabel: 'See Initiatives',

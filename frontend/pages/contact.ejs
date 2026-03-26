@@ -10,7 +10,7 @@
           Start a structured conversation with Kuwexa.
         </h1>
         <p class="mt-6 max-w-3xl text-lg leading-8 text-white/76">
-          Use this page to discuss trade enablement, digital platforms, websites, SEO systems, operational improvements, or long-term support across the Kuwexa ecosystem.
+          Use this page for parent-company inquiries, partnership conversations, and division guidance. For product-specific wholesale requests, use the dedicated B2B enquiry form.
         </p>
       </div>
 
@@ -28,7 +28,7 @@
 
     <div class="mt-12 grid gap-5 md:grid-cols-3">
       <% pageContent.contactCards.forEach((item) => { %>
-        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/8 p-6 backdrop-blur-sm" data-reveal>
+        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/10 p-6" data-reveal>
           <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Conversation Track</p>
           <h2 class="mt-4 font-display text-2xl font-bold text-white"><%= item.title %></h2>
           <p class="mt-3 text-sm leading-8 text-white/70"><%= item.copy %></p>
@@ -42,7 +42,7 @@
   <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
     <div class="grid gap-6">
       <div class="narrative-card narrative-card--dark reveal" data-reveal>
-        <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Contact Channels</span>
+        <span class="section-kicker !text-white/60 before:!bg-secondary">Contact Channels</span>
         <div class="mt-6 grid gap-4">
           <article class="rounded-[1.45rem] border border-white/10 bg-white/6 p-5">
             <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Email</p>
@@ -60,13 +60,22 @@
       </div>
 
       <div class="narrative-card reveal" data-reveal>
-        <span class="section-kicker">Engagement Models</span>
+        <span class="section-kicker">Conversation Areas</span>
         <div class="mt-6 grid gap-4">
-          <% pageContent.engagementModels.forEach((item) => { %>
+          <% pageContent.conversationAreas.forEach((item) => { %>
             <article class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
               <h3 class="font-display text-2xl font-bold text-primary"><%= item.title %></h3>
               <p class="mt-3 text-sm leading-7 text-slate-600"><%= item.copy %></p>
             </article>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="narrative-card reveal" data-reveal>
+        <span class="section-kicker">Support Principles</span>
+        <div class="mt-6 grid gap-3">
+          <% pageContent.supportPrinciples.forEach((item) => { %>
+            <div class="rounded-[1.2rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700 ring-1 ring-primary/6"><%= item %></div>
           <% }) %>
         </div>
       </div>
@@ -92,7 +101,7 @@
       <span class="section-kicker">Inquiry Form</span>
       <h2 class="mt-5 font-display text-4xl font-bold text-primary">Tell us what needs to move.</h2>
       <p class="mt-4 text-base leading-8 text-slate-600">
-        Every inquiry creates a structured lead record in the dashboard so follow-up, assignment, and response history stay organized from the beginning.
+        Every inquiry is captured with the context needed for follow-up, assignment, and response continuity from the beginning.
       </p>
 
       <form method="post" action="/contact" class="mt-8 space-y-4">
@@ -115,17 +124,17 @@
           <div>
             <label class="mb-2 block text-sm font-semibold text-slate-700" for="source">Inquiry Type</label>
             <select id="source" name="source" class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none">
-              <option value="Kuwexa Website Inquiry">Hybrid commerce inquiry</option>
-              <option value="Trade Enablement">Trade enablement or market access</option>
-              <option value="Digital Platform Build">Digital platform or website build</option>
-              <option value="SEO and Growth System">SEO, visibility, or content system</option>
-              <option value="Long-Term Support">Long-term support and optimization</option>
+              <option value="Kuwexa Website Inquiry">General Kuwexa inquiry</option>
+              <option value="Division Guidance">Help me reach the right division</option>
+              <option value="CodexWEBZ Inquiry">CodexWEBZ division inquiry</option>
+              <option value="Kuwexa Lifestyle Inquiry">Kuwexa Lifestyle inquiry</option>
+              <option value="B2B General Inquiry">General B2B question</option>
             </select>
           </div>
         </div>
         <div>
           <label class="mb-2 block text-sm font-semibold text-slate-700" for="message">Brief</label>
-          <textarea id="message" name="message" rows="7" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none" placeholder="Share the current challenge, the desired outcome, and what kind of support or system you need."></textarea>
+          <textarea id="message" name="message" rows="7" required class="w-full rounded-[1.35rem] border border-primary/10 bg-white px-4 py-3 text-sm focus:border-secondary focus:outline-none" placeholder="Share which division or company topic this is about, what outcome you need, and any important timing or context."></textarea>
         </div>
         <div class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
           <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary/38">Helpful Details to Include</p>
@@ -145,7 +154,7 @@
   <%- include('../components/section-heading', {
     eyebrow: 'FAQ',
     title: 'Questions teams ask before reaching out.',
-    copy: 'The goal is to make sure the public experience, SEO structure, and backend workflow all stay aligned from the first conversation.'
+    copy: 'The goal is to make sure the company story, page experience, and response path stay aligned from the first conversation.'
   }) %>
   <div class="mt-10">
     <%- include('../components/faq-list', { items: pageContent.faqs }) %>

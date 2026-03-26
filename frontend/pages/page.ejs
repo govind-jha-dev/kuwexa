@@ -2,16 +2,16 @@
 <%- include('../layouts/header') %>
 <article class="mx-auto max-w-5xl px-6 py-20 lg:px-8">
   <div class="surface-panel rounded-[2.25rem] p-8 lg:p-10">
-    <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">CMS Page</p>
+    <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Company Page</p>
     <h1 class="mt-5 font-display text-5xl font-bold leading-tight text-primary md:text-6xl"><%= page.title %></h1>
     <div class="soft-divider mt-8"></div>
-    <div class="prose-content mt-8"><%- page.body || '<p>Page content managed through the CMS.</p>' %></div>
+    <div class="prose-content mt-8"><%- page.body || '<p>Page content will appear here soon.</p>' %></div>
   </div>
 </article>
 <%- include('../components/team-showcase', {
   eyebrow: 'Leadership and Team',
-  title: 'The people behind the Kuwexa platform.',
-  copy: 'This CMS page is supported by the same team records used across careers, blog, and the rest of the public website.'
+  title: 'The people behind Kuwexa.',
+  copy: 'This page is supported by the same leadership and team records used across the wider public website.'
 }) %>
 <%- include('../layouts/footer') %>
 <%- include('../layouts/scripts') %>

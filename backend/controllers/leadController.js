@@ -25,14 +25,16 @@ async function renderLeadsPage(req, res) {
     ],
     infoPanel: {
       title: 'Lead Intake',
-      body: 'Leads are created by the public contact form. Managers can update status, ownership, and notes from this screen.'
+      body: 'Leads are created by the public contact flow and the B2B product enquiry form. Managers can review selected products, company details, status, and notes from this screen.'
     },
     table: {
       title: 'Leads',
       description: 'Track inquiries from first contact to closed deal.',
       columns: [
         { label: 'Name', key: 'name' },
+        { label: 'Company', key: 'company_name' },
         { label: 'Email', key: 'email' },
+        { label: 'Products', key: 'selected_products' },
         { label: 'Phone', key: 'phone' },
         { label: 'Source', key: 'source' },
         { label: 'Status', key: 'status' },

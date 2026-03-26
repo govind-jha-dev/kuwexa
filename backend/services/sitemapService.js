@@ -1,9 +1,7 @@
 const env = require('../config/env');
 const pageModel = require('../models/pageModel');
-const serviceModel = require('../models/serviceModel');
 const settingsModel = require('../models/settingsModel');
 const productModel = require('../models/productModel');
-const projectModel = require('../models/projectModel');
 const blogModel = require('../models/blogModel');
 const jobModel = require('../models/jobModel');
 const teamModel = require('../models/teamModel');
@@ -19,12 +17,10 @@ function urlNode(pathname, lastmod) {
 }
 
 async function generateSitemapXml() {
-  const [settings, pages, services, products, projects, posts, jobs, teamMembers] = await Promise.all([
+  const [settings, pages, products, posts, jobs, teamMembers] = await Promise.all([
     settingsModel.getSettings(),
     pageModel.listPublished(),
-    serviceModel.listPublished(),
     productModel.listPublished(),
-    projectModel.listPublished(),
     blogModel.listPublished(),
     jobModel.listOpen(),
     teamModel.listActive()
@@ -33,8 +29,7 @@ async function generateSitemapXml() {
 
   const staticUrls = [
     urlNode('/'),
-    urlNode('/services'),
-    urlNode('/portfolio'),
+    urlNode('/divisions'),
     urlNode('/blog'),
     urlNode('/careers'),
     urlNode('/team'),
@@ -42,14 +37,14 @@ async function generateSitemapXml() {
   ];
 
   if (showProducts) {
-    staticUrls.splice(2, 0, urlNode('/products'));
+    staticUrls.splice(2, 0, urlNode('/b2b'));
   }
 
   const dynamicUrls = [
     ...pages.map((page) => urlNode(`/${page.slug}`, page.updated_at)),
-    ...services.map((service) => urlNode(`/services/${service.slug}`, service.updated_at)),
-    ...(showProducts ? products.map((product) => urlNode(`/products/${product.slug}`, product.updated_at)) : []),
-    ...projects.map((project) => urlNode(`/portfolio/${project.slug}`, project.updated_at)),
+    urlNode('/divisions/codexwebz'),
+    urlNode('/divisions/kuwexa-lifestyle'),
+    ...(showProducts ? products.map((product) => urlNode(`/b2b/products/${product.slug}`, product.updated_at)) : []),
     ...posts.map((post) => urlNode(`/blog/${post.slug}`, post.updated_at)),
     ...jobs.map((job) => urlNode(`/careers/${job.slug}`, job.updated_at)),
     ...teamMembers.map((member) => urlNode(`/team/${member.slug}`, member.updated_at))

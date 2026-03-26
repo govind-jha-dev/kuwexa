@@ -57,7 +57,17 @@ const serviceValidation = [
 
 const productValidation = [
   body('name').trim().notEmpty().withMessage('Product name is required.'),
-  body('slug').optional({ values: 'falsy' }).trim().isSlug().withMessage('Slug must be URL-safe.')
+  body('slug').optional({ values: 'falsy' }).trim().isSlug().withMessage('Slug must be URL-safe.'),
+  body('category_id').notEmpty().withMessage('Product category is required.').bail().isInt().withMessage('Product category must be valid.'),
+  body('catalog_link').optional({ values: 'falsy' }).isURL().withMessage('Catalog link must be valid.'),
+  body('website_link').optional({ values: 'falsy' }).isURL().withMessage('Reference website link must be valid.'),
+  body('demo_link').optional({ values: 'falsy' }).isURL().withMessage('Secondary action link must be valid.')
+];
+
+const productCategoryValidation = [
+  body('name').trim().notEmpty().withMessage('Category name is required.'),
+  body('slug').optional({ values: 'falsy' }).trim().isSlug().withMessage('Slug must be URL-safe.'),
+  body('sort_order').optional({ values: 'falsy' }).isInt({ min: 0 }).withMessage('Sort order must be 0 or more.')
 ];
 
 const projectValidation = [
@@ -83,6 +93,22 @@ const leadValidation = [
   body('name').trim().notEmpty().withMessage('Name is required.'),
   body('email').isEmail().withMessage('A valid email is required.'),
   body('message').trim().notEmpty().withMessage('Message is required.')
+];
+
+const b2bEnquiryValidation = [
+  body('name').trim().notEmpty().withMessage('Name is required.'),
+  body('email').isEmail().withMessage('A valid email is required.'),
+  body('company_name').trim().notEmpty().withMessage('Company name is required.'),
+  body('selected_products')
+    .custom((value) => {
+      if (Array.isArray(value)) {
+        return value.map((item) => String(item).trim()).filter(Boolean).length > 0;
+      }
+
+      return Boolean(String(value || '').trim());
+    })
+    .withMessage('Select at least one product.'),
+  body('message').trim().notEmpty().withMessage('Inquiry details are required.')
 ];
 
 const chatValidation = [
@@ -132,10 +158,12 @@ module.exports = {
   pageValidation,
   serviceValidation,
   productValidation,
+  productCategoryValidation,
   projectValidation,
   teamValidation,
   blogValidation,
   leadValidation,
+  b2bEnquiryValidation,
   chatValidation,
   jobValidation,
   applicationValidation,

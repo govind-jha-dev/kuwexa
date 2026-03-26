@@ -104,11 +104,35 @@ async function ensureJobColumns(connection, databaseName) {
   await ensureColumn(connection, databaseName, 'jobs', 'meta_keywords', 'VARCHAR(255) NULL AFTER meta_description');
 }
 
+async function ensureLeadColumns(connection, databaseName) {
+  await ensureColumn(connection, databaseName, 'leads', 'company_name', 'VARCHAR(160) NULL AFTER name');
+  await ensureColumn(connection, databaseName, 'leads', 'selected_products', 'JSON NULL AFTER message');
+}
+
 async function ensureVisitorLogColumns(connection, databaseName) {
   await ensureColumn(connection, databaseName, 'visitor_logs', 'request_method', 'VARCHAR(10) NULL AFTER ip_address');
   await ensureColumn(connection, databaseName, 'visitor_logs', 'country_code', 'VARCHAR(10) NULL AFTER referrer');
   await ensureColumn(connection, databaseName, 'visitor_logs', 'country_name', 'VARCHAR(120) NULL AFTER country_code');
   await ensureColumn(connection, databaseName, 'visitor_logs', 'city', 'VARCHAR(120) NULL AFTER country_name');
+}
+
+async function ensureProductCategoriesTable(connection, databaseName) {
+  if (await hasTable(connection, databaseName, 'product_categories')) {
+    return;
+  }
+
+  await connection.query(`
+    CREATE TABLE product_categories (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(160) NOT NULL,
+      slug VARCHAR(180) NOT NULL UNIQUE,
+      description TEXT NULL,
+      sort_order INT NOT NULL DEFAULT 0,
+      status ENUM('draft', 'published') NOT NULL DEFAULT 'published',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  `);
 }
 
 async function ensureProductsTable(connection, databaseName) {
@@ -121,6 +145,7 @@ async function ensureProductsTable(connection, databaseName) {
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(160) NOT NULL,
       slug VARCHAR(180) NOT NULL UNIQUE,
+      category_id INT NULL,
       short_description VARCHAR(255) NULL,
       description LONGTEXT NULL,
       features JSON NULL,
@@ -129,6 +154,10 @@ async function ensureProductsTable(connection, databaseName) {
       images JSON NULL,
       demo_link VARCHAR(255) NULL,
       website_link VARCHAR(255) NULL,
+      catalog_link VARCHAR(255) NULL,
+      min_order_quantity VARCHAR(80) NULL,
+      unit_label VARCHAR(80) NULL,
+      sort_order INT NOT NULL DEFAULT 0,
       status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
       meta_title VARCHAR(255) NULL,
       meta_description TEXT NULL,
@@ -137,10 +166,38 @@ async function ensureProductsTable(connection, databaseName) {
       updated_by INT NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES product_categories(id) ON DELETE SET NULL,
       CONSTRAINT fk_products_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
       CONSTRAINT fk_products_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
     )
   `);
+}
+
+async function ensureProductColumns(connection, databaseName) {
+  await ensureColumn(connection, databaseName, 'products', 'category_id', 'INT NULL AFTER slug');
+  await ensureColumn(connection, databaseName, 'products', 'catalog_link', 'VARCHAR(255) NULL AFTER website_link');
+  await ensureColumn(connection, databaseName, 'products', 'min_order_quantity', 'VARCHAR(80) NULL AFTER catalog_link');
+  await ensureColumn(connection, databaseName, 'products', 'unit_label', 'VARCHAR(80) NULL AFTER min_order_quantity');
+  await ensureColumn(connection, databaseName, 'products', 'sort_order', 'INT NOT NULL DEFAULT 0 AFTER unit_label');
+
+  const [constraintRows] = await connection.query(
+    `
+      SELECT 1
+      FROM information_schema.KEY_COLUMN_USAGE
+      WHERE TABLE_SCHEMA = ?
+        AND TABLE_NAME = 'products'
+        AND COLUMN_NAME = 'category_id'
+        AND REFERENCED_TABLE_NAME = 'product_categories'
+      LIMIT 1
+    `,
+    [databaseName]
+  );
+
+  if (!constraintRows.length) {
+    await connection.query(
+      'ALTER TABLE products ADD CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES product_categories(id) ON DELETE SET NULL'
+    );
+  }
 }
 
 async function ensureBlockedVisitorsTable(connection, databaseName) {
@@ -179,6 +236,7 @@ async function ensureMediaAssetsTable(connection, databaseName) {
 }
 
 async function ensureExtendedSchema(connection, databaseName) {
+  await ensureProductCategoriesTable(connection, databaseName);
   await ensureProductsTable(connection, databaseName);
   await ensureBlockedVisitorsTable(connection, databaseName);
   await ensureMediaAssetsTable(connection, databaseName);
@@ -190,6 +248,8 @@ async function ensureExtendedSchema(connection, databaseName) {
   await ensureProjectColumns(connection, databaseName);
   await ensureBlogColumns(connection, databaseName);
   await ensureJobColumns(connection, databaseName);
+  await ensureLeadColumns(connection, databaseName);
+  await ensureProductColumns(connection, databaseName);
   await ensureVisitorLogColumns(connection, databaseName);
 }
 

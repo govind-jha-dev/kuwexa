@@ -11,6 +11,7 @@ const {
   handleValidationErrors,
   loginValidation,
   leadValidation,
+  b2bEnquiryValidation,
   chatValidation,
   applicationValidation
 } = require('../validators');
@@ -24,14 +25,18 @@ router.post(env.privateLoginPath, ensureGuest, authLimiter, loginValidation, han
 router.post('/logout', authController.logout);
 
 router.get('/', publicController.home);
-router.get('/services', publicController.services);
-router.get('/services/:slug', publicController.serviceDetail);
-router.get('/products', publicController.products);
-router.get('/products/:slug', publicController.productDetail);
-router.get('/portfolio', publicController.projects);
-router.get('/portfolio/:slug', publicController.projectDetail);
-router.get('/projects', (req, res) => res.redirect('/portfolio'));
-router.get('/projects/:slug', (req, res) => res.redirect(`/portfolio/${req.params.slug}`));
+router.get('/divisions', publicController.divisions);
+router.get('/divisions/:slug', publicController.divisionDetail);
+router.get('/b2b', publicController.b2b);
+router.get('/b2b/products/:slug', publicController.b2bProductDetail);
+router.get('/services', (req, res) => res.redirect('/divisions/codexwebz'));
+router.get('/services/:slug', (req, res) => res.redirect('/divisions/codexwebz'));
+router.get('/products', (req, res) => res.redirect('/b2b'));
+router.get('/products/:slug', (req, res) => res.redirect(`/b2b/products/${req.params.slug}`));
+router.get('/portfolio', (req, res) => res.redirect('/divisions'));
+router.get('/portfolio/:slug', (req, res) => res.redirect('/divisions'));
+router.get('/projects', (req, res) => res.redirect('/divisions'));
+router.get('/projects/:slug', (req, res) => res.redirect('/divisions'));
 router.get('/blog', publicController.blog);
 router.get('/blog/:slug', publicController.blogDetail);
 router.get('/careers', publicController.careers);
@@ -44,6 +49,7 @@ router.get('/team/:slug', publicController.teamProfile);
 router.get('/contact', publicController.contact);
 
 router.post('/contact', leadValidation, handleValidationErrors, publicController.submitLead);
+router.post('/b2b/enquiry', b2bEnquiryValidation, handleValidationErrors, publicController.submitB2BEnquiry);
 router.post('/chat', chatValidation, handleValidationErrors, chatController.submitChat);
 router.post(
   '/careers/:slug/apply',

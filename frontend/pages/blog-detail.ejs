@@ -20,22 +20,22 @@
       <% if (post.featured_image) { %>
         <img src="<%= post.featured_image %>" alt="<%= resolveImageAlt(post.featured_image, `${post.title} featured image`) %>" class="mt-8 h-80 w-full rounded-[2rem] object-cover" decoding="async" fetchpriority="high">
       <% } %>
-      <div class="prose-content mt-10"><%- post.content || '<p>Article content is managed through the built-in blog CMS.</p>' %></div>
+      <div class="prose-content mt-10"><%- post.content || '<p>Article content will appear here soon.</p>' %></div>
     </div>
 
     <aside class="space-y-6">
       <div class="rounded-[2rem] bg-primary p-8 text-white">
-        <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Editorial System</p>
-        <h2 class="mt-4 font-display text-3xl font-bold">This article lives inside the same SEO-ready CMS used by the platform.</h2>
-        <p class="mt-4 text-sm leading-8 text-white/72">Managers can draft, edit, publish, optimize metadata, and manage categories and tags without touching deployment code.</p>
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Editorial Perspective</p>
+        <h2 class="mt-4 font-display text-3xl font-bold">This article sits inside the wider Kuwexa editorial presence.</h2>
+        <p class="mt-4 text-sm leading-8 text-white/72">Each article is written to support credibility, clarity, and long-term search visibility.</p>
       </div>
 
       <div class="surface-panel rounded-[2rem] p-7">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-primary/38">Why it matters</p>
         <div class="mt-5 space-y-3 text-sm leading-7 text-slate-600">
-          <p>Thoughtful editorial design increases trust on the frontend.</p>
-          <p>Metadata and schema controls keep the content search-ready.</p>
-          <p>Operational workflow keeps publishing consistent after launch.</p>
+          <p>Thoughtful editorial design increases brand trust.</p>
+          <p>Clear metadata and structure help the article travel farther.</p>
+          <p>Consistent publishing strengthens the organization voice over time.</p>
         </div>
       </div>
     </aside>
@@ -44,14 +44,14 @@
 
 <%- include('../components/team-showcase', {
   eyebrow: 'Editorial Team',
-  title: 'Meet the leadership and delivery team behind the content system.',
-  copy: 'The blog is run by the same people who build the website, dashboards, workflows, and SEO structure behind the platform.'
+  title: 'Meet the leadership and team behind Kuwexa insights.',
+  copy: 'The blog reflects the same people who shape company direction, content quality, and public communication.'
 }) %>
 
 <%- include('../components/site-cta', {
-  eyebrow: 'Build the CMS Too',
-  title: 'Need articles, landing pages, and SEO controls that stay manageable after launch?',
-  copy: 'Kuwexa can build the editorial frontend and the backend publishing workflow as one system.',
+  eyebrow: 'Build Your Editorial Presence',
+  title: 'Need articles, landing pages, and SEO content that stay credible over time?',
+  copy: 'Kuwexa can shape an editorial presence that supports trust, visibility, and long-term communication.',
   primaryLabel: 'Talk to Kuwexa',
   primaryHref: '/contact',
   secondaryLabel: 'More Articles',

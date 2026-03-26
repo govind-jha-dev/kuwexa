@@ -1,256 +1,434 @@
 <%- include('../layouts/head', { title, seo }) %>
 <%- include('../layouts/header') %>
+
 <%
-  const marqueeBands = [...marketing.capabilityBands, ...marketing.capabilityBands];
+  const divisions = marketing.divisions || [];
+  const heroChips = marketing.heroChips || [];
+  const identityCards = [
+    { ...(marketing.visionCard || { title: 'Vision', copy: '' }), tone: 'dawn' },
+    { ...(marketing.missionCard || { title: 'Mission', copy: '' }), tone: 'forest' },
+    { ...(marketing.ethosCard || { title: 'Ethos', copy: '' }), tone: 'light' }
+  ];
+  const identityEyebrows = [
+    'Strategic Direction',
+    'Operating Commitment',
+    'Cultural Standard'
+  ];
+  const divisionCardClasses = [
+    'home-division-card--gold',
+    'home-division-card--olive',
+    'home-division-card--ink'
+  ];
+  const heroOrbitClasses = [
+    'home-hero-node--one',
+    'home-hero-node--two',
+    'home-hero-node--three'
+  ];
+  const ecosystemMap = marketing.ecosystemMap || [];
+  const workflowSteps = (marketing.workflow || []).slice(0, 4);
+  const companyDossier = marketing.companyDossier || [];
+  const organizationBands = marketing.capabilityBands || marketing.consumerCategories || [];
+  const storySignals = [
+    'Clear presentation',
+    'Operational credibility',
+    'Long-term direction'
+  ];
 %>
 
-<section class="kuwexa-hero text-white">
-  <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-    <div class="grid gap-12 lg:grid-cols-[1.02fr,0.98fr] lg:items-start">
-      <div class="relative z-[1]">
-        <p class="text-xs font-bold uppercase tracking-[0.4em] text-secondary">Kuwexa Private Limited</p>
-        <h1 class="mt-6 max-w-5xl font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
-          <%= marketing.heroTitle %>
-        </h1>
-        <p class="site-home__hero-copy mt-6 max-w-3xl text-white/76">
-          <%= marketing.heroSubtitle %>
-        </p>
-        <div class="mt-10 flex flex-wrap gap-4">
-          <a href="/contact" class="rounded-full bg-secondary px-6 py-3 text-sm font-bold text-primary shadow-lg shadow-secondary/20">Start a Conversation</a>
-          <a href="/services" class="rounded-full border border-white/16 px-6 py-3 text-sm font-semibold text-white hover:border-secondary hover:text-secondary">Explore Capabilities</a>
+<main class="home-cosmos">
+  <section class="kuwexa-hero home-hero text-white" data-drift="0.08">
+    <div class="home-hero__aurora home-hero__aurora--one"></div>
+    <div class="home-hero__aurora home-hero__aurora--two"></div>
+    <div class="home-hero__mesh"></div>
+
+    <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28 relative z-10">
+      <div class="grid gap-12 xl:grid-cols-[0.9fr,1.1fr] xl:items-center">
+        <div class="reveal" data-reveal data-stagger="1">
+          <p class="home-kicker">Kuwexa Private Limited</p>
+          <h1 class="home-hero__title mt-6 font-display" data-home-headline>
+            <%= marketing.heroTitle %>
+          </h1>
+          <p class="home-hero__subtitle mt-8">
+            <%= marketing.heroSubtitle %>
+          </p>
+
+          <% if (heroChips.length) { %>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <% heroChips.forEach((chip) => { %>
+                <span class="home-chip"><%= chip %></span>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <div class="mt-12 flex flex-wrap gap-4">
+            <a href="/divisions" class="home-button home-button--primary btn-ripple">Explore Divisions</a>
+            <a href="/contact" class="home-button home-button--ghost btn-ripple">Start A Conversation</a>
+          </div>
+
+          <p class="home-hero__note">
+            Kuwexa introduces the organization clearly, then directs buyers, partners, and clients to the right division, capability, or commercial conversation.
+          </p>
         </div>
-        <div class="mt-10 flex flex-wrap gap-3">
-          <% marketing.capabilityBands.forEach((band) => { %>
-            <span class="rounded-full border border-white/12 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/72"><%= band %></span>
+
+        <figure class="home-hero-orbit reveal" data-reveal data-stagger="2" data-spotlight-panel>
+          <div class="home-hero-orbit__stage">
+            <div class="home-hero-orbit__ring home-hero-orbit__ring--outer"></div>
+            <div class="home-hero-orbit__ring home-hero-orbit__ring--inner"></div>
+
+            <div class="home-hero-orbit__core">
+              <p class="home-hero-orbit__core-label">Parent Company</p>
+              <h2 class="mt-4 font-display text-5xl font-semibold leading-none text-white">Kuwexa</h2>
+              <p class="home-hero-orbit__core-meta mt-4">Focused Divisions</p>
+            </div>
+
+            <div class="home-hero-orbit__nodes">
+              <% divisions.slice(0, 3).forEach((division, index) => { %>
+                <article class="home-hero-node <%= heroOrbitClasses[index] || '' %>">
+                  <div class="home-hero-node__icon"><%= `0${index + 1}` %></div>
+                  <div>
+                    <p class="home-hero-node__label"><%= division.label %></p>
+                    <h3 class="home-hero-node__title font-display"><%= division.name %></h3>
+                  </div>
+                </article>
+              <% }) %>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16">
+    <div class="grid gap-8 xl:grid-cols-[0.94fr,1.06fr] xl:items-center">
+      <figure class="home-story-visual home-story-visual--system reveal" data-reveal data-spotlight-panel aria-labelledby="home-story-structure-title">
+        <div class="home-story-visual__system-grid"></div>
+        <div class="home-story-visual__system-shell">
+          <div class="home-story-visual__system-topline">
+            <div>
+              <p class="home-story-visual__eyebrow">Kuwexa Standard</p>
+              <h3 id="home-story-structure-title" class="home-story-visual__system-title font-display">
+                Built to feel disciplined, credible, and ready for long-term growth.
+              </h3>
+            </div>
+            <span class="home-story-visual__status">Organization First</span>
+          </div>
+
+          <p class="home-story-visual__support">
+            The public experience is designed to make Kuwexa easier to trust, easier to understand, and easier to grow without losing structure.
+          </p>
+
+          <% if (companyDossier.length) { %>
+            <div class="home-story-visual__dossier-grid">
+              <% companyDossier.slice(0, 4).forEach((item, index) => { %>
+                <article class="home-story-visual__dossier-card">
+                  <span class="home-story-visual__dossier-index"><%= `0${index + 1}` %></span>
+                  <p class="home-story-visual__dossier-label"><%= item.label %></p>
+                  <p class="home-story-visual__dossier-value"><%= item.value %></p>
+                </article>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <% if (storySignals.length) { %>
+            <div class="home-story-visual__signal-strip">
+              <% storySignals.forEach((item) => { %>
+                <span class="home-story-visual__signal"><%= item %></span>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      </figure>
+
+      <article class="home-story-panel reveal" data-reveal data-spotlight-panel>
+        <span class="section-kicker">Organization Profile</span>
+        <h2 class="mt-6 font-display text-4xl font-semibold leading-tight text-primary md:text-5xl">
+          A more credible way to present Kuwexa as an organization.
+        </h2>
+        <% (marketing.introParagraphs || []).slice(0, 2).forEach((item) => { %>
+          <p class="mt-6 text-base leading-8 text-slate-600"><%= item %></p>
+        <% }) %>
+
+        <div class="mt-10 grid gap-4">
+          <% (marketing.highlights || []).forEach((item) => { %>
+            <article class="home-story-panel__note">
+              <p class="home-story-panel__note-title"><%= item.title %></p>
+              <p class="mt-2 text-sm leading-7 text-slate-600"><%= item.copy %></p>
+            </article>
           <% }) %>
         </div>
-      </div>
 
-      <div class="hero-stage relative z-[1]">
-        <div class="hero-stage__frame orbital-pulse" data-reveal>
-          <p class="text-xs font-bold uppercase tracking-[0.35em] text-secondary">Operating Signals</p>
-          <h2 class="mt-4 max-w-lg font-display text-3xl font-bold">A hybrid model designed to connect trade, commerce, and digital systems.</h2>
-          <div class="hero-stage__grid mt-8">
-            <% marketing.proofStats.forEach((item) => { %>
-              <article class="hero-stat">
-                <p class="hero-stat__value"><%= item.value %></p>
-                <p class="hero-stat__label"><%= item.label %></p>
-                <p class="hero-stat__copy"><%= item.copy %></p>
-              </article>
+        <% if (organizationBands.length) { %>
+          <div class="mt-10 flex flex-wrap gap-3">
+            <% organizationBands.slice(0, 6).forEach((item) => { %>
+              <span class="home-category-pill"><%= item %></span>
             <% }) %>
           </div>
-        </div>
-
-        <div class="orbit-stack" data-reveal>
-          <div class="orbit-stack__ring"></div>
-          <div class="orbit-stack__ring orbit-stack__ring--inner"></div>
-          <% marketing.ecosystemPillars.forEach((item, index) => { %>
-            <article class="orbit-card orbit-card--<%= ['one', 'two', 'three'][index] || 'one' %>" data-drift="<%= 0.06 + (index * 0.02) %>">
-              <p class="orbit-card__label"><%= item.label %></p>
-              <h3 class="orbit-card__title"><%= item.title %></h3>
-              <p class="orbit-card__copy"><%= item.copy %></p>
-              <a href="<%= item.href %>" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-secondary">
-                Learn more
-                <span aria-hidden="true">&rarr;</span>
-              </a>
-            </article>
-          <% }) %>
-        </div>
-      </div>
+        <% } %>
+      </article>
     </div>
 
-    <div class="marquee-ribbon" data-reveal>
-      <div class="marquee-ribbon__track">
-        <% marqueeBands.forEach((band) => { %>
-          <span><%= band %></span>
-        <% }) %>
-      </div>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      <% identityCards.forEach((card, index) => { %>
+        <article class="home-identity-card home-identity-card--<%= card.tone %> reveal" data-reveal data-stagger="<%= Math.min(index + 1, 3) %>">
+          <p class="home-identity-card__eyebrow"><%= identityEyebrows[index] || 'Company Principle' %></p>
+          <h2 class="mt-8 font-display text-4xl font-semibold leading-tight md:text-[2.7rem]"><%= card.title %></h2>
+          <p class="mt-6 text-base leading-8"><%= card.copy %></p>
+        </article>
+      <% }) %>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-  <div class="grid gap-6 xl:grid-cols-[1.05fr,0.95fr]">
-    <div class="narrative-card reveal" data-reveal>
-      <span class="section-kicker">The Kuwexa Model</span>
-      <h2 class="mt-5 max-w-3xl font-display text-4xl font-bold leading-tight text-primary md:text-5xl">
-        One parent organization, three connected operating pillars, and a delivery philosophy built around systems instead of shortcuts.
-      </h2>
-      <div class="mt-8 grid gap-4 md:grid-cols-3">
-        <% marketing.highlights.forEach((item) => { %>
-          <article class="rounded-[1.5rem] bg-white/80 p-5 ring-1 ring-primary/8">
-            <p class="text-xs font-bold uppercase tracking-[0.22em] text-secondary">Pillar</p>
-            <h3 class="mt-4 font-display text-2xl font-bold text-primary"><%= item.title %></h3>
-            <p class="mt-3 text-sm leading-7 text-slate-600"><%= item.copy %></p>
-          </article>
-        <% }) %>
+  <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div class="reveal" data-reveal>
+        <span class="section-kicker">Business Units</span>
+        <h2 class="mt-5 font-display text-4xl font-semibold leading-tight text-primary md:text-5xl">
+          Three focused divisions under one parent company.
+        </h2>
       </div>
-    </div>
-
-    <div class="grid gap-6">
-      <div class="narrative-card narrative-card--dark reveal" data-reveal>
-        <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Hybrid Advantage</span>
-        <div class="signal-list mt-6">
-          <% marketing.hybridAdvantage.forEach((item) => { %>
-            <article class="rounded-[1.55rem] border border-white/10 bg-white/6 p-5">
-              <h3 class="font-display text-2xl font-bold text-white"><%= item.title %></h3>
-              <p class="mt-3 text-sm leading-7 text-white/72"><%= item.copy %></p>
-            </article>
-          <% }) %>
-        </div>
-      </div>
-
-      <div class="narrative-card reveal" data-reveal>
-        <span class="section-kicker">Leadership Snapshot</span>
-        <div class="mt-6 grid gap-4">
-          <% marketing.leadershipSnapshot.forEach((item) => { %>
-            <article class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
-              <h3 class="font-display text-2xl font-bold text-primary"><%= item.name %></h3>
-              <p class="mt-2 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500"><%= item.role %></p>
-            </article>
-          <% }) %>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-  <div class="grid gap-10 lg:grid-cols-[0.88fr,1.12fr] lg:items-end">
-    <%- include('../components/section-heading', {
-      eyebrow: 'Capabilities',
-      title: 'Execution layers that help Kuwexa present, operate, and scale with more clarity.',
-      copy: 'These public capabilities sit inside a broader operating ecosystem, so every engagement is shaped by real commercial context, structured delivery, and long-term maintainability.'
-    }) %>
-    <div class="narrative-card reveal" data-reveal>
-      <p class="text-sm leading-8 text-slate-600">
-        Many client-facing digital capabilities are delivered through <strong><%= marketing.divisionServicesLabel %></strong>, giving Kuwexa a dedicated execution layer for websites, systems, growth infrastructure, and operational tooling.
+      <p class="reveal max-w-2xl text-base leading-8 text-slate-600" data-reveal>
+        Each division carries a defined role, a clearer destination, and a more useful next step for the audience it serves.
       </p>
     </div>
-  </div>
 
-  <div class="mt-12 grid gap-6 lg:grid-cols-2">
-    <% services.forEach((service, index) => { %>
-      <article class="reveal spotlight-card narrative-card <%= index >= 4 ? 'hidden xl:block' : '' %>" data-reveal>
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <span class="rounded-full bg-secondary/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-primary"><%= service.profile.category %></span>
-          <span class="text-xs font-semibold uppercase tracking-[0.22em] text-primary/35"><%= service.icon || 'Kuwexa Capability' %></span>
-        </div>
-        <h3 class="mt-5 font-display text-3xl font-bold text-primary"><%= service.title %></h3>
-        <p class="mt-4 text-sm leading-8 text-slate-600"><%= service.short_description || service.profile.kicker %></p>
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <% service.profile.deliverables.slice(0, 4).forEach((item) => { %>
-            <div class="rounded-[1.3rem] bg-slate-50 px-4 py-4 text-sm font-semibold text-slate-700"><%= item %></div>
+    <div class="mt-12 grid gap-6 xl:grid-cols-3">
+      <% divisions.forEach((division, index) => { %>
+        <article class="home-division-card <%= divisionCardClasses[index] || '' %> reveal" data-reveal data-stagger="<%= Math.min(index + 1, 3) %>" data-spotlight-panel>
+          <p class="home-division-card__label"><%= division.label %></p>
+          <h2 class="mt-5 font-display text-4xl font-semibold leading-tight text-primary"><%= division.name %></h2>
+          <p class="mt-5 text-base leading-8 text-slate-700"><%= division.summary %></p>
+
+          <div class="mt-8 grid grid-cols-3 gap-3">
+            <% (division.highlightStats || []).slice(0, 3).forEach((item) => { %>
+              <div class="home-division-card__stat">
+                <p class="font-display text-2xl font-semibold text-primary"><%= item.value %></p>
+                <p class="mt-2 text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500"><%= item.label %></p>
+              </div>
+            <% }) %>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-2">
+            <% (division.marketFocus || []).slice(0, 3).forEach((item) => { %>
+              <span class="home-division-card__tag"><%= item %></span>
+            <% }) %>
+          </div>
+
+          <div class="mt-10 flex flex-wrap gap-3">
+            <a href="<%= division.detailPath %>" class="home-button home-button--dark">View Division</a>
+            <a href="<%= division.destinationUrl %>" <%- division.destinationUrl.startsWith('http') ? 'target="_blank" rel="noreferrer"' : '' %> class="home-button home-button--light">
+              <%= division.destinationLabel || 'Open Destination' %>
+            </a>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-6 py-6 lg:px-8 lg:py-12">
+    <div class="grid gap-8 xl:grid-cols-[0.84fr,1.16fr] xl:items-start">
+      <article class="home-ecosystem-intro reveal" data-reveal data-spotlight-panel>
+        <span class="section-kicker !text-white/60">Operating Model</span>
+        <h2 class="mt-6 font-display text-4xl font-semibold leading-tight text-white md:text-5xl">
+          One organization, multiple business routes, and clearer public trust signals.
+        </h2>
+        <p class="mt-6 text-base leading-8 text-white/75">
+          <%= (marketing.introParagraphs || ['Kuwexa brings trade awareness, consumer direction, and digital capability together.'])[0] %>
+        </p>
+
+        <blockquote class="home-ecosystem-intro__quote">
+          <p class="font-display text-3xl font-semibold leading-tight text-white">
+            <%= marketing.hybridContrast?.closingQuote || 'Trade and technology should move with one clear direction.' %>
+          </p>
+        </blockquote>
+
+        <div class="mt-8 grid gap-3">
+          <% workflowSteps.forEach((item) => { %>
+            <article class="home-workflow-mini">
+              <div class="home-workflow-mini__step"><%= item.step %></div>
+              <div>
+                <h3 class="font-display text-2xl font-semibold text-white"><%= item.title %></h3>
+                <p class="mt-2 text-sm leading-7 text-white/70"><%= item.copy %></p>
+              </div>
+            </article>
           <% }) %>
         </div>
-        <a href="/services/<%= service.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
-          Explore capability
-          <span aria-hidden="true">&rarr;</span>
-        </a>
       </article>
-    <% }) %>
-  </div>
-</section>
 
-<% if (showProductsMenu && products.length) { %>
-  <section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-    <div class="narrative-card reveal" data-reveal>
-      <div class="flex flex-wrap items-end justify-between gap-6">
-        <%- include('../components/section-heading', {
-          eyebrow: 'Platforms',
-          title: 'Products and internal platforms designed to live inside the same Kuwexa story system.',
-          copy: 'Each platform can be showcased with screenshots, features, SEO metadata, reusable image alt text, and structured content editing from the dashboard.'
-        }) %>
-        <a href="/products" class="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white">View All Platforms</a>
-      </div>
-      <div class="mt-10 grid gap-6 lg:grid-cols-3">
-        <% products.forEach((product) => { %>
-          <article class="rounded-[1.75rem] bg-slate-50 p-6 ring-1 ring-primary/6">
-            <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-[1.25rem] bg-white ring-1 ring-primary/10">
-              <% if (product.logo) { %>
-                <img src="<%= product.logo %>" alt="<%= resolveImageAlt(product.logo, `${product.name} logo`) %>" class="h-12 w-12 object-contain" loading="lazy" decoding="async">
-              <% } else { %>
-                <span class="font-display text-2xl font-bold text-primary"><%= String(product.name || 'P').charAt(0) %></span>
-              <% } %>
-            </div>
-            <h3 class="mt-5 font-display text-3xl font-bold text-primary"><%= product.name %></h3>
-            <p class="mt-4 text-sm leading-8 text-slate-600"><%= product.short_description || 'A Kuwexa platform presented through the same structured publishing system.' %></p>
-            <a href="/products/<%= product.slug %>" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">View platform <span aria-hidden="true">&rarr;</span></a>
+      <div class="grid gap-4 md:grid-cols-2">
+        <% ecosystemMap.forEach((item, index) => { %>
+          <article class="home-ecosystem-card reveal" data-reveal data-stagger="<%= Math.min(index + 1, 4) %>">
+            <p class="home-ecosystem-card__label"><%= item.label %></p>
+            <h3 class="mt-4 font-display text-3xl font-semibold leading-tight text-primary"><%= item.title %></h3>
+            <p class="mt-4 text-sm leading-8 text-slate-600"><%= item.copy %></p>
           </article>
         <% }) %>
       </div>
     </div>
   </section>
-<% } %>
 
-<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-  <div class="grid gap-6 xl:grid-cols-[0.95fr,1.05fr]">
-    <div class="narrative-card reveal" data-reveal>
-      <span class="section-kicker">Delivery Rhythm</span>
-      <div class="story-grid mt-8">
-        <% marketing.workflow.forEach((item) => { %>
-          <article class="story-step">
-            <span class="story-step__index"><%= item.step %></span>
-            <h3 class="story-step__title"><%= item.title %></h3>
-            <p class="story-step__copy"><%= item.copy %></p>
-          </article>
-        <% }) %>
-      </div>
-    </div>
+  <% if ((featuredProducts || []).length) { %>
+    <% const commerceProducts = featuredProducts.slice(0, 3); %>
+    <% const leadProduct = commerceProducts[0]; %>
+    <% const supportProducts = commerceProducts.slice(1); %>
+    <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+      <div class="home-commerce-shell reveal" data-reveal data-spotlight-panel>
+        <div class="home-commerce-shell__header">
+          <div>
+            <span class="section-kicker">Commercial Capability</span>
+            <h2 class="mt-6 font-display text-4xl font-semibold leading-tight text-primary md:text-5xl">
+              Kuwexa B2B brings wholesale discovery into a clearer company presentation.
+            </h2>
+          </div>
 
-    <div class="grid gap-6">
-      <div class="narrative-card narrative-card--dark reveal" data-reveal>
-        <span class="section-kicker !text-white/60 before:!bg-[linear-gradient(90deg,rgba(241,178,74,0.9),rgba(241,178,74,0))]">Initiatives</span>
-        <div class="mt-6 space-y-4">
-          <% projects.slice(0, 3).forEach((project) => { %>
-            <a href="/portfolio/<%= project.slug %>" class="block rounded-[1.55rem] border border-white/10 bg-white/6 p-5 transition hover:bg-white/10">
-              <div class="flex flex-wrap items-center justify-between gap-3">
-                <h3 class="font-display text-2xl font-bold text-white"><%= project.title %></h3>
-                <span class="signal-chip !bg-white/10 !text-secondary"><%= project.category || 'Initiative' %></span>
+          <div class="home-commerce-shell__summary">
+            <p class="text-base leading-8 text-slate-600">
+              Product categories, MOQ signals, and buyer enquiries are presented as part of the Kuwexa company story so wholesale conversations begin with more clarity.
+            </p>
+
+            <div class="home-commerce-shell__metrics">
+              <article class="home-commerce-metric">
+                <p class="home-commerce-metric__label">Trade Presentation</p>
+                <p class="home-commerce-metric__value">Product categories, MOQ signals, and buyer context arranged for serious wholesale review.</p>
+              </article>
+              <article class="home-commerce-metric">
+                <p class="home-commerce-metric__label">Company Continuity</p>
+                <p class="home-commerce-metric__value">Wholesale discovery stays connected to the wider Kuwexa organization.</p>
+              </article>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="/b2b" class="home-button home-button--primary">Open B2B Catalog</a>
+              <a href="/contact" class="home-button home-button--dark">Talk To Kuwexa</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-commerce-shell__stage">
+        <div class="home-commerce-insights">
+            <p class="home-commerce-insights__eyebrow">Why Buyers Trust It</p>
+            <div class="mt-6 grid gap-3">
+              <% (marketing.b2bHighlights || []).forEach((item, index) => { %>
+                <article class="home-commerce-insight">
+                  <span class="home-commerce-insight__index"><%= `0${index + 1}` %></span>
+                  <p class="home-commerce-insight__copy"><%= item %></p>
+                </article>
+              <% }) %>
+            </div>
+
+            <article class="home-commerce-note">
+              <p class="home-commerce-note__label">Company-Led</p>
+              <p class="home-commerce-note__copy">
+                The B2B catalog feels like part of the Kuwexa organization, not a disconnected external listing.
+              </p>
+            </article>
+          </div>
+
+          <div class="home-commerce-showcase">
+            <% if (leadProduct) { %>
+              <article class="home-product-card home-product-card--feature reveal" data-reveal data-stagger="1">
+                <div class="home-product-card__head">
+                  <span class="home-product-card__category"><%= leadProduct.category_name || 'B2B Product' %></span>
+                  <% if (leadProduct.min_order_quantity) { %>
+                    <span class="home-product-card__meta">
+                      MOQ <%= leadProduct.min_order_quantity %><%= leadProduct.unit_label ? ` ${leadProduct.unit_label}` : '' %>
+                    </span>
+                  <% } %>
+                </div>
+                <p class="home-product-card__eyebrow">Featured Catalog Line</p>
+                <h3 class="mt-5 font-display text-4xl font-semibold leading-tight text-white"><%= leadProduct.name %></h3>
+                <p class="mt-5 text-sm leading-8 text-white/75">
+                  <%= leadProduct.short_description || 'A Kuwexa B2B product card presented for wholesale buyers.' %>
+                </p>
+                <div class="mt-6 flex flex-wrap gap-2">
+                  <% (leadProduct.tech_stack || []).slice(0, 3).forEach((item) => { %>
+                    <span class="home-product-card__tag home-product-card__tag--feature"><%= item %></span>
+                  <% }) %>
+                </div>
+                <a href="/b2b/products/<%= leadProduct.slug %>" class="home-inline-link mt-8">
+                  View product
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </article>
+            <% } %>
+
+            <% if (supportProducts.length) { %>
+              <div class="home-commerce-showcase__stack">
+                <% supportProducts.forEach((product, index) => { %>
+                  <article class="home-product-card home-product-card--support reveal" data-reveal data-stagger="<%= Math.min(index + 2, 3) %>">
+                    <div class="home-product-card__head">
+                      <span class="home-product-card__category home-product-card__category--light"><%= product.category_name || 'B2B Product' %></span>
+                      <% if (product.min_order_quantity) { %>
+                        <span class="home-product-card__meta">
+                          MOQ <%= product.min_order_quantity %><%= product.unit_label ? ` ${product.unit_label}` : '' %>
+                        </span>
+                      <% } %>
+                    </div>
+                    <h3 class="mt-5 font-display text-3xl font-semibold leading-tight text-primary"><%= product.name %></h3>
+                    <p class="mt-4 text-sm leading-7 text-slate-600">
+                      <%= product.short_description || 'A Kuwexa B2B product card presented for wholesale buyers.' %>
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-2">
+                      <% (product.tech_stack || []).slice(0, 3).forEach((item) => { %>
+                        <span class="home-product-card__tag"><%= item %></span>
+                      <% }) %>
+                    </div>
+                    <a href="/b2b/products/<%= product.slug %>" class="home-inline-link mt-8">
+                      View product
+                      <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  </article>
+                <% }) %>
               </div>
-              <p class="mt-3 text-sm leading-7 text-white/70"><%= project.summary %></p>
-            </a>
-          <% }) %>
+            <% } %>
+          </div>
         </div>
       </div>
+    </section>
+  <% } %>
 
-      <div class="narrative-card reveal" data-reveal>
-        <span class="section-kicker">Insights</span>
-        <div class="mt-6 grid gap-4">
-          <% posts.forEach((post) => { %>
-            <article class="rounded-[1.45rem] bg-slate-50 p-5 ring-1 ring-primary/6">
-              <p class="text-xs font-bold uppercase tracking-[0.2em] text-secondary"><%= post.category || 'Insight' %></p>
-              <h3 class="mt-3 font-display text-2xl font-bold text-primary"><%= post.title %></h3>
-              <p class="mt-3 text-sm leading-7 text-slate-600"><%= post.summary %></p>
-              <a href="/blog/<%= post.slug %>" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">Read insight <span aria-hidden="true">&rarr;</span></a>
+  <%- include('../components/team-showcase', {
+    eyebrow: 'Leadership and Team',
+    title: 'Meet the people guiding the Kuwexa organization and its divisions.',
+    copy: 'Leadership and team profiles help visitors understand who carries the company vision, day-to-day execution, and long-term direction.'
+  }) %>
+
+  <section class="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+    <div class="grid gap-6 xl:grid-cols-[0.92fr,1.08fr]">
+      <article class="home-leadership-panel reveal" data-reveal>
+        <span class="section-kicker">Why Organizations Choose Kuwexa</span>
+        <h2 class="mt-5 font-display text-4xl font-semibold leading-tight text-primary md:text-5xl">
+          A company presence shaped by clarity, discipline, and follow-through.
+        </h2>
+        <div class="mt-8 grid gap-4">
+          <% (marketing.hybridAdvantage || []).forEach((item) => { %>
+            <article class="home-leadership-card">
+              <h3 class="font-display text-2xl font-semibold text-primary"><%= item.title %></h3>
+              <p class="mt-3 text-sm leading-7 text-slate-600"><%= item.copy %></p>
             </article>
           <% }) %>
         </div>
-      </div>
+        <p class="mt-8 text-sm leading-7 text-slate-600"><%= marketing.jobsSummary %></p>
+      </article>
+
+      <article class="narrative-card reveal" data-reveal>
+        <span class="section-kicker">FAQ</span>
+        <div class="mt-8">
+          <%- include('../components/faq-list', { items: marketing.faqs }) %>
+        </div>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-  <%- include('../components/section-heading', {
-    eyebrow: 'FAQ',
-    title: 'Questions teams ask before they start working with Kuwexa.',
-    copy: 'These early questions usually sit at the intersection of growth goals, system structure, and how the work will stay manageable after launch.'
+  <%- include('../components/site-cta', {
+    eyebrow: 'Organization Website',
+    title: 'Need to explore a division, discuss a partnership, or start a company-level conversation with Kuwexa?',
+    copy: 'Use the division directory to understand the organization, open the B2B catalog for product discovery, or contact the team for leadership, trade, and digital execution discussions.',
+    primaryLabel: 'Contact Kuwexa',
+    primaryHref: '/contact',
+    secondaryLabel: 'Explore Divisions',
+    secondaryHref: '/divisions'
   }) %>
-  <div class="mt-10">
-    <%- include('../components/faq-list', { items: marketing.faqs }) %>
-  </div>
-</section>
-
-<%- include('../components/site-cta', {
-  eyebrow: 'Build With Kuwexa',
-  title: 'Need a partner that can connect commercial reality with digital execution?',
-  copy: 'Kuwexa helps businesses move with more structure across trade, ecommerce, platforms, and growth systems while keeping the frontend, CMS, and operational workflow aligned.',
-  primaryLabel: 'Start a Conversation',
-  primaryHref: '/contact',
-  secondaryLabel: 'See the Capability Stack',
-  secondaryHref: '/services'
-}) %>
+</main>
 
 <%- include('../layouts/footer') %>
 <%- include('../layouts/scripts') %>
